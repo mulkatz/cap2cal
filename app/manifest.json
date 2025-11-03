@@ -1,0 +1,38 @@
+{
+  "name": "Cap2Cal",
+  "short_name": "Cap2Cal",
+  "description": "Capture event posters or flyers and automatically add them to your Calendar.",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1E2E3F",
+  "theme_color": "#E0FDDC",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/src/assets/meta/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/src/assets/meta/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_screens": [
+    {
+      "src": "/src/assets/meta/splash-640.png",
+      "sizes": "640x1136",
+      "type": "image/png"
+    },
+    {
+      "src": "/src/assets/meta/splash-750.png",
+      "sizes": "750x1334",
+      "type": "image/png"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

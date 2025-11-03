@@ -1,0 +1,112 @@
+{
+  "translations": {
+    "general": {
+      "okay": "Okay",
+      "cancel": "Abbrechen",
+      "yes": "Ja",
+      "no": "Nein",
+      "relevance": "Relevanz",
+      "time": "Zeit",
+      "onlyFavourites": "Nur Favoriten",
+      "sortBy": "Sortieren nach",
+      "ctaStart": "Foto",
+      "yourCaptures": "Deine Aufnahmen",
+      "searchTickets": "Nach Tickets suchen",
+      "buyTickets": "Tickets kaufen",
+      "noTicketsAvailable": "keine Tickets verfügbar",
+      "getTicket": "Ticket holen"
+    },
+    "toasts": {
+      "feedback": {
+        "success": "Danke für dein Feedback!",
+        "error": "Danke für dein Feedback!"
+      },
+      "extract": {
+        "success": "Erfolgreich erfasst!",
+        "error": "Das hat leider nicht funktioniert."
+      }
+    },
+    "sheet": {
+      "header": "Deine Events",
+      "noFavouritesYet": "Noch keine Favoriten"
+    },
+    "dialogs": {
+      "firstStart": {
+        "title": "Erster Start",
+        "description": "Dies war der erste Start"
+      },
+      "feedback": {
+        "title": "Feedback senden",
+        "description": "Diese App befindet sich in der Entwicklung - jedes Feedback ist sehr willkommen!",
+        "idea": "Idee",
+        "bug": "Fehler",
+        "inputPlaceholder": "Gib dein Feedback hier ein...",
+        "send": "Senden"
+      },
+      "export": {
+        "title": "Exportieren"
+      },
+      "notCaptured": {
+        "title": "Konnte nicht erfassen",
+        "generalAdvice": "Oh nein! Wir konnten nicht alle Event-Details erfassen. Versuche ein klareres Bild – Unschärfen oder fehlende Informationen können uns ausbremsen!"
+      },
+      "permissionDenied": {
+        "title": "Zugriff verweigert",
+        "cameraAdvice": "Du hast den Zugriff auf die Kamera verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
+        "calendarAdvice": "Du hast den Zugriff auf deinen Kalender verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
+        "photosAdvice": "Du hast den Zugriff auf deine Fotos verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
+        "toSettings": "App Einstellungen"
+      },
+      "loading": {
+        "phrases": {
+          "phrase1": {
+            "1": "Einen Moment, sammle alle Details...",
+            "2": "Ich durchsuche jetzt die Daten...",
+            "3": "Bereite alle Informationen für dich vor!",
+            "4": "Stelle sicher, dass alles bereit ist...",
+            "5": "Einen Moment noch, fast fertig..."
+          },
+          "phrase2": {
+            "1": "Einen Moment, hole alle wichtigen Infos...",
+            "2": "Ich arbeite daran, alles vorzubereiten...",
+            "3": "Fast alles, was du brauchst, ist bereit...",
+            "4": "Ich bringe das für dich zu Ende...",
+            "5": "Gleich geschafft, die letzten Details fehlen noch!"
+          },
+          "phrase3": {
+            "1": "Ich sammle jeden verfügbaren Informationsschnipsel...",
+            "2": "Ich stelle sicher, dass alles perfekt für dich ist...",
+            "3": "Bringe alle Puzzleteile zusammen...",
+            "4": "Fast fertig, bleib dran...",
+            "5": "Noch ein wenig Geduld!"
+          },
+          "phrase4": {
+            "1": "Gib mir eine Sekunde, scanne alle Optionen...",
+            "2": "Ich bin fast fertig damit...",
+            "3": "Überprüfe jedes Detail für dich...",
+            "4": "Gleich geschafft, fast erledigt!",
+            "5": "Nur noch einen Moment!"
+          },
+          "phrase5": {
+            "1": "Finalisiere alles, wir sind fast bereit...",
+            "2": "Überprüfe noch einmal alle Infos...",
+            "3": "Mache nur noch die letzten Feinabstimmungen...",
+            "4": "Stelle sicher, dass alles perfekt ist...",
+            "5": "Fast fertig, danke für deine Geduld!"
+          }
+        }
+      }
+    },
+    "types": {
+      "extractErrorReason": {
+        "IMAGE_TOO_BLURRED": "Bild zu unscharf",
+        "MULTIPLE_EVENTS_FOUND": "Mehrere Events gefunden",
+        "LOW_CONTRAST_OR_POOR_LIGHTING": "Geringer Kontrast oder schlechtes Licht",
+        "TEXT_TOO_SMALL": "Text zu klein",
+        "OVERLAPPING_TEXT_OR_GRAPHICS": "Überlappende Informationen",
+        "PROBABLY_NOT_AN_EVENT": "Das war kein Event",
+        "UNKNOWN": "Unbekannter Fehler"
+      }
+    }
+  }
+}

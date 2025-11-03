@@ -1,0 +1,70 @@
+PODS:
+  - Capacitor (7.2.0):
+    - CapacitorCordova
+  - CapacitorApp (7.0.1):
+    - Capacitor
+  - CapacitorCamera (7.0.1):
+    - Capacitor
+  - CapacitorCordova (7.2.0)
+  - CapacitorFilesystem (7.0.1):
+    - Capacitor
+  - CapacitorHaptics (7.0.1):
+    - Capacitor
+  - CapacitorNativeSettings (7.0.1):
+    - Capacitor
+  - CapacitorShare (7.0.1):
+    - Capacitor
+  - EbarooniCapacitorCalendar (7.2.0):
+    - Capacitor
+  - MichaelwolzCameraPreviewLite (7.1.0):
+    - Capacitor
+
+DEPENDENCIES:
+  - "Capacitor (from `../../../node_modules/@capacitor/ios`)"
+  - "CapacitorApp (from `../../../node_modules/@capacitor/app`)"
+  - "CapacitorCamera (from `../../../node_modules/@capacitor/camera`)"
+  - "CapacitorCordova (from `../../../node_modules/@capacitor/ios`)"
+  - "CapacitorFilesystem (from `../../../node_modules/@capacitor/filesystem`)"
+  - "CapacitorHaptics (from `../../../node_modules/@capacitor/haptics`)"
+  - CapacitorNativeSettings (from `../../../node_modules/capacitor-native-settings`)
+  - "CapacitorShare (from `../../../node_modules/@capacitor/share`)"
+  - "EbarooniCapacitorCalendar (from `../../../node_modules/@ebarooni/capacitor-calendar`)"
+  - "MichaelwolzCameraPreviewLite (from `../../../node_modules/@michaelwolz/camera-preview-lite`)"
+
+EXTERNAL SOURCES:
+  Capacitor:
+    :path: "../../../node_modules/@capacitor/ios"
+  CapacitorApp:
+    :path: "../../../node_modules/@capacitor/app"
+  CapacitorCamera:
+    :path: "../../../node_modules/@capacitor/camera"
+  CapacitorCordova:
+    :path: "../../../node_modules/@capacitor/ios"
+  CapacitorFilesystem:
+    :path: "../../../node_modules/@capacitor/filesystem"
+  CapacitorHaptics:
+    :path: "../../../node_modules/@capacitor/haptics"
+  CapacitorNativeSettings:
+    :path: "../../../node_modules/capacitor-native-settings"
+  CapacitorShare:
+    :path: "../../../node_modules/@capacitor/share"
+  EbarooniCapacitorCalendar:
+    :path: "../../../node_modules/@ebarooni/capacitor-calendar"
+  MichaelwolzCameraPreviewLite:
+    :path: "../../../node_modules/@michaelwolz/camera-preview-lite"
+
+SPEC CHECKSUMS:
+  Capacitor: 03bc7cbdde6a629a8b910a9d7d78c3cc7ed09ea7
+  CapacitorApp: febecbb9582cb353aed037e18ec765141f880fe9
+  CapacitorCamera: 6e73f1fc6c629a672658705a02409b60854bc0f1
+  CapacitorCordova: 5967b9ba03915ef1d585469d6e31f31dc49be96f
+  CapacitorFilesystem: e6261c410436f54908c11f94336c5b58286b1db0
+  CapacitorHaptics: 1f1e17041f435d8ead9ff2a34edd592c6aa6a8d6
+  CapacitorNativeSettings: bef37b3c7e2184da7416a3f162c71de19fd27593
+  CapacitorShare: e573823f511f260f598d0423c33b1e3d7bbe5fd1
+  EbarooniCapacitorCalendar: 4568a8a318b940245bf6e257a8b115626581bb7d
+  MichaelwolzCameraPreviewLite: 04724eb9d11e2633d131ae911b74f5a5e7f83836
+
+PODFILE CHECKSUM: cf2f19dec3715acaf08b98afb5b7928dcec56455
+
+COCOAPODS: 1.16.2

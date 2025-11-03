@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Cap2Cal</string>
+    <string name="title_activity_main">Cap2Cal</string>
+    <string name="package_name">cx.franz.cap2cal</string>
+    <string name="custom_url_scheme">cx.franz.cap2cal</string>
+</resources>

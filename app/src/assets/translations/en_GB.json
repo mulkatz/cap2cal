@@ -1,0 +1,112 @@
+{
+  "translations": {
+    "general": {
+      "okay": "Okay",
+      "cancel": "Cancel",
+      "yes": "Yes",
+      "no": "No",
+      "relevance": "Relevance",
+      "time": "Time",
+      "onlyFavourites": "Only favourites",
+      "sortBy": "Sort by",
+      "ctaStart": "Photo",
+      "yourCaptures": "Your Events",
+      "searchTickets": "Search for Tickets",
+      "buyTickets": "Buy Tickets",
+      "noTicketsAvailable": "No Tickets available",
+      "getTicket": "Get Ticket"
+    },
+    "toasts": {
+      "feedback": {
+        "success": "Thanks for your feedback!",
+        "error": "Thanks for your feedback!"
+      },
+      "extract": {
+        "success": "Captured!",
+        "error": "This didn't work."
+      }
+    },
+    "sheet": {
+      "header": "Your Captures",
+      "noFavouritesYet": "No favourites yet"
+    },
+    "dialogs": {
+      "firstStart": {
+        "title": "First Start",
+        "description": "This was the first start"
+      },
+      "feedback": {
+        "title": "Send Feedback",
+        "description": "This App is under development - feedback in any kind of way is very appreciated!",
+        "idea": "Idea",
+        "bug": "Bug",
+        "inputPlaceholder": "Put your feedback in here...",
+        "send": "Send"
+      },
+      "export": {
+        "title": "Export to"
+      },
+      "notCaptured": {
+        "title": "Couldn't Capture",
+        "generalAdvice": "Oops! Couldn’t grab all the event details. Try a clearer picture — blurs or missing info can trip us up!"
+      },
+      "permissionDenied": {
+        "title": "Permission denied",
+        "cameraAdvice": "You haven't granted permission to use the camera. To use Cap2Cal allow camera access in the app settings",
+        "calendarAdvice": "You haven't granted permission to access your calendar. To use the calendar export allow calendar access in the app settings",
+        "photosAdvice": "You haven't granted permission to access your photos. To use photo import allow photo library access in the app settings",
+        "toSettings": "App Settings"
+      },
+      "loading": {
+        "phrases": {
+          "phrase1": {
+            "1": "Just a moment, gathering all the details...",
+            "2": "Digging into the data now...",
+            "3": "Getting all the info ready for you!",
+            "4": "Making sure everything's in place...",
+            "5": "One second, almost there..."
+          },
+          "phrase2": {
+            "1": "Hold on, fetching all the goodies...",
+            "2": "I’m on it, getting things ready...",
+            "3": "Almost got everything you need...",
+            "4": "Let me wrap this up for you...",
+            "5": "Hold tight, final touches coming up!"
+          },
+          "phrase3": {
+            "1": "Collecting every bit of info I can...",
+            "2": "Just making sure it’s perfect for you...",
+            "3": "Pulling all the pieces together...",
+            "4": "Nearly done, stay with me...",
+            "5": "Just a bit more patience!"
+          },
+          "phrase4": {
+            "1": "Give me a second, scanning all options...",
+            "2": "I’m nearly finished with this...",
+            "3": "Looking through every detail for you...",
+            "4": "Hang in there, almost complete!",
+            "5": "Just about to finish!"
+          },
+          "phrase5": {
+            "1": "Finalizing everything, we’re almost set...",
+            "2": "Double-checking all the info...",
+            "3": "Just making those last few tweaks...",
+            "4": "Ensuring everything is perfect...",
+            "5": "Almost there, thanks for your patience!"
+          }
+        }
+      }
+    },
+    "types": {
+      "extractErrorReason": {
+        "IMAGE_TOO_BLURRED": "Picture too blurry",
+        "MULTIPLE_EVENTS_FOUND": "Multiple events found",
+        "LOW_CONTRAST_OR_POOR_LIGHTING": "Low contrast or poor lighting",
+        "TEXT_TOO_SMALL": "Text too small",
+        "OVERLAPPING_TEXT_OR_GRAPHICS": "Overlapping information",
+        "PROBABLY_NOT_AN_EVENT": "This was not an event",
+        "UNKNOWN": "Unknown error occurred"
+      }
+    }
+  }
+}
