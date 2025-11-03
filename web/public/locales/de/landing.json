@@ -1,0 +1,189 @@
+{
+  "nav": {
+    "features": "Funktionen",
+    "howItWorks": "So funktioniert's",
+    "download": "Download"
+  },
+  "hero": {
+    "titleSpan": "Verpasse nie wieder",
+    "titleMain": "ein Event",
+    "subtitle": "Capture2Calendar",
+    "description": "Fotografiere ein Event-Poster und füge es sofort deinem Kalender hinzu. KI-gestützte Event-Erfassung in 3 Sekunden.",
+    "cta": "Download für iOS",
+    "ctaAndroid": "Jetzt bei Google Play",
+    "subtext": "Für immer kostenlos. Kein Abo erforderlich.",
+    "trustBadge": "Tausende Nutzer verpassen keine Events mehr"
+  },
+  "steps": {
+    "title": "Vom Poster zum Kalender in 3 Sekunden",
+    "subtitle": "Event-Erfassung leicht gemacht",
+    "one": {
+      "title": "Fotografieren",
+      "description": "Fotografiere ein Event-Poster, Flyer oder Ticket. Funktioniert mit deiner Kamera oder aus deiner Fotogalerie."
+    },
+    "two": {
+      "title": "Extrahieren",
+      "description": "Unsere intelligente KI liest und extrahiert Event-Namen, Datum, Uhrzeit, Ort und sogar Ticket-Links—mit 99% Genauigkeit."
+    },
+    "three": {
+      "title": "Speichern",
+      "description": "Ein Klick fügt das Event zu Google Kalender, Apple Kalender, Outlook oder jedem Gerät-Kalender hinzu. Fertig."
+    }
+  },
+  "demo": {
+    "title": "Sieh es in Aktion",
+    "subtitle": "Beobachte, wie Cap2Cal Event-Poster in Kalendereinträge verwandelt",
+    "imageBefore": "Event-Poster",
+    "imageAfter": "Kalendereintrag",
+    "description": "Erfasse Konzerte, Festivals, Konferenzen, Sportevents und mehr—alles mit einem einfachen Foto."
+  },
+  "features": {
+    "title": "Warum Cap2Cal heraussticht",
+    "subtitle": "Speziell für Event-Erfassung entwickelt",
+    "aiAccuracy": {
+      "title": "KI-gestützte Genauigkeit",
+      "description": "99% Extraktionsgenauigkeit. Unsere KI versteht Datum, Uhrzeit und Orte in 8 Sprachen."
+    },
+    "universalCalendar": {
+      "title": "Universelle Kalender-Synchronisation",
+      "description": "Funktioniert mit Google Kalender, Apple Kalender, Outlook und jedem Gerät-Kalender. Nahtlose Integration, kein Setup erforderlich."
+    },
+    "lightning": {
+      "title": "Blitzschnell",
+      "description": "Vom Foto zum Kalendereintrag in unter 3 Sekunden. 120x schneller als manuelle Eingabe."
+    },
+    "multiLanguage": {
+      "title": "Spricht deine Sprache",
+      "description": "Extrahiere Events auf Englisch, Deutsch, Spanisch, Französisch, Portugiesisch, Italienisch, Japanisch und Koreanisch."
+    },
+    "offline": {
+      "title": "Funktioniert überall",
+      "description": "Erfasse Events auch ohne Internet. Sie werden automatisch synchronisiert, sobald du wieder online bist."
+    },
+    "privacy": {
+      "title": "Deine Daten bleiben privat",
+      "description": "Alle Event-Daten werden lokal auf deinem Gerät gespeichert. Kein Cloud-Speicher, außer du wählst Synchronisation."
+    },
+    "eventLibrary": {
+      "title": "Speichern & Favorisieren",
+      "description": "Bewahre alle erfassten Events in deiner persönlichen Bibliothek auf. Markiere Favoriten und sieh Poster-Bilder jederzeit an."
+    },
+    "tickets": {
+      "title": "Finde Tickets automatisch",
+      "description": "Cap2Cal identifiziert Ticket-Kauflinks und hilft dir, Tickets mit einem Klick zu kaufen."
+    },
+    "sharing": {
+      "title": "Teile mit Freunden",
+      "description": "Ein tolles Event gefunden? Teile es sofort mit Freunden und Familie direkt aus der App."
+    }
+  },
+  "useCases": {
+    "title": "Perfekt für alle, die Live-Events lieben",
+    "subtitle": "Von Konzerten bis Konferenzen, Cap2Cal hat alles im Griff",
+    "concert": {
+      "title": "Konzert-Fans",
+      "description": "Erfasse Konzertplakate, Festival-Lineups und verpasse nie wieder deine Lieblingskünstler."
+    },
+    "festival": {
+      "title": "Festival-Besucher",
+      "description": "Wenn Festival-Lineups veröffentlicht werden, erfasse 30+ Künstler, die du sehen willst, in unter 2 Minuten."
+    },
+    "professional": {
+      "title": "Vielbeschäftigte Profis",
+      "description": "Konferenzen, Workshops, Networking-Events—halte deinen beruflichen Kalender mühelos organisiert."
+    },
+    "student": {
+      "title": "Studenten",
+      "description": "Campus-Events, Vereinstreffen, Gastvorträge—verpasse nichts von dem, was passiert."
+    },
+    "organizer": {
+      "title": "Community-Organisatoren",
+      "description": "Erfasse konkurrierende Events und plane drum herum. Verfolge Event-Teilnahme und Engagement."
+    }
+  },
+  "comparison": {
+    "title": "Wie Cap2Cal im Vergleich abschneidet",
+    "subtitle": "Die Wahl ist klar",
+    "manual": "Manuelle Eingabe",
+    "googleLens": "Google Lens",
+    "otherApps": "Andere Event-Apps",
+    "cap2cal": "Cap2Cal",
+    "time": "Zeit zum Hinzufügen",
+    "timeManual": "6 Minuten",
+    "timeLens": "3 Minuten",
+    "timeOther": "Suche erforderlich",
+    "timeCap2cal": "3 Sekunden",
+    "accuracy": "Genauigkeit",
+    "accuracyManual": "90% (Tippfehler)",
+    "accuracyLens": "70% (kein Kontext)",
+    "accuracyOther": "95% (wenn gelistet)",
+    "accuracyCap2cal": "99%",
+    "calendar": "Kalender-Integration",
+    "offline": "Offline-Modus",
+    "tickets": "Ticket-Links",
+    "multiLang": "Mehrsprachig",
+    "multiLangManual": "Deine Mühe",
+    "multiLangLens": "100+",
+    "multiLangOther": "10-20",
+    "multiLangCap2cal": "8 Sprachen",
+    "price": "Preis",
+    "priceFree": "Kostenlos",
+    "priceManual": "Kostenlos (deine Zeit)",
+    "priceSubscription": "$0-$20/Monat"
+  },
+  "faq": {
+    "title": "Fragen? Wir haben Antworten.",
+    "q1": {
+      "question": "Wie genau ist die KI-Extraktion?",
+      "answer": "Cap2Cals KI erreicht 99% Genauigkeit bei Event-Postern. Unser Modell wurde mit über 100.000 Postern in 8 Sprachen trainiert. In seltenen Fällen, in denen die KI nicht sicher ist, siehst du eine bearbeitbare Vorschau vor dem Speichern."
+    },
+    "q2": {
+      "question": "Mit welchen Kalendern funktioniert Cap2Cal?",
+      "answer": "Cap2Cal funktioniert mit ALLEN Kalender-Apps: Google Kalender, Apple Kalender (iCal), Microsoft Outlook und jeder anderen Kalender-App auf deinem Telefon. Wir verwenden Standard-Kalender-APIs, die universell funktionieren."
+    },
+    "q3": {
+      "question": "Sind meine Daten privat und sicher?",
+      "answer": "Absolut. Alle erfassten Events werden standardmäßig lokal auf deinem Gerät gespeichert. Wir laden deine Fotos oder Event-Daten nicht auf unsere Server hoch, es sei denn, du entscheidest dich für Cloud-Synchronisation. Wir sind DSGVO- und CCPA-konform."
+    },
+    "q4": {
+      "question": "Funktioniert Cap2Cal offline?",
+      "answer": "Ja! Du kannst Events offline erfassen. Sie werden automatisch verarbeitet und zu deinem Kalender hinzugefügt, sobald du wieder online bist. Perfekt für Festivals mit schlechtem Empfang."
+    },
+    "q5": {
+      "question": "Welche Sprachen unterstützt Cap2Cal?",
+      "answer": "Derzeit extrahiert Cap2Cal Events auf Englisch, Deutsch, Spanisch, Französisch, Portugiesisch, Italienisch, Japanisch und Koreanisch. Weitere Sprachen folgen bald!"
+    },
+    "q6": {
+      "question": "Ist Cap2Cal wirklich kostenlos?",
+      "answer": "Ja! Alle Funktionen—unbegrenzte Erfassungen, KI-Extraktion, Kalender-Integration—sind 100% kostenlos. Keine versteckten Kosten, keine Abos."
+    },
+    "q7": {
+      "question": "Was unterscheidet Cap2Cal von Google Lens?",
+      "answer": "Während Google Lens Text aus Bildern extrahieren kann, versteht es keine Events und integriert sich nicht mit Kalendern. Cap2Cal ist speziell für Event-Poster entwickelt, erreicht 99% Genauigkeit und fügt Events nahtlos mit einem Klick zu deinem Kalender hinzu."
+    },
+    "q8": {
+      "question": "Kann ich Events mit Freunden teilen?",
+      "answer": "Ja! Du kannst erfasste Events per SMS, E-Mail oder Social Media teilen. Deine Freunde brauchen Cap2Cal nicht, um die Event-Details zu sehen."
+    }
+  },
+  "finalCta": {
+    "title": "Bereit, nie wieder ein Event zu verpassen?",
+    "description": "Lade Cap2Cal kostenlos herunter und verwandle, wie du Events entdeckst.",
+    "cta": "Download für iOS",
+    "ctaAndroid": "Jetzt bei Google Play",
+    "trustLine": "Tausende Nutzer haben Stunden manueller Eingabe gespart"
+  },
+  "footer": {
+    "copyright": "© {{year}} Capture2Calendar. Alle Rechte vorbehalten.",
+    "madeWith": "Mit ❤️ für Event-Liebhaber überall gemacht.",
+    "about": "Über uns",
+    "features": "Funktionen",
+    "howItWorks": "So funktioniert's",
+    "support": "Support",
+    "helpCenter": "Hilfe-Center",
+    "contact": "Kontakt",
+    "legal": "Rechtliches",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutz"
+  }
+}

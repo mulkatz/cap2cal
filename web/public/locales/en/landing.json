@@ -1,0 +1,189 @@
+{
+  "nav": {
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "download": "Download"
+  },
+  "hero": {
+    "titleSpan": "Never Miss",
+    "titleMain": "Another Event Again",
+    "subtitle": "Capture2Calendar",
+    "description": "Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in 3 seconds.",
+    "cta": "Download for iOS",
+    "ctaAndroid": "Get on Google Play",
+    "subtext": "Free forever. No subscription required.",
+    "trustBadge": "Join thousands of users who never miss events"
+  },
+  "steps": {
+    "title": "From Poster to Calendar in 3 Seconds",
+    "subtitle": "Event discovery made effortless",
+    "one": {
+      "title": "Snap",
+      "description": "Take a photo of any event poster, flyer, or ticket. Works with your camera or from your photo library."
+    },
+    "two": {
+      "title": "Extract",
+      "description": "Our intelligent AI reads and extracts the event name, date, time, location, and even ticket links—with 99% accuracy."
+    },
+    "three": {
+      "title": "Save",
+      "description": "One tap adds the event to Google Calendar, Apple Calendar, Outlook, or any device calendar. You're done."
+    }
+  },
+  "demo": {
+    "title": "See It In Action",
+    "subtitle": "Watch how Cap2Cal transforms event posters into calendar entries",
+    "imageBefore": "Event Poster",
+    "imageAfter": "Calendar Entry",
+    "description": "Capture concerts, festivals, conferences, sports events, and more—all with a simple photo."
+  },
+  "features": {
+    "title": "Why Cap2Cal Stands Out",
+    "subtitle": "Purpose-built for event discovery",
+    "aiAccuracy": {
+      "title": "AI-Powered Accuracy",
+      "description": "99% extraction accuracy. Our AI understands dates, times, locations in 8 languages."
+    },
+    "universalCalendar": {
+      "title": "Universal Calendar Sync",
+      "description": "Works with Google Calendar, Apple Calendar, Outlook, and any device calendar. Seamless integration, no setup required."
+    },
+    "lightning": {
+      "title": "Lightning Fast",
+      "description": "From photo to calendar entry in under 3 seconds. 120x faster than manual entry."
+    },
+    "multiLanguage": {
+      "title": "Speaks Your Language",
+      "description": "Extract events in English, German, Spanish, French, Portuguese, Italian, Japanese, and Korean."
+    },
+    "offline": {
+      "title": "Works Anywhere",
+      "description": "Capture events even without internet. They'll sync automatically when you're back online."
+    },
+    "privacy": {
+      "title": "Your Data Stays Private",
+      "description": "All event data is stored locally on your device. No cloud storage unless you choose to sync."
+    },
+    "eventLibrary": {
+      "title": "Save & Favorite",
+      "description": "Keep all captured events in your personal library. Mark favorites and view poster images anytime."
+    },
+    "tickets": {
+      "title": "Find Tickets Automatically",
+      "description": "Cap2Cal identifies ticket purchase links and helps you buy tickets with one tap."
+    },
+    "sharing": {
+      "title": "Share with Friends",
+      "description": "Found an amazing event? Share it instantly with friends and family right from the app."
+    }
+  },
+  "useCases": {
+    "title": "Perfect For Everyone Who Loves Live Events",
+    "subtitle": "From concerts to conferences, Cap2Cal has you covered",
+    "concert": {
+      "title": "Concert Fanatics",
+      "description": "Capture concert posters, festival lineups, and never miss your favorite artists."
+    },
+    "festival": {
+      "title": "Festival Goers",
+      "description": "When festival lineups drop, capture 30+ artists you want to see in under 2 minutes."
+    },
+    "professional": {
+      "title": "Busy Professionals",
+      "description": "Conferences, workshops, networking events—keep your professional calendar organized effortlessly."
+    },
+    "student": {
+      "title": "Students",
+      "description": "Campus events, club meetings, guest lectures—never miss out on what's happening."
+    },
+    "organizer": {
+      "title": "Community Organizers",
+      "description": "Capture competing events and plan around them. Track event attendance and engagement."
+    }
+  },
+  "comparison": {
+    "title": "How Cap2Cal Compares",
+    "subtitle": "The choice is clear",
+    "manual": "Manual Entry",
+    "googleLens": "Google Lens",
+    "otherApps": "Other Event Apps",
+    "cap2cal": "Cap2Cal",
+    "time": "Time to Add Event",
+    "timeManual": "6 minutes",
+    "timeLens": "3 minutes",
+    "timeOther": "Requires search",
+    "timeCap2cal": "3 seconds",
+    "accuracy": "Accuracy",
+    "accuracyManual": "90% (typos)",
+    "accuracyLens": "70% (no context)",
+    "accuracyOther": "95% (if listed)",
+    "accuracyCap2cal": "99%",
+    "calendar": "Calendar Integration",
+    "offline": "Offline Mode",
+    "tickets": "Ticket Links",
+    "multiLang": "Multi-Language",
+    "multiLangManual": "Your effort",
+    "multiLangLens": "100+",
+    "multiLangOther": "10-20",
+    "multiLangCap2cal": "8 languages",
+    "price": "Price",
+    "priceFree": "Free",
+    "priceManual": "Free (your time)",
+    "priceSubscription": "$0-$20/mo"
+  },
+  "faq": {
+    "title": "Got Questions? We've Got Answers.",
+    "q1": {
+      "question": "How accurate is the AI extraction?",
+      "answer": "Cap2Cal's AI achieves 99% accuracy on event posters. Our model has been trained on over 100,000 posters across 8 languages. In rare cases where the AI isn't confident, you'll see an editable preview before saving."
+    },
+    "q2": {
+      "question": "Which calendars does Cap2Cal work with?",
+      "answer": "Cap2Cal works with ALL calendar apps: Google Calendar, Apple Calendar (iCal), Microsoft Outlook, and any other calendar app on your phone. We use standard calendar APIs that work universally."
+    },
+    "q3": {
+      "question": "Is my data private and secure?",
+      "answer": "Absolutely. All captured events are stored locally on your device by default. We don't upload your photos or event data to our servers unless you opt-in to cloud sync. We're GDPR and CCPA compliant."
+    },
+    "q4": {
+      "question": "Does Cap2Cal work offline?",
+      "answer": "Yes! You can capture events offline. They'll be processed and added to your calendar automatically once you're back online. Perfect for festivals with spotty service."
+    },
+    "q5": {
+      "question": "What languages does Cap2Cal support?",
+      "answer": "Currently, Cap2Cal extracts events in English, German, Spanish, French, Portuguese, Italian, Japanese, and Korean. More languages coming soon!"
+    },
+    "q6": {
+      "question": "Is Cap2Cal really free?",
+      "answer": "Yes! All features—unlimited captures, AI extraction, calendar integration—are 100% free. No hidden costs, no subscriptions."
+    },
+    "q7": {
+      "question": "What makes Cap2Cal different from Google Lens?",
+      "answer": "While Google Lens can extract text from images, it doesn't understand events or integrate with calendars. Cap2Cal is purpose-built for event posters, achieving 99% accuracy and seamlessly adding events to your calendar in one tap."
+    },
+    "q8": {
+      "question": "Can I share events with friends?",
+      "answer": "Yes! You can share captured events via text, email, or social media. Your friends don't need Cap2Cal to see the event details."
+    }
+  },
+  "finalCta": {
+    "title": "Ready to Never Miss Another Event?",
+    "description": "Download Cap2Cal free and transform how you discover events.",
+    "cta": "Download for iOS",
+    "ctaAndroid": "Get on Google Play",
+    "trustLine": "Join thousands of users who've saved hours of manual entry"
+  },
+  "footer": {
+    "copyright": "© {{year}} Capture2Calendar. All rights reserved.",
+    "madeWith": "Made with ❤️ for event lovers everywhere.",
+    "about": "About",
+    "features": "Features",
+    "howItWorks": "How It Works",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "contact": "Contact Us",
+    "legal": "Legal",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
+  }
+}

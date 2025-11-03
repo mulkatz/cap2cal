@@ -1,0 +1,101 @@
+<!doctype html>
+<!--
+  WICHTIG: Das Attribut lang="en" wurde entfernt.
+  React (über react-helmet-async) wird dynamisch lang="de" oder lang="en" einfügen.
+-->
+<html lang="">
+  <head>
+    <meta charset="UTF-8">
+    <!-- Optimized font loading for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Preload critical font weights only: 400, 600, 700, 800, 900 -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" />
+    <!-- Load fonts asynchronously using media trick -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'" />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    </noscript>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
+
+    <meta name="theme-color" content="#ffffff" />
+
+    <!--
+    Primary Meta Tags (FALLBACK)
+    Diese werden von React für jede Seite überschrieben.
+  -->
+    <title>Cap2Cal - Never Miss Another Event Again</title>
+    <meta name="title" content="Cap2Cal - AI-Powered Event Capture" />
+    <meta
+      name="description"
+      content="Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in 3 seconds." />
+
+    <!-- Open Graph / Facebook (FALLBACK) -->
+    <meta property="og:type" content="website" />
+    <!--    {/* Update URL once deployed */}-->
+    <meta property="og:url" content="https://capture2calendar.app/" />
+    <meta property="og:title" content="Cap2Cal - Never Miss Another Event Again" />
+    <meta
+      property="og:description"
+      content="Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in 3 seconds." />
+    <!--    {/* Add a real image URL later */}-->
+    <meta property="og:image" content="https://placehold.co/1200x630/0ea5e9/ffffff?text=Cap2Cal" />
+
+    <!-- Twitter (FALLBACK) -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <!--    {/* Update URL once deployed */}-->
+    <meta property="twitter:url" content="https://capture2calendar.app/" />
+    <meta property="twitter:title" content="Cap2Cal - Never Miss Another Event Again" />
+    <meta
+      property="twitter:description"
+      content="Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in 3 seconds." />
+    <!--    {/* Add a real image URL later */}-->
+    <meta property="twitter:image" content="https://placehold.co/1200x675/0ea5e9/ffffff?text=Cap2Cal" />
+
+    <!--    {/* Favicon - Update paths/files later */}-->
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Cap2Cal" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!--    {/* <link rel="manifest" href="/manifest.json" /> */}-->
+
+    <meta name="theme-color" content="#18181b" />
+
+    <!-- Additional Meta Tags for SEO (FALLBACK) -->
+    <meta name="robots" content="index, follow" />
+    <meta
+      name="keywords"
+      content="event calendar, capture event, poster to calendar, AI event extraction, calendar app, event organizer, concert calendar, festival planner, never miss events" />
+    <meta name="author" content="Franz Benthin" />
+
+    <link href="./index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!--{/* This is where your React app will mount */}-->
+    <div id="root"></div>
+    <!--{/* Assuming your main TSX file is in src, adjust path if necessary */}-->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

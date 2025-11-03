@@ -1,0 +1,24 @@
+{
+  "name": "Cap2Cal - Never Miss Another Event",
+  "short_name": "Cap2Cal",
+  "description": "Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in 3 seconds.",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "theme_color": "#18181b",
+  "background_color": "#18181b",
+  "display": "standalone",
+  "start_url": "/",
+  "scope": "/"
+}
