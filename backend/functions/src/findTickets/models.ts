@@ -1,4 +1,3 @@
-// #### GOOGLE SEARCH INTERFACE
 interface GoogleApiItemPagemapMusicEvent {
   endDate?: string;
   eventStatus?: string;
@@ -69,9 +68,7 @@ interface ApiOutput {
   ticket_links: TicketLink[];
   error?: string;
 }
-// #### END GOOGLE SEARCH INTERFACE
 
-// #### API TYPES
 export type SellerOffer = {
   seller: string | 'eventim' | 'ticket_master';
   offerUrl: string;
@@ -116,18 +113,17 @@ export interface CustomSearchResponse {
   items?: SearchResultItem[];
 }
 
-// #### END API TYPES
-
-// #### START TICKET PROVIDERS
 export const TICKET_PROVIDER_DOMAINS: string[] = [
   'ticketmaster.com',
   'livenation.com',
-  'eventim.de', // And other country-specific eventim domains like .co.uk, .pl, .it etc.
+  'eventim.de',
+  'eventim.com',
+  'eventim.co.uk',
+  'eventim.pl',
   'stubhub.com',
   'seatgeek.com',
   'axs.com',
   'ticketweb.com',
-  'eventim.com',
   'eventbrite.com',
   'seetickets.com',
   'songkick.com',
@@ -137,10 +133,11 @@ export const TICKET_PROVIDER_DOMAINS: string[] = [
   'oeticket.com',
   'ticketone.it',
   'fnacspectacles.com',
-  'ticketportal.cz', // .pl, .sk etc.
+  'ticketportal.cz',
   'ticketswap.com',
-  'ra.co', // Resident Advisor for electronic music
+  'ra.co',
   'dice.fm',
-  // Add more regional or genre-specific providers
-  // e.g. CTS Eventim subsidiaries, local theaters, etc.
+  'ticketmaster.co.uk',
+  'ticketmaster.ca',
+  'ticketmaster.de',
 ];

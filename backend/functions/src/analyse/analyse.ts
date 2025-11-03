@@ -5,42 +5,36 @@ import { GenerateContentRequest, VertexAI } from '@google-cloud/vertexai';
 import { v4 as uuid } from 'uuid';
 import { GCLOUD_PROJECT, GEMINI_MODEL_ID, VERTEX_AI_LOCATION } from '../config';
 
-export const analyse4 = onRequest(
+export const analyse = onRequest(
   {
     region: VERTEX_AI_LOCATION,
     memory: '1GiB',
     timeoutSeconds: 180,
     cors: true,
-// @ts-ignore
+    // @ts-ignore
     enforceAppCheck: true,
   },
   async (request, response) => {
     const { image, i18n } = request.body;
-
-    console.log('call');
 
     if (!image) {
       response.status(400).json({ error: 'Image base64 data is required' });
       return;
     }
 
-    // ✅ Instantiate the Vertex AI client.
-    // It automatically uses your project ID and credentials from the environment.
     const vertexAI = new VertexAI({
       project: GCLOUD_PROJECT,
       location: VERTEX_AI_LOCATION,
     });
 
-    // ✅ Get the generative model, specifying the Vertex AI model name.
     const generativeModel = vertexAI.getGenerativeModel({
-      model: GEMINI_MODEL_ID, // Correct model name for Vertex AI
-      systemInstruction: { role: 'model', parts: [{ text: prompt({ i18n }) }] }, // System instruction is configured here
+      model: GEMINI_MODEL_ID,
+      systemInstruction: { role: 'model', parts: [{ text: prompt({ i18n }) }] },
     });
 
     const mimeType = image.startsWith('data:image/jpeg;base64,') ? 'image/jpeg' : 'image/png';
     const data = image.replace(/^data:image\/(jpeg|png);base64,/, '');
 
-    // ✅ The request payload structure is different for the Vertex AI SDK.
     const req = {
       contents: [
         {
@@ -60,7 +54,6 @@ export const analyse4 = onRequest(
     try {
       const result = await generativeModel.generateContent(req);
 
-      // ✅ The response structure is different. The text is nested inside candidates.
       const candidates = result.response?.candidates;
       if (!candidates || candidates.length === 0 || !candidates[0].content?.parts[0]?.text) {
         console.error('Invalid response structure from Vertex AI:', JSON.stringify(result));
@@ -71,7 +64,6 @@ export const analyse4 = onRequest(
       const jsonText = candidates[0].content.parts[0].text;
       const data = JSON.parse(jsonText);
 
-      // Your existing logic to add UUIDs
       if (data?.data?.items) {
         data.data.items = data.data.items.map((item: any) => ({
           ...item,
@@ -79,10 +71,9 @@ export const analyse4 = onRequest(
         }));
       }
 
-      // Send the final result back
       response.status(200).json({
         message: 'processed',
-        data: JSON.stringify(data), // Sending as a string, as in your original code
+        data: JSON.stringify(data),
       });
     } catch (e: any) {
       console.error('Error processing request:', e);
@@ -97,6 +88,8 @@ export const analyse4 = onRequest(
 type PromptParams = {
   i18n: string;
 };
+
+// System prompt for event extraction from images
 const prompt = (
   params: PromptParams
 ) => `You are an advanced AI trained to extract structured event-related information from various input sources like posters, flyers, letters, emails, or screenshots of websites. Your goal is to analyze the input and produce a complete and accurate response following the schema below. Pay close attention to extracting all **crucial (required)** information.

@@ -928,10 +928,6 @@ video {
   min-height: 100vh;
 }
 
-.\!w-auto {
-  width: auto !important;
-}
-
 .w-2 {
   width: 0.5rem;
 }
@@ -1006,10 +1002,6 @@ video {
 
 .max-w-sm {
   max-width: 24rem;
-}
-
-.\!flex-none {
-  flex: none !important;
 }
 
 .flex-1 {
@@ -1373,11 +1365,6 @@ video {
   background-color: rgb(44 65 86 / var(--tw-bg-opacity, 1));
 }
 
-.bg-red-950 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(69 10 10 / var(--tw-bg-opacity, 1));
-}
-
 .bg-secondary {
   background-color: #E0FDDCFF;
 }
@@ -1526,11 +1513,6 @@ video {
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;
-}
-
-.object-cover {
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 
 .p-0 {

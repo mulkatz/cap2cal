@@ -9,48 +9,17 @@ import {
   SafetySetting,
 } from '@google/generative-ai';
 import { defineSecret } from 'firebase-functions/params';
+import { TICKET_PROVIDER_DOMAINS } from '../findTickets/models';
 
-// --- Secret Definitions ---
-const GEMINI_API_KEY = defineSecret('GEMINI_API_TOKEN'); // Your Gemini API Key Secret
-const CUSTOM_SEARCH_API_KEY = '***REMOVED***'; // Your Google Custom Search API Key Secret
-const CUSTOM_SEARCH_CX_ID = '***REMOVED***'; // Your Google Custom Search CX ID Secret
+const GEMINI_API_KEY = defineSecret('GEMINI_API_TOKEN');
+const CUSTOM_SEARCH_API_KEY = defineSecret('GOOGLE_CUSTOM_SEARCH_API_KEY');
+const CUSTOM_SEARCH_CX_ID = defineSecret('GOOGLE_CUSTOM_SEARCH_CX_ID');
 
-// --- Configuration ---
-const MAX_CONTENT_LENGTH_FOR_GEMINI = 180000; // Characters, adjust based on model and typical page sizes (Gemini 1.5 Flash can handle more)
+const MAX_CONTENT_LENGTH_FOR_GEMINI = 180000;
 const GEMINI_MODEL_NAME = 'gemini-1.5-flash-latest';
 const RESULTS_PER_PAGE = 10;
-const PAGES_TO_FETCH = 1; // Fetch 1 page (10 results) to limit search API cost initially. Increase if needed.
-const MAX_LINKS_TO_ANALYZE_WITH_GEMINI = 3; // Max number of links to pass to Gemini to control cost/time
-
-const TICKET_PROVIDER_DOMAINS: string[] = [
-  'ticketmaster.com',
-  'livenation.com',
-  'eventim.de',
-  'stubhub.com',
-  'seatgeek.com',
-  'axs.com',
-  'ticketweb.com',
-  'eventbrite.com',
-  'seetickets.com',
-  'songkick.com',
-  'bandsintown.com',
-  'viagogo.com',
-  'ticketcorner.ch',
-  'oeticket.com',
-  'ticketone.it',
-  'fnacspectacles.com',
-  'ticketportal.cz',
-  'ticketswap.com',
-  'ra.co',
-  'dice.fm',
-  // Add country-specific versions like:
-  'ticketmaster.co.uk',
-  'ticketmaster.ca',
-  'ticketmaster.de',
-  'eventim.co.uk',
-  'eventim.pl',
-  // Consider local/regional providers
-];
+const PAGES_TO_FETCH = 1;
+const MAX_LINKS_TO_ANALYZE_WITH_GEMINI = 3;
 
 interface SearchItem {
   link: string;
@@ -228,35 +197,38 @@ async function getPriceFromUrlWithGemini(
   return result;
 }
 
-export const findTicketPrice1 = onRequest(
+export const findTicketPrice = onRequest(
   {
     secrets: [GEMINI_API_KEY, CUSTOM_SEARCH_API_KEY, CUSTOM_SEARCH_CX_ID],
-    memory: '1GiB', // Increased memory for potentially multiple page fetches & analyses
-    timeoutSeconds: 300, // Increased timeout
+    memory: '1GiB',
+    timeoutSeconds: 300,
     cors: true,
   },
   async (request, response) => {
     const { eventQuery } = request.body;
+
+    const API_KEY_VALUE = CUSTOM_SEARCH_API_KEY.value();
+    const CX_ID_VALUE = CUSTOM_SEARCH_CX_ID.value();
+    const GEMINI_API_KEY_VALUE = GEMINI_API_KEY.value();
 
     if (!eventQuery) {
       response.status(400).json({ error: 'Missing eventQuery in request body' });
       return;
     }
 
-    if (!CUSTOM_SEARCH_API_KEY || !CUSTOM_SEARCH_CX_ID || !GEMINI_API_KEY) {
-      logger.error('One or more API keys/IDs are not configured in secrets.');
-      response.status(500).json({ error: 'Server configuration error: API Key(s) missing.' });
+    if (!API_KEY_VALUE || !CX_ID_VALUE || !GEMINI_API_KEY_VALUE) {
+      logger.error('One or more API keys/IDs are not configured');
+      response.status(500).json({ error: 'Server configuration error' });
       return;
     }
 
     try {
-      logger.info(`[Main Flow] Received event query: ${eventQuery}`);
+      logger.info(`Received event query: ${eventQuery}`);
       let allSearchItems: SearchItem[] = [];
 
-      // Step 1: Google Custom Search to find potential links
       for (let i = 0; i < PAGES_TO_FETCH; i++) {
         const startIndex = i * RESULTS_PER_PAGE + 1;
-        const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${CUSTOM_SEARCH_API_KEY}&cx=${CUSTOM_SEARCH_CX_ID}&q=${encodeURIComponent(eventQuery)}&start=${startIndex}`;
+        const searchUrl = `https://www.googleapis.com/customsearch/v1?key=${API_KEY_VALUE}&cx=${CX_ID_VALUE}&q=${encodeURIComponent(eventQuery)}&start=${startIndex}`;
         try {
           logger.info(`[Main Flow] Fetching search results page ${i + 1}`);
           const searchResponse = await axios.get(searchUrl);
@@ -303,9 +275,8 @@ export const findTicketPrice1 = onRequest(
         return;
       }
 
-      // Step 2: Analyze selected links with Gemini
       const analysisPromises = linksToAnalyze.map((link) =>
-        getPriceFromUrlWithGemini(eventQuery, link, GEMINI_API_KEY.value())
+        getPriceFromUrlWithGemini(eventQuery, link, GEMINI_API_KEY_VALUE)
       );
       const analyzedLinksResults = await Promise.all(analysisPromises);
 
