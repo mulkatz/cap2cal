@@ -6,6 +6,7 @@ import { CardController } from '../components/Card.controller.tsx';
 import { CaptureEvent } from '../models/CaptureEvent.ts';
 import toast from 'react-hot-toast';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
+import { useResultContext } from '../contexts/ResultContext.tsx';
 import { LoadingController } from '../components/dialogs/Loading.controller.tsx';
 import { ApiEvent, ExtractionError } from '../api/model.ts';
 import { db } from '../models/db.ts';
@@ -21,6 +22,7 @@ export const useCapture = () => {
 
   const { t } = useTranslation();
   const dialogs = useDialogContext();
+  const resultPage = useResultContext();
   const { logAnalyticsEvent } = useFirebaseContext();
 
   useEffect(() => {
@@ -32,12 +34,11 @@ export const useCapture = () => {
   const onCaptured = async (imgUrl: string) => {
     setCapturedImage(imgUrl);
 
-    dialogs.push(
-      <Dialog>
-        <Card>
-          <LoadingController />
-        </Card>
-      </Dialog>
+    // Show loading state on ResultPage with pattern background
+    resultPage.show(
+      <Card>
+        <LoadingController />
+      </Card>
     );
 
     const hasRequiredData = (item: ApiEvent) => {
@@ -46,7 +47,6 @@ export const useCapture = () => {
 
     try {
       const result = await fetchData(imgUrl, i18next.language);
-      dialogs.pop();
 
       if ('success' === result.status) {
         const items = result.data.items;
@@ -97,20 +97,18 @@ export const useCapture = () => {
 
         if (events.length > 1) {
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
-          dialogs.push(
-            <MultiDialog onClose={dialogs.pop}>
-              {events.map((event) => (
-                <CardController key={event.title} data={event} />
-              ))}
-            </MultiDialog>
+          resultPage.show(
+            <div className="flex w-full max-w-md flex-col gap-4">
+              <MultiDialog>
+                {events.map((event) => (
+                  <CardController key={event.title} data={event} />
+                ))}
+              </MultiDialog>
+            </div>
           );
         } else {
           await saveEvent(events[0], imgUrl);
-          dialogs.push(
-            <Dialog onClose={dialogs.pop}>
-              <CardController data={events[0]} />
-            </Dialog>
-          );
+          resultPage.show(<CardController data={events[0]} />);
         }
         logAnalyticsEvent('extraction_success');
         return;
@@ -131,12 +129,10 @@ export const useCapture = () => {
   };
 
   const pushError = (reason: ExtractionError) => {
-    dialogs.replace(
-      <Dialog onClose={dialogs.pop}>
-        <Card>
-          <NotCaptured reason={reason} onClose={dialogs.pop} />
-        </Card>
-      </Dialog>
+    resultPage.show(
+      <Card>
+        <NotCaptured reason={reason} onClose={resultPage.hide} />
+      </Card>
     );
   };
 

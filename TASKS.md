@@ -1,7 +1,6 @@
 # TASKS
-- the app project needs to be refactored
-  - we have lots of big files which makes the project nearly unmaintainable, we need to create sub components and use hooks probably (you know best)
-- we need to clean up the app project
-- you can find some information about improvement in the /docs
-- refactor everything in a professional way
-- optimize also console logs so that they make more sense and follow the same approach
+- I want to change the routing / visual structure of the app
+- at the moment we have our listview and import icons on the main page and the camera view
+- in the future the icons should only be visible on the main page
+- whenever a photo is taken there should be another layer with the same background and pattern as the main page, the darkened and the event result card(s) are displayed over it
+- we need an additional button there that says something like 'done' in lead to the main page / or closes the result page (maybe this can be handled with the state property)

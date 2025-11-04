@@ -2,17 +2,19 @@ import CameraView2, { CameraRefProps } from './CameraView2.tsx';
 import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { usePermissions } from '../hooks/usePermissions.tsx';
 import { SplashView } from './SplashView.tsx';
+import { ResultPage } from './ResultPage.tsx';
 import { CaptureSheet } from '../components/Sheet.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
 import { DialogStack, useDialogContext } from '../contexts/DialogContext.tsx';
+import { useResultContext } from '../contexts/ResultContext.tsx';
 import { useCapture } from '../hooks/useCapture.tsx';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Dialog } from '../components/Dialog.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { Feedback } from '../components/dialogs/Feedback.atom.tsx';
 import { initI18n } from '../helper/i18nHelper.ts';
-import { IconBulb, IconBurger, IconDownload } from '../assets/icons';
+import { IconBulb, IconBurger, IconChevronLeft, IconDownload, IconTriangleRight } from '../assets/icons';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
 import { Effects, useEffectContext } from '../contexts/EffectsContext.tsx';
 import { cn } from '../utils';
@@ -35,6 +37,7 @@ export const App = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [listViewOpen, setListViewOpen] = useState(false);
   const dialogs = useDialogContext();
+  const resultContext = useResultContext();
   const cameraRef = useRef<CameraRefProps>(null);
   const [appState, setAppState] = useState<AppState>('splash');
   const [showFeedback, setShowFeedback] = useState(false);
@@ -182,24 +185,40 @@ export const App = () => {
           <CameraView2 ref={cameraRef} onStreamCallback={onStreamCallback} />
           {(appState === 'loading' || appState === 'splash') && <SplashView />}
 
-          <div className={cn('absolute left-0 right-0 z-10 flex justify-center bottom-safe-offset-36')}>
-            <CaptureButton onClick={handleCapture} state={appState} />
-          </div>
+          {!resultContext.content && (
+            <div className={cn('absolute left-0 right-0 z-10 flex justify-center bottom-safe-offset-36')}>
+              <CaptureButton onClick={handleCapture} state={appState} />
+            </div>
+          )}
 
-          <MiniButton
-            icon={<IconDownload width={34} height={34} />}
-            onClick={getPhotoAsBase64}
-            className={'absolute left-[20px] top-[20px]'}
-          />
+          {appState === 'home' && (
+            <MiniButton
+              icon={<IconChevronLeft width={34} height={34} />}
+              onClick={() => setAppState('splash')}
+              className={'absolute left-[20px] top-[20px]'}
+            />
+          )}
 
-          <MiniButton
-            icon={<IconBurger width={34} height={34} />}
-            onClick={onListClick}
-            className={'absolute right-[20px] top-[20px]'}
-            visible={hasSavedEvents}
-          />
+          {!resultContext.content && appState === 'splash' && (
+            <>
+              <MiniButton
+                icon={<IconDownload width={34} height={34} />}
+                onClick={getPhotoAsBase64}
+                className={'absolute left-[20px] top-[20px]'}
+              />
+
+              <MiniButton
+                icon={<IconBurger width={34} height={34} />}
+                onClick={onListClick}
+                className={'absolute right-[20px] top-[20px]'}
+                visible={hasSavedEvents}
+              />
+            </>
+          )}
 
           <CaptureSheet isOpen={listViewOpen} onClose={() => setListViewOpen(false)} />
+
+          {resultContext.content && <ResultPage onDone={resultContext.hide}>{resultContext.content}</ResultPage>}
 
           <Toaster position={'top-center'} />
           <Effects />
