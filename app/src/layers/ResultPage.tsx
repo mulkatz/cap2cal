@@ -24,16 +24,6 @@ export const ResultPage = ({ children, onDone }: ResultPageProps) => {
         <div className="flex-1 flex items-center justify-center w-full overflow-y-auto py-8">
           {children}
         </div>
-
-        {/* Done button at the bottom */}
-        <div className="w-full pb-safe-offset-8 px-4">
-          <button
-            onClick={onDone}
-            className="w-full max-w-md mx-auto bg-white/10 backdrop-blur-sm border border-white/20 text-white py-4 px-8 rounded-full text-lg font-medium hover:bg-white/20 transition-colors"
-          >
-            Done
-          </button>
-        </div>
       </div>
     </div>
   );

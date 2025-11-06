@@ -16,6 +16,9 @@ import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { MultiDialog } from '../components/MultiDialog.tsx';
 import i18next from 'i18next';
 import { colors } from '../design-tokens/colors.ts';
+import { Window } from '../components/Window.tsx';
+import { ImagePreview } from '../components/ImagePreview.tsx';
+import { IconCheck } from '../assets/icons';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
@@ -93,22 +96,51 @@ export const useCapture = () => {
 
         const events = createEvents(sanitizedItems);
 
-        // console.log('got events', events);
-
         if (events.length > 1) {
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
           resultPage.show(
-            <div className="flex w-full max-w-md flex-col gap-4">
-              <MultiDialog>
-                {events.map((event) => (
-                  <CardController key={event.title} data={event} />
-                ))}
-              </MultiDialog>
-            </div>
+            <MultiDialog onClose={resultPage.hide}>
+              {events.map((event) => (
+                <CardController key={event.title} data={event} />
+              ))}
+            </MultiDialog>
           );
+          // dialogs.push(
+          //   <MultiDialog onClose={() => dialogs.pop()}>
+          //     {events.map((event) => (
+          //       <CardController key={event.title} data={event} />
+          //     ))}
+          //   </MultiDialog>
+          // );
         } else {
           await saveEvent(events[0], imgUrl);
-          resultPage.show(<CardController data={events[0]} />);
+          resultPage.show(
+            // <MultiDialog onClose={resultPage.hide}>
+            //   {events.map((event) => (
+            <div className={'flex h-full flex-col'}>
+              <div className={'my-auto'}>
+              <CardController data={events[0]} />
+              </div>
+              <div className="flex w-full items-center justify-center self-end px-4 pb-safe-offset-8">
+                <div
+                  className={'text-clickHighlight rounded-full border-2 border-accentElevated bg-primaryDark p-4'}
+                  onClick={resultPage.hide}>
+                  <IconCheck width={32} height={32} color={'#00FF00'} />
+                </div>
+              </div>
+            </div>
+            // ))}
+            // </MultiDialog>
+          );
+          // dialogs.push(
+          //
+          //   <MultiDialog onClose={() => dialogs.pop()}>
+          //   {events.map((event) => (
+          //     <CardController data={events[0]} />
+          //   ))}
+          // </MultiDialog>
+          //     )
+          // resultPage.show(<CardController data={events[0]} />);
         }
         logAnalyticsEvent('extraction_success');
         return;

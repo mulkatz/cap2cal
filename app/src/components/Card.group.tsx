@@ -10,11 +10,14 @@ interface Props {
   usePattern?: boolean;
 }
 
+// 'relative flex flex-col items-start rounded-lg border-[1px] border-accent bg-[#232428] text-start text-[21px] text-white drop-shadow-lg w-full',
+
+
 export const Card = ({ children, highlight, className, inline = false, usePattern = false }: Props) => {
   return (
     <div
       className={cn(
-        'relative flex flex-col items-start rounded-lg border-[1px] border-accent bg-primaryDark text-start text-[21px] text-white drop-shadow-lg',
+        'relative flex flex-col box-border items-start rounded-lg border-[1.5px] border-accent bg-primaryDark text-start text-[21px] text-white drop-shadow-lg w-full',
         { 'border-highlight': highlight },
         'transition-all duration-[300ms]',
         'pt-[13px] text-secondary',

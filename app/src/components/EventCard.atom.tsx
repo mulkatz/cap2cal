@@ -126,7 +126,8 @@ const EventCardAtom = ({
 
   // --- Render ---
   return (
-    <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-br from-gradientFrom to-gradientTo'}>
+    <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-br from-gradientFrom to-gradientTo max-h-[60vh]'}>
+    {/*<Card highlight={isFavourite} inline usePattern className={'bg-[#232428] max-h-[60vh]'}>*/}
       <>
         <div className={'flex w-full flex-col overflow-y-auto overflow-x-hidden px-3 text-secondary'}>
           {/* Header */}
@@ -158,7 +159,7 @@ const EventCardAtom = ({
           </div>
 
           {/* Description & Agenda */}
-          <div className="flex max-h-full w-[calc(100%_+_8px)] grow flex-col gap-3 overflow-y-auto pr-[8px] text-[16px] font-medium opacity-90">
+          <div className="flex max-h-full w-[calc(100%_+_8px)] grow flex-col gap-3 overflow-y-scroll pr-[8px] text-[16px] font-medium opacity-90">
             {description?.short && <p>{description.short}</p>}
 
             {agenda && agenda?.length > 0 && (

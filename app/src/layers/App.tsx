@@ -172,7 +172,14 @@ export const App = () => {
 
   useEffect(() => {
     if (appState === 'splash' || appState === 'loading') {
-      document.body.style.setProperty('background-color', '#000000', 'important');
+      document.body.style.setProperty('background-color', '#FF0000', 'important');
+      const ref = cameraRef?.current;
+      if (!ref) return;
+      try {
+        ref.stopPreview();
+      } catch (e) {
+        console.error('Cannot stop preview');
+      }
     } else {
       document.body.style.setProperty('background-color', 'transparent', 'important');
     }
