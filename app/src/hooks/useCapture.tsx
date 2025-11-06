@@ -6,7 +6,6 @@ import { CardController } from '../components/Card.controller.tsx';
 import { CaptureEvent } from '../models/CaptureEvent.ts';
 import toast from 'react-hot-toast';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
-import { useResultContext } from '../contexts/ResultContext.tsx';
 import { LoadingController } from '../components/dialogs/Loading.controller.tsx';
 import { ApiEvent, ExtractionError } from '../api/model.ts';
 import { db } from '../models/db.ts';
@@ -15,17 +14,12 @@ import { useTranslation } from 'react-i18next';
 import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { MultiDialog } from '../components/MultiDialog.tsx';
 import i18next from 'i18next';
-import { colors } from '../design-tokens/colors.ts';
-import { Window } from '../components/Window.tsx';
-import { ImagePreview } from '../components/ImagePreview.tsx';
-import { IconCheck } from '../assets/icons';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
 
   const { t } = useTranslation();
   const dialogs = useDialogContext();
-  const resultPage = useResultContext();
   const { logAnalyticsEvent } = useFirebaseContext();
 
   useEffect(() => {
@@ -37,11 +31,12 @@ export const useCapture = () => {
   const onCaptured = async (imgUrl: string) => {
     setCapturedImage(imgUrl);
 
-    // Show loading state on ResultPage with pattern background
-    resultPage.show(
-      <Card>
-        <LoadingController />
-      </Card>
+    dialogs.push(
+      <Dialog>
+        <Card>
+          <LoadingController />
+        </Card>
+      </Dialog>
     );
 
     const hasRequiredData = (item: ApiEvent) => {
@@ -50,6 +45,7 @@ export const useCapture = () => {
 
     try {
       const result = await fetchData(imgUrl, i18next.language);
+      dialogs.pop();
 
       if ('success' === result.status) {
         const items = result.data.items;
@@ -96,51 +92,24 @@ export const useCapture = () => {
 
         const events = createEvents(sanitizedItems);
 
+        // console.log('got events', events);
+
         if (events.length > 1) {
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
-          resultPage.show(
-            <MultiDialog onClose={resultPage.hide}>
+          dialogs.push(
+            <MultiDialog onClose={dialogs.pop}>
               {events.map((event) => (
                 <CardController key={event.title} data={event} />
               ))}
             </MultiDialog>
           );
-          // dialogs.push(
-          //   <MultiDialog onClose={() => dialogs.pop()}>
-          //     {events.map((event) => (
-          //       <CardController key={event.title} data={event} />
-          //     ))}
-          //   </MultiDialog>
-          // );
         } else {
           await saveEvent(events[0], imgUrl);
-          resultPage.show(
-            // <MultiDialog onClose={resultPage.hide}>
-            //   {events.map((event) => (
-            <div className={'flex h-full flex-col'}>
-              <div className={'my-auto'}>
+          dialogs.push(
+            <Dialog onClose={dialogs.pop}>
               <CardController data={events[0]} />
-              </div>
-              <div className="flex w-full items-center justify-center self-end px-4 pb-safe-offset-8">
-                <div
-                  className={'text-clickHighlight rounded-full border-2 border-accentElevated bg-primaryDark p-4'}
-                  onClick={resultPage.hide}>
-                  <IconCheck width={32} height={32} color={'#00FF00'} />
-                </div>
-              </div>
-            </div>
-            // ))}
-            // </MultiDialog>
+            </Dialog>
           );
-          // dialogs.push(
-          //
-          //   <MultiDialog onClose={() => dialogs.pop()}>
-          //   {events.map((event) => (
-          //     <CardController data={events[0]} />
-          //   ))}
-          // </MultiDialog>
-          //     )
-          // resultPage.show(<CardController data={events[0]} />);
         }
         logAnalyticsEvent('extraction_success');
         return;
@@ -161,19 +130,21 @@ export const useCapture = () => {
   };
 
   const pushError = (reason: ExtractionError) => {
-    resultPage.show(
-      <Card>
-        <NotCaptured reason={reason} onClose={resultPage.hide} />
-      </Card>
+    dialogs.replace(
+      <Dialog onClose={dialogs.pop}>
+        <Card>
+          <NotCaptured reason={reason} onClose={dialogs.pop} />
+        </Card>
+      </Dialog>
     );
   };
 
   const toastError = () => {
     toast.error(t('toasts.extract.error'), {
       style: {
-        borderColor: colors.accent,
-        backgroundColor: colors.primary,
-        color: colors.secondary,
+        borderColor: '#2C4156',
+        backgroundColor: '#1E2E3F',
+        color: '#FDDCFF',
       },
       duration: 2500,
     });
@@ -182,9 +153,9 @@ export const useCapture = () => {
   const toastSuccess = () => {
     toast.success(t('toasts.extract.success'), {
       style: {
-        borderColor: colors.accent,
-        backgroundColor: colors.primary,
-        color: colors.secondary,
+        borderColor: '#2C4156',
+        backgroundColor: '#1E2E3F',
+        color: '#FDDCFF',
       },
       duration: 2500,
     });

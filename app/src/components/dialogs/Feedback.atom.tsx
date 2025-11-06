@@ -7,7 +7,6 @@ import { useAppContext } from '../../contexts/AppContext.tsx';
 import toast from 'react-hot-toast';
 import { useDialogContext } from '../../contexts/DialogContext.tsx';
 import { useTranslation } from 'react-i18next';
-import { colors } from '../../design-tokens/colors.ts';
 
 type Kind = 'default' | 'idea' | 'bug';
 
@@ -36,9 +35,9 @@ export const Feedback = ({}: {}) => {
 
       toast(t('toasts.feedback.success'), {
         style: {
-          borderColor: colors.accent,
-          backgroundColor: colors.primary,
-          color: colors.secondary,
+          borderColor: '#2C4156',
+          backgroundColor: '#1E2E3F',
+          color: '#FDDCFF',
         },
         duration: 2500,
       });
@@ -57,13 +56,13 @@ export const Feedback = ({}: {}) => {
           <ToggleItem
             text={t('dialogs.feedback.idea')}
             isHighlight={kind === 'idea'}
-            highlightColor={colors.ideaHighlight}
+            highlightColor={'#FF0000'}
             onClick={() => onToggle('idea')}
           />
           <ToggleItem
             text={t('dialogs.feedback.bug')}
             isHighlight={kind === 'bug'}
-            highlightColor={colors.bugHighlight}
+            highlightColor={'#FFFF00'}
             onClick={() => onToggle('bug')}
           />
         </div>

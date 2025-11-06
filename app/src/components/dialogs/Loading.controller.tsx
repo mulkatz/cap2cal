@@ -1,7 +1,6 @@
 import { PuffLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { colors } from '../../design-tokens/colors.ts';
 
 const numPhrases = 5;
 const numPhrasesCollections = 5;
@@ -33,7 +32,7 @@ export const LoadingController = () => {
   return (
     <div className={'mb-3 flex w-full flex-col items-center text-center'}>
       <PuffLoader
-        color={colors.loaderPrimary}
+        color={'#19D8E0'}
         loading={true}
         size={120}
         aria-label="LoadingController ResultView"

@@ -1,5 +1,4 @@
 import toast from 'react-hot-toast';
-import { colors } from '../design-tokens/colors.ts';
 
 export const initServiceWorker = () => {
   if ('serviceWorker' in navigator) {
@@ -19,7 +18,7 @@ export const initServiceWorker = () => {
         icon: '🤖',
         style: {
           borderRadius: '6px',
-          background: colors.toastBackground,
+          background: '#1E2938',
           color: '#fff',
         },
       });

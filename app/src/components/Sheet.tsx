@@ -7,7 +7,6 @@ import { CardController } from './Card.controller.tsx';
 import { Card } from './Card.group.tsx';
 import { useTranslation } from 'react-i18next';
 import { IconClose } from '../assets/icons';
-import { colors } from '../design-tokens/colors.ts';
 
 type Props = {
   isOpen: boolean;
@@ -129,7 +128,7 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
           {/*</div>*/}
         </Sheet.Content>
       </Sheet.Container>
-      <Sheet.Backdrop onTap={onClose} style={{ backgroundColor: colors.backdropOverlay }} />
+      <Sheet.Backdrop onTap={onClose} style={{ backgroundColor: 'rgba(0, 0, 0, 0.7)' }} />
     </Sheet>
   );
 };

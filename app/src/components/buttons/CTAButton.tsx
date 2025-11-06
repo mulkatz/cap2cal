@@ -1,7 +1,6 @@
 import { cn } from '../../utils.ts';
 import { ReactNode } from 'react';
 import { ClipLoader } from 'react-spinners';
-import { colors } from '../../design-tokens/colors.ts';
 
 export const CTAButton = ({
   loading,
@@ -44,7 +43,7 @@ export const CTAButton = ({
         {loading && (
           <div className={'flex h-[48px] w-[48px] items-center justify-center'}>
             {/* Set spinner color based on disabled state or a fixed color */}
-            <ClipLoader color={loading ? colors.loaderSecondary : colors.loaderWhite} size={24} />
+            <ClipLoader color={loading ? '#A0AEC0' : '#FFFFFF'} size={24} />
           </div>
         )}
 
