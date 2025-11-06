@@ -1,9 +1,9 @@
 import { IconCamera, IconCamera2, IconCamera3 } from '../../assets/icons';
 import { ClipLoader } from 'react-spinners';
-import { AppState } from '../../layers/App.tsx';
 import imgButton from './../../assets/images/icon.png';
 import { cn } from '../../utils.ts';
 import { useTranslation } from 'react-i18next';
+import { AppState } from '../../contexts/AppContext.tsx';
 
 export const CaptureButton = ({ onClick, state }: { onClick: () => void; state: AppState }) => {
   const { t } = useTranslation();

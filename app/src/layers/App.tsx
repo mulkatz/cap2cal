@@ -1,7 +1,6 @@
 import CameraView, { CameraRefProps } from './CameraView.tsx';
 import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { SplashView } from './SplashView.tsx';
-import { CaptureSheet } from '../components/Sheet.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
 import { DialogStack, useDialogContext } from '../contexts/DialogContext.tsx';
@@ -11,31 +10,27 @@ import { Dialog } from '../components/Dialog.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { Feedback } from '../components/dialogs/Feedback.atom.tsx';
 import { initI18n } from '../helper/i18nHelper.ts';
-import { IconBulb, IconBurger, IconDownload } from '../assets/icons';
-import { MiniButton } from '../components/buttons/MiniButton.tsx';
 import { Effects, useEffectContext } from '../contexts/EffectsContext.tsx';
-import { cn } from '../utils.ts';
 import { Camera, CameraResultType, CameraSource, PermissionStatus } from '@capacitor/camera';
 import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.atom.tsx';
 import { Toaster } from 'react-hot-toast';
 import { Capacitor } from '@capacitor/core';
-import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
+import { useAppContext } from '../contexts/AppContext.tsx';
 
 initI18n();
-
-export type AppState = 'home' | 'loading' | 'camera' | 'result';
 
 const isFeedbackVisible = false;
 
 export const App = () => {
   const { splash } = useEffectContext();
   useDisableOverscroll();
+
+  const {appState, setAppState} = useAppContext();
   const { onImportFile, onCaptured } = useCapture();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [listViewOpen, setListViewOpen] = useState(false);
   const dialogs = useDialogContext();
   const cameraRef = useRef<CameraRefProps>(null);
-  const [appState, setAppState] = useState<AppState>('home');
   const [showFeedback, setShowFeedback] = useState(false);
   const [initialised, setInitialised] = useState(false);
 

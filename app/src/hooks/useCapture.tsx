@@ -15,6 +15,7 @@ import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { MultiResultDialog } from '../components/MultiResultDialog.tsx';
 import i18next from 'i18next';
 import { SingleResultDialog } from '../components/SingleResultDialog.tsx';
+import { useAppContext } from '../contexts/AppContext.tsx';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
@@ -22,12 +23,7 @@ export const useCapture = () => {
   const { t } = useTranslation();
   const dialogs = useDialogContext();
   const { logAnalyticsEvent } = useFirebaseContext();
-
-  useEffect(() => {
-    if (capturedImage) {
-      // onCaptured(capturedImage);
-    }
-  }, [capturedImage]);
+  const { setAppState } = useAppContext();
 
   const onCaptured = async (imgUrl: string) => {
     setCapturedImage(imgUrl);
@@ -93,12 +89,10 @@ export const useCapture = () => {
 
         const events = createEvents(sanitizedItems);
 
-        // console.log('got events', events);
-
         if (events.length > 1) {
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
           dialogs.push(
-            <MultiResultDialog onClose={dialogs.pop} full>
+            <MultiResultDialog onClose={popAndBackHome} full>
               {events.map((event) => (
                 <CardController key={event.title} data={event} />
               ))}
@@ -107,7 +101,7 @@ export const useCapture = () => {
         } else {
           await saveEvent(events[0], imgUrl);
           dialogs.push(
-            <SingleResultDialog onClose={dialogs.pop} full>
+            <SingleResultDialog onClose={popAndBackHome} full>
               <CardController data={events[0]} />
             </SingleResultDialog>
           );
@@ -132,9 +126,9 @@ export const useCapture = () => {
 
   const pushError = (reason: ExtractionError) => {
     dialogs.replace(
-      <Dialog onClose={dialogs.pop} full>
+      <Dialog onClose={popAndBackHome} full>
         <Card>
-          <NotCaptured reason={reason} onClose={dialogs.pop} />
+          <NotCaptured reason={reason} onClose={popAndBackHome} />
         </Card>
       </Dialog>
     );
@@ -160,6 +154,11 @@ export const useCapture = () => {
       },
       duration: 2500,
     });
+  };
+
+  const popAndBackHome = () => {
+    dialogs.pop();
+    setAppState('home');
   };
 
   const saveEvent = async (event: CaptureEvent, imgUrl: string) => {
