@@ -260,6 +260,14 @@ export const App = () => {
   useEffect(() => {
     if (appState === 'home' || appState === 'loading') {
       document.body.style.setProperty('background-color', 'black', 'important');
+      const ref = cameraRef?.current;
+      if(!ref) return;
+      try{
+      ref.stopPreview()
+
+      }catch (e){
+        console.error("Cannot stop camera preview");
+      }
     } else {
       document.body.style.setProperty('background-color', 'transparent', 'important');
     }
