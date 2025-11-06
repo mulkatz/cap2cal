@@ -10,7 +10,7 @@ import {
 import { IconButton } from './buttons/IconButton.tsx';
 import { CaptureEvent } from '../models/CaptureEvent.ts';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { TicketButton } from './TicketButton.tsx';
 import { Card } from './Card.group.tsx';
 
@@ -65,7 +65,7 @@ const SingleDate = ({ date, time }: { date?: string; time?: string }) => {
 };
 
 // ## Main Component: EventCardAtom
-const EventCardAtom = ({
+const EventCardAtom = React.memo(({
   data,
   onFavourite,
   isFavourite,
@@ -215,6 +215,6 @@ const EventCardAtom = ({
       </>
     </Card>
   );
-};
+});
 
 export default EventCardAtom;

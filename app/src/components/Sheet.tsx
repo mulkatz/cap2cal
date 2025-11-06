@@ -1,5 +1,5 @@
 import { Sheet, SheetRef } from 'react-modal-sheet';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { cn } from '../utils.ts';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../models/db.ts';
@@ -39,13 +39,29 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
                 return startB - startA;
               });
         }),
-    [favouritesFilter, sortByFilter, db.eventItems]
+    [favouritesFilter, sortByFilter] // Removed db.eventItems as it's stable
   );
 
   useEffect(() => {
     // console.log(filteredAndSortedItems);
   }, [filteredAndSortedItems]);
-  ``;
+
+  const handleSortByChange = useCallback(() => {
+    changeFilter(
+      sortByFilter,
+      setSortByFilter as any,
+      Object.keys(sortByOptions) as Array<keyof typeof sortByOptions>
+    );
+  }, [sortByFilter]);
+
+  const handleFavouritesChange = useCallback(() => {
+    changeFilter(
+      favouritesFilter,
+      setFavouritesFilter as any,
+      Object.keys(favouriteOptions) as Array<keyof typeof favouriteOptions>
+    );
+  }, [favouritesFilter]);
+
   return (
     <Sheet isOpen={isOpen} detent="content-height" onClose={onClose} className={'!z-20'}>
       <Sheet.Container className={'!bg-primaryDark'}>
@@ -80,13 +96,7 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
                   label={t('general.sortBy')}
                   options={['relevance', 'time']}
                   value={t(`general.${sortByFilter}`)}
-                  onChange={() =>
-                    changeFilter(
-                      sortByFilter,
-                      setSortByFilter as any,
-                      Object.keys(sortByOptions) as Array<keyof typeof sortByOptions>
-                    )
-                  }
+                  onChange={handleSortByChange}
                 />
 
                 <FilterOption
@@ -94,21 +104,15 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
                   label={t('general.onlyFavourites')}
                   options={['yes', 'no']}
                   value={t(`general.${favouritesFilter}`)}
-                  onChange={() => {
-                    changeFilter(
-                      favouritesFilter,
-                      setFavouritesFilter as any,
-                      Object.keys(favouriteOptions) as Array<keyof typeof favouriteOptions>
-                    );
-                  }}
+                  onChange={handleFavouritesChange}
                 />
 
                 <div className={'mx-auto my-2.5 h-[1.5px] w-[40%] self-center rounded-full bg-accentElevated'}></div>
 
                 {filteredAndSortedItems && filteredAndSortedItems?.length > 0 ? (
                   <>
-                    {filteredAndSortedItems?.map((value, index) => (
-                      <div className={'mb-3'} key={index}>
+                    {filteredAndSortedItems?.map((value) => (
+                      <div className={'mb-3'} key={value.id}>
                         {/*<TestCard />*/}
                         <CardController data={value} />
                       </div>
@@ -142,7 +146,7 @@ type FilterOptionProps<T extends Record<string, string>> = {
   className?: string;
 };
 
-const FilterOption = <T extends Record<string, string>>({
+const FilterOption = React.memo(<T extends Record<string, string>>({
   label,
   options,
   value,
@@ -165,7 +169,7 @@ const FilterOption = <T extends Record<string, string>>({
       </button>
     </div>
   );
-};
+}) as <T extends Record<string, string>>(props: FilterOptionProps<T>) => JSX.Element;
 
 // Example options object for 'only favourites'
 const favouriteOptions = {
