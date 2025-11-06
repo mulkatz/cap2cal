@@ -154,7 +154,7 @@ const EventCardAtom = React.memo(({
           {/* Location */}
           <div className={'mb-2 cursor-pointer'} onClick={onAddress}>
             <div className={'text-[17px] font-medium'}>{location?.city}</div>
-            <div className={'text-[12px] font-light opacity-70'}>{location?.address}</div>
+            <div className={'text-[12px] font-light opacity-70 underline'}>{location?.address}</div>
           </div>
 
           {/* Description & Agenda */}
@@ -190,7 +190,7 @@ const EventCardAtom = React.memo(({
           </div>
 
           {/* Web Link */}
-          <div className={'mb-3 mt-2 block cursor-pointer text-[12px] font-light opacity-70'} onClick={onWebLink}>
+          <div className={'mb-3 mt-2 block cursor-pointer text-[12px] font-light opacity-70 underline'} onClick={onWebLink}>
             {shortenedWebLink}
           </div>
         </div>
