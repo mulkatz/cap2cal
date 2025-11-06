@@ -3,9 +3,18 @@ import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from
 import { getSafeAreaTopHeight } from '../utils.ts';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
+import { MiniButton } from '../components/buttons/MiniButton.tsx';
+import { IconChevronLeft } from '../assets/icons';
+import { Toaster } from 'react-hot-toast';
+import { Effects } from '../contexts/EffectsContext.tsx';
+import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
+import { AppState } from './App.tsx';
 
 interface CameraViewProps {
   onStreamCallback?: (running: boolean) => void;
+  onClose: () => void;
+  appState: AppState;
+  handleCapture: () => Promise<void>;
 }
 
 export interface CameraRefProps {
@@ -15,7 +24,7 @@ export interface CameraRefProps {
   stopPreview: () => Promise<void>;
 }
 
-const CameraView2 = forwardRef<CameraRefProps, CameraViewProps>(({ onStreamCallback }, ref) => {
+const CameraView = forwardRef<CameraRefProps, CameraViewProps>(({ onStreamCallback, onClose, appState, handleCapture }, ref) => {
   const [isPreviewRunning, setIsPreviewRunning] = useState(false);
 
   // start when coming back from external link
@@ -498,8 +507,17 @@ const CameraView2 = forwardRef<CameraRefProps, CameraViewProps>(({ onStreamCallb
       <span className={'pt-safe'} />
       <div id="cameraPreview" className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover" />
       {!isPreviewRunning && <div className="absolute inset-0 z-0 bg-black" />}
+      <div className={'absolute left-0 right-0 z-10 flex justify-center bottom-safe-offset-36'}>
+        <CaptureButton onClick={handleCapture} state={appState} />
+      </div>
+
+      <MiniButton
+        icon={<IconChevronLeft width={34} height={34} />}
+        onClick={onClose}
+        className={'absolute left-[20px] top-[20px]'}
+      />
     </>
   );
 });
 
-export default CameraView2;
+export default CameraView;

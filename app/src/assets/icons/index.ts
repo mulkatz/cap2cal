@@ -17,3 +17,5 @@ export { default as IconBulb } from './bulb.svg?react';
 export { default as IconDownload } from './download.svg?react';
 export { default as IconHeroText } from './home-hero-text.svg?react';
 export { default as IconTriangleRight } from './triangle_right.svg?react';
+export { default as IconChevronLeft } from './chevron-left.svg?react';
+export { default as IconCheck } from './check.svg?react';

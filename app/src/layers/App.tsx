@@ -1,4 +1,4 @@
-import CameraView2, { CameraRefProps } from './CameraView2.tsx';
+import CameraView, { CameraRefProps } from './CameraView.tsx';
 import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { SplashView } from './SplashView.tsx';
 import { CaptureSheet } from '../components/Sheet.tsx';
@@ -25,7 +25,7 @@ initI18n();
 
 export type AppState = 'home' | 'loading' | 'camera' | 'result';
 
-const feedbackButtonVisible = false;
+const isFeedbackVisible = false;
 
 export const App = () => {
   const { splash } = useEffectContext();
@@ -54,9 +54,9 @@ export const App = () => {
       return (await db.eventItems.count()) > 0;
     }) || false;
 
-  const onListClick = () => setListViewOpen(!listViewOpen);
+  const onHistory = () => setListViewOpen(!listViewOpen);
 
-  const onFeedBack = () => {
+  const onFeedback = () => {
     if (!showFeedback) {
       setShowFeedback(true);
       dialogs.push(
@@ -115,7 +115,7 @@ export const App = () => {
   /**
    * A full function to get a photo as a base64 string, including permission handling.
    */
-  const getPhotoAsBase64 = async () => {
+  const onImport = async () => {
     // 1. First, check and request permissions
     const permissionsGranted = await checkAndRequestPermissions();
 
@@ -274,47 +274,31 @@ export const App = () => {
     <main>
       <>
         <div className={'relative flex h-[100vh] w-full flex-col overflow-hidden'}>
-
-          {/* CAMERA VIEW */}
-          <CameraView2 ref={cameraRef} onStreamCallback={onStreamCallback} />
-
-
-          {(appState === 'loading' || appState === 'home') && <SplashView />}
-
-
-          <div className={cn('absolute left-0 right-0 z-10 flex justify-center bottom-safe-offset-36')}>
-            <CaptureButton onClick={handleCapture} state={appState} />
-          </div>
-
-          <MiniButton
-            icon={<IconDownload width={34} height={34} />}
-            // onClick={() =>(fileInputRef)}
-            onClick={getPhotoAsBase64}
-            className={'absolute left-[20px] top-[20px]'}
+          <CameraView
+            ref={cameraRef}
+            onStreamCallback={onStreamCallback}
+            handleCapture={handleCapture}
+            appState={appState}
+            onClose={() => setAppState('home')}
           />
 
-          <MiniButton
-            icon={<IconBurger width={34} height={34} />}
-            onClick={onListClick}
-            className={'absolute right-[20px] top-[20px]'}
-            visible={hasSavedEvents}
-          />
-
-          <CaptureSheet isOpen={listViewOpen} onClose={() => setListViewOpen(false)} />
+          {(appState === 'loading' || appState === 'home') && (
+            <SplashView
+              hasSavedEvents={hasSavedEvents}
+              isListViewOpen={listViewOpen}
+              onCloseListViewOpen={() => setListViewOpen(false)}
+              onHistory={onHistory}
+              onImport={onImport}
+              isFeedbackVisible={isFeedbackVisible}
+              onFeedback={onFeedback}
+            />
+          )}
 
           <Toaster position={'top-center'} />
           <Effects />
         </div>
         <DialogStack />
 
-        {feedbackButtonVisible && (
-          <MiniButton
-            icon={<IconBulb width={30} height={30} />}
-            onClick={onFeedBack}
-            className={'absolute left-[10px] z-50 bottom-safe-offset-2.5'}
-            elevate={false}
-          />
-        )}
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
         <input
           type="file"

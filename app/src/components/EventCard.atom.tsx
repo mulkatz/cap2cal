@@ -126,7 +126,7 @@ const EventCardAtom = ({
 
   // --- Render ---
   return (
-    <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-br from-[#1D2E3F] to-[#243445]'}>
+    <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-br from-[#1D2E3F] to-[#243445] max-h-[60vh]'}>
       <>
         <div className={'flex w-full flex-col overflow-y-auto overflow-x-hidden px-3 text-secondary'}>
           {/* Header */}

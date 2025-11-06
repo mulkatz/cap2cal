@@ -12,8 +12,9 @@ import { db } from '../models/db.ts';
 import { fetchData } from '../api/api.ts';
 import { useTranslation } from 'react-i18next';
 import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
-import { MultiDialog } from '../components/MultiDialog.tsx';
+import { MultiResultDialog } from '../components/MultiResultDialog.tsx';
 import i18next from 'i18next';
+import { SingleResultDialog } from '../components/SingleResultDialog.tsx';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
@@ -32,7 +33,7 @@ export const useCapture = () => {
     setCapturedImage(imgUrl);
 
     dialogs.push(
-      <Dialog>
+      <Dialog full>
         <Card>
           <LoadingController />
         </Card>
@@ -97,18 +98,18 @@ export const useCapture = () => {
         if (events.length > 1) {
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
           dialogs.push(
-            <MultiDialog onClose={dialogs.pop}>
+            <MultiResultDialog onClose={dialogs.pop} full>
               {events.map((event) => (
                 <CardController key={event.title} data={event} />
               ))}
-            </MultiDialog>
+            </MultiResultDialog>
           );
         } else {
           await saveEvent(events[0], imgUrl);
           dialogs.push(
-            <Dialog onClose={dialogs.pop}>
+            <SingleResultDialog onClose={dialogs.pop} full>
               <CardController data={events[0]} />
-            </Dialog>
+            </SingleResultDialog>
           );
         }
         logAnalyticsEvent('extraction_success');
@@ -131,7 +132,7 @@ export const useCapture = () => {
 
   const pushError = (reason: ExtractionError) => {
     dialogs.replace(
-      <Dialog onClose={dialogs.pop}>
+      <Dialog onClose={dialogs.pop} full>
         <Card>
           <NotCaptured reason={reason} onClose={dialogs.pop} />
         </Card>
