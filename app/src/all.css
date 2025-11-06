@@ -881,6 +881,10 @@ video {
   height: 24px;
 }
 
+.h-\[2px\] {
+  height: 2px;
+}
+
 .h-\[36px\] {
   height: 36px;
 }
@@ -1266,9 +1270,14 @@ video {
   border-style: none;
 }
 
-.border-accent {
+.border-\[\#2e3f50\] {
   --tw-border-opacity: 1;
-  border-color: rgb(44 65 86 / var(--tw-border-opacity, 1));
+  border-color: rgb(46 63 80 / var(--tw-border-opacity, 1));
+}
+
+.border-\[\#415970\] {
+  --tw-border-opacity: 1;
+  border-color: rgb(65 89 112 / var(--tw-border-opacity, 1));
 }
 
 .border-accentElevated {
@@ -1330,6 +1339,11 @@ video {
 .bg-\[\#080D11\] {
   --tw-bg-opacity: 1;
   background-color: rgb(8 13 17 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#415970\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(65 89 112 / var(--tw-bg-opacity, 1));
 }
 
 .bg-accent {
@@ -1427,6 +1441,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
+.bg-yellow-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 224 71 / var(--tw-bg-opacity, 1));
+}
+
 .bg-\[radial-gradient\(\#444cf7_0\.5px\2c transparent_0\.5px\)\] {
   background-image: radial-gradient(#444cf7 0.5px,transparent 0.5px);
 }
@@ -1477,6 +1496,12 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-\[\#2b3f54\] {
+  --tw-gradient-from: #2b3f54 var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(43 63 84 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-black\/50 {
   --tw-gradient-from: rgb(0 0 0 / 0.5) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
@@ -1524,6 +1549,10 @@ video {
 
 .to-\[\#2C4156\] {
   --tw-gradient-to: #2C4156 var(--tw-gradient-to-position);
+}
+
+.to-\[\#2b3f54\]\/50 {
+  --tw-gradient-to: rgb(43 63 84 / 0.5) var(--tw-gradient-to-position);
 }
 
 .to-\[\#37AEE2\] {
@@ -1895,6 +1924,11 @@ video {
   color: rgb(30 46 63 / var(--tw-text-opacity, 1));
 }
 
+.text-primaryDark {
+  --tw-text-opacity: 1;
+  color: rgb(26 38 50 / var(--tw-text-opacity, 1));
+}
+
 .text-secondary {
   color: #E0FDDCFF;
 }
@@ -1936,6 +1970,10 @@ video {
 .text-yellow-400 {
   --tw-text-opacity: 1;
   color: rgb(250 204 21 / var(--tw-text-opacity, 1));
+}
+
+.underline {
+  text-decoration-line: underline;
 }
 
 .opacity-0 {

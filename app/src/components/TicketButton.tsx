@@ -8,7 +8,7 @@ import { CameraPreview } from '@michaelwolz/camera-preview-lite';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 
-export const TicketButton = ({ id }: { id: string }) => {
+export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boolean }) => {
   const [fetching, setFetching] = useState(false);
   const { t } = useTranslation();
   const i18n = i18next.language;
@@ -37,11 +37,11 @@ export const TicketButton = ({ id }: { id: string }) => {
   }
 
   if (item.ticketDirectLink) {
-    return <CTAButton text={t('general.buyTickets')} onClick={() => onTicket(item.ticketDirectLink!)} />;
+    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} onClick={() => onTicket(item.ticketDirectLink!)} />;
   }
 
   if (item.alreadyFetchedTicketLink) {
-    return <CTAButton text={t('general.buyTickets')} onClick={() => onTicket(item.alreadyFetchedTicketLink!)} />;
+    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} onClick={() => onTicket(item.alreadyFetchedTicketLink!)} />;
   }
 
   if (item.alreadyFetchedTicketLink === null) {
@@ -51,6 +51,7 @@ export const TicketButton = ({ id }: { id: string }) => {
   if (item.alreadyFetchedTicketLink === undefined && item.ticketSearchQuery) {
     return (
       <CTAButton
+        highlight={isFavourite}
         text={t('general.searchTickets')}
         loading={fetching}
         onClick={() => fetchTickets(item, item.ticketSearchQuery!)}

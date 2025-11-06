@@ -156,12 +156,12 @@ const FilterOption = React.memo(<T extends Record<string, string>>({
   return (
     <div
       className={cn(
-        'flex items-center justify-between rounded-lg border-[1px] border-accentElevated bg-primary px-2.5 py-2.5 pl-3 text-secondary',
+        'flex items-center justify-between rounded-lg border-[2px] border-accentElevated bg-primary px-2.5 py-2.5 pl-3 text-secondary',
         className
       )}>
       <div className="text-[16px] font-semibold">{label}</div>
       <button
-        className="flex w-[105px] justify-center rounded-[4px] border-[1px] border-accentElevated bg-primaryElevated p-2 text-[16px]"
+        className="flex w-[105px] justify-center rounded-[4px] border-[2px] border-accentElevated bg-primaryElevated p-2 text-[16px]"
         onClick={() => onChange(value)}>
         <div className="cursor-pointer appearance-none bg-primaryElevated text-[16px] font-semibold outline-none">
           {value as string}

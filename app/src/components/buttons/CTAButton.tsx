@@ -9,6 +9,7 @@ export const CTAButton = ({
   onClick,
   className, // Added missing className to destructuring
   disabled,
+  highlight
 }: {
   loading?: boolean;
   text: string;
@@ -16,6 +17,7 @@ export const CTAButton = ({
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
+  highlight?: boolean;
 }) => {
   // Determine if the button should be considered disabled, either by the prop or by loading state
   // const isDisabled = disabled || loading;
@@ -34,7 +36,8 @@ export const CTAButton = ({
           // Conditional Styling based on disabled state
           disabled
             ? 'transform cursor-not-allowed border-accentElevated bg-primaryElevated text-secondary/70 transition-all' // Disabled styles
-            : 'transform border-accentElevated bg-primaryElevated text-secondary transition-all' // Normal/Active styles
+            : 'transform border-accentElevated bg-[#415970] text-secondary transition-all', // Normal/Active styles
+          !disabled && highlight && 'bg-yellow-300 text-primaryDark'
         )}>
         {/* Only show the icon if not loading */}
         {!!icon && !loading && icon}
@@ -43,7 +46,7 @@ export const CTAButton = ({
         {loading && (
           <div className={'flex h-[48px] w-[48px] items-center justify-center'}>
             {/* Set spinner color based on disabled state or a fixed color */}
-            <ClipLoader color={loading ? '#A0AEC0' : '#FFFFFF'} size={24} />
+            {!highlight ? <ClipLoader color={loading ? '#A0AEC0' : '#FFFFFF'} size={24} /> : <ClipLoader color={loading ? '#192632' : '#FFFFFF'} size={24} />}
           </div>
         )}
 

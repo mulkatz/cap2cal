@@ -126,7 +126,8 @@ const EventCardAtom = React.memo(({
 
   // --- Render ---
   return (
-    <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-br from-[#1D2E3F] to-[#243445] max-h-[60vh]'}>
+    // <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-br from-[#1D2E3F] to-[#243445] max-h-[60vh]'}>
+    <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 max-h-[60vh]'}>
       <>
         <div className={'flex w-full flex-col overflow-y-auto overflow-x-hidden px-3 text-secondary'}>
           {/* Header */}
@@ -158,7 +159,7 @@ const EventCardAtom = React.memo(({
           </div>
 
           {/* Description & Agenda */}
-          <div className="flex max-h-full w-[calc(100%_+_8px)] grow flex-col gap-3 overflow-y-auto pr-[8px] text-[16px] font-medium opacity-90">
+          <div className="flex max-h-full w-[calc(100%_+_8px)] grow flex-col gap-3 overflow-y-auto pr-[8px] text-[16px] font-normal opacity-90">
             {description?.short && <p>{description.short}</p>}
 
             {agenda && agenda?.length > 0 && (
@@ -208,8 +209,8 @@ const EventCardAtom = React.memo(({
         {showTicketButton && (
           <>
             {/* Use a div for a semantic divider */}
-            <div className={cn('h-[1px] w-full bg-accent')} />
-            <TicketButton id={id} />
+            <div className={cn('h-[2px] w-full ', isFavourite ? 'bg-yellow-300' : 'bg-[#415970]')} />
+            <TicketButton isFavourite={isFavourite} id={id} />
           </>
         )}
       </>
