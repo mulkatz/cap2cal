@@ -16,7 +16,7 @@ const IconCamera = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
     <circle cx="12" cy="13" r="4"></circle>
@@ -54,7 +54,7 @@ const IconRobot = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <rect x="3" y="11" width="18" height="10" rx="2"></rect>
     <circle cx="12" cy="5" r="2"></circle>
@@ -75,7 +75,7 @@ const IconZap = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
   </svg>
@@ -92,7 +92,7 @@ const IconGlobe = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <circle cx="12" cy="12" r="10"></circle>
     <line x1="2" y1="12" x2="22" y2="12"></line>
@@ -111,7 +111,7 @@ const IconWifi = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
     <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
@@ -131,7 +131,7 @@ const IconLock = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
     <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -149,7 +149,7 @@ const IconHeart = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
   </svg>
@@ -166,7 +166,7 @@ const IconTicket = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
   </svg>
@@ -183,7 +183,7 @@ const IconShare = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <circle cx="18" cy="5" r="3"></circle>
     <circle cx="6" cy="12" r="3"></circle>
@@ -311,17 +311,17 @@ export default function LandingPage(): JSX.Element {
       {/* Skip to main content link for keyboard navigation */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-white focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-accent focus:px-4 focus:py-2 focus:text-secondary focus:shadow-lg focus:outline-none focus:ring-2 focus:ring-highlight">
         Skip to main content
       </a>
       <div
-        className="relative isolate min-h-screen overflow-x-hidden bg-gray-50 text-left text-gray-900"
-        style={{ backgroundImage: 'linear-gradient(120deg, #459bca 14%, #bcd8e5 78%)' }}>
+        className="relative isolate min-h-screen overflow-x-hidden bg-primaryDark text-left text-secondary"
+        style={{ backgroundImage: 'linear-gradient(120deg, #1A2632 0%, #2b3f54 100%)' }}>
         {/* Header */}
-        <header className="sticky top-0 z-50 w-full border-b border-gray-200/70 bg-white/70 backdrop-blur-lg">
+        <header className="sticky top-0 z-50 w-full border-b border-cardBorder/50 bg-primaryDark/90 backdrop-blur-lg">
           <div className="container mx-auto flex items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-2 text-2xl font-bold text-gray-900">
-              <span className="text-blue-600">
+            <div className="flex items-center gap-2 text-2xl font-bold text-secondary">
+              <span className="text-highlight">
                 <IconCalendar />
               </span>
               <span className="hidden sm:inline">Cap2Cal</span>
@@ -330,20 +330,20 @@ export default function LandingPage(): JSX.Element {
             <nav className="hidden items-center space-x-6 md:flex">
               <a
                 href="#features"
-                className="font-medium text-gray-600 transition-colors hover:text-blue-600"
+                className="font-medium text-secondary/80 transition-colors hover:text-highlight"
                 onClick={() => posthog.capture('navigation_clicked', { target: 'features', device: 'desktop' })}>
                 {t('nav.features')}
               </a>
               <a
                 href="#how-it-works"
-                className="font-medium text-gray-600 transition-colors hover:text-blue-600"
+                className="font-medium text-secondary/80 transition-colors hover:text-highlight"
                 onClick={() => posthog.capture('navigation_clicked', { target: 'how-it-works', device: 'desktop' })}>
                 {t('nav.howItWorks')}
               </a>
               <button
                 type="button"
                 onClick={() => handleDownloadClick('ios', 'header')}
-                className="transform rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-2 font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-blue-500/50">
+                className="transform rounded-[5px] border-[1px] border-accentElevated bg-accent px-5 py-2 font-semibold text-secondary shadow-md transition-all hover:scale-105 hover:bg-accentElevated">
                 {t('nav.download')}
               </button>
             </nav>
@@ -351,7 +351,7 @@ export default function LandingPage(): JSX.Element {
             <button
               type="button"
               onClick={handleToggleMobileMenu}
-              className="flex items-center justify-center rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-blue-600 md:hidden"
+              className="flex items-center justify-center rounded-lg p-2 text-secondary/80 transition-colors hover:bg-accent hover:text-highlight md:hidden"
               aria-label="Toggle mobile menu">
               {isMobileMenuOpen ? <IconX /> : <IconMenu />}
             </button>
@@ -360,14 +360,14 @@ export default function LandingPage(): JSX.Element {
           {isMobileMenuOpen && (
             <>
               <div
-                className="fixed left-0 right-0 top-[73px] bottom-0 z-40 bg-black/30 backdrop-blur-sm md:hidden"
+                className="fixed left-0 right-0 top-[73px] bottom-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
                 onClick={handleCloseMobileMenu}
                 aria-hidden="true"></div>
-              <nav className="fixed right-0 top-[73px] z-50 h-[calc(100vh-73px)] w-full max-w-sm animate-slideInRight border-l border-gray-200 bg-white shadow-2xl md:hidden">
+              <nav className="fixed right-0 top-[73px] z-50 h-[calc(100vh-73px)] w-full max-w-sm animate-slideInRight border-l border-cardBorder bg-primaryDark shadow-2xl md:hidden">
                 <div className="flex flex-col space-y-1 p-6">
                   <a
                     href="#features"
-                    className="rounded-lg px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-blue-600"
+                    className="rounded-lg px-4 py-3 font-medium text-secondary/80 transition-colors hover:bg-accent hover:text-highlight"
                     onClick={() => {
                       posthog.capture('navigation_clicked', { target: 'features', device: 'mobile' });
                       handleCloseMobileMenu();
@@ -376,7 +376,7 @@ export default function LandingPage(): JSX.Element {
                   </a>
                   <a
                     href="#how-it-works"
-                    className="rounded-lg px-4 py-3 font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-blue-600"
+                    className="rounded-lg px-4 py-3 font-medium text-secondary/80 transition-colors hover:bg-accent hover:text-highlight"
                     onClick={() => {
                       posthog.capture('navigation_clicked', { target: 'how-it-works', device: 'mobile' });
                       handleCloseMobileMenu();
@@ -389,7 +389,7 @@ export default function LandingPage(): JSX.Element {
                       handleDownloadClick('ios', 'mobile-menu');
                       handleCloseMobileMenu();
                     }}
-                    className="mt-4 w-full transform rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 px-5 py-3 font-semibold text-white shadow-lg shadow-blue-500/30 transition-all hover:scale-105 hover:shadow-blue-500/50">
+                    className="mt-4 w-full transform rounded-[5px] border-[1px] border-accentElevated bg-accent px-5 py-3 font-semibold text-secondary shadow-md transition-all hover:scale-105 hover:bg-accentElevated">
                     {t('nav.download')}
                   </button>
                 </div>
@@ -402,74 +402,74 @@ export default function LandingPage(): JSX.Element {
           {/* Hero Section */}
           <section className="container relative mx-auto overflow-hidden px-6 pb-32 pt-24 text-center">
             <h1 className="relative mb-2 text-5xl font-extrabold leading-tight tracking-tight md:text-7xl">
-              <span className="bg-gradient-to-r from-white to-cyan-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-highlight to-secondary bg-clip-text text-transparent">
                 {t('hero.titleSpan')}
               </span>{' '}
-              {t('hero.titleMain')}
+              <span className="text-secondary">{t('hero.titleMain')}</span>
             </h1>
-            <p className="relative mb-4 text-lg text-gray-700 md:text-xl">{t('hero.subtitle')}</p>
-            <p className="relative mx-auto mb-10 max-w-3xl text-xl text-gray-900 md:text-2xl">
+            <p className="relative mb-4 text-lg text-secondary/80 md:text-xl">{t('hero.subtitle')}</p>
+            <p className="relative mx-auto mb-10 max-w-3xl text-xl text-secondary/90 md:text-2xl">
               {t('hero.description')}
             </p>
             <div className="relative flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
                 type="button"
                 onClick={() => handleDownloadClick('ios', 'hero')}
-                className="transform rounded-lg bg-gradient-to-r from-cyan-500 to-blue-600 px-10 py-4 text-lg font-semibold text-white shadow-xl shadow-blue-500/40 transition-all hover:scale-105 hover:shadow-blue-400/60 ring-1 ring-black/10 shadow-blue-300/60">
+                className="transform rounded-[5px] border-[1px] border-accentElevated bg-accent px-10 py-4 text-lg font-semibold text-secondary shadow-md transition-all hover:scale-105 hover:bg-accentElevated">
                 {t('hero.cta')}
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadClick('android', 'hero')}
-                className="transform rounded-lg border-2 border-white/80 bg-white/40 px-10 py-4 text-lg font-semibold text-gray-900 backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/60">
+                className="transform rounded-[5px] border-[2px] border-cardBorder bg-primaryElevated px-10 py-4 text-lg font-semibold text-secondary transition-all hover:scale-105 hover:bg-accent">
                 {t('hero.ctaAndroid')}
               </button>
             </div>
-            <p className="relative mt-5 text-sm text-gray-700">{t('hero.subtext')}</p>
-            <p className="relative mt-2 text-sm font-medium text-blue-900">{t('hero.trustBadge')}</p>
+            <p className="relative mt-5 text-sm text-secondary/70">{t('hero.subtext')}</p>
+            <p className="relative mt-2 text-sm font-medium text-highlight">{t('hero.trustBadge')}</p>
           </section>
 
           {/* How It Works Section */}
-          <section id="how-it-works" className="bg-white py-24">
+          <section id="how-it-works" className="bg-primary py-24">
             <div className="container mx-auto px-6">
-              <h2 className="mb-4 text-center text-4xl font-bold">{t('steps.title')}</h2>
-              <p className="mb-16 text-center text-xl text-gray-600">{t('steps.subtitle')}</p>
+              <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('steps.title')}</h2>
+              <p className="mb-16 text-center text-xl text-secondary/80">{t('steps.subtitle')}</p>
               <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                <div className="rounded-2xl border border-solid border-[#ace2ff] bg-[#e8f3f9] p-8 shadow-lg backdrop-blur-lg">
+                <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-8 shadow-lg">
                   <div className="mb-4 flex items-center gap-4">
-                    <div className="rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 p-3">
+                    <div className="rounded-full border border-cardBorder bg-accent p-3">
                       <IconCamera />
                     </div>
-                    <div className="bg-gradient-to-br from-cyan-400 to-blue-500 bg-clip-text text-5xl font-extrabold text-transparent">
+                    <div className="bg-gradient-to-br from-highlight to-secondary bg-clip-text text-5xl font-extrabold text-transparent">
                       1.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-semibold">{t('steps.one.title')}</h3>
-                  <p className="text-gray-700">{t('steps.one.description')}</p>
+                  <h3 className="mb-3 text-2xl font-semibold text-secondary">{t('steps.one.title')}</h3>
+                  <p className="text-secondary/80">{t('steps.one.description')}</p>
                 </div>
-                <div className="rounded-2xl border border-solid border-[#ace2ff] bg-[#e8f3f9] p-8 shadow-lg backdrop-blur-lg">
+                <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-8 shadow-lg">
                   <div className="mb-4 flex items-center gap-4">
-                    <div className="rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 p-3">
+                    <div className="rounded-full border border-cardBorder bg-accent p-3">
                       <IconRobot />
                     </div>
-                    <div className="bg-gradient-to-br from-cyan-400 to-blue-500 bg-clip-text text-5xl font-extrabold text-transparent">
+                    <div className="bg-gradient-to-br from-highlight to-secondary bg-clip-text text-5xl font-extrabold text-transparent">
                       2.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-semibold">{t('steps.two.title')}</h3>
-                  <p className="text-gray-700">{t('steps.two.description')}</p>
+                  <h3 className="mb-3 text-2xl font-semibold text-secondary">{t('steps.two.title')}</h3>
+                  <p className="text-secondary/80">{t('steps.two.description')}</p>
                 </div>
-                <div className="rounded-2xl border border-solid border-[#ace2ff] bg-[#e8f3f9] p-8 shadow-lg backdrop-blur-lg">
+                <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-8 shadow-lg">
                   <div className="mb-4 flex items-center gap-4">
-                    <div className="rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 p-3">
+                    <div className="rounded-full border border-cardBorder bg-accent p-3">
                       <IconCalendar />
                     </div>
-                    <div className="bg-gradient-to-br from-cyan-400 to-blue-500 bg-clip-text text-5xl font-extrabold text-transparent">
+                    <div className="bg-gradient-to-br from-highlight to-secondary bg-clip-text text-5xl font-extrabold text-transparent">
                       3.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-semibold">{t('steps.three.title')}</h3>
-                  <p className="text-gray-700">{t('steps.three.description')}</p>
+                  <h3 className="mb-3 text-2xl font-semibold text-secondary">{t('steps.three.title')}</h3>
+                  <p className="text-secondary/80">{t('steps.three.description')}</p>
                 </div>
               </div>
             </div>
@@ -477,8 +477,8 @@ export default function LandingPage(): JSX.Element {
 
           {/* Features Section */}
           <section id="features" className="container mx-auto px-6 py-24">
-            <h2 className="mb-4 text-center text-4xl font-bold">{t('features.title')}</h2>
-            <p className="mb-16 text-center text-xl text-gray-600">{t('features.subtitle')}</p>
+            <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('features.title')}</h2>
+            <p className="mb-16 text-center text-xl text-secondary/80">{t('features.subtitle')}</p>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               <FeatureCard
                 icon={<IconRobot />}
@@ -529,9 +529,9 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* FAQ Section */}
-          <section className="bg-white py-24">
+          <section className="bg-primary py-24">
             <div className="container mx-auto px-6">
-              <h2 className="mb-16 text-center text-4xl font-bold">{t('faq.title')}</h2>
+              <h2 className="mb-16 text-center text-4xl font-bold text-secondary">{t('faq.title')}</h2>
               <div className="mx-auto max-w-3xl space-y-4">
                 <FAQItem
                   question={t('faq.q1.question')}
@@ -570,79 +570,79 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* Final CTA Section */}
-          <section className="bg-gradient-to-b from-cyan-600 to-blue-700 py-24">
+          <section className="bg-gradient-to-b from-primaryElevated to-accent py-24">
             <div className="container mx-auto px-6 text-center">
-              <h2 className="mb-4 text-4xl font-bold text-white">{t('finalCta.title')}</h2>
-              <p className="mb-10 text-xl text-blue-100">{t('finalCta.description')}</p>
+              <h2 className="mb-4 text-4xl font-bold text-secondary">{t('finalCta.title')}</h2>
+              <p className="mb-10 text-xl text-secondary/80">{t('finalCta.description')}</p>
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <button
                   type="button"
                   onClick={() => handleDownloadClick('ios', 'final-cta')}
-                  className="transform rounded-lg bg-white px-10 py-4 text-lg font-bold text-blue-700 shadow-2xl transition-all hover:scale-105 hover:bg-gray-100">
+                  className="transform rounded-[5px] border-[1px] border-highlight bg-highlight px-10 py-4 text-lg font-bold text-primaryDark shadow-md transition-all hover:scale-105 hover:bg-highlight/90">
                   {t('finalCta.cta')}
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDownloadClick('android', 'final-cta')}
-                  className="transform rounded-lg border-2 border-white px-10 py-4 text-lg font-bold text-white transition-all hover:scale-105 hover:bg-white/10">
+                  className="transform rounded-[5px] border-[2px] border-cardBorder px-10 py-4 text-lg font-bold text-secondary transition-all hover:scale-105 hover:bg-primaryElevated">
                   {t('finalCta.ctaAndroid')}
                 </button>
               </div>
-              <p className="mt-6 text-sm text-blue-200">{t('finalCta.trustLine')}</p>
+              <p className="mt-6 text-sm text-secondary/70">{t('finalCta.trustLine')}</p>
             </div>
           </section>
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-gray-200/80 bg-white py-8">
+        <footer className="border-t border-cardBorder/50 bg-primaryDark py-8">
           <div className="container mx-auto px-6">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               <div>
-                <div className="mb-4 flex items-center gap-2 text-xl font-bold text-gray-900">
-                  <span className="text-blue-600">
+                <div className="mb-4 flex items-center gap-2 text-xl font-bold text-secondary">
+                  <span className="text-highlight">
                     <IconCalendar />
                   </span>
                   Cap2Cal
                 </div>
-                <p className="text-sm text-gray-600">{t('footer.madeWith')}</p>
+                <p className="text-sm text-secondary/70">{t('footer.madeWith')}</p>
               </div>
               <div>
-                <h3 className="mb-4 font-semibold text-gray-900">{t('footer.features')}</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <h3 className="mb-4 font-semibold text-secondary">{t('footer.features')}</h3>
+                <ul className="space-y-2 text-sm text-secondary/70">
                   <li>
-                    <a href="#features" className="transition-colors hover:text-gray-900">
+                    <a href="#features" className="transition-colors hover:text-highlight">
                       {t('nav.features')}
                     </a>
                   </li>
                   <li>
-                    <a href="#how-it-works" className="transition-colors hover:text-gray-900">
+                    <a href="#how-it-works" className="transition-colors hover:text-highlight">
                       {t('nav.howItWorks')}
                     </a>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="mb-4 font-semibold text-gray-900">{t('footer.support')}</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <h3 className="mb-4 font-semibold text-secondary">{t('footer.support')}</h3>
+                <ul className="space-y-2 text-sm text-secondary/70">
                   <li>
-                    <a href="#" className="transition-colors hover:text-gray-900">
+                    <a href="#" className="transition-colors hover:text-highlight">
                       {t('footer.helpCenter')}
                     </a>
                   </li>
                   <li>
-                    <a href="#" className="transition-colors hover:text-gray-900">
+                    <a href="#" className="transition-colors hover:text-highlight">
                       {t('footer.contact')}
                     </a>
                   </li>
                 </ul>
               </div>
               <div>
-                <h3 className="mb-4 font-semibold text-gray-900">{t('footer.legal')}</h3>
-                <ul className="space-y-2 text-sm text-gray-600">
+                <h3 className="mb-4 font-semibold text-secondary">{t('footer.legal')}</h3>
+                <ul className="space-y-2 text-sm text-secondary/70">
                   <li>
                     <Link
                       to="/terms"
-                      className="transition-colors hover:text-gray-900"
+                      className="transition-colors hover:text-highlight"
                       onClick={() => posthog.capture('footer_link_clicked', { target: 'terms' })}>
                       {t('footer.terms')}
                     </Link>
@@ -650,7 +650,7 @@ export default function LandingPage(): JSX.Element {
                   <li>
                     <Link
                       to="/privacy"
-                      className="transition-colors hover:text-gray-900"
+                      className="transition-colors hover:text-highlight"
                       onClick={() => posthog.capture('footer_link_clicked', { target: 'privacy' })}>
                       {t('footer.privacy')}
                     </Link>
@@ -658,7 +658,7 @@ export default function LandingPage(): JSX.Element {
                 </ul>
               </div>
             </div>
-            <div className="mt-8 border-t border-gray-200 pt-6 text-center text-sm text-gray-500">
+            <div className="mt-8 border-t border-cardBorder/50 pt-6 text-center text-sm text-secondary/60">
               <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
             </div>
           </div>
@@ -676,10 +676,10 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description }: FeatureCardProps): JSX.Element {
   return (
-    <div className="rounded-2xl border border-solid border-[#ace2ff] bg-[#e8f3f9] p-6 shadow-lg backdrop-blur-lg transition-transform hover:scale-105">
-      <div className="mb-4 w-max rounded-full border border-solid border-[#ace2ff] bg-blue-50 p-3">{icon}</div>
-      <h3 className="mb-2 text-xl font-semibold">{title}</h3>
-      <p className="text-gray-700">{description}</p>
+    <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-6 shadow-lg transition-transform hover:scale-105">
+      <div className="mb-4 w-max rounded-full border border-cardBorder bg-accent p-3">{icon}</div>
+      <h3 className="mb-2 text-xl font-semibold text-secondary">{title}</h3>
+      <p className="text-secondary/80">{description}</p>
     </div>
   );
 }
@@ -693,13 +693,13 @@ function FAQItem({ question, answer }: FAQItemProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white overflow-hidden">
+    <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 overflow-hidden">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-gray-50">
-        <span className="font-semibold text-gray-900">{question}</span>
-        <span className={`transform transition-transform ${isOpen ? 'rotate-180' : ''}`}>
+        className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-accent">
+        <span className="font-semibold text-secondary">{question}</span>
+        <span className={`transform transition-transform ${isOpen ? 'rotate-180' : ''} text-secondary`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -715,8 +715,8 @@ function FAQItem({ question, answer }: FAQItemProps): JSX.Element {
         </span>
       </button>
       {isOpen && (
-        <div className="border-t border-gray-200 bg-gray-50 px-6 py-4">
-          <p className="text-gray-700">{answer}</p>
+        <div className="border-t border-cardBorder bg-accent px-6 py-4">
+          <p className="text-secondary/80">{answer}</p>
         </div>
       )}
     </div>

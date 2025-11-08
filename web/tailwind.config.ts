@@ -16,7 +16,6 @@ const config = {
 
       colors: {
         secondary: '#E0FDDCFF',
-        // accent: '#376E4EE6',
         accent: '#2C4156',
         accentElevated: '#41526a',
         primary: '#1E2E3F',
@@ -25,6 +24,7 @@ const config = {
         warn: '#FF2929',
         highlight: '#e6de4d',
         clickHighLight: '#e6de4d',
+        cardBorder: '#415970',
       },
 
       animation: {
