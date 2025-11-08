@@ -30,6 +30,6 @@
     ]
   },
   "remoteconfig": {
-    "template": "app/remoteconfig.template.json"
+    "template": "backend/remoteconfig.template.json"
   }
 }

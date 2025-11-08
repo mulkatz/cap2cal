@@ -4,6 +4,8 @@ import { GenerateContentRequest, VertexAI } from '@google-cloud/vertexai';
 
 import { v4 as uuid } from 'uuid';
 import { GCLOUD_PROJECT, GEMINI_MODEL_ID, VERTEX_AI_LOCATION } from '../config';
+import { validateCaptureRequest, incrementUserCaptureCount } from '../auth';
+import { logger } from 'firebase-functions';
 
 export const analyse = onRequest(
   {
@@ -15,6 +17,16 @@ export const analyse = onRequest(
     enforceAppCheck: true,
   },
   async (request, response) => {
+    // Validate capture request (check auth and limits)
+    const validation = await validateCaptureRequest(request);
+
+    if (!validation.allowed) {
+      response.status(validation.status || 403).json({
+        error: validation.error || 'Capture not allowed',
+      });
+      return;
+    }
+
     const { image, i18n } = request.body;
 
     if (!image) {
@@ -69,6 +81,11 @@ export const analyse = onRequest(
           ...item,
           id: uuid(),
         }));
+      }
+
+      // Increment capture count on successful processing
+      if (validation.userId) {
+        await incrementUserCaptureCount(validation.userId);
       }
 
       response.status(200).json({

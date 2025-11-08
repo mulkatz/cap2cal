@@ -1,8 +1,8 @@
-import React, { createContext, ReactNode, useContext } from 'react';
+import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics, logEvent } from 'firebase/analytics';
-import { getRemoteConfig, getValue } from 'firebase/remote-config';
+import { getAuth, signInAnonymously, User } from 'firebase/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/analytics';
 
@@ -22,6 +22,8 @@ const firebaseConfig = {
 interface FirebaseContextType {
   logAnalyticsEvent: (event: string, data?: any) => void;
   sendFeedback: (data?: any) => Promise<void>;
+  user: User | null;
+  getAuthToken: () => Promise<string | null>;
 }
 
 // Create the FirebaseContext with default values
@@ -32,8 +34,37 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const firestore = getFirestore(app);
-  const remoteConfig = getRemoteConfig(app);
-  remoteConfig.settings.minimumFetchIntervalMillis = 0;
+  const auth = getAuth(app);
+
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Sign in anonymously on mount
+    const initAuth = async () => {
+      try {
+        const result = await signInAnonymously(auth);
+        console.log('USER signed in', result);
+        setUser(result.user);
+      } catch (error: any) {
+        console.error('Error signing in anonymously:', error);
+
+        // Check if it's a configuration error
+        if (error?.code === 'auth/configuration-not-found') {
+          console.warn('⚠️ Anonymous authentication is not enabled in Firebase Console.');
+          console.warn('Please enable it: Firebase Console → Authentication → Sign-in method → Anonymous');
+        }
+      }
+    };
+
+    initAuth();
+
+    // Listen for auth state changes
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const logAnalyticsEvent = (event: string, data?: any) => {
     if (isDevelopmentEnvironment()) {
@@ -48,12 +79,25 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     await addDoc(collection(firestore, 'feedback-db'), data);
   };
 
-  const getVersionInfo = () => {
-    const value = getValue(remoteConfig, 'version_info');
-    console.log('got version info', value);
+  const getAuthToken = async (): Promise<string | null> => {
+    if (!user) {
+      console.warn('Cannot get auth token - user not authenticated');
+      return null;
+    }
+    return await user.getIdToken();
   };
 
-  return <FirebaseContext.Provider value={{ logAnalyticsEvent, sendFeedback }}>{children}</FirebaseContext.Provider>;
+  return (
+    <FirebaseContext.Provider
+      value={{
+        logAnalyticsEvent,
+        sendFeedback,
+        user,
+        getAuthToken,
+      }}>
+      {children}
+    </FirebaseContext.Provider>
+  );
 };
 
 // Custom hook to use the FirebaseContext

@@ -22,7 +22,7 @@ export const useCapture = () => {
 
   const { t } = useTranslation();
   const dialogs = useDialogContext();
-  const { logAnalyticsEvent } = useFirebaseContext();
+  const { logAnalyticsEvent, getAuthToken } = useFirebaseContext();
   const { setAppState } = useAppContext();
 
   const onCaptured = async (imgUrl: string) => {
@@ -41,7 +41,11 @@ export const useCapture = () => {
     };
 
     try {
-      const result = await fetchData(imgUrl, i18next.language);
+      // Get auth token to send to backend
+      const authToken = await getAuthToken();
+      const result = await fetchData(imgUrl, i18next.language, authToken || undefined);
+
+      // Note: Backend increments capture count, so we don't need to do it here
       dialogs.pop();
 
       if ('success' === result.status) {

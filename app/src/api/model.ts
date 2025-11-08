@@ -65,6 +65,7 @@ export type ExtractionError =
   | 'LOW_CONTRAST_OR_POOR_LIGHTING'
   | 'TEXT_TOO_SMALL'
   | 'OVERLAPPING_TEXT_OR_GRAPHICS'
+  | 'LIMIT_REACHED'
   | 'UNKNOWN';
 
 export type ApiFindResult = {

@@ -1,14 +1,17 @@
 // import { EventError, EventSuccess } from '../models/model.ts';
 import { ApiError, ApiEvent, ApiFindResult, ApiSuccess } from './model.ts';
 
-// const ANALYSE_API_URL = 'https://analyse-u6pn2d2dsq-uc.a.run.app';
-const ANALYSE_API_URL = 'https://analyse4-u6pn2d2dsq-uc.a.run.app';
+const ANALYSE_API_URL = 'https://analyse-u6pn2d2dsq-uc.a.run.app';
 const FIND_TICKETS_API_URL = 'https://findtickets-u6pn2d2dsq-uc.a.run.app';
 
 type EventSuccess = ApiSuccess<{ items: ApiEvent[] }>;
 type EventError = ApiError;
 
-export const fetchData = async (image: string, i18n: string): Promise<EventSuccess | EventError> => {
+export const fetchData = async (
+  image: string,
+  i18n: string,
+  authToken?: string
+): Promise<EventSuccess | EventError> => {
   // console.log('YYYY fetch data', i18n, image);
 
   // // const { userLanguage } = useAppContext();
@@ -19,11 +22,17 @@ export const fetchData = async (image: string, i18n: string): Promise<EventSucce
   // const fullLanguageName = getFullLanguageName(userLanguageCode);
 
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (authToken) {
+      headers['Authorization'] = `Bearer ${authToken}`;
+    }
+
     const res = await fetch(ANALYSE_API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         image,
         i18n,
@@ -35,6 +44,18 @@ export const fetchData = async (image: string, i18n: string): Promise<EventSucce
 
       console.log('YYYY GOT RESPONSE', JSON.stringify(data.data));
       return JSON.parse(data.data);
+    }
+
+    // Handle 403 - capture limit reached
+    if (res.status === 403) {
+      const errorData = await res.json();
+      console.log('YYYY LIMIT REACHED', errorData);
+      return {
+        status: 'error',
+        data: {
+          reason: 'LIMIT_REACHED',
+        },
+      };
     }
 
     console.log('YYYY GOT ERROR', res.status, res.statusText, await res.json());

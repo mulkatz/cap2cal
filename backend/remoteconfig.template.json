@@ -1,0 +1,19 @@
+{
+  "parameters": {
+    "paid_only": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "valueType": "BOOLEAN"
+    },
+    "free_capture_limit": {
+      "defaultValue": {
+        "value": "2"
+      },
+      "valueType": "NUMBER"
+    }
+  },
+  "version": {
+    "versionNumber": "1"
+  }
+}
