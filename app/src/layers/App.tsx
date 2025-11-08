@@ -44,6 +44,29 @@ export const App = () => {
     };
   }, []);
 
+  // Listen for shared images from Android intent
+  useEffect(() => {
+    const handleSharedImage = async (event: any) => {
+      console.log('on shared image', JSON.stringify(event));
+
+      try {
+        const data = typeof event === 'string' ? JSON.parse(event) : event;
+        if (data.imageData) {
+          console.log('Received shared image from intent');
+          await onCaptured(data.imageData);
+        }
+      } catch (error) {
+        console.error('Error processing shared image:', error);
+      }
+    };
+
+    window.addEventListener('sharedImage', handleSharedImage);
+
+    return () => {
+      window.removeEventListener('sharedImage', handleSharedImage);
+    };
+  }, [onCaptured]);
+
   const hasSavedEvents =
     useLiveQuery(async () => {
       return (await db.eventItems.count()) > 0;
