@@ -16,6 +16,8 @@ import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.ato
 import { Toaster } from 'react-hot-toast';
 import { Capacitor } from '@capacitor/core';
 import { useAppContext } from '../contexts/AppContext.tsx';
+import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
+import { AnalyticsEvent, AnalyticsParam } from '../utils/analytics.ts';
 
 initI18n();
 
@@ -27,6 +29,7 @@ export const App = () => {
 
   const { appState, setAppState } = useAppContext();
   const { onImportFile, onCaptured } = useCapture();
+  const { logAnalyticsEvent, setAnalyticsUserProperty } = useFirebaseContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [listViewOpen, setListViewOpen] = useState(false);
   const dialogs = useDialogContext();
@@ -38,6 +41,19 @@ export const App = () => {
     setTimeout(() => {
       setInitialised(true);
     }, 300);
+
+    // Set user properties
+    const platform = Capacitor.getPlatform();
+    const language = navigator.language;
+
+    setAnalyticsUserProperty('platform', platform);
+    setAnalyticsUserProperty('language', language);
+
+    // Track app opened
+    logAnalyticsEvent(AnalyticsEvent.APP_OPENED, {
+      platform: platform,
+      language: language,
+    });
 
     return () => {
       setInitialised(false);
@@ -53,7 +69,16 @@ export const App = () => {
         const data = typeof event === 'string' ? JSON.parse(event) : event;
         if (data.imageData) {
           console.log('Received shared image from intent');
-          await onCaptured(data.imageData);
+
+          // Track share intent entry point
+          logAnalyticsEvent(AnalyticsEvent.ENTRY_SHARE_INTENT, {
+            [AnalyticsParam.SHARE_INTENT_TYPE]: 'image',
+          });
+
+          // Set user property to track that this user came via share intent
+          setAnalyticsUserProperty('is_share_intent_user', true);
+
+          await onCaptured(data.imageData, 'share');
         }
       } catch (error) {
         console.error('Error processing shared image:', error);
@@ -65,7 +90,7 @@ export const App = () => {
     return () => {
       window.removeEventListener('sharedImage', handleSharedImage);
     };
-  }, [onCaptured]);
+  }, [onCaptured, logAnalyticsEvent, setAnalyticsUserProperty]);
 
   const hasSavedEvents =
     useLiveQuery(async () => {
@@ -77,6 +102,10 @@ export const App = () => {
   const onFeedback = () => {
     if (!showFeedback) {
       setShowFeedback(true);
+
+      // Track feedback dialog opened
+      logAnalyticsEvent(AnalyticsEvent.FEEDBACK_OPENED);
+
       dialogs.push(
         <Dialog
           onClose={() => {
@@ -170,8 +199,12 @@ export const App = () => {
         console.error('base64 string was undefined');
         return;
       }
+
+      // Track image selected from gallery
+      logAnalyticsEvent(AnalyticsEvent.IMAGE_SELECTED_FROM_GALLERY);
+
       // await onCaptured('data:image/jpeg;base64,' + image.base64String);
-      await onCaptured(imageUrl);
+      await onCaptured(imageUrl, 'gallery');
     } catch (error) {
       // This catch block will handle cases where the user cancels the photo picker
       console.error('Error getting photo', error);
@@ -259,11 +292,19 @@ export const App = () => {
           return;
         }
       }
+
+      // Track camera opened
+      logAnalyticsEvent(AnalyticsEvent.CAMERA_OPENED);
+
       setAppState('camera');
       return;
     }
 
     console.log('capture photo');
+
+    // Track image captured from camera
+    logAnalyticsEvent(AnalyticsEvent.IMAGE_CAPTURED);
+
     const imgUrl = await ref.capturePhoto();
     if (!imgUrl) {
       // toast.error('Error taking photo');
@@ -271,7 +312,7 @@ export const App = () => {
     }
 
     // setCapturedImage('data:image/jpeg;base64,' + imgUrl);
-    await onCaptured('data:image/jpeg;base64,' + imgUrl);
+    await onCaptured('data:image/jpeg;base64,' + imgUrl, 'camera');
   };
 
   const onStreamCallback = (running: boolean) => {

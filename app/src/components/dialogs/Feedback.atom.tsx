@@ -7,13 +7,14 @@ import { useAppContext } from '../../contexts/AppContext.tsx';
 import toast from 'react-hot-toast';
 import { useDialogContext } from '../../contexts/DialogContext.tsx';
 import { useTranslation } from 'react-i18next';
+import { AnalyticsEvent, AnalyticsParam } from '../../utils/analytics.ts';
 
 type Kind = 'default' | 'idea' | 'bug';
 
 export const Feedback = ({}: {}) => {
   const { t } = useTranslation();
   const dialogs = useDialogContext();
-  const { sendFeedback } = useFirebaseContext();
+  const { sendFeedback, logAnalyticsEvent } = useFirebaseContext();
   const { version } = useAppContext();
   const [kind, setKind] = useState<Kind>('default');
   const textRef = useRef<HTMLTextAreaElement | null>(null);
@@ -31,6 +32,11 @@ export const Feedback = ({}: {}) => {
         date: new Date().getTime(),
         env: getPlatformAndBrowser(),
         version,
+      });
+
+      // Track feedback submission
+      logAnalyticsEvent(AnalyticsEvent.FEEDBACK_SUBMITTED, {
+        [AnalyticsParam.FEEDBACK_TYPE]: kind,
       });
 
       toast(t('toasts.feedback.success'), {

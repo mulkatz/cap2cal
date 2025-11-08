@@ -16,17 +16,28 @@ import { MultiResultDialog } from '../components/MultiResultDialog.tsx';
 import i18next from 'i18next';
 import { SingleResultDialog } from '../components/SingleResultDialog.tsx';
 import { useAppContext } from '../contexts/AppContext.tsx';
+import {
+  AnalyticsEvent,
+  AnalyticsParam,
+  getEventFieldsPresence,
+} from '../utils/analytics.ts';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
 
   const { t } = useTranslation();
   const dialogs = useDialogContext();
-  const { logAnalyticsEvent, getAuthToken } = useFirebaseContext();
+  const { logAnalyticsEvent, trackPerformance, getAuthToken } = useFirebaseContext();
   const { setAppState } = useAppContext();
 
-  const onCaptured = async (imgUrl: string) => {
+  const onCaptured = async (imgUrl: string, imageSource: 'camera' | 'gallery' | 'share' = 'camera') => {
     setCapturedImage(imgUrl);
+
+    // Track extraction started
+    const extractionStartTime = performance.now();
+    logAnalyticsEvent(AnalyticsEvent.EXTRACTION_STARTED, {
+      [AnalyticsParam.IMAGE_SOURCE]: imageSource,
+    });
 
     dialogs.push(
       <Dialog full>
@@ -43,7 +54,19 @@ export const useCapture = () => {
     try {
       // Get auth token to send to backend
       const authToken = await getAuthToken();
+
+      // Track image upload
+      const uploadStartTime = performance.now();
+      logAnalyticsEvent(AnalyticsEvent.IMAGE_UPLOAD_STARTED);
+
       const result = await fetchData(imgUrl, i18next.language, authToken || undefined);
+
+      // Track upload completion
+      const uploadDuration = performance.now() - uploadStartTime;
+      trackPerformance('upload', uploadDuration);
+      logAnalyticsEvent(AnalyticsEvent.IMAGE_UPLOAD_COMPLETED, {
+        [AnalyticsParam.DURATION_MS]: Math.round(uploadDuration),
+      });
 
       // Note: Backend increments capture count, so we don't need to do it here
       dialogs.pop();
@@ -60,8 +83,13 @@ export const useCapture = () => {
         // console.log('got items', items);
 
         if (sanitizedItems.length === 0) {
-          logAnalyticsEvent('extraction_error', {
-            reason: 'PROBABLY_NOT_AN_EVENT' satisfies ExtractionError,
+          const extractionDuration = performance.now() - extractionStartTime;
+          trackPerformance('extraction', extractionDuration);
+
+          logAnalyticsEvent(AnalyticsEvent.EXTRACTION_ERROR, {
+            [AnalyticsParam.EXTRACTION_REASON]: 'PROBABLY_NOT_AN_EVENT' satisfies ExtractionError,
+            [AnalyticsParam.IMAGE_SOURCE]: imageSource,
+            [AnalyticsParam.DURATION_MS]: Math.round(extractionDuration),
           });
 
           pushError('PROBABLY_NOT_AN_EVENT');
@@ -93,6 +121,27 @@ export const useCapture = () => {
 
         const events = createEvents(sanitizedItems);
 
+        // Track extraction success with comprehensive data
+        const extractionDuration = performance.now() - extractionStartTime;
+        trackPerformance('extraction', extractionDuration);
+        trackPerformance('total_capture', extractionDuration);
+
+        // Analyze the first event for field presence
+        const firstEvent = sanitizedItems[0];
+        const eventFieldsPresence = getEventFieldsPresence(firstEvent);
+
+        logAnalyticsEvent(AnalyticsEvent.EXTRACTION_SUCCESS, {
+          [AnalyticsParam.IMAGE_SOURCE]: imageSource,
+          [AnalyticsParam.HAS_MULTIPLE_IMAGES]: events.length > 1,
+          [AnalyticsParam.DURATION_MS]: Math.round(extractionDuration),
+          ...eventFieldsPresence,
+        });
+
+        // Track event preview viewed
+        logAnalyticsEvent(AnalyticsEvent.EVENT_PREVIEW_VIEWED, {
+          event_count: events.length,
+        });
+
         if (events.length > 1) {
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
           dialogs.push(
@@ -110,18 +159,27 @@ export const useCapture = () => {
             </SingleResultDialog>
           );
         }
-        logAnalyticsEvent('extraction_success');
         return;
       }
 
+      const extractionDuration = performance.now() - extractionStartTime;
+      trackPerformance('extraction', extractionDuration);
+
       pushError('PROBABLY_NOT_AN_EVENT');
-      logAnalyticsEvent('extraction_error', {
-        reason: result.data?.reason || 'UNKNOWN',
+      logAnalyticsEvent(AnalyticsEvent.EXTRACTION_ERROR, {
+        [AnalyticsParam.EXTRACTION_REASON]: result.data?.reason || 'UNKNOWN',
+        [AnalyticsParam.IMAGE_SOURCE]: imageSource,
+        [AnalyticsParam.DURATION_MS]: Math.round(extractionDuration),
       });
     } catch (e) {
+      const extractionDuration = performance.now() - extractionStartTime;
+      trackPerformance('extraction', extractionDuration);
+
       pushError('UNKNOWN');
-      logAnalyticsEvent('extraction_error', {
-        reason: 'UNKNOWN' satisfies ExtractionError,
+      logAnalyticsEvent(AnalyticsEvent.EXTRACTION_ERROR, {
+        [AnalyticsParam.EXTRACTION_REASON]: 'UNKNOWN' satisfies ExtractionError,
+        [AnalyticsParam.IMAGE_SOURCE]: imageSource,
+        [AnalyticsParam.DURATION_MS]: Math.round(extractionDuration),
       });
     } finally {
       setCapturedImage(undefined);
@@ -178,13 +236,17 @@ export const useCapture = () => {
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>, ref: RefObject<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     console.log('handleFileChange');
+
+    // Track image selection from gallery
+    logAnalyticsEvent(AnalyticsEvent.IMAGE_SELECTED_FROM_GALLERY);
+
     if (file) {
       const dataType = file.type;
       const reader = new FileReader();
       reader.onloadend = () => {
         console.log('onloadend');
         const base64String = reader.result as string; // The result is a Base64 string
-        onCaptured(base64String);
+        onCaptured(base64String, 'gallery');
 
         if (ref?.current) {
           ref.current.value = '';

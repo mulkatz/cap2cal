@@ -1,12 +1,18 @@
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
-import { getAnalytics, logEvent } from 'firebase/analytics';
+import { getAnalytics, logEvent, setUserProperties } from 'firebase/analytics';
 import { getAuth, signInAnonymously, User } from 'firebase/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/analytics';
 
 import { isDevelopmentEnvironment } from '../utils.ts';
+import {
+  AnalyticsEvent,
+  AnalyticsParam,
+  ScreenName,
+  type ScreenNameType,
+} from '../utils/analytics.ts';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -21,6 +27,9 @@ const firebaseConfig = {
 // Define the types for the context
 interface FirebaseContextType {
   logAnalyticsEvent: (event: string, data?: any) => void;
+  logScreenView: (screenName: ScreenNameType, previousScreen?: ScreenNameType) => void;
+  setAnalyticsUserProperty: (property: string, value: string | number | boolean) => void;
+  trackPerformance: (timingType: string, durationMs: number) => void;
   sendFeedback: (data?: any) => Promise<void>;
   user: User | null;
   getAuthToken: () => Promise<string | null>;
@@ -68,11 +77,39 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const logAnalyticsEvent = (event: string, data?: any) => {
     if (isDevelopmentEnvironment()) {
-      console.warn(`Analytics event not send since in development environment`);
+      console.warn(`[Analytics] ${event}`, data || '');
       return;
     }
 
     logEvent(analytics, event, data);
+  };
+
+  const logScreenView = (screenName: ScreenNameType, previousScreen?: ScreenNameType) => {
+    const params: Record<string, any> = {
+      [AnalyticsParam.SCREEN_NAME]: screenName,
+    };
+
+    if (previousScreen) {
+      params[AnalyticsParam.PREVIOUS_SCREEN] = previousScreen;
+    }
+
+    logAnalyticsEvent(AnalyticsEvent.SCREEN_VIEW, params);
+  };
+
+  const setAnalyticsUserProperty = (property: string, value: string | number | boolean) => {
+    if (isDevelopmentEnvironment()) {
+      console.warn(`[Analytics User Property] ${property} = ${value}`);
+      return;
+    }
+
+    setUserProperties(analytics, { [property]: value });
+  };
+
+  const trackPerformance = (timingType: string, durationMs: number) => {
+    logAnalyticsEvent(AnalyticsEvent.PERFORMANCE_TIMING, {
+      [AnalyticsParam.TIMING_TYPE]: timingType,
+      [AnalyticsParam.DURATION_MS]: Math.round(durationMs),
+    });
   };
 
   const sendFeedback = async (data?: any) => {
@@ -91,6 +128,9 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     <FirebaseContext.Provider
       value={{
         logAnalyticsEvent,
+        logScreenView,
+        setAnalyticsUserProperty,
+        trackPerformance,
         sendFeedback,
         user,
         getAuthToken,
