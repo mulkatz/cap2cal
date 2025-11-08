@@ -7,13 +7,18 @@ const numPhrasesCollections = 5;
 
 export const LoadingController = () => {
   const { t } = useTranslation();
-  const phraseCollectionIndex = Math.floor(Math.random() * numPhrasesCollections) + 1;
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+  const [currentVariation, setCurrentVariation] = useState(Math.floor(Math.random() * numPhrasesCollections) + 1);
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const change = () => {
-      setCurrentPhraseIndex((prevIndex) => (prevIndex + 1) % numPhrases);
+      setCurrentPhraseIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % numPhrases;
+        // Pick a new random variation for each phrase level
+        setCurrentVariation(Math.floor(Math.random() * numPhrasesCollections) + 1);
+        return nextIndex;
+      });
       setTimeout(() => {
         setIsVisible(true);
       }, 50);
@@ -41,7 +46,7 @@ export const LoadingController = () => {
       />
       <div className={'mx-4 flex h-[100px] w-full flex-col items-center justify-center px-8'}>
         <span className={`w-full align-middle text-[16px] ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-          {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${phraseCollectionIndex}`)}
+          {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${currentVariation}`)}
         </span>
       </div>
     </div>
