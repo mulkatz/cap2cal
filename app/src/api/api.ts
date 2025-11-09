@@ -3,6 +3,7 @@ import { ApiError, ApiEvent, ApiFindResult, ApiSuccess } from './model.ts';
 
 const ANALYSE_API_URL = 'https://analyse-u6pn2d2dsq-uc.a.run.app';
 const FIND_TICKETS_API_URL = 'https://findtickets-u6pn2d2dsq-uc.a.run.app';
+const FEATURE_FLAGS_API_URL = 'https://featureflags-u6pn2d2dsq-uc.a.run.app';
 
 type EventSuccess = ApiSuccess<{ items: ApiEvent[] }>;
 type EventError = ApiError;
@@ -95,6 +96,41 @@ export const findTickets = async (query: string, i18n: string): Promise<ApiFindR
 
   return null;
 };
+
+/**
+ * Feature Flags Response Type
+ */
+export interface FeatureFlags {
+  paid_only: boolean;
+  free_capture_limit: number;
+}
+
+/**
+ * Fetches current feature flags from the backend
+ * @returns Promise with feature flags or null if request fails
+ */
+export const fetchFeatureFlags = async (): Promise<FeatureFlags | null> => {
+  try {
+    const res = await fetch(FEATURE_FLAGS_API_URL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (res.status === 200) {
+      const data = await res.json();
+      return data satisfies FeatureFlags;
+    }
+
+    console.error('Failed to fetch feature flags:', res.status, res.statusText);
+    return null;
+  } catch (error) {
+    console.error('Error fetching feature flags:', error);
+    return null;
+  }
+};
+
 //
 // const getFullLanguageName = (languageCode: string): string => {
 //   try {

@@ -1,5 +1,6 @@
 import React, { ChangeEvent, RefObject, useEffect, useState } from 'react';
 import { NotCaptured } from '../components/dialogs/NotCaptured.atom.tsx';
+import { UpgradeDialog } from '../components/dialogs/UpgradeDialog.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { Dialog } from '../components/Dialog.tsx';
 import { CardController } from '../components/Card.controller.tsx';
@@ -27,7 +28,7 @@ export const useCapture = () => {
 
   const { t } = useTranslation();
   const dialogs = useDialogContext();
-  const { logAnalyticsEvent, trackPerformance, getAuthToken } = useFirebaseContext();
+  const { logAnalyticsEvent, trackPerformance, getAuthToken, featureFlags } = useFirebaseContext();
   const { setAppState } = useAppContext();
 
   const onCaptured = async (imgUrl: string, imageSource: 'camera' | 'gallery' | 'share' = 'camera') => {
@@ -187,6 +188,26 @@ export const useCapture = () => {
   };
 
   const pushError = (reason: ExtractionError) => {
+    // Show upgrade dialog if limit is reached and paid_only is enabled
+    if (reason === 'LIMIT_REACHED' && featureFlags?.paid_only) {
+      dialogs.replace(
+        <Dialog onClose={popAndBackHome} full>
+          <Card>
+            <UpgradeDialog
+              onUpgrade={() => {
+                // TODO: Implement payment flow (e.g., RevenueCat)
+                console.log('Upgrade clicked - integrate payment provider here');
+                popAndBackHome();
+              }}
+              onClose={popAndBackHome}
+            />
+          </Card>
+        </Dialog>
+      );
+      return;
+    }
+
+    // Show regular error dialog for other errors
     dialogs.replace(
       <Dialog onClose={popAndBackHome} full>
         <Card>

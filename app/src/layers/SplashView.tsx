@@ -1,10 +1,12 @@
 import imgHero from '../assets/images/home-hero.png';
 import { useAppContext } from '../contexts/AppContext.tsx';
+import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { IconBulb, IconBurger, IconDownload, IconHeroText } from '../assets/icons';
 import React, { useEffect } from 'react';
 import { cn } from '../utils.ts';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
 import { CaptureSheet } from '../components/Sheet.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const SplashView = ({
   onImport,
@@ -24,6 +26,13 @@ export const SplashView = ({
   isFeedbackVisible: boolean,
 }) => {
   const { version } = useAppContext();
+  const { featureFlags } = useFirebaseContext();
+  const { t } = useTranslation();
+
+  const handleUpgradeClick = () => {
+    // TODO: Implement payment flow (e.g., RevenueCat)
+    console.log('Upgrade button clicked - integrate payment provider here');
+  };
 
   return (
     <>
@@ -44,6 +53,27 @@ export const SplashView = ({
           </div>
         </div>
       </div>
+
+      {/* Upgrade button - only show when paid_only is enabled */}
+      {featureFlags?.paid_only && (
+        <button
+          onClick={handleUpgradeClick}
+          className="pointer-events-auto absolute top-[80px] left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 rounded-full border border-highlight bg-primaryElevated px-4 py-2 shadow-lg transition-all hover:bg-primary hover:scale-105">
+          <svg
+            className="h-4 w-4 text-highlight"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M13 10V3L4 14h7v7l9-11h-7z"
+            />
+          </svg>
+          <span className="text-sm font-semibold text-highlight">{t('dialogs.upgrade.cta')}</span>
+        </button>
+      )}
 
       <MiniButton
         icon={<IconDownload width={34} height={34} />}

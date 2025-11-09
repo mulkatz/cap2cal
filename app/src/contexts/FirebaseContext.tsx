@@ -13,6 +13,7 @@ import {
   ScreenName,
   type ScreenNameType,
 } from '../utils/analytics.ts';
+import { fetchFeatureFlags, type FeatureFlags } from '../api/api.ts';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -33,6 +34,8 @@ interface FirebaseContextType {
   sendFeedback: (data?: any) => Promise<void>;
   user: User | null;
   getAuthToken: () => Promise<string | null>;
+  featureFlags: FeatureFlags | null;
+  featureFlagsLoading: boolean;
 }
 
 // Create the FirebaseContext with default values
@@ -46,6 +49,39 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
   const auth = getAuth(app);
 
   const [user, setUser] = useState<User | null>(null);
+  const [featureFlags, setFeatureFlags] = useState<FeatureFlags | null>(null);
+  const [featureFlagsLoading, setFeatureFlagsLoading] = useState<boolean>(true);
+
+  // Fetch feature flags on mount
+  useEffect(() => {
+    const loadFeatureFlags = async () => {
+      try {
+        const flags = await fetchFeatureFlags();
+        if (flags) {
+          setFeatureFlags(flags);
+          console.log('[Feature Flags] Loaded:', flags);
+        } else {
+          console.warn('[Feature Flags] Failed to load, using defaults');
+          // Set default values if fetch fails
+          setFeatureFlags({
+            paid_only: false,
+            free_capture_limit: 5,
+          });
+        }
+      } catch (error) {
+        console.error('[Feature Flags] Error loading:', error);
+        // Set default values on error
+        setFeatureFlags({
+          paid_only: false,
+          free_capture_limit: 5,
+        });
+      } finally {
+        setFeatureFlagsLoading(false);
+      }
+    };
+
+    loadFeatureFlags();
+  }, []);
 
   useEffect(() => {
     // Sign in anonymously on mount
@@ -134,6 +170,8 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         sendFeedback,
         user,
         getAuthToken,
+        featureFlags,
+        featureFlagsLoading,
       }}>
       {children}
     </FirebaseContext.Provider>

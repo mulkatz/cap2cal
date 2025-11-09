@@ -42,14 +42,14 @@
           "step1Description": "Fotografiere ein Event-Poster",
           "step2Title": "Extrahieren",
           "step2Description": "KI liest alle Details",
-          "step3Title": "Speichern",
-          "step3Description": "Exportiere in deinen Kalender"
+          "step3Title": "Speichern & Kaufen",
+          "step3Description": "In Kalender exportieren und Tickets direkt kaufen"
         },
-        "freeTrial": {
+        "getStarted": {
           "title": "Bereit loszulegen?",
-          "bullet1": "Erste 5 Erfassungen KOSTENLOS",
-          "bullet2": "Keine Kreditkarte erforderlich",
-          "bullet3": "Funktioniert mit allen Kalendern",
+          "bullet1": "Sofortige Event-Extraktion",
+          "bullet2": "Funktioniert mit allen Kalendern",
+          "bullet3": "Direkter Ticket-Kauf",
           "permissionsTitle": "Wir benötigen Zugriff auf:",
           "permissionCamera": "Kamera - um Events zu erfassen",
           "permissionCalendar": "Kalender - um Events zu speichern"
@@ -85,6 +85,17 @@
         "calendarAdvice": "Du hast den Zugriff auf deinen Kalender verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
         "photosAdvice": "Du hast den Zugriff auf deine Fotos verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
         "toSettings": "App Einstellungen"
+      },
+      "upgrade": {
+        "title": "Erfassungslimit erreicht",
+        "subtitle": "Du hast alle kostenlosen Erfassungen verbraucht",
+        "benefit1": "Unbegrenzte Event-Erfassungen",
+        "benefit2": "Bevorzugte Verarbeitung",
+        "benefit3": "Erweiterte Funktionen",
+        "pricing": "4,99 €/Monat",
+        "cta": "Auf Pro upgraden",
+        "notNow": "Nicht jetzt",
+        "capturesRemaining": "{{count}} Erfassungen verbleibend"
       },
       "loading": {
         "phrases": {
@@ -134,6 +145,7 @@
         "TEXT_TOO_SMALL": "Text zu klein",
         "OVERLAPPING_TEXT_OR_GRAPHICS": "Überlappende Informationen",
         "PROBABLY_NOT_AN_EVENT": "Das war kein Event",
+        "LIMIT_REACHED": "Erfassungslimit erreicht",
         "UNKNOWN": "Unbekannter Fehler"
       }
     }

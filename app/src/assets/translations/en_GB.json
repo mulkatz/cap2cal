@@ -33,7 +33,7 @@
     "dialogs": {
       "onboarding": {
         "valueProp": {
-          "title": "Turn Event Posters into Calendar Invites",
+          "title": "Turn Event Posters into Calendar Events",
           "subtitle": "Just snap a photo, we'll handle the rest"
         },
         "howItWorks": {
@@ -42,14 +42,14 @@
           "step1Description": "Photo any event poster",
           "step2Title": "Extract",
           "step2Description": "AI reads all the details",
-          "step3Title": "Save",
-          "step3Description": "Export to your calendar"
+          "step3Title": "Save & Buy",
+          "step3Description": "Export to calendar and buy tickets directly"
         },
-        "freeTrial": {
+        "getStarted": {
           "title": "Ready to Get Started?",
-          "bullet1": "First 5 captures FREE",
-          "bullet2": "No credit card required",
-          "bullet3": "Works with all calendars",
+          "bullet1": "Instant event extraction",
+          "bullet2": "Works with all calendars",
+          "bullet3": "Direct ticket purchase",
           "permissionsTitle": "We'll need access to:",
           "permissionCamera": "Camera - to capture events",
           "permissionCalendar": "Calendar - to save events"
@@ -85,6 +85,17 @@
         "calendarAdvice": "You haven't granted permission to access your calendar. To use the calendar export allow calendar access in the app settings",
         "photosAdvice": "You haven't granted permission to access your photos. To use photo import allow photo library access in the app settings",
         "toSettings": "App Settings"
+      },
+      "upgrade": {
+        "title": "Capture Limit Reached",
+        "subtitle": "You've used all your free captures",
+        "benefit1": "Unlimited event captures",
+        "benefit2": "Priority processing",
+        "benefit3": "Advanced features",
+        "pricing": "$4.99/month",
+        "cta": "Upgrade to Pro",
+        "notNow": "Not Now",
+        "capturesRemaining": "{{count}} captures remaining"
       },
       "loading": {
         "phrases": {
@@ -134,6 +145,7 @@
         "TEXT_TOO_SMALL": "Text too small",
         "OVERLAPPING_TEXT_OR_GRAPHICS": "Overlapping information",
         "PROBABLY_NOT_AN_EVENT": "This was not an event",
+        "LIMIT_REACHED": "Capture limit reached",
         "UNKNOWN": "Unknown error occurred"
       }
     }
