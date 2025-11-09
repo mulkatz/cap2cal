@@ -31,6 +31,35 @@
       "noFavouritesYet": "No favourites yet"
     },
     "dialogs": {
+      "onboarding": {
+        "valueProp": {
+          "title": "Turn Event Posters into Calendar Invites",
+          "subtitle": "Just snap a photo, we'll handle the rest"
+        },
+        "howItWorks": {
+          "title": "How It Works",
+          "step1Title": "Capture",
+          "step1Description": "Photo any event poster",
+          "step2Title": "Extract",
+          "step2Description": "AI reads all the details",
+          "step3Title": "Save",
+          "step3Description": "Export to your calendar"
+        },
+        "freeTrial": {
+          "title": "Ready to Get Started?",
+          "bullet1": "First 5 captures FREE",
+          "bullet2": "No credit card required",
+          "bullet3": "Works with all calendars",
+          "permissionsTitle": "We'll need access to:",
+          "permissionCamera": "Camera - to capture events",
+          "permissionCalendar": "Calendar - to save events"
+        },
+        "navigation": {
+          "next": "Next",
+          "skip": "Skip",
+          "getStarted": "Get Started"
+        }
+      },
       "firstStart": {
         "title": "First Start",
         "description": "This was the first start"

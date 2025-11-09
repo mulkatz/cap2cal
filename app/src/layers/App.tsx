@@ -18,6 +18,7 @@ import { Capacitor } from '@capacitor/core';
 import { useAppContext } from '../contexts/AppContext.tsx';
 import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam } from '../utils/analytics.ts';
+import { Onboarding } from '../components/onboarding/Onboarding.tsx';
 
 initI18n();
 
@@ -36,6 +37,10 @@ export const App = () => {
   const cameraRef = useRef<CameraRefProps>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [initialised, setInitialised] = useState(false);
+  const [hasSeenOnboarding, setHasSeenOnboarding] = useState(() => {
+    return localStorage.getItem('hasSeenOnboarding') === 'true';
+  });
+  const [isShareIntentUser, setIsShareIntentUser] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -78,6 +83,13 @@ export const App = () => {
           // Set user property to track that this user came via share intent
           setAnalyticsUserProperty('is_share_intent_user', true);
 
+          // Skip onboarding for share intent users
+          setIsShareIntentUser(true);
+          if (!hasSeenOnboarding) {
+            localStorage.setItem('hasSeenOnboarding', 'true');
+            setHasSeenOnboarding(true);
+          }
+
           await onCaptured(data.imageData, 'share');
         }
       } catch (error) {
@@ -90,12 +102,17 @@ export const App = () => {
     return () => {
       window.removeEventListener('sharedImage', handleSharedImage);
     };
-  }, [onCaptured, logAnalyticsEvent, setAnalyticsUserProperty]);
+  }, [onCaptured, logAnalyticsEvent, setAnalyticsUserProperty, hasSeenOnboarding]);
 
   const hasSavedEvents =
     useLiveQuery(async () => {
       return (await db.eventItems.count()) > 0;
     }) || false;
+
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('hasSeenOnboarding', 'true');
+    setHasSeenOnboarding(true);
+  };
 
   const onHistory = () => setListViewOpen(!listViewOpen);
 
@@ -338,6 +355,15 @@ export const App = () => {
       }
     }
   }, [appState]);
+
+  // Show onboarding if user hasn't seen it yet
+  if (!hasSeenOnboarding) {
+    return (
+      <main>
+        <Onboarding onComplete={handleOnboardingComplete} />
+      </main>
+    );
+  }
 
   return (
     <main>

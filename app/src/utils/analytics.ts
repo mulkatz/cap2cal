@@ -15,6 +15,12 @@ export const AnalyticsEvent = {
   APP_OPENED: 'app_opened',
   SESSION_START: 'session_start',
 
+  // Onboarding
+  ONBOARDING_STARTED: 'onboarding_started',
+  ONBOARDING_SCREEN_VIEWED: 'onboarding_screen_viewed',
+  ONBOARDING_COMPLETED: 'onboarding_completed',
+  ONBOARDING_SKIPPED: 'onboarding_skipped',
+
   // Entry Points
   ENTRY_SHARE_INTENT: 'entry_share_intent',
   ENTRY_DIRECT: 'entry_direct',
@@ -67,6 +73,10 @@ export const AnalyticsParam = {
   // Screen & Navigation
   SCREEN_NAME: 'screen_name',
   PREVIOUS_SCREEN: 'previous_screen',
+
+  // Onboarding
+  ONBOARDING_STEP: 'step',
+  ONBOARDING_DURATION_SEC: 'duration_sec',
 
   // Entry & Source
   ENTRY_POINT: 'entry_point',
@@ -130,6 +140,9 @@ export const AnalyticsUserProperty = {
 // ============================================================================
 
 export const ScreenName = {
+  ONBOARDING_VALUE_PROP: 'onboarding_value_prop',
+  ONBOARDING_HOW_IT_WORKS: 'onboarding_how_it_works',
+  ONBOARDING_FREE_TRIAL: 'onboarding_free_trial',
   HOME: 'home',
   CAMERA: 'camera',
   PROCESSING: 'processing',

@@ -1,7 +1,7 @@
-# Onboarding & Pro Plan Promotion Concept
-## Cap2Cal User Experience & Monetization Strategy
+# Onboarding & Monetization Strategy
+## Cap2Cal User Experience & Revenue Optimization
 
-**Version:** 1.0
+**Version:** 2.0
 **Date:** 2025-01-08
 **Status:** Draft for Implementation
 
@@ -10,29 +10,261 @@
 ## Table of Contents
 
 1. [Executive Summary](#executive-summary)
-2. [Current State Analysis](#current-state-analysis)
-3. [Onboarding Flow Design](#onboarding-flow-design)
-4. [Pro Plan Promotion Strategy](#pro-plan-promotion-strategy)
-5. [User Journey & Touchpoints](#user-journey--touchpoints)
-6. [UI/UX Specifications](#uiux-specifications)
-7. [Technical Implementation Guide](#technical-implementation-guide)
-8. [Analytics & Optimization](#analytics--optimization)
-9. [Pricing Strategy](#pricing-strategy)
-10. [A/B Testing Recommendations](#ab-testing-recommendations)
-11. [Implementation Roadmap](#implementation-roadmap)
+2. [Business Model Options](#business-model-options)
+3. [Current State Analysis](#current-state-analysis)
+4. [Onboarding Flow Design](#onboarding-flow-design)
+5. [Monetization Strategy A: Affiliate Revenue](#monetization-strategy-a-affiliate-revenue)
+6. [Monetization Strategy B: Subscription Revenue](#monetization-strategy-b-subscription-revenue)
+7. [Monetization Strategy C: Hybrid Model](#monetization-strategy-c-hybrid-model)
+8. [User Journey & Touchpoints](#user-journey--touchpoints)
+9. [UI/UX Specifications](#uiux-specifications)
+10. [Technical Implementation Guide](#technical-implementation-guide)
+11. [Analytics & Optimization](#analytics--optimization)
+12. [A/B Testing Framework](#ab-testing-framework)
+13. [Implementation Roadmap](#implementation-roadmap)
 
 ---
 
 ## Executive Summary
 
-Cap2Cal currently lacks any onboarding experience and has no frontend UI for its already-implemented backend subscription infrastructure. This document proposes:
+Cap2Cal has **two potential revenue streams** that can be tested independently or combined:
 
-- **A lightweight, value-focused onboarding flow** (3 screens, ~30 seconds)
-- **Strategic pro plan touchpoints** throughout the user journey
-- **Soft paywall approach** that educates before limiting
-- **Implementation guidance** leveraging existing backend infrastructure
+### Revenue Stream #1: Affiliate Commissions
+- Users get **unlimited free captures**
+- Revenue from "Find Tickets" affiliate link clicks
+- Volume-based model (more users = more clicks = more revenue)
+- Lower friction, broader user base
 
-**Key Insight:** The backend is ready (auth, limits, remote config). We only need to build the frontend experience.
+### Revenue Stream #2: Subscription Plans
+- Users pay for **unlimited captures** after free tier (5/month)
+- Recurring revenue from Pro subscriptions
+- Predictable MRR, fewer users but higher ARPU
+- Backend infrastructure already complete
+
+### Recommended Approach: TEST BOTH
+Use the existing `paid_only` Remote Config flag to A/B test between models:
+- **`paid_only: false`** → Affiliate model (unlimited captures, promote ticket links)
+- **`paid_only: true`** → Subscription model (limit captures, promote Pro upgrade)
+- **Hybrid:** Combine both (free users see affiliate links, Pro users don't)
+
+This document provides implementation guidance for **all three strategies** so you can optimize based on real data.
+
+**Key Insight:** The backend is ready. We need to build:
+1. Onboarding (same for all models)
+2. Affiliate link optimization UI (for affiliate/hybrid)
+3. Subscription paywall UI (for subscription/hybrid)
+
+---
+
+## Business Model Options
+
+### Model Comparison
+
+| Factor | Affiliate Model | Subscription Model | Hybrid Model |
+|--------|----------------|-------------------|--------------|
+| **User Friction** | Low (unlimited free) | Medium (5 captures/month) | Low-Medium |
+| **Revenue Predictability** | Low (depends on clicks) | High (recurring MRR) | Medium-High |
+| **Scalability** | High (more users = more clicks) | Medium (conversion-limited) | High |
+| **ARPU** | Low ($0.10-0.50/user/month) | High ($2-5/user/month) | Medium-High |
+| **User Base Size** | Large (no paywall) | Smaller (paywall limits) | Large |
+| **Time to Revenue** | Immediate (first ticket click) | Delayed (after 5 captures) | Immediate + Recurring |
+| **Churn Risk** | N/A (all users free) | Medium (subscription fatigue) | Low (multiple revenue streams) |
+| **Implementation Complexity** | Low (UI changes only) | Medium (payment integration) | High (both systems) |
+
+---
+
+### Model A: Affiliate Revenue Only
+
+**Strategy:** Keep app completely free, monetize through ticket affiliate links
+
+#### How It Works
+1. User captures unlimited events (no capture limits)
+2. "Find Tickets" button prominently displayed on every event card
+3. Clicking "Find Tickets" → searches for tickets via affiliate program
+4. User purchases ticket → Cap2Cal earns commission (5-15% typical)
+
+#### Revenue Assumptions
+- **Conversion Rate:** 5-10% of events have available tickets
+- **Click-Through Rate:** 20-30% of users click "Find Tickets"
+- **Purchase Conversion:** 2-5% of clicks result in ticket purchase
+- **Average Commission:** $2-5 per ticket sold
+- **Monthly Revenue per 1000 Users:** $20-100
+
+#### Pros ✅
+- Zero friction (no paywalls, no limits)
+- Aligns with user intent (people want to attend events)
+- Scales with user growth
+- No payment integration needed
+- Better App Store ratings (free = happier users)
+- Viral growth potential (people share free apps)
+
+#### Cons ❌
+- Unpredictable revenue (depends on event types)
+- Not all events have ticketing (birthday parties, local gatherings)
+- Low commission rates (need high volume)
+- Dependent on affiliate program quality
+- Revenue lags behind user growth
+
+#### Best For
+- Early stage: Building large user base
+- Event types: Concerts, sports, festivals, theater
+- Geographic focus: Major cities with active event scenes
+
+#### Remote Config Setup
+```json
+{
+  "paid_only": false,
+  "show_affiliate_links": true,
+  "affiliate_link_prominence": "high"
+}
+```
+
+---
+
+### Model B: Subscription Revenue Only
+
+**Strategy:** Free tier (5 captures/month), paid Pro tier (unlimited)
+
+#### How It Works
+1. User gets 5 free captures per month
+2. After 5 captures → hard paywall
+3. Upgrade to Pro ($4.99/month or $24.99/year) for unlimited
+4. No affiliate links shown (cleaner UX for paying customers)
+
+#### Revenue Assumptions
+- **Free to Paid Conversion:** 5-10% of users upgrade
+- **Average Subscription:** $30/year (annual plan preferred)
+- **Churn Rate:** 5% monthly
+- **Monthly Revenue per 1000 Users:** $150-300
+
+#### Pros ✅
+- Predictable recurring revenue (MRR)
+- Higher ARPU than affiliate model
+- Clear value proposition (unlimited captures)
+- Independent of event types (all events count)
+- Easier financial forecasting
+- Premium brand positioning
+
+#### Cons ❌
+- Higher user friction (paywall)
+- Smaller user base (most users won't pay)
+- Requires payment integration (RevenueCat, Stripe)
+- Potential for negative reviews ("should be free")
+- Churn management overhead
+- Customer support for billing issues
+
+#### Best For
+- Power users: People who capture >5 events/month
+- Professional users: Event planners, organizers
+- Value-focused positioning: Premium tool for serious users
+
+#### Remote Config Setup
+```json
+{
+  "paid_only": true,
+  "free_capture_limit": 5,
+  "show_affiliate_links": false
+}
+```
+
+---
+
+### Model C: Hybrid (RECOMMENDED)
+
+**Strategy:** Combine affiliate revenue (free users) + subscription revenue (Pro users)
+
+#### How It Works
+1. **Free Tier (Unlimited Captures)**
+   - No capture limits
+   - "Find Tickets" affiliate links shown prominently
+   - Optional upgrade to Pro
+
+2. **Pro Tier ($2.99-4.99/month)**
+   - Unlimited captures (same as free)
+   - **No affiliate links** (cleaner, ad-free experience)
+   - Priority support
+   - Early access to features
+   - Cloud sync (future)
+   - Batch export (future)
+
+#### Revenue Assumptions
+- **90% Free Users:** Generate affiliate revenue ($0.20/user/month)
+- **10% Pro Users:** Generate subscription revenue ($3/user/month)
+- **Blended ARPU:** $0.18 + $0.30 = **$0.48/user/month**
+- **Monthly Revenue per 1000 Users:** $480
+
+#### Pros ✅
+- Two revenue streams (diversified)
+- No paywall (keeps free users engaged)
+- Higher conversion (Pro is optional, not required)
+- Better positioning (Pro = ad-free experience)
+- Scales both ways (volume + quality)
+- Retains all users (no one blocked)
+
+#### Cons ❌
+- More complex implementation (both systems)
+- Need to balance affiliate vs Pro messaging
+- Risk of cannibalizing Pro sales (if free is too good)
+- Requires ongoing optimization (which links to show, when)
+
+#### Best For
+- Long-term sustainability
+- Maximizing total revenue
+- Balancing growth + monetization
+- Broad user base with power user segment
+
+#### Remote Config Setup
+```json
+{
+  "paid_only": false,
+  "free_capture_limit": 999999,
+  "show_affiliate_links": true,
+  "hide_affiliate_for_pro": true,
+  "affiliate_link_prominence": "medium"
+}
+```
+
+---
+
+### Decision Framework
+
+#### Choose Affiliate Model If:
+- You want rapid user growth
+- Your target events have high ticketing rates (concerts, sports)
+- You don't want to manage subscriptions/payments yet
+- App Store ratings are critical (free apps rate higher)
+
+#### Choose Subscription Model If:
+- You need predictable revenue for investors/planning
+- Your users capture many events (>5/month)
+- You're building premium features worth paying for
+- You can justify the value clearly
+
+#### Choose Hybrid Model If:
+- You want to maximize total revenue
+- You're unsure which model works better (test both!)
+- You have time to implement both systems
+- You want to serve both casual and power users
+
+---
+
+### Recommended Testing Sequence
+
+**Phase 1 (Months 1-3): Affiliate Only**
+- Set `paid_only: false`
+- Focus on growth and user acquisition
+- Optimize affiliate link placement and CTR
+- Measure: DAU, affiliate clicks, commission revenue
+
+**Phase 2 (Months 4-6): Add Subscription Option**
+- Keep unlimited captures (no hard paywall)
+- Add optional Pro upgrade with benefits
+- Measure: free-to-paid conversion, Pro user retention
+
+**Phase 3 (Months 7+): Optimize Mix**
+- A/B test hard paywall for subset of users
+- Compare total revenue: affiliate-only vs hybrid vs subscription-only
+- Choose winning model based on data
 
 ---
 
@@ -226,16 +458,430 @@ Instead of upfront screens, teach during first use:
 
 ---
 
-## Pro Plan Promotion Strategy
+## Monetization Strategy A: Affiliate Revenue
+
+### Overview
+
+If you choose the **Affiliate Model** or **Hybrid Model**, optimizing the "Find Tickets" feature is critical for revenue generation. This section provides guidance on maximizing affiliate click-through rates and conversions.
+
+### Current Implementation
+
+Your app already has a "Find Tickets" button on event cards that searches for ticket purchase links via the `findTickets` backend API. This is the foundation for affiliate revenue.
+
+---
+
+### Affiliate Revenue Optimization Strategy
+
+#### 1. Prominent Ticket Link Placement
+
+**Goal:** Make finding tickets easy and visible
+
+##### Event Card - Primary CTA
+```
+┌─────────────────────────────────┐
+│  Concert: Taylor Swift          │
+│  Dec 15, 2025 • 7:00 PM        │
+│  Madison Square Garden          │
+│                                 │
+│  ┌───────────────────────────┐ │
+│  │  🎫 Find Tickets          │ │  ← PRIMARY BUTTON
+│  └───────────────────────────┘ │
+│                                 │
+│  [Export to Calendar]           │  ← Secondary button
+│  [Share Event]                  │
+│                                 │
+└─────────────────────────────────┘
+```
+
+**Design Principles:**
+- **High Contrast:** Use vibrant color (blue, purple, or brand color)
+- **Large Touch Target:** Full-width button, 48pt+ height
+- **Icon + Text:** Ticket emoji + clear label
+- **Above the Fold:** Visible without scrolling
+- **A/B Test Positions:** Test above vs below calendar export
+
+---
+
+#### 2. Smart Ticket Detection
+
+**Goal:** Only show "Find Tickets" when tickets are likely available
+
+**Implementation Strategy:**
+
+##### Option A: Show Always (Simplest)
+```typescript
+// Always show button, let backend handle search
+<Button onClick={handleFindTickets}>
+  🎫 Find Tickets
+</Button>
+```
+
+**Pros:** Simplest implementation, no false negatives
+**Cons:** Shows for events without tickets (birthday parties, etc.)
+
+##### Option B: Event Type Detection (Smarter)
+```typescript
+// Show based on event tags/keywords
+const hasTicketingKeywords = event.tags?.some(tag =>
+  ['concert', 'sports', 'festival', 'theater', 'show', 'game'].includes(tag.toLowerCase())
+);
+
+const eventTitleSuggestsTickets = /concert|show|game|festival|tour|performance/i.test(event.title);
+
+const shouldShowTickets = hasTicketingKeywords || eventTitleSuggestsTickets;
+
+{shouldShowTickets && (
+  <Button onClick={handleFindTickets}>
+    🎫 Find Tickets
+  </Button>
+)}
+```
+
+**Pros:** Reduces friction, only shows when relevant
+**Cons:** May miss some ticketed events
+
+##### Option C: Backend Prediction (Best)
+```typescript
+// Backend returns `hasTicketsAvailable: boolean` during extraction
+if (event.hasTicketsAvailable) {
+  <Button onClick={handleFindTickets}>
+    🎫 Find Tickets
+  </Button>
+}
+```
+
+**Implementation:**
+Add to Gemini AI prompt during extraction:
+```
+Determine if this event likely has tickets available for purchase.
+Return hasTicketsAvailable: true for concerts, sports events, festivals, theater, etc.
+Return hasTicketsAvailable: false for private events, birthdays, meetings, etc.
+```
+
+**Pros:** Most accurate, leverages AI
+**Cons:** Requires backend changes
+
+**Recommendation:** Start with Option A (show always), then upgrade to Option C after testing
+
+---
+
+#### 3. Ticket Link UI Enhancements
+
+##### A. Loading State
+```
+[Finding tickets...]  ← Spinner animation
+```
+
+##### B. Success State (Tickets Found)
+```
+┌─────────────────────────────────┐
+│  🎫 Tickets Available!          │
+│                                 │
+│  Ticketmaster • From $45        │  ← Price preview
+│  [Buy Tickets →]                │
+│                                 │
+│  StubHub • From $52             │
+│  [Buy Tickets →]                │
+└─────────────────────────────────┘
+```
+
+**Features:**
+- Show multiple ticket providers
+- Display price ranges (if available from API)
+- Direct links to purchase pages
+- Track which provider gets clicks (for optimization)
+
+##### C. No Tickets Found State
+```
+┌─────────────────────────────────┐
+│  ℹ️ No tickets found            │
+│                                 │
+│  This event may be private or   │
+│  tickets aren't available yet.  │
+│                                 │
+│  [OK]                           │
+└─────────────────────────────────┘
+```
+
+**Options:**
+- Don't show error (just hide button after search)
+- Show gentle message
+- Suggest user can still export to calendar
+
+---
+
+#### 4. Affiliate Link Tracking & Attribution
+
+**Goal:** Track which clicks generate revenue
+
+##### Analytics Events
+```typescript
+// When user taps "Find Tickets"
+logEvent('ticket_search_initiated', {
+  event_title: event.title,
+  event_type: event.tags[0],
+  has_location: !!event.location,
+});
+
+// When ticket links are found
+logEvent('ticket_links_found', {
+  event_title: event.title,
+  provider_count: ticketProviders.length,
+  providers: ticketProviders.map(p => p.name).join(','),
+});
+
+// When user taps specific ticket link
+logEvent('ticket_link_clicked', {
+  event_title: event.title,
+  provider: provider.name,
+  price_range: provider.priceRange,
+  affiliate_id: provider.affiliateId,
+});
+```
+
+##### Conversion Tracking
+Use UTM parameters or affiliate tracking IDs:
+```typescript
+const affiliateUrl = `${ticketUrl}?utm_source=cap2cal&utm_medium=app&utm_campaign=event_${eventId}&ref=cap2cal_${userId}`;
+```
+
+**Track in Firebase Analytics:**
+- Click-through rate (CTR): % of users who click "Find Tickets"
+- Provider preference: Which ticket providers get most clicks
+- Event type correlation: Which events drive most ticket searches
+- Conversion rate: % of clicks that result in purchases (if affiliate program provides this data)
+
+---
+
+#### 5. Gamification & Engagement
+
+**Goal:** Encourage users to check ticket links
+
+##### A. "Ticket Alerts" Feature
+```
+┌─────────────────────────────────┐
+│  🔔 Ticket Alert Set!           │
+│                                 │
+│  We'll notify you when tickets  │
+│  become available for:          │
+│  "Taylor Swift Concert"         │
+│                                 │
+│  [OK]                           │
+└─────────────────────────────────┘
+```
+
+**Implementation:**
+- User can "watch" events for ticket availability
+- Backend periodically checks if tickets are available
+- Push notification when tickets found
+- Drives re-engagement + affiliate clicks
+
+##### B. "Popular Events" Section
+```
+┌─────────────────────────────────┐
+│  🔥 Trending Events             │
+│                                 │
+│  🎤 Taylor Swift Tour           │
+│  🎫 Tickets from $89            │
+│                                 │
+│  ⚽ Lakers vs Warriors          │
+│  🎫 Tickets from $45            │
+└─────────────────────────────────┘
+```
+
+**Strategy:**
+- Show popular ticketed events in saved events view
+- Curate high-commission events
+- Drive additional ticket searches beyond captured events
+
+---
+
+#### 6. A/B Testing for Affiliate Optimization
+
+##### Test 1: Button Placement
+- **Control:** "Find Tickets" below calendar export
+- **Variant A:** "Find Tickets" above calendar export (primary CTA)
+- **Metric:** Click-through rate
+
+##### Test 2: Button Copy
+- **Control:** "🎫 Find Tickets"
+- **Variant A:** "🎫 Buy Tickets"
+- **Variant B:** "🎫 Get Tickets Now"
+- **Variant C:** "🎫 Tickets Available"
+- **Metric:** Click-through rate
+
+##### Test 3: Price Display
+- **Control:** No price shown, just provider names
+- **Variant A:** Show "From $XX" price preview
+- **Metric:** Click-through rate + conversion (if trackable)
+
+##### Test 4: Timing of Ticket CTA
+- **Control:** Show immediately on event card
+- **Variant A:** Show after calendar export (upsell)
+- **Variant B:** Show in push notification 24h before event
+- **Metric:** Total affiliate clicks per user
+
+---
+
+#### 7. Affiliate Partner Selection
+
+**Recommended Partners:**
+
+##### A. Ticketmaster Affiliate Program
+- **Commission:** 4-8% per sale
+- **Coverage:** Major concerts, sports, theater (US, UK, EU)
+- **API:** Yes (for price/availability checking)
+- **Approval:** Medium difficulty
+
+##### B. StubHub Affiliate (eBay Partner Network)
+- **Commission:** 5-7% per sale
+- **Coverage:** Secondary market (resale tickets)
+- **API:** Limited
+- **Approval:** Easy
+
+##### C. Eventbrite
+- **Commission:** 10-20% per sale (varies by event)
+- **Coverage:** Independent events, local shows
+- **API:** Excellent (event search, availability)
+- **Approval:** Easy
+
+##### D. SeatGeek
+- **Commission:** 5-10% per sale
+- **Coverage:** Sports, concerts, theater
+- **API:** Yes
+- **Approval:** Medium
+
+##### E. Regional Partners
+- **Europe:** Eventim, See Tickets
+- **Asia:** BookMyShow (India), Viagogo
+- **Australia:** Ticketek
+
+**Strategy:**
+- Start with 2-3 partners (Ticketmaster + Eventbrite + regional)
+- Show all available options to users (maximize conversion)
+- Track which partners drive most revenue
+- Negotiate better rates as volume grows
+
+---
+
+#### 8. Remote Config for Affiliate Features
+
+**Config Parameters:**
+
+```json
+{
+  "show_affiliate_links": true,
+  "affiliate_link_prominence": "high",
+  "ticket_button_position": "above_export",
+  "ticket_button_text": "🎫 Find Tickets",
+  "show_ticket_prices": true,
+  "enabled_affiliates": ["ticketmaster", "eventbrite", "stubhub"],
+  "ticket_search_auto_trigger": false,
+  "hide_affiliate_for_pro": true
+}
+```
+
+**Use Cases:**
+- **A/B Testing:** Toggle features for user cohorts
+- **Pro User Experience:** Hide affiliate links for paying users
+- **Regional Optimization:** Enable different partners by country
+- **Emergency Off Switch:** Disable if affiliate program suspended
+
+---
+
+#### 9. Revenue Projections
+
+**Scenario Analysis:**
+
+##### Conservative (Affiliate Only)
+- **Monthly Active Users:** 1,000
+- **Avg Captures per User:** 3
+- **% Events with Tickets:** 15%
+- **Ticket Link CTR:** 20%
+- **Purchase Conversion:** 3%
+- **Avg Commission:** $3
+
+**Calculation:**
+- 1,000 users × 3 captures = 3,000 events/month
+- 3,000 × 15% ticketed = 450 ticketed events
+- 450 × 20% CTR = 90 clicks
+- 90 × 3% purchase = 2.7 sales/month
+- 2.7 × $3 = **$8/month**
+
+**Per 1,000 MAU: $8**
+
+##### Moderate (Optimized Affiliate)
+- **Monthly Active Users:** 1,000
+- **Avg Captures per User:** 5 (higher engagement)
+- **% Events with Tickets:** 25% (better targeting)
+- **Ticket Link CTR:** 35% (optimized UI)
+- **Purchase Conversion:** 5%
+- **Avg Commission:** $4
+
+**Calculation:**
+- 1,000 × 5 = 5,000 events
+- 5,000 × 25% = 1,250 ticketed events
+- 1,250 × 35% = 437 clicks
+- 437 × 5% = 22 sales
+- 22 × $4 = **$88/month**
+
+**Per 1,000 MAU: $88**
+
+##### Aggressive (Hybrid Model)
+- **Monthly Active Users:** 1,000
+  - 900 free users (affiliate revenue)
+  - 100 Pro users (subscription revenue)
+- **Free User Affiliate Revenue:** 900 × $0.088 = $79/month
+- **Pro User Subscription Revenue:** 100 × $3/month = $300/month
+- **Total Revenue:** **$379/month**
+
+**Per 1,000 MAU: $379 (blended)**
+
+---
+
+### Implementation Checklist for Affiliate Model
+
+**Phase 1: Basic Implementation**
+- [ ] Add prominent "Find Tickets" button to event cards
+- [ ] Implement loading/success/error states
+- [ ] Add analytics tracking (click, found, no results)
+- [ ] Test with 2-3 affiliate partners
+- [ ] Set up affiliate accounts (Ticketmaster, Eventbrite)
+
+**Phase 2: Optimization**
+- [ ] Add smart ticket detection (event type filtering)
+- [ ] Show price previews (if API supports)
+- [ ] A/B test button placement and copy
+- [ ] Track conversion rates per partner
+- [ ] Add Remote Config toggles
+
+**Phase 3: Advanced Features**
+- [ ] Implement ticket price alerts
+- [ ] Add "trending events" section
+- [ ] Build affiliate dashboard (revenue tracking)
+- [ ] Negotiate higher commission rates
+- [ ] Add regional affiliate partners
+
+---
+
+## Monetization Strategy B: Subscription Revenue
 
 ### Philosophy
 **"Soft Paywall with Progressive Engagement"**
+
+**Note:** This section applies only if you enable `paid_only: true` in Remote Config.
 
 Users should:
 1. Experience value before seeing pricing
 2. Be gently reminded of limits before hitting them
 3. Understand benefits, not just features
 4. Have multiple upgrade touchpoints
+
+### Overview
+
+This strategy implements a freemium model where users get a limited number of captures for free, then must upgrade to Pro for unlimited access. All the UI components and flows described here are **optional** - controlled by the `paid_only` Remote Config flag.
+
+---
 
 ### Monetization Tiers
 
@@ -500,6 +1146,305 @@ Replace current generic error dialog in `NotCaptured.atom.tsx` with dedicated pa
 - Selecting plan → highlights selection
 - "Subscribe" button → initiates purchase flow
 - Track: `pricing_viewed`, `plan_selected`, `purchase_initiated`
+
+---
+
+## Monetization Strategy C: Hybrid Model (RECOMMENDED)
+
+### Overview
+
+The **Hybrid Model** combines the best of both worlds: affiliate revenue from free users + subscription revenue from Pro users. This maximizes total revenue while keeping the app accessible to all users.
+
+### Key Differentiators
+
+#### Free Users
+- **Unlimited captures** (no paywall)
+- See "Find Tickets" affiliate links prominently
+- All core features available
+- Ads or affiliate promotions visible
+
+#### Pro Users ($2.99-4.99/month)
+- **Unlimited captures** (same as free)
+- **No affiliate links** (cleaner, ad-free experience)
+- Priority support
+- Early access to new features
+- Cloud sync (future)
+- Batch export (future)
+- Pro badge in settings
+
+### Why Hybrid Works Best
+
+1. **No Paywall Friction:** Free users never hit a capture limit, keeping engagement high
+2. **Two Revenue Streams:** Diversified income (affiliate + subscriptions)
+3. **Clear Upgrade Value:** Pro = "ad-free experience" is easy to understand
+4. **Higher Conversion:** Pro is optional, not required (less resentment)
+5. **Scalability:** Grows both ways (more free users = more affiliate clicks, power users upgrade)
+
+---
+
+### Implementation Strategy
+
+#### Remote Config Setup
+```json
+{
+  "paid_only": false,
+  "free_capture_limit": 999999,
+  "show_affiliate_links": true,
+  "hide_affiliate_for_pro": true,
+  "affiliate_link_prominence": "medium",
+  "pro_benefits": ["ad_free", "priority_support", "early_access"]
+}
+```
+
+#### User Experience Flows
+
+##### Free User Flow
+```
+Capture Event
+  ├─ AI Extraction succeeds
+  ├─ Event card displayed
+  ├─ "Find Tickets" button shown (prominent)
+  ├─ User clicks → Affiliate link
+  └─ Optional "Upgrade to Pro" banner (dismissible)
+```
+
+##### Pro User Flow
+```
+Capture Event
+  ├─ AI Extraction succeeds
+  ├─ Event card displayed
+  ├─ "Find Tickets" button HIDDEN
+  ├─ Clean, ad-free interface
+  └─ Pro badge visible in settings
+```
+
+#### Upgrade Touchpoints for Hybrid Model
+
+Unlike the subscription-only model, Pro upgrades in the Hybrid model are **entirely optional**. Position Pro as a premium experience, not a requirement.
+
+##### 1. Settings Page "Upgrade to Pro" Section
+```
+┌─────────────────────────────────┐
+│   Settings                      │
+│                                 │
+│   ⭐ Upgrade to Pro              │
+│   ┌───────────────────────────┐ │
+│   │ Enjoy an ad-free,         │ │
+│   │ distraction-free          │ │
+│   │ experience                │ │
+│   │                           │ │
+│   │ [See Pro Benefits]        │ │
+│   └───────────────────────────┘ │
+│                                 │
+└─────────────────────────────────┘
+```
+
+**Tone:** Aspirational, not pushy
+
+##### 2. Dismissible Banner on Saved Events
+```
+┌─────────────────────────────────┐
+│   Saved Events            [X]   │
+│                                 │
+│   ┌───────────────────────────┐ │
+│   │ 💎 Upgrade to Pro         │ │
+│   │ Remove ads & get priority │ │
+│   │ support    [Learn More]   │ │
+│   └───────────────────────────┘ │
+│                                 │
+│   Today                         │
+│   ├─ Concert at...              │
+└─────────────────────────────────┘
+```
+
+**Behavior:**
+- Shown max once per day
+- Dismissible (close icon)
+- Stays hidden for 7 days after dismiss
+
+##### 3. After 10th Capture (Engagement Milestone)
+```
+┌─────────────────────────────────┐
+│                                 │
+│   🎉 You're on a roll!          │
+│   You've captured 10 events     │
+│                                 │
+│   Love Cap2Cal? Upgrade to Pro  │
+│   for an ad-free experience     │
+│                                 │
+│   [Maybe Later]  [See Pro Plans]│
+│                                 │
+└─────────────────────────────────┘
+```
+
+**Timing:** After user demonstrates engagement (10 captures)
+**Tone:** Celebratory, not limiting
+
+##### 4. "Try Pro Free for 7 Days" (Optional)
+```
+┌─────────────────────────────────┐
+│                                 │
+│   ✨ Try Pro Free for 7 Days    │
+│                                 │
+│   ✅ Ad-free experience         │
+│   ✅ Priority support           │
+│   ✅ Early feature access       │
+│                                 │
+│   Cancel anytime, no charge     │
+│   until trial ends              │
+│                                 │
+│   [Start Free Trial]            │
+│                                 │
+└─────────────────────────────────┘
+```
+
+**Strategy:** Free trial increases conversion (standard for subscription apps)
+**Note:** Requires payment provider setup (RevenueCat handles this)
+
+---
+
+### Pro Benefits to Promote (Hybrid Model)
+
+Since free users already get unlimited captures, Pro benefits must focus on **quality of experience**:
+
+#### Core Benefits
+1. **Ad-Free Experience**
+   - No affiliate ticket links
+   - No promotional banners
+   - Clean, distraction-free interface
+
+2. **Priority Support**
+   - Email response <24h
+   - Direct access to developer
+   - Bug fixes prioritized
+
+3. **Early Access to Features**
+   - Beta features before public release
+   - Vote on feature roadmap
+   - Exclusive features (see Future Features below)
+
+#### Future Pro-Only Features (Upsell Opportunities)
+
+1. **Cloud Sync**
+   - Sync events across devices
+   - Access from web dashboard
+   - Never lose events
+
+2. **Batch Export**
+   - Export multiple events at once
+   - Create calendar bundles
+   - Share event collections
+
+3. **Advanced Editing**
+   - Edit AI-extracted details before export
+   - Create recurring events
+   - Custom calendar categories
+
+4. **Smart Notifications**
+   - Reminders before events
+   - Traffic alerts for event location
+   - Ticket price drop alerts
+
+5. **Event Analytics**
+   - Personal event stats
+   - Most attended venues
+   - Event type breakdowns
+
+6. **API Access**
+   - Integrate with other apps
+   - Automation workflows
+   - Developer tools
+
+**Strategy:** Launch with simple Pro tier (ad-free + support), add premium features over time to increase perceived value and justify higher pricing.
+
+---
+
+### Revenue Comparison: Hybrid vs Others
+
+**Scenario: 1,000 Monthly Active Users**
+
+#### Affiliate Only
+- 1,000 free users × $0.088/user = **$88/month**
+- **Churn:** N/A (all users free)
+- **ARPU:** $0.088
+
+#### Subscription Only (paid_only: true)
+- 100 Pro users (10% conversion) × $3/month = **$300/month**
+- 900 users blocked or churned
+- **Churn:** 5%/month
+- **ARPU:** $0.30 (only counting paying users)
+
+#### Hybrid (RECOMMENDED)
+- 900 free users × $0.088 = $79/month (affiliate revenue)
+- 100 Pro users × $3/month = $300/month (subscription revenue)
+- **Total:** **$379/month**
+- **Churn:** 2% (Pro users), 0% (free users)
+- **Blended ARPU:** $0.379
+
+**Winner:** Hybrid generates **30% more revenue** than subscription alone, **330% more** than affiliate alone.
+
+---
+
+### Analytics for Hybrid Model
+
+Track both affiliate AND subscription metrics:
+
+#### Affiliate Metrics (Free Users)
+```
+ticket_search_initiated
+  → ticket_links_found
+  → ticket_link_clicked
+  → ticket_purchase_completed (if trackable)
+```
+
+#### Subscription Metrics (All Users)
+```
+upgrade_prompt_shown (trigger: 'settings' | '10th_capture' | 'banner')
+  → pricing_viewed
+  → plan_selected
+  → trial_started (if offering free trial)
+  → purchase_completed
+```
+
+#### User Cohorts
+- **Free Users (Non-Pro):** Track affiliate revenue per user
+- **Pro Users:** Track LTV, churn rate, features used
+- **Trial Users:** Track trial-to-paid conversion
+
+#### Key Questions to Answer
+1. What % of revenue comes from affiliates vs subscriptions?
+2. Do Pro users engage more than free users?
+3. Which Pro features are most valued?
+4. What triggers the highest upgrade conversions?
+5. Does hiding affiliate links increase Pro conversions?
+
+---
+
+### Implementation Checklist for Hybrid Model
+
+**Phase 1: Affiliate Foundation**
+- [ ] Implement prominent "Find Tickets" for free users
+- [ ] Hide affiliate links for Pro users
+- [ ] Track affiliate clicks and conversions
+- [ ] Set up affiliate partnerships
+
+**Phase 2: Pro Subscription**
+- [ ] Create "Upgrade to Pro" UI in settings
+- [ ] Implement dismissible Pro banner
+- [ ] Add 10th capture celebration + upgrade prompt
+- [ ] Integrate payment provider (RevenueCat)
+
+**Phase 3: Differentiation**
+- [ ] Add "Pro" badge in settings
+- [ ] Ensure affiliate links hidden for Pro users
+- [ ] Implement priority support email workflow
+- [ ] Add Pro-only features (cloud sync, batch export, etc.)
+
+**Phase 4: Optimization**
+- [ ] A/B test Pro messaging
+- [ ] Test free trial vs no trial
+- [ ] Optimize affiliate link prominence
+- [ ] Monitor revenue mix (affiliate vs subscription)
 
 ---
 
@@ -1834,35 +2779,199 @@ Your limit will reset on [Date], or you can upgrade to Pro for unlimited capture
 
 ## Final Recommendations
 
+### Which Business Model Should You Choose?
+
+**Our Recommendation: Start with Affiliate Model, Evolve to Hybrid**
+
+#### Phase 1 (Launch → Month 3): Affiliate Only
+```json
+{
+  "paid_only": false,
+  "show_affiliate_links": true,
+  "affiliate_link_prominence": "high"
+}
+```
+
+**Rationale:**
+- ✅ Zero friction → maximize user acquisition and growth
+- ✅ No payment integration needed → faster launch
+- ✅ Better App Store ratings (free apps rate higher)
+- ✅ Prove affiliate revenue model works
+- ✅ Build large user base first
+
+**Focus:**
+- Onboarding optimization
+- Affiliate link CTR optimization
+- User growth and retention
+- Data collection on which events drive ticket clicks
+
+---
+
+#### Phase 2 (Month 4-6): Add Optional Pro (Hybrid Model)
+```json
+{
+  "paid_only": false,
+  "free_capture_limit": 999999,
+  "show_affiliate_links": true,
+  "hide_affiliate_for_pro": true
+}
+```
+
+**Rationale:**
+- ✅ Keep all existing users (no one blocked)
+- ✅ Add second revenue stream for power users
+- ✅ Test subscription willingness without risk
+- ✅ Pro = "ad-free experience" is clear value prop
+
+**Focus:**
+- Pro tier implementation (RevenueCat integration)
+- A/B test Pro messaging and pricing
+- Track conversion rates
+- Optimize revenue mix
+
+---
+
+#### Phase 3 (Month 7+): Optimize Based on Data
+
+**If affiliate revenue is strong:** Stay with Hybrid, keep it optional
+**If subscription conversions are high:** Consider hard paywall for new users (A/B test)
+**If both are working:** Keep Hybrid, optimize both streams
+
+---
+
 ### Do's ✅
-1. **Start with 5 free captures** - generous enough to show value
-2. **Show onboarding to everyone** - even simple apps benefit from orientation
-3. **Use soft paywall approach** - educate before blocking
-4. **Highlight annual plan** - better for revenue and retention
-5. **Track everything** - analytics are critical for optimization
-6. **Use RevenueCat** - saves weeks of payment integration work
-7. **A/B test everything** - pricing, messaging, timing
+
+#### For All Models
+1. **Show onboarding to everyone** - even simple apps benefit from orientation
+2. **Track everything** - analytics are critical for optimization
+3. **A/B test everything** - pricing, messaging, timing, button placement
+4. **Don't forget Android share intent users** - they skip onboarding
+5. **Mobile-first design** - optimize for thumb-friendly interactions
+
+#### For Affiliate Model
+6. **Make "Find Tickets" prominent** - it's your revenue driver
+7. **Partner with multiple providers** - Ticketmaster + Eventbrite + regional
+8. **Track affiliate performance** - clicks, providers, event types
+9. **Optimize for high-ticketing events** - concerts, sports, festivals
+
+#### For Subscription/Hybrid Model
+10. **Use soft paywall approach** - educate before blocking (if using limits)
+11. **Highlight annual plan** - better for revenue and retention
+12. **Use RevenueCat** - saves weeks of payment integration work
+13. **Don't block before value is shown** - let users experience the app first
+
+---
 
 ### Don'ts ❌
-1. **Don't block before value is shown** - let users complete 5 captures
-2. **Don't spam upgrade prompts** - max 2-3 nudges before hard limit
-3. **Don't make onboarding skippable too easily** - hide skip button until 5 seconds
-4. **Don't forget to test purchases** - use sandbox accounts thoroughly
-5. **Don't launch without analytics** - you'll be flying blind
-6. **Don't forget Android share intent users** - they skip onboarding
-7. **Don't set prices too low** - undervaluing hurts long-term sustainability
+
+#### For All Models
+1. **Don't launch without analytics** - you'll be flying blind
+2. **Don't make onboarding skippable too easily** - hide skip button until 5 seconds
+3. **Don't skip user testing** - test flows with real users before launch
+4. **Don't ignore feedback** - App Store reviews reveal monetization friction
+
+#### For Affiliate Model
+5. **Don't show tickets for all events** - filter to ticketed events only (concerts, sports, etc.)
+6. **Don't rely on one partner** - diversify affiliate relationships
+7. **Don't make affiliate links look like ads** - integrate naturally into event cards
+
+#### For Subscription Model
+8. **Don't set prices too low** - undervaluing hurts long-term sustainability
+9. **Don't spam upgrade prompts** - max 2-3 nudges before hard limit
+10. **Don't forget to test purchases** - use sandbox accounts thoroughly
+11. **Don't enable hard paywall (`paid_only: true`) until you have data** - test affiliate first
+
+---
+
+### Quick Start Guide
+
+**Want to launch ASAP? Do This:**
+
+#### Week 1-2: Onboarding Only
+1. Implement 3-screen onboarding
+2. Add onboarding analytics
+3. Test with beta users
+4. Launch with `paid_only: false` (no limits)
+
+**Result:** Users see onboarding, unlimited free captures, existing "Find Tickets" button
+
+#### Week 3-4: Optimize Affiliate Links (Optional)
+5. Make "Find Tickets" more prominent
+6. Add affiliate link analytics
+7. Test button copy and placement
+8. Set up affiliate partnerships (Ticketmaster, Eventbrite)
+
+**Result:** Basic affiliate revenue starts flowing
+
+#### Week 5-8: Add Pro Subscription (Optional)
+9. Implement "Upgrade to Pro" UI in settings
+10. Integrate RevenueCat
+11. Add payment flow
+12. Keep captures unlimited (Hybrid model)
+
+**Result:** Dual revenue streams (affiliate + subscriptions)
+
+---
+
+### Decision Tree
+
+```
+Start Here: Do you need revenue immediately?
+  │
+  ├─ YES → Go with Subscription Model
+  │         - Implement hard paywall (5 captures/month)
+  │         - Integrate payments (RevenueCat)
+  │         - Focus on conversion optimization
+  │         - Higher revenue per user, smaller user base
+  │
+  └─ NO → Go with Affiliate Model
+            - Keep unlimited captures
+            - Optimize "Find Tickets" button
+            - Build large user base
+            - Add subscriptions later (Hybrid)
+            - Higher user growth, lower initial revenue
+
+Recommendation: Start with Affiliate → Grow users → Add subscriptions → Test both (Hybrid)
+```
+
+---
+
+### Remote Config Testing Matrix
+
+Use Remote Config to A/B test different models:
+
+| User Cohort | `paid_only` | `show_affiliate_links` | Result |
+|-------------|-------------|------------------------|--------|
+| **Control (50%)** | false | true | Affiliate Model |
+| **Variant A (25%)** | true | false | Subscription Model |
+| **Variant B (25%)** | false | true + hide for Pro | Hybrid Model |
+
+**After 30 days, compare:**
+- Total revenue per cohort
+- User retention rates
+- App Store ratings
+- Support ticket volume
+
+**Choose the winner based on:**
+1. Total revenue (primary metric)
+2. User satisfaction (ratings, NPS)
+3. Long-term retention
+4. Scalability
 
 ---
 
 **Next Steps:**
-1. Review this document with your team
-2. Create design mockups for onboarding screens
-3. Set up RevenueCat account
-4. Start Phase 1 implementation
-5. Schedule weekly progress reviews
+1. **Decide your Phase 1 model** (recommendation: Affiliate Only)
+2. Review this document with your team
+3. Create design mockups for onboarding screens
+4. If doing subscriptions: Set up RevenueCat account
+5. If doing affiliate: Set up Ticketmaster/Eventbrite accounts
+6. Start Phase 1 implementation (onboarding first)
+7. Schedule weekly progress reviews
 
 ---
 
 **Document Owner:** Franz
 **Last Updated:** 2025-01-08
+**Version:** 2.0 (Dual Revenue Model)
 **Status:** Ready for Implementation

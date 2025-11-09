@@ -31,6 +31,35 @@
       "noFavouritesYet": "Noch keine Favoriten"
     },
     "dialogs": {
+      "onboarding": {
+        "valueProp": {
+          "title": "Verwandle Event-Poster in Kalendereinträge",
+          "subtitle": "Einfach fotografieren, wir erledigen den Rest"
+        },
+        "howItWorks": {
+          "title": "So funktioniert's",
+          "step1Title": "Erfassen",
+          "step1Description": "Fotografiere ein Event-Poster",
+          "step2Title": "Extrahieren",
+          "step2Description": "KI liest alle Details",
+          "step3Title": "Speichern",
+          "step3Description": "Exportiere in deinen Kalender"
+        },
+        "freeTrial": {
+          "title": "Bereit loszulegen?",
+          "bullet1": "Erste 5 Erfassungen KOSTENLOS",
+          "bullet2": "Keine Kreditkarte erforderlich",
+          "bullet3": "Funktioniert mit allen Kalendern",
+          "permissionsTitle": "Wir benötigen Zugriff auf:",
+          "permissionCamera": "Kamera - um Events zu erfassen",
+          "permissionCalendar": "Kalender - um Events zu speichern"
+        },
+        "navigation": {
+          "next": "Weiter",
+          "skip": "Überspringen",
+          "getStarted": "Loslegen"
+        }
+      },
       "firstStart": {
         "title": "Erster Start",
         "description": "Dies war der erste Start"
