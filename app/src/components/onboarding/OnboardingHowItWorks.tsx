@@ -5,14 +5,14 @@ export const OnboardingHowItWorks: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center text-center px-6 max-w-md">
+    <div className="flex h-full w-full flex-col items-center justify-center px-8 py-12">
       {/* Title */}
-      <h2 className="text-3xl font-bold text-secondary mb-12">
+      <h2 className="mb-12 text-center text-3xl font-bold text-secondary">
         {t('dialogs.onboarding.howItWorks.title')}
       </h2>
 
       {/* Steps */}
-      <div className="flex flex-col gap-8 w-full">
+      <div className="flex w-full max-w-sm flex-col gap-8">
         {/* Step 1: Capture */}
         <div className="flex items-start gap-4 text-left">
           <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center">

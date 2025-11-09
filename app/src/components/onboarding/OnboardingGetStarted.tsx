@@ -5,14 +5,14 @@ export const OnboardingGetStarted: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center justify-center text-center px-6 max-w-md">
+    <div className="flex h-full w-full flex-col items-center justify-center px-8 py-12">
       {/* Title */}
-      <h2 className="text-3xl font-bold text-secondary mb-8">
+      <h2 className="mb-8 text-center text-3xl font-bold text-secondary">
         {t('dialogs.onboarding.getStarted.title')}
       </h2>
 
       {/* Benefits */}
-      <div className="flex flex-col gap-4 w-full mb-8">
+      <div className="mb-8 flex w-full max-w-sm flex-col gap-4">
         <div className="flex items-center gap-3 text-left">
           <div className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
             <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">

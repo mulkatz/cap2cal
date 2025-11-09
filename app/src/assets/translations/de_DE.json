@@ -33,13 +33,13 @@
     "dialogs": {
       "onboarding": {
         "valueProp": {
-          "title": "Verwandle Event-Poster in Kalendereinträge",
-          "subtitle": "Einfach fotografieren, wir erledigen den Rest"
+          "title": "Verwandle Alles in Kalendereinträge",
+          "subtitle": "Poster, Flyer, Social Posts, Einladungen — wir erledigen den Rest"
         },
         "howItWorks": {
           "title": "So funktioniert's",
           "step1Title": "Erfassen",
-          "step1Description": "Fotografiere ein Event-Poster",
+          "step1Description": "Fotografiere alles mit Datumsangaben",
           "step2Title": "Extrahieren",
           "step2Description": "KI liest alle Details",
           "step3Title": "Speichern & Kaufen",

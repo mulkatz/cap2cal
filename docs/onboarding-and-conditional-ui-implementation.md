@@ -42,6 +42,18 @@ Cap2Cal now features a comprehensive onboarding experience and flexible monetiza
 
 **"Show, Don't Tell"** - The onboarding focuses on demonstrating value rather than explaining features.
 
+**"Everything, Not Just Posters"** - Cap2Cal's positioning emphasizes universal applicability. Rather than pigeonholing as "an event poster scanner", we position it as a universal date-information extractor that works with:
+- Physical materials: posters, flyers, brochures, tickets
+- Digital content: social media posts, screenshots, PDFs
+- Personal items: handwritten invites, letters, emails
+- Professional content: conference schedules, meeting agendas
+
+This broader positioning:
+- ✅ Increases perceived value (more use cases)
+- ✅ Reduces user friction (works with anything they already have)
+- ✅ Enables viral sharing (more shareable moments)
+- ✅ Expands addressable market (beyond just event-goers)
+
 ### Screen-by-Screen Breakdown
 
 #### Screen 1: Value Proposition
@@ -50,28 +62,44 @@ Cap2Cal now features a comprehensive onboarding experience and flexible monetiza
 ```
 ┌─────────────────────────────┐
 │                             │
+│         [App Logo]          │
+│                             │
 │    📷  →  📅               │
 │   Camera  Calendar          │
 │                             │
-│  Turn Event Posters into    │
+│  Turn Everything into       │
 │    Calendar Events          │
 │                             │
-│  Just snap a photo,         │
-│  we'll handle the rest      │
+│  Posters, flyers, social    │
+│  posts, invites — we        │
+│  handle the rest            │
 │                             │
 └─────────────────────────────┘
 ```
 
-**Purpose**: Instantly communicate the core value proposition
+**Purpose**: Instantly communicate the core value proposition and broad applicability
 
 **Copy**:
-- **EN**: "Turn Event Posters into Calendar Events"
-- **DE**: "Verwandle Event-Poster in Kalendereinträge"
+- **EN**: "Turn Everything into Calendar Events"
+- **Subtitle**: "Posters, flyers, social posts, invites — we handle the rest"
+- **DE**: "Verwandle Alles in Kalendereinträge"
+- **Subtitle**: "Poster, Flyer, Social Posts, Einladungen — wir erledigen den Rest"
 
 **Visual Elements**:
+- **App logo** at the top (rounded square icon)
 - Camera icon → Arrow → Calendar icon
+- Centered layout with proper padding
 - Clean, minimalist design
 - Magic pattern background
+
+**Key Positioning Change**: Emphasizes that Cap2Cal works with **any content containing date information**, not just event posters. This broadens the perceived use cases to include:
+- Physical posters and flyers
+- Social media screenshots (Instagram, Facebook events)
+- Email invitations
+- Handwritten notes
+- PDF documents
+- Conference schedules
+- Anything with date/time information
 
 ---
 
@@ -83,7 +111,8 @@ Cap2Cal now features a comprehensive onboarding experience and flexible monetiza
 │      How It Works           │
 │                             │
 │  📷  1. Capture             │
-│      Photo any event poster │
+│      Photo anything with    │
+│      date info              │
 │                             │
 │  💡  2. Extract             │
 │      AI reads all details   │
@@ -97,9 +126,14 @@ Cap2Cal now features a comprehensive onboarding experience and flexible monetiza
 
 **Purpose**: Break down the user journey into 3 simple steps
 
-**Key Change**: Step 3 mentions "Save & Buy" and "buy tickets directly" to highlight the ticket purchasing feature (affiliate revenue opportunity)
+**Key Changes**:
+- Step 1: Changed from "Photo any event poster" to "Photo anything with date info" to emphasize broad applicability
+- Step 3: Mentions "Save & Buy" and "buy tickets directly" to highlight the ticket purchasing feature (affiliate revenue opportunity)
+- Centered layout with consistent padding
 
 **Copy Updates**:
+- ❌ Old: "Capture - Photo any event poster"
+- ✅ New: "Capture - Photo anything with date info"
 - ❌ Old: "Save - Export to your calendar"
 - ✅ New: "Save & Buy - Export to calendar and buy tickets directly"
 
