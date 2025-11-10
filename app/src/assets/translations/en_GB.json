@@ -97,6 +97,27 @@
         "notNow": "Not Now",
         "capturesRemaining": "{{count}} captures remaining"
       },
+      "paywall": {
+        "title": "Never Miss an Event",
+        "subtitle": "You've hit your free limit. Upgrade to capture unlimited events and never miss out!",
+        "bestValue": "BEST VALUE",
+        "yearlyTitle": "Annual Plan",
+        "yearlySubtext": "Just $0.83/month - Save 17%",
+        "perYear": "/year",
+        "monthlyTitle": "Monthly Plan",
+        "monthlySubtext": "Billed monthly, cancel anytime",
+        "perMonth": "/month",
+        "whatsIncluded": "What's Included",
+        "benefit1": "Unlimited event captures - never hit a limit again",
+        "benefit2": "Priority AI processing - get results faster",
+        "benefit3": "Advanced event detection - capture complex events",
+        "benefit4": "Support indie development - help us build more features",
+        "testimonial": "\"This app saves me hours every week!\" - Sarah, Pro User",
+        "cta": "Continue with {{plan}}",
+        "notNow": "Maybe Later",
+        "restorePurchases": "Restore Purchases",
+        "legalText": "Subscription auto-renews unless canceled. Cancel anytime in Settings."
+      },
       "loading": {
         "phrases": {
           "phrase1": {

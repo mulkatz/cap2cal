@@ -97,6 +97,27 @@
         "notNow": "Nicht jetzt",
         "capturesRemaining": "{{count}} Erfassungen verbleibend"
       },
+      "paywall": {
+        "title": "Verpasse kein Event",
+        "subtitle": "Du hast dein kostenloses Limit erreicht. Upgrade für unbegrenzte Event-Erfassungen!",
+        "bestValue": "BESTER WERT",
+        "yearlyTitle": "Jahresabo",
+        "yearlySubtext": "Nur 0,83 €/Monat - Spare 17%",
+        "perYear": "/Jahr",
+        "monthlyTitle": "Monatsabo",
+        "monthlySubtext": "Monatlich abgerechnet, jederzeit kündbar",
+        "perMonth": "/Monat",
+        "whatsIncluded": "Das ist enthalten",
+        "benefit1": "Unbegrenzte Event-Erfassungen - nie wieder Limits",
+        "benefit2": "Prioritäts-KI-Verarbeitung - schnellere Ergebnisse",
+        "benefit3": "Erweiterte Event-Erkennung - komplexe Events erfassen",
+        "benefit4": "Unterstütze Indie-Entwicklung - hilf uns neue Features zu bauen",
+        "testimonial": "\"Diese App spart mir jede Woche Stunden!\" - Sarah, Pro-Nutzerin",
+        "cta": "Weiter mit {{plan}}",
+        "notNow": "Vielleicht später",
+        "restorePurchases": "Käufe wiederherstellen",
+        "legalText": "Das Abo verlängert sich automatisch, sofern nicht gekündigt. Jederzeit in den Einstellungen kündbar."
+      },
       "loading": {
         "phrases": {
           "phrase1": {

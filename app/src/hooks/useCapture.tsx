@@ -1,6 +1,7 @@
 import React, { ChangeEvent, RefObject, useEffect, useState } from 'react';
 import { NotCaptured } from '../components/dialogs/NotCaptured.atom.tsx';
 import { UpgradeDialog } from '../components/dialogs/UpgradeDialog.tsx';
+import { PaywallSheet } from '../components/dialogs/PaywallSheet.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { Dialog } from '../components/Dialog.tsx';
 import { CardController } from '../components/Card.controller.tsx';
@@ -25,6 +26,7 @@ import {
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
+  const [isPaywallOpen, setIsPaywallOpen] = useState(false);
 
   const { t } = useTranslation();
   const dialogs = useDialogContext();
@@ -188,22 +190,15 @@ export const useCapture = () => {
   };
 
   const pushError = (reason: ExtractionError) => {
-    // Show upgrade dialog if limit is reached and paid_only is enabled
+    // Show paywall sheet if limit is reached and paid_only is enabled
     if (reason === 'LIMIT_REACHED' && featureFlags?.paid_only) {
-      dialogs.replace(
-        <Dialog onClose={popAndBackHome} full>
-          <Card>
-            <UpgradeDialog
-              onUpgrade={() => {
-                // TODO: Implement payment flow (e.g., RevenueCat)
-                console.log('Upgrade clicked - integrate payment provider here');
-                popAndBackHome();
-              }}
-              onClose={popAndBackHome}
-            />
-          </Card>
-        </Dialog>
-      );
+      dialogs.pop(); // Remove loading dialog
+      setIsPaywallOpen(true);
+
+      // Track paywall view
+      logAnalyticsEvent('paywall_viewed', {
+        trigger: 'limit_reached',
+      });
       return;
     }
 
@@ -215,6 +210,32 @@ export const useCapture = () => {
         </Card>
       </Dialog>
     );
+  };
+
+  const handlePaywallClose = () => {
+    setIsPaywallOpen(false);
+    setAppState('home');
+
+    // Track paywall dismissal
+    logAnalyticsEvent('paywall_dismissed', {
+      trigger: 'user_close',
+    });
+  };
+
+  const handleSelectPlan = (plan: 'monthly' | 'yearly') => {
+    // TODO: Implement payment flow (e.g., RevenueCat)
+    console.log(`User selected plan: ${plan}`);
+
+    // Track plan selection
+    logAnalyticsEvent('paywall_plan_selected', {
+      plan: plan,
+      trigger: 'limit_reached',
+    });
+
+    // For now, just close the paywall
+    // In production, this would initiate the purchase flow
+    setIsPaywallOpen(false);
+    setAppState('home');
   };
 
   const toastError = () => {
@@ -278,5 +299,46 @@ export const useCapture = () => {
     }
   };
 
-  return { setCapturedImage, capturedImage, onImportFile: handleFileChange, onImport, onCaptured };
+  // Dev function to test paywall - only in development
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      // Expose dev function to window object for testing
+      (window as any).__triggerPaywall = () => {
+        console.log('🧪 [DEV] Triggering paywall sheet...');
+        setIsPaywallOpen(true);
+        logAnalyticsEvent('paywall_viewed', {
+          trigger: 'dev_test',
+        });
+      };
+
+      // Also expose a function to trigger any error type
+      (window as any).__triggerError = (errorType: ExtractionError) => {
+        console.log(`🧪 [DEV] Triggering error: ${errorType}`);
+        pushError(errorType);
+      };
+
+      console.log('🧪 [DEV] Paywall dev functions available:');
+      console.log('  - window.__triggerPaywall() - Show paywall sheet');
+      console.log('  - window.__triggerError("LIMIT_REACHED") - Trigger limit reached error');
+      console.log('  - window.__triggerError("PROBABLY_NOT_AN_EVENT") - Trigger other errors');
+
+      return () => {
+        // Cleanup on unmount
+        delete (window as any).__triggerPaywall;
+        delete (window as any).__triggerError;
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return {
+    setCapturedImage,
+    capturedImage,
+    onImportFile: handleFileChange,
+    onImport,
+    onCaptured,
+    paywallSheet: (
+      <PaywallSheet isOpen={isPaywallOpen} onClose={handlePaywallClose} onSelectPlan={handleSelectPlan} />
+    ),
+  };
 };

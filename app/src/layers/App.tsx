@@ -29,7 +29,7 @@ export const App = () => {
   useDisableOverscroll();
 
   const { appState, setAppState } = useAppContext();
-  const { onImportFile, onCaptured } = useCapture();
+  const { onImportFile, onCaptured, paywallSheet } = useCapture();
   const { logAnalyticsEvent, setAnalyticsUserProperty } = useFirebaseContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [listViewOpen, setListViewOpen] = useState(false);
@@ -393,6 +393,7 @@ export const App = () => {
           <Effects />
         </div>
         <DialogStack />
+        {paywallSheet}
 
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
         <input
