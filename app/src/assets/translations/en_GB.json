@@ -39,11 +39,11 @@
         "howItWorks": {
           "title": "How It Works",
           "step1Title": "Capture",
-          "step1Description": "Photo anything with date info",
-          "step2Title": "Extract",
-          "step2Description": "AI reads all the details",
-          "step3Title": "Save & Buy",
-          "step3Description": "Export to calendar and buy tickets directly"
+          "step1Description": "Take a photo of anything with date information on it",
+          "step2Title": "Extract & Save",
+          "step2Description": "AI reads all details and saves the event in your app library",
+          "step3Title": "Access Anytime",
+          "step3Description": "Export to calendar, share events, buy tickets, and navigate to locations"
         },
         "tickets": {
           "title": "Buy Tickets Instantly",
@@ -57,12 +57,12 @@
         "getStarted": {
           "title": "Ready to Get Started?",
           "subtitle": "Everything you need to never miss an event again",
-          "bullet1": "Instant event extraction",
-          "bullet2": "Works with all calendars",
-          "bullet3": "Direct ticket purchase",
+          "bullet1": "Instant event extraction and storage",
+          "bullet2": "Export to all your calendars",
+          "bullet3": "Access tickets, sharing, and navigation",
           "permissionsTitle": "We'll need access to:",
-          "permissionCamera": "Camera - to capture events",
-          "permissionCalendar": "Calendar - to save events"
+          "permissionCamera": "Camera - to capture event information",
+          "permissionCalendar": "Calendar - to save your events"
         },
         "navigation": {
           "next": "Next",

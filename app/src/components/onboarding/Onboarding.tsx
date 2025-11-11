@@ -37,7 +37,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     const screenNames = [
       ScreenName.ONBOARDING_VALUE_PROP,
       ScreenName.ONBOARDING_HOW_IT_WORKS,
-      'onboarding_tickets' as ScreenName,
+      ScreenName.ONBOARDING_TICKETS,
       ScreenName.ONBOARDING_FREE_TRIAL,
     ];
 
@@ -72,7 +72,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="magicpattern fixed inset-0 z-50 flex flex-col items-center justify-between py-12">
+    <div className="magicpattern fixed inset-0 z-50 flex flex-col items-center justify-between py-6">
       {/* Embla Carousel */}
       <div className="embla flex flex-1 items-center justify-center" style={{ width: '100%' }}>
         <div className="embla__viewport" ref={emblaRef}>

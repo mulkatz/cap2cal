@@ -13,7 +13,7 @@ export const OnboardingValueProp: React.FC = () => {
         <div className="rounded-2xl border-2 border-accentElevated bg-primaryDark p-6 shadow-2xl sm:p-8">
           {/* App Logo */}
           <div className="mb-4 flex items-center justify-center sm:mb-6">
-            <div className="rounded-3xl bg-gradient-to-br from-highlight/20 to-highlight/5 p-2 ring-2 ring-highlight/30">
+            <div className="rounded-3xl p-2">
               <img src={iconImage} alt="Cap2Cal Logo" className="h-16 w-16 rounded-2xl sm:h-20 sm:w-20" />
             </div>
           </div>

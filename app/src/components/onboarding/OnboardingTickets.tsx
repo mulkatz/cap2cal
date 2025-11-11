@@ -10,9 +10,9 @@ export const OnboardingTickets: React.FC = () => {
       <div className="flex max-h-[70vh] w-full max-w-md flex-col overflow-y-auto">
         {/* Main Card Container */}
         <div className="rounded-2xl border-2 border-accentElevated bg-primaryDark p-6 shadow-2xl sm:p-8">
-          {/* Icon with animated glow */}
+          {/* Icon */}
           <div className="mb-4 flex items-center justify-center sm:mb-6">
-            <div className="relative flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 ring-4 ring-highlight/20 shadow-lg shadow-highlight/30 sm:h-20 sm:w-20">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 ring-4 ring-highlight/20 shadow-lg shadow-highlight/30 sm:h-20 sm:w-20">
               <svg
                 className="h-8 w-8 text-highlight sm:h-10 sm:w-10"
                 fill="none"
@@ -25,8 +25,6 @@ export const OnboardingTickets: React.FC = () => {
                   d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"
                 />
               </svg>
-              {/* Pulsing ring effect */}
-              <div className="absolute inset-0 animate-ping rounded-full bg-highlight/20 ring-2 ring-highlight/30"></div>
             </div>
           </div>
 

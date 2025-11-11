@@ -142,6 +142,7 @@ export const AnalyticsUserProperty = {
 export const ScreenName = {
   ONBOARDING_VALUE_PROP: 'onboarding_value_prop',
   ONBOARDING_HOW_IT_WORKS: 'onboarding_how_it_works',
+  ONBOARDING_TICKETS: 'onboarding_tickets',
   ONBOARDING_FREE_TRIAL: 'onboarding_free_trial',
   HOME: 'home',
   CAMERA: 'camera',

@@ -39,11 +39,11 @@
         "howItWorks": {
           "title": "So funktioniert's",
           "step1Title": "Erfassen",
-          "step1Description": "Fotografiere alles mit Datumsangaben",
-          "step2Title": "Extrahieren",
-          "step2Description": "KI liest alle Details",
-          "step3Title": "Speichern & Kaufen",
-          "step3Description": "In Kalender exportieren und Tickets direkt kaufen"
+          "step1Description": "Mache ein Foto von allem mit Datumsinformationen",
+          "step2Title": "Extrahieren & Speichern",
+          "step2Description": "KI liest alle Details und speichert das Event in deiner App-Bibliothek",
+          "step3Title": "Jederzeit Zugriff",
+          "step3Description": "In Kalender exportieren, Events teilen, Tickets kaufen und zur Location navigieren"
         },
         "tickets": {
           "title": "Tickets sofort kaufen",
@@ -57,12 +57,12 @@
         "getStarted": {
           "title": "Bereit loszulegen?",
           "subtitle": "Alles was du brauchst, um nie wieder ein Event zu verpassen",
-          "bullet1": "Sofortige Event-Extraktion",
-          "bullet2": "Funktioniert mit allen Kalendern",
-          "bullet3": "Direkter Ticket-Kauf",
+          "bullet1": "Sofortige Event-Extraktion und Speicherung",
+          "bullet2": "Export in alle deine Kalender",
+          "bullet3": "Zugriff auf Tickets, Teilen und Navigation",
           "permissionsTitle": "Wir benötigen Zugriff auf:",
-          "permissionCamera": "Kamera - um Events zu erfassen",
-          "permissionCalendar": "Kalender - um Events zu speichern"
+          "permissionCamera": "Kamera - um Event-Informationen zu erfassen",
+          "permissionCalendar": "Kalender - um deine Events zu speichern"
         },
         "navigation": {
           "next": "Weiter",
