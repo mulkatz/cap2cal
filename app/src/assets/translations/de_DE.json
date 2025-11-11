@@ -45,8 +45,18 @@
           "step3Title": "Speichern & Kaufen",
           "step3Description": "In Kalender exportieren und Tickets direkt kaufen"
         },
+        "tickets": {
+          "title": "Tickets sofort kaufen",
+          "subtitle": "Verpasse nie wieder deine Lieblings-Events. Finde und kaufe Tickets direkt aus der App.",
+          "feature1": "Suche Events in deiner Nähe mit integrierter Ticketsuche",
+          "feature2": "Vergleiche Preise verschiedener Anbieter sofort",
+          "feature3": "Sichere Zahlung - sichere dir deinen Platz in Sekunden",
+          "exampleLabel": "Beispiel",
+          "buyButton": "Tickets kaufen"
+        },
         "getStarted": {
           "title": "Bereit loszulegen?",
+          "subtitle": "Alles was du brauchst, um nie wieder ein Event zu verpassen",
           "bullet1": "Sofortige Event-Extraktion",
           "bullet2": "Funktioniert mit allen Kalendern",
           "bullet3": "Direkter Ticket-Kauf",

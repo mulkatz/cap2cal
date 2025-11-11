@@ -45,8 +45,18 @@
           "step3Title": "Save & Buy",
           "step3Description": "Export to calendar and buy tickets directly"
         },
+        "tickets": {
+          "title": "Buy Tickets Instantly",
+          "subtitle": "Never miss out on your favourite events. Find and purchase tickets directly from the app.",
+          "feature1": "Search events near you with integrated ticket search",
+          "feature2": "Compare prices across multiple vendors instantly",
+          "feature3": "Secure checkout - book your spot in seconds",
+          "exampleLabel": "Example",
+          "buyButton": "Get Tickets"
+        },
         "getStarted": {
           "title": "Ready to Get Started?",
+          "subtitle": "Everything you need to never miss an event again",
           "bullet1": "Instant event extraction",
           "bullet2": "Works with all calendars",
           "bullet3": "Direct ticket purchase",

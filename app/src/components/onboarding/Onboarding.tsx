@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { OnboardingValueProp } from './OnboardingValueProp.tsx';
 import { OnboardingHowItWorks } from './OnboardingHowItWorks.tsx';
+import { OnboardingTickets } from './OnboardingTickets.tsx';
 import { OnboardingGetStarted } from './OnboardingGetStarted.tsx';
 import { OnboardingNavigation } from './OnboardingNavigation.tsx';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
@@ -20,6 +21,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const screens = [
     <OnboardingValueProp key="value-prop" />,
     <OnboardingHowItWorks key="how-it-works" />,
+    <OnboardingTickets key="tickets" />,
     <OnboardingGetStarted key="get-started" />,
   ];
 
@@ -35,6 +37,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     const screenNames = [
       ScreenName.ONBOARDING_VALUE_PROP,
       ScreenName.ONBOARDING_HOW_IT_WORKS,
+      'onboarding_tickets' as ScreenName,
       ScreenName.ONBOARDING_FREE_TRIAL,
     ];
 
