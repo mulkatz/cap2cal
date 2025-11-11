@@ -63,15 +63,6 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     }
   };
 
-  const handleSkip = () => {
-    const duration = Math.round((Date.now() - startTime) / 1000);
-    logAnalyticsEvent(AnalyticsEvent.ONBOARDING_SKIPPED, {
-      [AnalyticsParam.ONBOARDING_STEP]: selectedIndex + 1,
-      [AnalyticsParam.ONBOARDING_DURATION_SEC]: duration,
-    });
-    onComplete();
-  };
-
   const handleComplete = () => {
     const duration = Math.round((Date.now() - startTime) / 1000);
     logAnalyticsEvent(AnalyticsEvent.ONBOARDING_COMPLETED, {
@@ -97,12 +88,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
       {/* Navigation */}
       <div className="w-full pb-safe-offset-8">
-        <OnboardingNavigation
-          step={selectedIndex}
-          totalSteps={screens.length}
-          onNext={handleNext}
-          onSkip={handleSkip}
-        />
+        <OnboardingNavigation step={selectedIndex} totalSteps={screens.length} onNext={handleNext} />
       </div>
     </div>
   );

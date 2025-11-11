@@ -6,15 +6,9 @@ interface OnboardingNavigationProps {
   step: number;
   totalSteps: number;
   onNext: () => void;
-  onSkip: () => void;
 }
 
-export const OnboardingNavigation: React.FC<OnboardingNavigationProps> = ({
-  step,
-  totalSteps,
-  onNext,
-  onSkip,
-}) => {
+export const OnboardingNavigation: React.FC<OnboardingNavigationProps> = ({ step, totalSteps, onNext }) => {
   const { t } = useTranslation();
 
   const isLastStep = step === totalSteps - 1;
@@ -22,39 +16,29 @@ export const OnboardingNavigation: React.FC<OnboardingNavigationProps> = ({
   return (
     <div className="w-full px-6">
       {/* Progress Indicators */}
-      <div className="flex justify-center gap-2 mb-6">
+      <div className="mb-6 flex justify-center gap-2">
         {Array.from({ length: totalSteps }).map((_, index) => (
           <div
             key={index}
             className={`h-2 rounded-full transition-all duration-300 ${
               index === step
-                ? 'w-8 bg-primary'
+                ? 'w-8 bg-highlight'
                 : index < step
-                  ? 'w-2 bg-primary opacity-50'
-                  : 'w-2 bg-accent opacity-30'
+                  ? 'w-2 bg-highlight opacity-50'
+                  : 'w-2 bg-accentElevated opacity-40'
             }`}
           />
         ))}
       </div>
 
       {/* Next/Get Started Button */}
-      <div className="mb-4">
-        <CTAButton
-          text={
-            isLastStep
-              ? t('dialogs.onboarding.navigation.getStarted')
-              : t('dialogs.onboarding.navigation.next')
-          }
-          onClick={onNext}
-        />
-      </div>
-
-      {/* Skip Button */}
-      <button
-        onClick={onSkip}
-        className="w-full py-3 text-secondary opacity-60 hover:opacity-100 transition-opacity text-sm">
-        {t('dialogs.onboarding.navigation.skip')}
-      </button>
+      <CTAButton
+        text={
+          isLastStep ? t('dialogs.onboarding.navigation.getStarted') : t('dialogs.onboarding.navigation.next')
+        }
+        onClick={onNext}
+        highlight
+      />
     </div>
   );
 };
