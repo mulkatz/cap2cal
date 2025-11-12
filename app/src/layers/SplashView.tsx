@@ -1,8 +1,7 @@
 import imgHero from '../assets/images/home-hero.png';
 import { useAppContext } from '../contexts/AppContext.tsx';
-import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { IconBulb, IconBurger, IconDownload, IconHeroText } from '../assets/icons';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { cn } from '../utils.ts';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
 import { CaptureSheet } from '../components/Sheet.tsx';
@@ -17,6 +16,7 @@ export const SplashView = ({
   onFeedback,
   isFeedbackVisible,
   onShowPaywall,
+  hasReachedCaptureLimit,
 }: {
   onImport: () => void;
   onHistory: () => void;
@@ -26,9 +26,9 @@ export const SplashView = ({
   onFeedback: () => void;
   isFeedbackVisible: boolean;
   onShowPaywall?: (trigger: string) => void;
+  hasReachedCaptureLimit?: boolean;
 }) => {
   const { version } = useAppContext();
-  const { featureFlags } = useFirebaseContext();
   const { t } = useTranslation();
 
   const handleUpgradeClick = () => {
@@ -55,8 +55,8 @@ export const SplashView = ({
         </div>
       </div>
 
-      {/* Upgrade button - only show when paid_only is enabled */}
-      {featureFlags?.paid_only && (
+      {/* Upgrade button - only show when user has reached their capture limit */}
+      {hasReachedCaptureLimit && (
         <div className={'absolute left-1/2 top-[34px] flex h-[24px] items-center justify-center'}>
           <button
             onClick={handleUpgradeClick}

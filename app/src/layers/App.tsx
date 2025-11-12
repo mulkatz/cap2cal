@@ -417,6 +417,7 @@ export const App = () => {
               isFeedbackVisible={isFeedbackVisible}
               onFeedback={onFeedback}
               onShowPaywall={showPaywall}
+              hasReachedCaptureLimit={checkCaptureLimit()}
             />
           )}
 
