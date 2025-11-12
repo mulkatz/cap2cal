@@ -1,0 +1,16 @@
+{
+  "name": "cap2cal-screenshots",
+  "version": "1.0.0",
+  "description": "Automated screenshot generation for Cap2Cal app store listings",
+  "type": "module",
+  "scripts": {
+    "screenshots": "node scripts/generate-screenshots.js",
+    "screenshots:en": "node scripts/generate-screenshots.js --lang en-GB",
+    "screenshots:de": "node scripts/generate-screenshots.js --lang de-DE",
+    "screenshots:all": "node scripts/generate-all.js"
+  },
+  "dependencies": {
+    "puppeteer": "^24.0.0"
+  },
+  "devDependencies": {}
+}
