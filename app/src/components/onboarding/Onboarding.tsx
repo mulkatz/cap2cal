@@ -72,13 +72,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="magicpattern fixed inset-0 z-50 flex flex-col items-center justify-between py-6">
+    <div className="magicpattern fixed inset-0 z-50 flex flex-col items-center justify-between py-6" data-testid="onboarding-container">
       {/* Embla Carousel */}
       <div className="embla flex flex-1 items-center justify-center" style={{ width: '100%' }}>
         <div className="embla__viewport" ref={emblaRef}>
           <div className="embla__container">
             {screens.map((screen, index) => (
-              <div className="embla__slide" key={index}>
+              <div className="embla__slide" key={index} data-testid={`onboarding-slide-${index}`}>
                 <div className="flex h-full w-full items-center justify-center">{screen}</div>
               </div>
             ))}

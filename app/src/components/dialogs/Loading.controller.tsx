@@ -35,7 +35,7 @@ export const LoadingController = () => {
   }, []);
 
   return (
-    <div className={'mb-3 flex w-full flex-col items-center text-center'}>
+    <div className={'mb-3 flex w-full flex-col items-center text-center'} data-testid="loading-dialog">
       <PuffLoader
         color={'#19D8E0'}
         loading={true}

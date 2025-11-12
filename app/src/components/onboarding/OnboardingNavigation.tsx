@@ -38,6 +38,7 @@ export const OnboardingNavigation: React.FC<OnboardingNavigationProps> = ({ step
         }
         onClick={onNext}
         highlight
+        data-testid="onboarding-next-button"
       />
     </div>
   );

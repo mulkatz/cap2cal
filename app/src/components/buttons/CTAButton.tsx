@@ -9,7 +9,8 @@ export const CTAButton = ({
   onClick,
   className, // Added missing className to destructuring
   disabled,
-  highlight
+  highlight,
+  'data-testid': dataTestId
 }: {
   loading?: boolean;
   text: string;
@@ -18,6 +19,7 @@ export const CTAButton = ({
   className?: string;
   disabled?: boolean;
   highlight?: boolean;
+  'data-testid'?: string;
 }) => {
   // Determine if the button should be considered disabled, either by the prop or by loading state
   // const isDisabled = disabled || loading;
@@ -29,6 +31,7 @@ export const CTAButton = ({
       <button
         onClick={onClick}
         disabled={disabled} // Pass the disabled state to the button
+        data-testid={dataTestId}
         className={cn(
           'flex h-[48px] w-full items-center justify-center rounded-[5px] border-[1px] p-3.5 shadow-md',
           { 'text-[16px] font-bold text-secondary': true },

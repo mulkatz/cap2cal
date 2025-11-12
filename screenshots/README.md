@@ -68,11 +68,10 @@ node scripts/generate-screenshots.js --lang=de-DE
 3. **Find your screenshots** in `output/<language>/`:
    - `01_onboarding_value_prop.png` - Value proposition screen
    - `02_onboarding_how_it_works.png` - How it works screen
-   - `03_onboarding_tickets.png` - Tickets feature screen
-   - `04_onboarding_permissions.png` - Permissions screen
-   - `05_home_screen.png` - Main home screen
-   - `06_event_list.png` - Event list view
-   - `07_event_detail.png` - Event detail view
+   - `03_onboarding_permissions.png` - Permissions screen
+   - `04_home_screen.png` - Main home screen
+   - `05_event_list.png` - Event list view
+   - `06_event_detail.png` - Event detail view (if available)
 
 ## Configuration
 

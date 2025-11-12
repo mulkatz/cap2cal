@@ -73,6 +73,7 @@ export const SplashView = ({
         icon={<IconDownload width={34} height={34} />}
         onClick={onImport}
         className={'absolute left-[20px] top-[20px]'}
+        data-testid="import-button"
       />
 
       <MiniButton
@@ -80,6 +81,7 @@ export const SplashView = ({
         onClick={onHistory}
         className={'absolute right-[20px] top-[20px]'}
         visible={hasSavedEvents}
+        data-testid="history-button"
       />
 
       {isFeedbackVisible && (

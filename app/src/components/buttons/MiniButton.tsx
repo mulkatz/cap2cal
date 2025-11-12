@@ -7,16 +7,19 @@ export const MiniButton = ({
   className,
   visible = true,
   elevate = true,
+  'data-testid': dataTestId
 }: {
   icon: ReactNode;
   onClick: () => void;
   className?: string;
   visible?: boolean;
   elevate?: boolean;
+  'data-testid'?: string;
 }) => {
   return (
     <button
       onClick={onClick}
+      data-testid={dataTestId}
       className={cn(
         'flex cursor-pointer items-center justify-center p-1.5 text-[16px] text-secondary',
         'transform transition-all duration-[300ms] ease-out', // Ensure transform utilities are enabled
