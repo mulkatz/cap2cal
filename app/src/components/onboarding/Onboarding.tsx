@@ -21,7 +21,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const screens = [
     <OnboardingValueProp key="value-prop" />,
     <OnboardingHowItWorks key="how-it-works" />,
-    <OnboardingTickets key="tickets" />,
+    // <OnboardingTickets key="tickets" />,
     <OnboardingGetStarted key="get-started" />,
   ];
 

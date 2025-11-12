@@ -34,12 +34,12 @@
       "onboarding": {
         "valueProp": {
           "title": "Turn Everything into Calendar Events",
-          "subtitle": "Posters, flyers, social posts, invites — we handle the rest"
+          "subtitle": "Posters, flyers, social posts, invites, handwritten notes — we handle the rest"
         },
         "howItWorks": {
           "title": "How It Works",
           "step1Title": "Capture",
-          "step1Description": "Take a photo of anything with date information on it",
+          "step1Description": "Take a photo or import anything with date information on it",
           "step2Title": "Extract & Save",
           "step2Description": "AI reads all details and saves the event in your app library",
           "step3Title": "Access Anytime",

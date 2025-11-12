@@ -542,5 +542,7 @@ export function formatTimeToShort(timeString: string): string | null {
   }
 }
 
+export const isSmallScreen = window.screen.height < 680;
+
 // The 'cleanStringForURLQuery' and 'sanitizeLink' functions
 // were unused or commented out and have been removed.

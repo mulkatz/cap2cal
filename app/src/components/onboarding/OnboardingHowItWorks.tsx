@@ -18,8 +18,8 @@ export const OnboardingHowItWorks: React.FC = () => {
           {/* Steps Container */}
           <div className="flex w-full flex-col gap-4 sm:gap-5">
             {/* Step 1: Capture */}
-            <div className="rounded-xl border-2 border-accentElevated bg-primary/50 p-3 transition-all duration-200 hover:border-highlight/30 sm:p-4">
-              <div className="flex items-start gap-3 text-left sm:gap-4">
+            <div className="bg-primary/00 rounded-xl border-0 border-accentElevated p-2 transition-all duration-200 hover:border-highlight/30 sm:p-4">
+              <div className="flex items-start gap-5 text-left sm:gap-4">
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 sm:h-12 sm:w-12">
                   <svg
                     className="h-5 w-5 text-highlight sm:h-6 sm:w-6"
@@ -42,7 +42,7 @@ export const OnboardingHowItWorks: React.FC = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="mb-1 text-lg font-bold text-secondary sm:text-xl">
-                    1. {t('dialogs.onboarding.howItWorks.step1Title')}
+                    {t('dialogs.onboarding.howItWorks.step1Title')}
                   </h3>
                   <p className="text-xs leading-relaxed text-secondary/70 sm:text-sm">
                     {t('dialogs.onboarding.howItWorks.step1Description')}
@@ -52,8 +52,8 @@ export const OnboardingHowItWorks: React.FC = () => {
             </div>
 
             {/* Step 2: Extract */}
-            <div className="rounded-xl border-2 border-accentElevated bg-primary/50 p-3 transition-all duration-200 hover:border-highlight/30 sm:p-4">
-              <div className="flex items-start gap-3 text-left sm:gap-4">
+            <div className="rounded-xl border-0 border-accentElevated bg-primary/0 p-2 transition-all duration-200 hover:border-highlight/30 sm:p-4">
+              <div className="flex items-start gap-5 text-left sm:gap-4">
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 sm:h-12 sm:w-12">
                   <svg
                     className="h-5 w-5 text-highlight sm:h-6 sm:w-6"
@@ -70,7 +70,7 @@ export const OnboardingHowItWorks: React.FC = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="mb-1 text-lg font-bold text-secondary sm:text-xl">
-                    2. {t('dialogs.onboarding.howItWorks.step2Title')}
+                    {t('dialogs.onboarding.howItWorks.step2Title')}
                   </h3>
                   <p className="text-xs leading-relaxed text-secondary/70 sm:text-sm">
                     {t('dialogs.onboarding.howItWorks.step2Description')}
@@ -80,8 +80,8 @@ export const OnboardingHowItWorks: React.FC = () => {
             </div>
 
             {/* Step 3: Save */}
-            <div className="rounded-xl border-2 border-accentElevated bg-primary/50 p-3 transition-all duration-200 hover:border-highlight/30 sm:p-4">
-              <div className="flex items-start gap-3 text-left sm:gap-4">
+            <div className="rounded-xl border-0 border-accentElevated bg-primary/0 p-2 transition-all duration-200 hover:border-highlight/30 sm:p-4">
+              <div className="flex items-start gap-5 text-left sm:gap-4">
                 <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 sm:h-12 sm:w-12">
                   <svg
                     className="h-5 w-5 text-highlight sm:h-6 sm:w-6"
@@ -98,7 +98,7 @@ export const OnboardingHowItWorks: React.FC = () => {
                 </div>
                 <div className="flex-1">
                   <h3 className="mb-1 text-lg font-bold text-secondary sm:text-xl">
-                    3. {t('dialogs.onboarding.howItWorks.step3Title')}
+                    {t('dialogs.onboarding.howItWorks.step3Title')}
                   </h3>
                   <p className="text-xs leading-relaxed text-secondary/70 sm:text-sm">
                     {t('dialogs.onboarding.howItWorks.step3Description')}

@@ -14,7 +14,7 @@ export const OnboardingValueProp: React.FC = () => {
           {/* App Logo */}
           <div className="mb-4 flex items-center justify-center sm:mb-6">
             <div className="rounded-3xl p-2">
-              <img src={iconImage} alt="Cap2Cal Logo" className="h-16 w-16 rounded-2xl sm:h-20 sm:w-20" />
+              <img src={iconImage} alt="Cap2Cal Logo" className="h-24 w-24 rounded-2xl sm:h-20 sm:w-20" />
             </div>
           </div>
 

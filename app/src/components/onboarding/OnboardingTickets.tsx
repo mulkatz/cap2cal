@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { isSmallScreen } from '../../utils.ts';
 
 export const OnboardingTickets: React.FC = () => {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ export const OnboardingTickets: React.FC = () => {
         <div className="rounded-2xl border-2 border-accentElevated bg-primaryDark p-6 shadow-2xl sm:p-8">
           {/* Icon */}
           <div className="mb-4 flex items-center justify-center sm:mb-6">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 ring-4 ring-highlight/20 shadow-lg shadow-highlight/30 sm:h-20 sm:w-20">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 shadow-lg shadow-highlight/30 ring-4 ring-highlight/20 sm:h-20 sm:w-20">
               <svg
                 className="h-8 w-8 text-highlight sm:h-10 sm:w-10"
                 fill="none"
@@ -89,20 +90,22 @@ export const OnboardingTickets: React.FC = () => {
             </div>
           </div>
 
-          {/* Example visual - ticket button mockup */}
-          <div className="rounded-xl border-2 border-highlight/30 bg-gradient-to-r from-highlight/10 to-highlight/5 p-3 shadow-lg shadow-highlight/10 sm:p-4">
-            <div className="flex items-center justify-between gap-2">
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-semibold uppercase tracking-wide text-highlight">
-                  {t('dialogs.onboarding.tickets.exampleLabel')}
-                </p>
-                <p className="mt-1 truncate text-base font-bold text-secondary sm:text-lg">Summer Festival 2025</p>
-              </div>
-              <div className="flex-shrink-0 rounded-lg bg-highlight px-3 py-2 text-xs font-bold text-primaryDark shadow-md sm:px-4 sm:text-sm">
-                {t('dialogs.onboarding.tickets.buyButton')}
+          {/*Example visual - ticket button mockup */}
+          {!isSmallScreen && (
+            <div className="rounded-xl border-2 border-highlight/30 bg-gradient-to-r from-highlight/10 to-highlight/5 p-3 shadow-lg shadow-highlight/10 sm:p-4">
+              <div className="flex items-center justify-between gap-2">
+                <div className="min-w-0 flex-1">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-highlight">
+                    {t('dialogs.onboarding.tickets.exampleLabel')}
+                  </p>
+                  <p className="mt-1 truncate text-base font-bold text-secondary sm:text-lg">Summer Festival 2025</p>
+                </div>
+                <div className="flex-shrink-0 rounded-lg bg-highlight px-3 py-2 text-xs font-bold text-primaryDark shadow-md sm:px-4 sm:text-sm">
+                  {t('dialogs.onboarding.tickets.buyButton')}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

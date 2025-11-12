@@ -34,12 +34,12 @@
       "onboarding": {
         "valueProp": {
           "title": "Verwandle Alles in Kalendereinträge",
-          "subtitle": "Poster, Flyer, Social Posts, Einladungen — wir erledigen den Rest"
+          "subtitle": "Poster, Flyer, Social Posts, Einladungen, handgeschriebene Notizen — wir erledigen den Rest"
         },
         "howItWorks": {
           "title": "So funktioniert's",
           "step1Title": "Erfassen",
-          "step1Description": "Mache ein Foto von allem mit Datumsinformationen",
+          "step1Description": "Mache ein Foto oder importiere eine Datei mit Datumsinformationen",
           "step2Title": "Extrahieren & Speichern",
           "step2Description": "KI liest alle Details und speichert das Event in deiner App-Bibliothek",
           "step3Title": "Jederzeit Zugriff",
