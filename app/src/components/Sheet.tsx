@@ -47,11 +47,7 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
   }, [filteredAndSortedItems]);
 
   const handleSortByChange = useCallback(() => {
-    changeFilter(
-      sortByFilter,
-      setSortByFilter as any,
-      Object.keys(sortByOptions) as Array<keyof typeof sortByOptions>
-    );
+    changeFilter(sortByFilter, setSortByFilter as any, Object.keys(sortByOptions) as Array<keyof typeof sortByOptions>);
   }, [sortByFilter]);
 
   const handleFavouritesChange = useCallback(() => {
@@ -67,8 +63,10 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
       <Sheet.Container className={'!bg-primaryDark'}>
         <Sheet.Header>
           <div className={'relative'}>
+            <div className="mx-auto mb-4 mt-2 h-1 w-12 rounded-full bg-accentElevated opacity-50" />
+
             <p className={'mb-3 mt-7 text-center text-[22px] font-bold text-secondary'}>{t('sheet.header')}</p>
-            <span className={'absolute bottom-7 right-2'}>
+            <span className={'absolute -top-6 right-2'}>
               <button
                 onClick={onClose}
                 className={cn(
@@ -146,30 +144,26 @@ type FilterOptionProps<T extends Record<string, string>> = {
   className?: string;
 };
 
-const FilterOption = React.memo(<T extends Record<string, string>>({
-  label,
-  options,
-  value,
-  onChange,
-  className,
-}: FilterOptionProps<T>) => {
-  return (
-    <div
-      className={cn(
-        'flex items-center justify-between rounded-lg border-[2px] border-accentElevated bg-primary px-2.5 py-2.5 pl-3 text-secondary',
-        className
-      )}>
-      <div className="text-[16px] font-semibold">{label}</div>
-      <button
-        className="flex w-[105px] justify-center rounded-[4px] border-[2px] border-accentElevated bg-primaryElevated p-2 text-[16px]"
-        onClick={() => onChange(value)}>
-        <div className="cursor-pointer appearance-none bg-primaryElevated text-[16px] font-semibold outline-none">
-          {value as string}
-        </div>
-      </button>
-    </div>
-  );
-}) as <T extends Record<string, string>>(props: FilterOptionProps<T>) => JSX.Element;
+const FilterOption = React.memo(
+  <T extends Record<string, string>>({ label, options, value, onChange, className }: FilterOptionProps<T>) => {
+    return (
+      <div
+        className={cn(
+          'flex items-center justify-between rounded-lg border-[2px] border-accentElevated bg-primary px-2.5 py-2.5 pl-3 text-secondary',
+          className
+        )}>
+        <div className="text-[16px] font-semibold">{label}</div>
+        <button
+          className="flex w-[105px] justify-center rounded-[4px] border-[2px] border-accentElevated bg-primaryElevated p-2 text-[16px]"
+          onClick={() => onChange(value)}>
+          <div className="cursor-pointer appearance-none bg-primaryElevated text-[16px] font-semibold outline-none">
+            {value as string}
+          </div>
+        </button>
+      </div>
+    );
+  }
+) as <T extends Record<string, string>>(props: FilterOptionProps<T>) => JSX.Element;
 
 // Example options object for 'only favourites'
 const favouriteOptions = {

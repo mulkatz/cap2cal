@@ -416,6 +416,7 @@ export const App = () => {
               onImport={onImport}
               isFeedbackVisible={isFeedbackVisible}
               onFeedback={onFeedback}
+              onShowPaywall={showPaywall}
             />
           )}
 

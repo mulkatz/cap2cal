@@ -3,6 +3,7 @@ import { Sheet, SheetRef } from 'react-modal-sheet';
 import { useTranslation } from 'react-i18next';
 import { CTAButton } from '../buttons/CTAButton.tsx';
 import { cn } from '../../utils.ts';
+import { IconClose } from '../../assets/icons';
 
 interface PaywallSheetProps {
   isOpen: boolean;
@@ -25,11 +26,30 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
       <Sheet.Container className="!bg-primaryDark">
         <Sheet.Header className="pb-0">
           {/* Drag handle indicator */}
-          <div className="mx-auto mb-4 mt-2 h-1 w-12 rounded-full bg-accentElevated opacity-50" />
+          <div className={'relative'}>
+            <div className="mx-auto mb-4 mt-2 h-1 w-12 rounded-full bg-accentElevated opacity-50" />
+            {/*<p className={'mb-3 mt-7 text-center text-[22px] font-bold text-secondary'}>{t('sheet.header')}</p>*/}
+            <span className={'absolute -top-6 right-2'}>
+              <button
+                onClick={onClose}
+                className={cn(
+                  'group mr-2 box-border flex h-[48px] w-[48px] items-center justify-center text-secondary'
+                )}>
+                <span
+                  className={cn(
+                    'flex h-[38px] w-[38px] items-center justify-center rounded-full border-[1px] border-accentElevated bg-primaryElevated',
+                    'border-[1px] border-secondary',
+                    'transform transition-all duration-[800ms] group-active:bg-clickHighLight'
+                  )}>
+                  <IconClose width={18} height={18} />
+                </span>
+              </button>
+            </span>
+          </div>
         </Sheet.Header>
 
-        <Sheet.Content className="pb-safe">
-          <div className="px-6 pb-8">
+        <Sheet.Content className="overflow-y-scroll pb-safe">
+          <div className="px-6 pb-8 pt-2">
             {/* Icon/Illustration */}
             <div className="mx-auto mb-6 flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30">
               <svg
@@ -38,24 +58,15 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
                 stroke="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 10V3L4 14h7v7l9-11h-7z"
-                />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
             </div>
 
             {/* Title */}
-            <h2 className="mb-2 text-center text-3xl font-bold text-secondary">
-              {t('dialogs.paywall.title')}
-            </h2>
+            <h2 className="mb-2 text-center text-3xl font-bold text-secondary">{t('dialogs.paywall.title')}</h2>
 
             {/* Subtitle */}
-            <p className="mb-8 text-center text-base text-secondary/70">
-              {t('dialogs.paywall.subtitle')}
-            </p>
+            <p className="mb-8 text-center text-base text-secondary/70">{t('dialogs.paywall.subtitle')}</p>
 
             {/* Pricing Options */}
             <div className="mb-6 space-y-3">
@@ -72,9 +83,7 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
                 <div
                   className={cn(
                     'absolute right-0 top-0 rounded-bl-lg px-3 py-1 text-xs font-bold transition-all duration-200',
-                    selectedPlan === 'yearly'
-                      ? 'bg-highlight text-primaryDark'
-                      : 'bg-accentElevated text-secondary/60'
+                    selectedPlan === 'yearly' ? 'bg-highlight text-primaryDark' : 'bg-accentElevated text-secondary/60'
                   )}>
                   {t('dialogs.paywall.bestValue')}
                 </div>
@@ -116,7 +125,7 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
                 <div>
                   <p className="text-lg font-bold text-secondary">{t('dialogs.paywall.monthlyTitle')}</p>
                   <div className="mt-1 flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-secondary">.99</span>
+                    <span className="text-2xl font-bold text-secondary">$0.99</span>
                     <span className="text-sm text-secondary/60">{t('dialogs.paywall.perMonth')}</span>
                   </div>
                   <p className="mt-1 text-sm text-secondary/70">{t('dialogs.paywall.monthlySubtext')}</p>
@@ -166,28 +175,22 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
               ))}
             </div>
 
-            {/* Social Proof */}
-            <div className="mb-6 rounded-lg bg-primaryElevated/50 p-4 text-center">
-              <div className="mb-2 flex items-center justify-center gap-1">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    className="h-5 w-5 text-highlight"
-                    fill="currentColor"
-                    viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-              <p className="text-sm italic text-secondary/80">{t('dialogs.paywall.testimonial')}</p>
-            </div>
+            {/*/!* Social Proof *!/*/}
+            {/*<div className="mb-6 rounded-lg bg-primaryElevated/50 p-4 text-center">*/}
+            {/*  <div className="mb-2 flex items-center justify-center gap-1">*/}
+            {/*    {[...Array(5)].map((_, i) => (*/}
+            {/*      <svg key={i} className="h-5 w-5 text-highlight" fill="currentColor" viewBox="0 0 20 20">*/}
+            {/*        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />*/}
+            {/*      </svg>*/}
+            {/*    ))}*/}
+            {/*  </div>*/}
+            {/*  <p className="text-sm italic text-secondary/80">{t('dialogs.paywall.testimonial')}</p>*/}
+            {/*</div>*/}
 
             {/* CTA Button */}
             <CTAButton
               text={t('dialogs.paywall.cta', {
-                plan: selectedPlan === 'yearly'
-                  ? t('dialogs.paywall.yearlyTitle')
-                  : t('dialogs.paywall.monthlyTitle')
+                plan: selectedPlan === 'yearly' ? t('dialogs.paywall.yearlyTitle') : t('dialogs.paywall.monthlyTitle'),
               })}
               onClick={handleContinue}
               highlight
@@ -207,9 +210,7 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
             </div>
 
             {/* Legal text */}
-            <p className="mt-4 text-center text-xs text-secondary/40">
-              {t('dialogs.paywall.legalText')}
-            </p>
+            <p className="mt-4 text-center text-xs text-secondary/40">{t('dialogs.paywall.legalText')}</p>
           </div>
         </Sheet.Content>
       </Sheet.Container>

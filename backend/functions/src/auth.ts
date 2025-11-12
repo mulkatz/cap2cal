@@ -17,6 +17,70 @@ interface ValidationResult {
   status?: number;
 }
 
+interface RemoteConfigValues {
+  paidOnly: boolean;
+  freeLimit: number;
+}
+
+/**
+ * Fetches Remote Config values with fallback to defaults
+ * Shared function used by both auth validation and feature flags endpoint
+ */
+export async function getRemoteConfigValues(): Promise<RemoteConfigValues> {
+  // Default values (fallback if Remote Config fails)
+  let paidOnly = false;
+  let freeLimit = 5;
+
+  try {
+    const template = await remoteConfig.getTemplate();
+
+    // Debug logging to see what's actually in the template
+    logger.info('[Remote Config] Template fetched', {
+      parameterKeys: Object.keys(template.parameters),
+      version: template.version,
+    });
+
+    const paidOnlyParam = template.parameters['paid_only'];
+    const freeLimitParam = template.parameters['free_capture_limit'];
+
+    // Debug logging for individual parameters
+    if (paidOnlyParam) {
+      logger.info('[Remote Config] paid_only parameter', {
+        defaultValue: paidOnlyParam.defaultValue,
+      });
+    } else {
+      logger.warn('[Remote Config] paid_only parameter not found in template');
+    }
+
+    if (freeLimitParam) {
+      logger.info('[Remote Config] free_capture_limit parameter', {
+        defaultValue: freeLimitParam.defaultValue,
+      });
+    } else {
+      logger.warn('[Remote Config] free_capture_limit parameter not found in template');
+    }
+
+    // Extract values from Remote Config parameters
+    const paidOnlyValue = paidOnlyParam?.defaultValue as { value?: string } | undefined;
+    const freeLimitValue = freeLimitParam?.defaultValue as { value?: string } | undefined;
+
+    paidOnly = paidOnlyValue?.value === 'true' || false;
+    freeLimit = freeLimitValue?.value
+      ? parseInt(freeLimitValue.value, 10)
+      : 5;
+
+    logger.info(`[Remote Config] Parsed values: paid_only=${paidOnly}, free_capture_limit=${freeLimit}`);
+  } catch (error: any) {
+    logger.warn('Could not fetch Remote Config, using defaults', {
+      error: error.message,
+      stack: error.stack,
+    });
+    // Use default values (already set above)
+  }
+
+  return { paidOnly, freeLimit };
+}
+
 export async function validateCaptureRequest(request: Request): Promise<ValidationResult> {
   try {
     // Extract auth token from Authorization header
@@ -47,56 +111,8 @@ export async function validateCaptureRequest(request: Request): Promise<Validati
 
     const userId = decodedToken.uid;
 
-    // Get Remote Config values with fallback to defaults
-    let paidOnly = false;
-    let freeLimit = 5;
-
-    try {
-      const template = await remoteConfig.getTemplate();
-
-      // Debug logging to see what's actually in the template
-      logger.info('[Remote Config] Template fetched', {
-        parameterKeys: Object.keys(template.parameters),
-        version: template.version,
-      });
-
-      const paidOnlyParam = template.parameters['paid_only'];
-      const freeLimitParam = template.parameters['free_capture_limit'];
-
-      // Debug logging for individual parameters
-      if (paidOnlyParam) {
-        logger.info('[Remote Config] paid_only parameter', {
-          defaultValue: paidOnlyParam.defaultValue,
-        });
-      } else {
-        logger.warn('[Remote Config] paid_only parameter not found in template');
-      }
-
-      if (freeLimitParam) {
-        logger.info('[Remote Config] free_capture_limit parameter', {
-          defaultValue: freeLimitParam.defaultValue,
-        });
-      } else {
-        logger.warn('[Remote Config] free_capture_limit parameter not found in template');
-      }
-
-      // Extract values from Remote Config parameters
-      const paidOnlyValue = paidOnlyParam?.defaultValue as { value?: string } | undefined;
-      const freeLimitValue = freeLimitParam?.defaultValue as { value?: string } | undefined;
-
-      paidOnly = paidOnlyValue?.value === 'true' || false;
-      freeLimit = freeLimitValue?.value
-        ? parseInt(freeLimitValue.value, 10)
-        : 5;
-
-      logger.info(`[Remote Config] Parsed values: paid_only=${paidOnly}, free_capture_limit=${freeLimit}`);
-    } catch (error: any) {
-      logger.warn('Could not fetch Remote Config, using defaults', {
-        error: error.message,
-        stack: error.stack,
-      });
-      // Use default values (already set above)
-    }
+    // Get Remote Config values
+    const { paidOnly, freeLimit } = await getRemoteConfigValues();
 
     // If paid_only mode is not enabled, allow all captures
     if (!paidOnly) {

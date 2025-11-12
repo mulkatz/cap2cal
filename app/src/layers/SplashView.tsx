@@ -15,23 +15,24 @@ export const SplashView = ({
   isListViewOpen,
   onCloseListViewOpen,
   onFeedback,
-  isFeedbackVisible
-                           }:{
-  onImport: () => void,
-  onHistory: () => void,
-  hasSavedEvents: boolean,
-  isListViewOpen: boolean,
-  onCloseListViewOpen: () => void,
-  onFeedback: () => void,
-  isFeedbackVisible: boolean,
+  isFeedbackVisible,
+  onShowPaywall,
+}: {
+  onImport: () => void;
+  onHistory: () => void;
+  hasSavedEvents: boolean;
+  isListViewOpen: boolean;
+  onCloseListViewOpen: () => void;
+  onFeedback: () => void;
+  isFeedbackVisible: boolean;
+  onShowPaywall?: (trigger: string) => void;
 }) => {
   const { version } = useAppContext();
   const { featureFlags } = useFirebaseContext();
   const { t } = useTranslation();
 
   const handleUpgradeClick = () => {
-    // TODO: Implement payment flow (e.g., RevenueCat)
-    console.log('Upgrade button clicked - integrate payment provider here');
+    onShowPaywall?.('upgrade_button_click');
   };
 
   return (
@@ -56,23 +57,16 @@ export const SplashView = ({
 
       {/* Upgrade button - only show when paid_only is enabled */}
       {featureFlags?.paid_only && (
-        <button
-          onClick={handleUpgradeClick}
-          className="pointer-events-auto absolute top-[80px] left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 rounded-full border border-highlight bg-primaryElevated px-4 py-2 shadow-lg transition-all hover:bg-primary hover:scale-105">
-          <svg
-            className="h-4 w-4 text-highlight"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-            />
-          </svg>
-          <span className="text-sm font-semibold text-highlight">{t('dialogs.upgrade.cta')}</span>
-        </button>
+        <div className={'absolute left-1/2 top-[34px] flex h-[24px] items-center justify-center'}>
+          <button
+            onClick={handleUpgradeClick}
+            className="pointer-events-auto left-1/2 top-[80px] flex -translate-x-1/2 items-center gap-2 rounded-full border border-highlight bg-primaryElevated px-4 py-2 shadow-lg transition-all">
+            <svg className="h-4 w-4 text-highlight" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            <span className="text-sm font-semibold text-highlight">{t('dialogs.upgrade.cta')}</span>
+          </button>
+        </div>
       )}
 
       <MiniButton
