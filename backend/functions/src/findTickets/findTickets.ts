@@ -90,7 +90,7 @@ export const findTickets = onRequest(
         const sortedTicketData = sortTicketLinksByLikeliness(unorderedTicketLinks);
         response.status(200).json(sortedTicketData);
       } catch (error) {
-        console.error('Failed to sort ticket links:', error);
+        logger.error('Failed to sort ticket links', error);
         response.status(500).json({ error: 'Failed to sort ticket links.' });
       }
     } catch (error: any) {

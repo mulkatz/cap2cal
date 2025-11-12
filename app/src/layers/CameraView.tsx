@@ -8,6 +8,7 @@ import { IconChevronLeft } from '../assets/icons';
 import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
 import { AppState } from '../contexts/AppContext.tsx';
 import { CameraInstructionDialog } from '../components/dialogs/CameraInstructionDialog.tsx';
+import { logger } from '../utils/logger';
 
 interface CameraViewProps {
   onStreamCallback?: (running: boolean) => void;
@@ -34,7 +35,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
     // start when coming back from external link
     useEffect(() => {
       const handleVisibilityChange = () => {
-        console.log('visibilitychange', document.hidden, isPreviewRunning);
+        logger.debug('Camera', 'Visibility change detected', { hidden: document.hidden, isPreviewRunning });
 
         if (!document.hidden && isPreviewRunning) {
           startStream();
@@ -82,7 +83,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         //   return 'denied';
         // }
       } catch (error) {
-        console.error('Error requesting camera access:', error);
+        logger.error('Camera', 'Error requesting camera access', error instanceof Error ? error : undefined);
         return 'error';
       }
     };
@@ -107,7 +108,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         try {
           await startPreview('rear');
         } catch (rearError) {
-          console.warn('Back-facing camera not available, falling back to front-facing camera.', rearError);
+          logger.warn('Camera', 'Back-facing camera not available, falling back to front-facing camera');
           await startPreview('front');
         }
 
@@ -117,7 +118,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         }
         return null; // Return null on success
       } catch (error) {
-        console.error('Error starting camera preview:', error);
+        logger.error('Camera', 'Error starting camera preview', error instanceof Error ? error : undefined);
         // If there's an error, notify parent
         if (onStreamCallback) {
           onStreamCallback(false);
@@ -130,7 +131,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
      * Helper to actually start the camera with the given position (front or rear)
      */
     const startPreview = async (position: 'front' | 'rear') => {
-      console.log('start preview');
+      logger.debug('Camera', 'Starting camera preview', { position });
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
 
@@ -175,12 +176,12 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
      * ───────────────────────────────────────────────────────────
      */
     const stopPreview = async () => {
-      console.log('call stopPreview');
+      logger.debug('Camera', 'Stopping camera preview');
 
       try {
         await CameraPreview.stop();
       } catch (error) {
-        console.warn('No active camera preview to stop.', error);
+        logger.debug('Camera', 'No active camera preview to stop');
       } finally {
         setIsPreviewRunning(false);
       }
@@ -204,7 +205,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         const width = window.innerWidth;
         const height = window.innerHeight;
 
-        console.log('call capture with', width, height);
+        logger.debug('Camera', 'Capturing photo', { width, height });
 
         const options: CameraPreviewPictureOptions = {
           quality: 85,
@@ -223,7 +224,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
 
         const cropHeightFactor = height / window.innerHeight;
 
-        console.log('crop height factor:', cropHeightFactor);
+        logger.debug('Camera', 'Crop height factor', { cropHeightFactor });
         // const bottomCroppedImage = await cropBottom(originalDataUrl, 1);
         // const bottomCroppedDimensions = await getImageDimensions(bottomCroppedImage);
         //
@@ -243,7 +244,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         // );
         // console.log('cropped', cropped);
 
-        console.log('safe area top', safeAreaTopPx);
+        logger.debug('Camera', 'Safe area top', { safeAreaTopPx });
 
         const targetDimensions = calculateCropDimensions(
           originalDimensions.width,

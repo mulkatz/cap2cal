@@ -18,11 +18,9 @@ import { MultiResultDialog } from '../components/MultiResultDialog.tsx';
 import i18next from 'i18next';
 import { SingleResultDialog } from '../components/SingleResultDialog.tsx';
 import { useAppContext } from '../contexts/AppContext.tsx';
-import {
-  AnalyticsEvent,
-  AnalyticsParam,
-  getEventFieldsPresence,
-} from '../utils/analytics.ts';
+import { AnalyticsEvent, AnalyticsParam, getEventFieldsPresence } from '../utils/analytics.ts';
+import { incrementCaptureCount, getCaptureCount, hasReachedLimit, resetCaptureCount } from '../utils/captureLimit.ts';
+import { logger } from '../utils/logger';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
@@ -124,6 +122,10 @@ export const useCapture = () => {
 
         const events = createEvents(sanitizedItems);
 
+        // Increment capture count on successful extraction
+        const newCount = incrementCaptureCount();
+        logger.info('Capture', `Success! Total captures: ${newCount}`);
+
         // Track extraction success with comprehensive data
         const extractionDuration = performance.now() - extractionStartTime;
         trackPerformance('extraction', extractionDuration);
@@ -168,15 +170,21 @@ export const useCapture = () => {
       const extractionDuration = performance.now() - extractionStartTime;
       trackPerformance('extraction', extractionDuration);
 
-      pushError('PROBABLY_NOT_AN_EVENT');
+      const errorReason = result.data?.reason || 'UNKNOWN';
+      logger.error('Capture', `Extraction failed with reason: ${errorReason}`, undefined, { imageSource });
+
+      pushError(errorReason);
       logAnalyticsEvent(AnalyticsEvent.EXTRACTION_ERROR, {
-        [AnalyticsParam.EXTRACTION_REASON]: result.data?.reason || 'UNKNOWN',
+        [AnalyticsParam.EXTRACTION_REASON]: errorReason,
         [AnalyticsParam.IMAGE_SOURCE]: imageSource,
         [AnalyticsParam.DURATION_MS]: Math.round(extractionDuration),
       });
     } catch (e) {
       const extractionDuration = performance.now() - extractionStartTime;
       trackPerformance('extraction', extractionDuration);
+
+      // Log the actual error
+      logger.error('Capture', 'Extraction failed with exception', e instanceof Error ? e : undefined, { imageSource });
 
       pushError('UNKNOWN');
       logAnalyticsEvent(AnalyticsEvent.EXTRACTION_ERROR, {
@@ -190,8 +198,8 @@ export const useCapture = () => {
   };
 
   const pushError = (reason: ExtractionError) => {
-    // Show paywall sheet if limit is reached and paid_only is enabled
-    if (reason === 'LIMIT_REACHED' && featureFlags?.paid_only) {
+    // Show paywall sheet if limit is reached
+    if (reason === 'LIMIT_REACHED') {
       dialogs.pop(); // Remove loading dialog
       setIsPaywallOpen(true);
 
@@ -224,7 +232,7 @@ export const useCapture = () => {
 
   const handleSelectPlan = (plan: 'monthly' | 'yearly') => {
     // TODO: Implement payment flow (e.g., RevenueCat)
-    console.log(`User selected plan: ${plan}`);
+    logger.info('Paywall', `User selected plan: ${plan}`);
 
     // Track plan selection
     logAnalyticsEvent('paywall_plan_selected', {
@@ -277,7 +285,7 @@ export const useCapture = () => {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>, ref: RefObject<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
-    console.log('handleFileChange');
+    logger.debug('FileImport', 'File selection initiated');
 
     // Track image selection from gallery
     logAnalyticsEvent(AnalyticsEvent.IMAGE_SELECTED_FROM_GALLERY);
@@ -286,7 +294,7 @@ export const useCapture = () => {
       const dataType = file.type;
       const reader = new FileReader();
       reader.onloadend = () => {
-        console.log('onloadend');
+        logger.debug('FileImport', 'File read completed', { fileType: dataType });
         const base64String = reader.result as string; // The result is a Base64 string
         onCaptured(base64String, 'gallery');
 
@@ -295,7 +303,6 @@ export const useCapture = () => {
         }
       };
       reader.readAsDataURL(file); // Convert the file to a Base64 string
-      // You can now handle the selected file (e.g., upload it, preview it, etc.)
     }
   };
 
@@ -304,7 +311,7 @@ export const useCapture = () => {
     if (import.meta.env.DEV) {
       // Expose dev function to window object for testing
       (window as any).__triggerPaywall = () => {
-        console.log('🧪 [DEV] Triggering paywall sheet...');
+        logger.debug('DevTools', 'Triggering paywall sheet');
         setIsPaywallOpen(true);
         logAnalyticsEvent('paywall_viewed', {
           trigger: 'dev_test',
@@ -313,23 +320,76 @@ export const useCapture = () => {
 
       // Also expose a function to trigger any error type
       (window as any).__triggerError = (errorType: ExtractionError) => {
-        console.log(`🧪 [DEV] Triggering error: ${errorType}`);
+        logger.debug('DevTools', `Triggering error: ${errorType}`);
         pushError(errorType);
       };
 
-      console.log('🧪 [DEV] Paywall dev functions available:');
-      console.log('  - window.__triggerPaywall() - Show paywall sheet');
-      console.log('  - window.__triggerError("LIMIT_REACHED") - Trigger limit reached error');
-      console.log('  - window.__triggerError("PROBABLY_NOT_AN_EVENT") - Trigger other errors');
+      // Expose capture limit dev functions
+      (window as any).__getCaptureCount = () => {
+        const count = getCaptureCount();
+        logger.debug('DevTools', `Current capture count: ${count}`);
+        return count;
+      };
+
+      (window as any).__incrementCaptureCount = () => {
+        const newCount = incrementCaptureCount();
+        logger.debug('DevTools', `Incremented capture count to: ${newCount}`);
+        return newCount;
+      };
+
+      (window as any).__resetCaptureCount = () => {
+        resetCaptureCount();
+        logger.debug('DevTools', 'Reset capture count to 0');
+      };
+
+      (window as any).__checkLimit = () => {
+        const limitReached = checkCaptureLimit();
+        const count = getCaptureCount();
+        const limit = featureFlags?.free_capture_limit || 5;
+        logger.debug('DevTools', `Capture count: ${count}/${limit}, Limit reached: ${limitReached}`);
+        return limitReached;
+      };
+
+      logger.info('DevTools', '🧪 Paywall dev functions available:');
+      logger.info('DevTools', '  - window.__triggerPaywall() - Show paywall sheet');
+      logger.info('DevTools', '  - window.__triggerError("LIMIT_REACHED") - Trigger limit reached error');
+      logger.info('DevTools', '  - window.__triggerError("PROBABLY_NOT_AN_EVENT") - Trigger other errors');
+      logger.info('DevTools', '🧪 Capture limit dev functions available:');
+      logger.info('DevTools', '  - window.__getCaptureCount() - Get current capture count');
+      logger.info('DevTools', '  - window.__incrementCaptureCount() - Increment capture count');
+      logger.info('DevTools', '  - window.__resetCaptureCount() - Reset capture count to 0');
+      logger.info('DevTools', '  - window.__checkLimit() - Check if limit is reached');
 
       return () => {
         // Cleanup on unmount
         delete (window as any).__triggerPaywall;
         delete (window as any).__triggerError;
+        delete (window as any).__getCaptureCount;
+        delete (window as any).__incrementCaptureCount;
+        delete (window as any).__resetCaptureCount;
+        delete (window as any).__checkLimit;
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  /**
+   * Check if user has reached the capture limit
+   */
+  const checkCaptureLimit = (): boolean => {
+    if (!featureFlags) {
+      return false; // If feature flags not loaded yet, allow capture
+    }
+    return hasReachedLimit(featureFlags.free_capture_limit);
+  };
+
+  /**
+   * Show the paywall sheet
+   */
+  const showPaywall = (trigger: string = 'manual') => {
+    setIsPaywallOpen(true);
+    logAnalyticsEvent('paywall_viewed', { trigger });
+  };
 
   return {
     setCapturedImage,
@@ -337,8 +397,9 @@ export const useCapture = () => {
     onImportFile: handleFileChange,
     onImport,
     onCaptured,
-    paywallSheet: (
-      <PaywallSheet isOpen={isPaywallOpen} onClose={handlePaywallClose} onSelectPlan={handleSelectPlan} />
-    ),
+    paywallSheet: <PaywallSheet isOpen={isPaywallOpen} onClose={handlePaywallClose} onSelectPlan={handleSelectPlan} />,
+    checkCaptureLimit,
+    showPaywall,
+    captureCount: getCaptureCount(),
   };
 };

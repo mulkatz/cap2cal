@@ -68,7 +68,7 @@ export const analyse = onRequest(
 
       const candidates = result.response?.candidates;
       if (!candidates || candidates.length === 0 || !candidates[0].content?.parts[0]?.text) {
-        console.error('Invalid response structure from Vertex AI:', JSON.stringify(result));
+        logger.error('Invalid response structure from Vertex AI', { result: JSON.stringify(result) });
         response.status(500).json({ message: 'Failed to get a valid response from the AI model.' });
         return;
       }
@@ -88,12 +88,17 @@ export const analyse = onRequest(
         await incrementUserCaptureCount(validation.userId);
       }
 
+      logger.info('Successfully processed image and extracted event data', {
+        userId: validation.userId,
+        eventCount: data?.data?.items?.length || 0
+      });
+
       response.status(200).json({
         message: 'processed',
         data: JSON.stringify(data),
       });
     } catch (e: any) {
-      console.error('Error processing request:', e);
+      logger.error('Error processing request', e);
       response.status(500).json({
         message: 'An error occurred during processing.',
         error: e.message,

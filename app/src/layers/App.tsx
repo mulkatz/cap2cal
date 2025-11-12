@@ -19,6 +19,7 @@ import { useAppContext } from '../contexts/AppContext.tsx';
 import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam } from '../utils/analytics.ts';
 import { Onboarding } from '../components/onboarding/Onboarding.tsx';
+import { logger } from '../utils/logger';
 
 initI18n();
 
@@ -29,8 +30,8 @@ export const App = () => {
   useDisableOverscroll();
 
   const { appState, setAppState } = useAppContext();
-  const { onImportFile, onCaptured, paywallSheet } = useCapture();
-  const { logAnalyticsEvent, setAnalyticsUserProperty } = useFirebaseContext();
+  const { onImportFile, onCaptured, paywallSheet, checkCaptureLimit, showPaywall } = useCapture();
+  const { logAnalyticsEvent, setAnalyticsUserProperty, featureFlags, featureFlagsLoading } = useFirebaseContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [listViewOpen, setListViewOpen] = useState(false);
   const dialogs = useDialogContext();
@@ -68,12 +69,12 @@ export const App = () => {
   // Listen for shared images from Android intent
   useEffect(() => {
     const handleSharedImage = async (event: any) => {
-      console.log('on shared image', JSON.stringify(event));
+      logger.debug('ShareIntent', 'Received shared image event', { event: JSON.stringify(event) });
 
       try {
         const data = typeof event === 'string' ? JSON.parse(event) : event;
         if (data.imageData) {
-          console.log('Received shared image from intent');
+          logger.info('ShareIntent', 'Processing shared image from intent');
 
           // Track share intent entry point
           logAnalyticsEvent(AnalyticsEvent.ENTRY_SHARE_INTENT, {
@@ -93,7 +94,15 @@ export const App = () => {
           await onCaptured(data.imageData, 'share');
         }
       } catch (error) {
-        console.error('Error processing shared image:', error);
+        logger.error('ShareIntent', 'Error processing shared image', error instanceof Error ? error : undefined);
+        // Show user feedback
+        dialogs.push(
+          <Dialog onClose={dialogs.pop}>
+            <Card>
+              <div>Failed to process shared image. Please try again.</div>
+            </Card>
+          </Dialog>
+        );
       }
     };
 
@@ -148,7 +157,7 @@ export const App = () => {
       // Check the current permission status
       permissions = await Camera.checkPermissions();
     } catch (error) {
-      console.error('Error checking permissions', error);
+      logger.error('Permissions', 'Error checking permissions', error instanceof Error ? error : undefined);
       return false;
     }
 
@@ -160,8 +169,7 @@ export const App = () => {
     // If permissions are denied, we can't request them again on some platforms.
     // The user must enable them in the app settings.
     if (permissions.camera === 'denied' || permissions.photos === 'denied') {
-      // Optionally, guide the user to their settings
-      console.log('Permissions were denied. Please enable them in app settings.');
+      logger.warn('Permissions', 'Permissions were denied by user');
       return false;
     }
 
@@ -171,7 +179,7 @@ export const App = () => {
       // Return true only if both permissions are granted after the request
       return newPermissions.camera === 'granted' && newPermissions.photos === 'granted';
     } catch (error) {
-      console.error('Error requesting permissions', error);
+      logger.error('Permissions', 'Error requesting permissions', error instanceof Error ? error : undefined);
       return false;
     }
   };
@@ -180,12 +188,24 @@ export const App = () => {
    * A full function to get a photo as a base64 string, including permission handling.
    */
   const onImport = async () => {
+    // Check capture limit before importing from gallery
+    if (featureFlags && !featureFlagsLoading) {
+      const limitReached = checkCaptureLimit();
+      logger.debug('CaptureLimit', `Limit reached: ${limitReached}`);
+
+      if (limitReached) {
+        logger.info('CaptureLimit', 'Showing paywall - limit reached on gallery import');
+        showPaywall('limit_reached_gallery_click');
+        return;
+      }
+    }
+
     // 1. First, check and request permissions
     const permissionsGranted = await checkAndRequestPermissions();
 
     // 2. If permissions were not granted, stop the function
     if (!permissionsGranted) {
-      console.log('Cannot access camera or photos, permission denied.');
+      logger.warn('Gallery', 'Cannot access photos - permission denied');
       dialogs.replace(
         <Dialog onClose={dialogs.pop}>
           <Card>
@@ -209,22 +229,20 @@ export const App = () => {
       // Prepend the data URI scheme to use it in an <img> tag.
       const imageUrl = `data:image/${image.format};base64,${image.base64String}`;
 
-      console.log('Successfully retrieved base64 image.');
-      // Now you can use `imageUrl` or `image.base64String`
-
       if (!image.base64String) {
-        console.error('base64 string was undefined');
+        logger.error('Gallery', 'Base64 string was undefined');
         return;
       }
+
+      logger.info('Gallery', 'Successfully retrieved image from gallery');
 
       // Track image selected from gallery
       logAnalyticsEvent(AnalyticsEvent.IMAGE_SELECTED_FROM_GALLERY);
 
-      // await onCaptured('data:image/jpeg;base64,' + image.base64String);
       await onCaptured(imageUrl, 'gallery');
     } catch (error) {
       // This catch block will handle cases where the user cancels the photo picker
-      console.error('Error getting photo', error);
+      logger.debug('Gallery', 'User cancelled photo picker or error occurred', error instanceof Error ? error : undefined);
     }
   };
 
@@ -263,6 +281,18 @@ export const App = () => {
 
   const handleCapture = async () => {
     console.log('check permissions', Capacitor.getPlatform());
+
+    // Check capture limit before opening camera
+    if (featureFlags && !featureFlagsLoading) {
+      const limitReached = checkCaptureLimit();
+      console.log(`[Capture Limit] Limit reached: ${limitReached}`);
+
+      if (limitReached) {
+        console.log('[Capture Limit] Showing paywall - limit reached');
+        showPaywall('limit_reached_camera_click');
+        return;
+      }
+    }
 
     let cameraPermission = 'denied';
 

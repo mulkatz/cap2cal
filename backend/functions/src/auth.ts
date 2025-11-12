@@ -1,5 +1,6 @@
 import * as admin from 'firebase-admin';
 import { Request } from 'firebase-functions/v2/https';
+import { logger } from 'firebase-functions';
 
 // Initialize Firebase Admin
 if (!admin.apps.length) {
@@ -36,7 +37,7 @@ export async function validateCaptureRequest(request: Request): Promise<Validati
     try {
       decodedToken = await admin.auth().verifyIdToken(token);
     } catch (error) {
-      console.error('Token verification failed:', error);
+      logger.error('Token verification failed', error);
       return {
         allowed: false,
         error: 'Invalid authentication token',
@@ -52,8 +53,32 @@ export async function validateCaptureRequest(request: Request): Promise<Validati
 
     try {
       const template = await remoteConfig.getTemplate();
+
+      // Debug logging to see what's actually in the template
+      logger.info('[Remote Config] Template fetched', {
+        parameterKeys: Object.keys(template.parameters),
+        version: template.version,
+      });
+
       const paidOnlyParam = template.parameters['paid_only'];
       const freeLimitParam = template.parameters['free_capture_limit'];
+
+      // Debug logging for individual parameters
+      if (paidOnlyParam) {
+        logger.info('[Remote Config] paid_only parameter', {
+          defaultValue: paidOnlyParam.defaultValue,
+        });
+      } else {
+        logger.warn('[Remote Config] paid_only parameter not found in template');
+      }
+
+      if (freeLimitParam) {
+        logger.info('[Remote Config] free_capture_limit parameter', {
+          defaultValue: freeLimitParam.defaultValue,
+        });
+      } else {
+        logger.warn('[Remote Config] free_capture_limit parameter not found in template');
+      }
 
       // Extract values from Remote Config parameters
       const paidOnlyValue = paidOnlyParam?.defaultValue as { value?: string } | undefined;
@@ -64,15 +89,18 @@ export async function validateCaptureRequest(request: Request): Promise<Validati
         ? parseInt(freeLimitValue.value, 10)
         : 5;
 
-      console.log(`[Remote Config] paid_only=${paidOnly}, free_capture_limit=${freeLimit}`);
+      logger.info(`[Remote Config] Parsed values: paid_only=${paidOnly}, free_capture_limit=${freeLimit}`);
     } catch (error: any) {
-      console.warn('Could not fetch Remote Config, using defaults:', error.message);
+      logger.warn('Could not fetch Remote Config, using defaults', {
+        error: error.message,
+        stack: error.stack,
+      });
       // Use default values (already set above)
     }
 
     // If paid_only mode is not enabled, allow all captures
     if (!paidOnly) {
-      console.log(`[Auth] paid_only is false - allowing capture for user ${userId}`);
+      logger.info(`[Auth] paid_only is false - allowing capture for user ${userId}`);
       return { allowed: true, userId };
     }
 
@@ -82,16 +110,16 @@ export async function validateCaptureRequest(request: Request): Promise<Validati
 
     // If user is pro, allow capture
     if (userData?.isPro === true) {
-      console.log(`[Auth] User ${userId} is Pro - allowing capture`);
+      logger.info(`[Auth] User ${userId} is Pro - allowing capture`);
       return { allowed: true, userId };
     }
 
     // Check capture count for free users
     const captureCount = userData?.captureCount || 0;
-    console.log(`[Auth] User ${userId} capture count: ${captureCount}/${freeLimit}`);
+    logger.info(`[Auth] User ${userId} capture count: ${captureCount}/${freeLimit}`);
 
     if (captureCount >= freeLimit) {
-      console.log(`[Auth] User ${userId} reached limit - blocking capture`);
+      logger.warn(`[Auth] User ${userId} reached limit - blocking capture`);
       return {
         allowed: false,
         error: 'Free capture limit reached. Upgrade to Pro to continue.',
@@ -100,10 +128,10 @@ export async function validateCaptureRequest(request: Request): Promise<Validati
     }
 
     // User can capture
-    console.log(`[Auth] User ${userId} allowed - ${freeLimit - captureCount} captures remaining`);
+    logger.info(`[Auth] User ${userId} allowed - ${freeLimit - captureCount} captures remaining`);
     return { allowed: true, userId };
   } catch (error) {
-    console.error('Error validating capture request:', error);
+    logger.error('Error validating capture request', error);
     return {
       allowed: false,
       error: 'Internal server error during validation',
@@ -127,9 +155,9 @@ export async function incrementUserCaptureCount(userId: string): Promise<void> {
     // Log the new count
     const updatedDoc = await userRef.get();
     const newCount = updatedDoc.data()?.captureCount || 0;
-    console.log(`[Auth] Incremented capture count for user ${userId} to ${newCount}`);
+    logger.info(`[Auth] Incremented capture count for user ${userId} to ${newCount}`);
   } catch (error) {
-    console.error('Error incrementing capture count:', error);
+    logger.error('Error incrementing capture count', error);
     // Don't throw error - this is non-critical
   }
 }

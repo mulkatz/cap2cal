@@ -11,12 +11,12 @@ export type ApiSuccess<T> = ApiResponse<T> & {
 };
 
 export type ApiError = ApiResponse<{
-  reason: string;
+  reason: ExtractionError;
 }> & {
   status: 'error';
   message?: string;
   data?: {
-    reason?: string;
+    reason?: ExtractionError;
   };
 };
 

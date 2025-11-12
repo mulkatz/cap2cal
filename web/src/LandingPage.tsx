@@ -343,7 +343,7 @@ export default function LandingPage(): JSX.Element {
               <button
                 type="button"
                 onClick={() => handleDownloadClick('ios', 'header')}
-                className="transform rounded-[5px] border-[1px] border-accentElevated bg-accent px-5 py-2 font-semibold text-secondary shadow-md transition-all hover:scale-105 hover:bg-accentElevated">
+                className="transform rounded-xl border-2 border-highlight bg-highlight px-5 py-2 font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
                 {t('nav.download')}
               </button>
             </nav>
@@ -389,7 +389,7 @@ export default function LandingPage(): JSX.Element {
                       handleDownloadClick('ios', 'mobile-menu');
                       handleCloseMobileMenu();
                     }}
-                    className="mt-4 w-full transform rounded-[5px] border-[1px] border-accentElevated bg-accent px-5 py-3 font-semibold text-secondary shadow-md transition-all hover:scale-105 hover:bg-accentElevated">
+                    className="mt-4 w-full transform rounded-xl border-2 border-highlight bg-highlight px-5 py-3 font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
                     {t('nav.download')}
                   </button>
                 </div>
@@ -401,75 +401,137 @@ export default function LandingPage(): JSX.Element {
         <main id="main-content">
           {/* Hero Section */}
           <section className="container relative mx-auto overflow-hidden px-6 pb-32 pt-24 text-center">
-            <h1 className="relative mb-2 text-5xl font-extrabold leading-tight tracking-tight md:text-7xl">
+            {/* Hero Visualization */}
+            <div className="relative mb-8 flex w-full items-center justify-center">
+              <div className="relative flex items-center justify-center gap-3 sm:gap-4">
+                {/* Camera Icon */}
+                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-accentElevated bg-primary shadow-lg sm:h-20 sm:w-20">
+                  <svg
+                    className="h-8 w-8 text-secondary sm:h-10 sm:w-10"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                </div>
+
+                {/* Arrow with glow */}
+                <div className="relative">
+                  <svg
+                    className="h-8 w-8 flex-shrink-0 text-highlight drop-shadow-lg sm:h-12 sm:w-12"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </div>
+
+                {/* Calendar Icon */}
+                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-accentElevated bg-primary shadow-lg sm:h-20 sm:w-20">
+                  <svg
+                    className="h-8 w-8 text-secondary sm:h-10 sm:w-10"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <h1 className="relative mb-4 text-5xl font-extrabold leading-tight tracking-tight md:text-7xl">
               <span className="bg-gradient-to-r from-highlight to-secondary bg-clip-text text-transparent">
                 {t('hero.titleSpan')}
               </span>{' '}
               <span className="text-secondary">{t('hero.titleMain')}</span>
             </h1>
-            <p className="relative mb-4 text-lg text-secondary/80 md:text-xl">{t('hero.subtitle')}</p>
-            <p className="relative mx-auto mb-10 max-w-3xl text-xl text-secondary/90 md:text-2xl">
+
+            {/* Decorative gradient bar */}
+            <div className="mx-auto mb-6 h-1 w-20 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
+
+            <p className="relative mb-4 text-lg leading-relaxed text-secondary/80 md:text-xl">{t('hero.subtitle')}</p>
+            <p className="relative mx-auto mb-10 max-w-3xl text-xl leading-relaxed text-secondary/70 md:text-2xl">
               {t('hero.description')}
             </p>
             <div className="relative flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
                 type="button"
                 onClick={() => handleDownloadClick('ios', 'hero')}
-                className="transform rounded-[5px] border-[1px] border-accentElevated bg-accent px-10 py-4 text-lg font-semibold text-secondary shadow-md transition-all hover:scale-105 hover:bg-accentElevated">
+                className="transform rounded-xl border-2 border-highlight bg-highlight px-10 py-4 text-lg font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
                 {t('hero.cta')}
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadClick('android', 'hero')}
-                className="transform rounded-[5px] border-[2px] border-cardBorder bg-primaryElevated px-10 py-4 text-lg font-semibold text-secondary transition-all hover:scale-105 hover:bg-accent">
+                className="transform rounded-xl border-2 border-accentElevated bg-primaryElevated px-10 py-4 text-lg font-semibold text-secondary shadow-lg transition-all hover:scale-105 hover:border-highlight/50 hover:bg-accent">
                 {t('hero.ctaAndroid')}
               </button>
             </div>
-            <p className="relative mt-5 text-sm text-secondary/70">{t('hero.subtext')}</p>
-            <p className="relative mt-2 text-sm font-medium text-highlight">{t('hero.trustBadge')}</p>
+            <p className="relative mt-6 text-sm text-secondary/70">{t('hero.subtext')}</p>
+            <p className="relative mt-2 text-sm font-bold uppercase tracking-wide text-highlight">{t('hero.trustBadge')}</p>
           </section>
 
           {/* How It Works Section */}
           <section id="how-it-works" className="bg-primary py-24">
             <div className="container mx-auto px-6">
               <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('steps.title')}</h2>
-              <p className="mb-16 text-center text-xl text-secondary/80">{t('steps.subtitle')}</p>
+              <p className="mb-4 text-center text-xl leading-relaxed text-secondary/70">{t('steps.subtitle')}</p>
+              {/* Decorative gradient bar */}
+              <div className="mx-auto mb-16 h-1 w-16 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
+
               <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-                <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-8 shadow-lg">
-                  <div className="mb-4 flex items-center gap-4">
-                    <div className="rounded-full border border-cardBorder bg-accent p-3">
+                <div className="group rounded-2xl border-2 border-accentElevated bg-primaryDark p-8 shadow-2xl transition-all duration-200 hover:scale-105 hover:border-highlight/30 hover:shadow-highlight/10">
+                  <div className="mb-6 flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30">
                       <IconCamera />
                     </div>
                     <div className="bg-gradient-to-br from-highlight to-secondary bg-clip-text text-5xl font-extrabold text-transparent">
                       1.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-semibold text-secondary">{t('steps.one.title')}</h3>
-                  <p className="text-secondary/80">{t('steps.one.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-secondary">{t('steps.one.title')}</h3>
+                  <p className="leading-relaxed text-secondary/70">{t('steps.one.description')}</p>
                 </div>
-                <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-8 shadow-lg">
-                  <div className="mb-4 flex items-center gap-4">
-                    <div className="rounded-full border border-cardBorder bg-accent p-3">
+                <div className="group rounded-2xl border-2 border-accentElevated bg-primaryDark p-8 shadow-2xl transition-all duration-200 hover:scale-105 hover:border-highlight/30 hover:shadow-highlight/10">
+                  <div className="mb-6 flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30">
                       <IconRobot />
                     </div>
                     <div className="bg-gradient-to-br from-highlight to-secondary bg-clip-text text-5xl font-extrabold text-transparent">
                       2.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-semibold text-secondary">{t('steps.two.title')}</h3>
-                  <p className="text-secondary/80">{t('steps.two.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-secondary">{t('steps.two.title')}</h3>
+                  <p className="leading-relaxed text-secondary/70">{t('steps.two.description')}</p>
                 </div>
-                <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-8 shadow-lg">
-                  <div className="mb-4 flex items-center gap-4">
-                    <div className="rounded-full border border-cardBorder bg-accent p-3">
+                <div className="group rounded-2xl border-2 border-accentElevated bg-primaryDark p-8 shadow-2xl transition-all duration-200 hover:scale-105 hover:border-highlight/30 hover:shadow-highlight/10">
+                  <div className="mb-6 flex items-center gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30">
                       <IconCalendar />
                     </div>
                     <div className="bg-gradient-to-br from-highlight to-secondary bg-clip-text text-5xl font-extrabold text-transparent">
                       3.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-semibold text-secondary">{t('steps.three.title')}</h3>
-                  <p className="text-secondary/80">{t('steps.three.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-secondary">{t('steps.three.title')}</h3>
+                  <p className="leading-relaxed text-secondary/70">{t('steps.three.description')}</p>
                 </div>
               </div>
             </div>
@@ -478,7 +540,9 @@ export default function LandingPage(): JSX.Element {
           {/* Features Section */}
           <section id="features" className="container mx-auto px-6 py-24">
             <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('features.title')}</h2>
-            <p className="mb-16 text-center text-xl text-secondary/80">{t('features.subtitle')}</p>
+            <p className="mb-4 text-center text-xl leading-relaxed text-secondary/70">{t('features.subtitle')}</p>
+            {/* Decorative gradient bar */}
+            <div className="mx-auto mb-16 h-1 w-16 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               <FeatureCard
                 icon={<IconRobot />}
@@ -531,7 +595,9 @@ export default function LandingPage(): JSX.Element {
           {/* FAQ Section */}
           <section className="bg-primary py-24">
             <div className="container mx-auto px-6">
-              <h2 className="mb-16 text-center text-4xl font-bold text-secondary">{t('faq.title')}</h2>
+              <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('faq.title')}</h2>
+              {/* Decorative gradient bar */}
+              <div className="mx-auto mb-16 h-1 w-16 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
               <div className="mx-auto max-w-3xl space-y-4">
                 <FAQItem
                   question={t('faq.q1.question')}
@@ -570,25 +636,39 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* Final CTA Section */}
-          <section className="bg-gradient-to-b from-primaryElevated to-accent py-24">
-            <div className="container mx-auto px-6 text-center">
+          <section className="relative overflow-hidden bg-gradient-to-b from-primaryElevated to-accent py-24">
+            <div className="container relative mx-auto px-6 text-center">
+              {/* Icon */}
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 shadow-lg shadow-highlight/30 ring-4 ring-highlight/20">
+                <svg
+                  className="h-10 w-10 text-highlight"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+
               <h2 className="mb-4 text-4xl font-bold text-secondary">{t('finalCta.title')}</h2>
-              <p className="mb-10 text-xl text-secondary/80">{t('finalCta.description')}</p>
+              <p className="mb-4 text-xl leading-relaxed text-secondary/70">{t('finalCta.description')}</p>
+              {/* Decorative gradient bar */}
+              <div className="mx-auto mb-10 h-1 w-16 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
+
               <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
                 <button
                   type="button"
                   onClick={() => handleDownloadClick('ios', 'final-cta')}
-                  className="transform rounded-[5px] border-[1px] border-highlight bg-highlight px-10 py-4 text-lg font-bold text-primaryDark shadow-md transition-all hover:scale-105 hover:bg-highlight/90">
+                  className="transform rounded-xl border-2 border-highlight bg-highlight px-10 py-4 text-lg font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
                   {t('finalCta.cta')}
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDownloadClick('android', 'final-cta')}
-                  className="transform rounded-[5px] border-[2px] border-cardBorder px-10 py-4 text-lg font-bold text-secondary transition-all hover:scale-105 hover:bg-primaryElevated">
+                  className="transform rounded-xl border-2 border-accentElevated px-10 py-4 text-lg font-bold text-secondary shadow-lg transition-all hover:scale-105 hover:border-highlight/50 hover:bg-primaryElevated">
                   {t('finalCta.ctaAndroid')}
                 </button>
               </div>
-              <p className="mt-6 text-sm text-secondary/70">{t('finalCta.trustLine')}</p>
+              <p className="mt-8 text-sm text-secondary/70">{t('finalCta.trustLine')}</p>
             </div>
           </section>
         </main>
@@ -676,10 +756,12 @@ interface FeatureCardProps {
 
 function FeatureCard({ icon, title, description }: FeatureCardProps): JSX.Element {
   return (
-    <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 p-6 shadow-lg transition-transform hover:scale-105">
-      <div className="mb-4 w-max rounded-full border border-cardBorder bg-accent p-3">{icon}</div>
-      <h3 className="mb-2 text-xl font-semibold text-secondary">{title}</h3>
-      <p className="text-secondary/80">{description}</p>
+    <div className="group rounded-2xl border-2 border-accentElevated bg-primaryDark p-6 shadow-2xl transition-all duration-200 hover:scale-105 hover:border-highlight/30 hover:shadow-highlight/10">
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30">
+        {icon}
+      </div>
+      <h3 className="mb-3 text-xl font-bold text-secondary">{title}</h3>
+      <p className="leading-relaxed text-secondary/70">{description}</p>
     </div>
   );
 }
@@ -693,21 +775,21 @@ function FAQItem({ question, answer }: FAQItemProps): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="rounded-lg border-[2px] border-cardBorder bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 overflow-hidden">
+    <div className="overflow-hidden rounded-2xl border-2 border-accentElevated bg-primaryDark shadow-xl transition-all duration-200 hover:border-highlight/30">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-accent">
-        <span className="font-semibold text-secondary">{question}</span>
-        <span className={`transform transition-transform ${isOpen ? 'rotate-180' : ''} text-secondary`}>
+        className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors hover:bg-primary/50">
+        <span className="text-lg font-bold text-secondary">{question}</span>
+        <span className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} text-highlight`}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round">
             <polyline points="6 9 12 15 18 9"></polyline>
@@ -715,8 +797,8 @@ function FAQItem({ question, answer }: FAQItemProps): JSX.Element {
         </span>
       </button>
       {isOpen && (
-        <div className="border-t border-cardBorder bg-accent px-6 py-4">
-          <p className="text-secondary/80">{answer}</p>
+        <div className="border-t-2 border-accentElevated bg-primary/30 px-6 py-5">
+          <p className="leading-relaxed text-secondary/70">{answer}</p>
         </div>
       )}
     </div>

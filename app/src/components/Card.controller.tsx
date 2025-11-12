@@ -18,6 +18,7 @@ import { Share } from '@capacitor/share';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Window } from './Window.tsx';
 import { ImagePreview } from './ImagePreview.tsx';
+import { logger } from '../utils/logger';
 import { CalendarPermissionScope, CapacitorCalendar } from '@ebarooni/capacitor-calendar';
 import { PermissionDeniedAtom } from './dialogs/PermissionDenied.atom.tsx';
 import React, { useCallback, useMemo } from 'react';
