@@ -23,5 +23,8 @@ project(':ebarooni-capacitor-calendar').projectDir = new File('../../node_module
 include ':michaelwolz-camera-preview-lite'
 project(':michaelwolz-camera-preview-lite').projectDir = new File('../../node_modules/@michaelwolz/camera-preview-lite/android')
 
+include ':revenuecat-purchases-capacitor'
+project(':revenuecat-purchases-capacitor').projectDir = new File('../../node_modules/@revenuecat/purchases-capacitor/android')
+
 include ':capacitor-native-settings'
 project(':capacitor-native-settings').projectDir = new File('../../node_modules/capacitor-native-settings/android')

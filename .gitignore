@@ -25,3 +25,7 @@ dist-ssr
 
 .env
 .firebase
+
+# Screenshots
+screenshots/output
+screenshots/node_modules

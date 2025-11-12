@@ -1,10 +1,10 @@
-import Purchases, {
-  LOG_LEVEL,
+import { Purchases, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
+import type {
   CustomerInfo,
   PurchasesPackage,
   PurchasesOfferings,
-} from 'react-native-purchases';
-import { Platform } from 'react-native';
+} from '@revenuecat/purchases-capacitor';
+import { Capacitor } from '@capacitor/core';
 
 /**
  * Product IDs that should match your RevenueCat offerings
@@ -46,14 +46,19 @@ export interface PurchaseError {
  */
 export const initializePurchases = async (userId: string): Promise<void> => {
   try {
-    const apiKey = Platform.select({
-      ios: import.meta.env.VITE_REVENUECAT_API_KEY_IOS || '',
-      android: import.meta.env.VITE_REVENUECAT_API_KEY_ANDROID || '',
-      default: '',
-    });
+    // Check if running on native platform
+    if (!Capacitor.isNativePlatform()) {
+      console.warn('[Purchases] Not running on native platform, purchases disabled');
+      return;
+    }
+
+    const platform = Capacitor.getPlatform();
+    const apiKey = platform === 'ios'
+      ? import.meta.env.VITE_REVENUECAT_API_KEY_IOS || ''
+      : import.meta.env.VITE_REVENUECAT_API_KEY_ANDROID || '';
 
     if (!apiKey) {
-      console.warn('RevenueCat API key not configured. Purchases will not work.');
+      console.warn(`[Purchases] RevenueCat API key not configured for ${platform}. Purchases will not work.`);
       return;
     }
 
@@ -64,8 +69,8 @@ export const initializePurchases = async (userId: string): Promise<void> => {
     });
 
     // Enable debug logs in development
-    if (__DEV__) {
-      await Purchases.setLogLevel(LOG_LEVEL.DEBUG);
+    if (import.meta.env.DEV) {
+      await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
     }
 
     console.log('[Purchases] RevenueCat initialized for user:', userId);
@@ -82,7 +87,12 @@ export const initializePurchases = async (userId: string): Promise<void> => {
  */
 export const checkIsProUser = async (): Promise<boolean> => {
   try {
-    const customerInfo = await Purchases.getCustomerInfo();
+    if (!Capacitor.isNativePlatform()) {
+      console.warn('[Purchases] Not on native platform, returning false');
+      return false;
+    }
+
+    const { customerInfo } = await Purchases.getCustomerInfo();
     const hasProEntitlement = customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
 
     console.log('[Purchases] Pro status:', hasProEntitlement);
@@ -100,7 +110,11 @@ export const checkIsProUser = async (): Promise<boolean> => {
  */
 export const getOfferings = async (): Promise<PurchasesOfferings | null> => {
   try {
-    const offerings = await Purchases.getOfferings();
+    if (!Capacitor.isNativePlatform()) {
+      return null;
+    }
+
+    const { offerings } = await Purchases.getOfferings();
 
     if (!offerings.current) {
       console.warn('[Purchases] No current offering available');
@@ -162,6 +176,13 @@ export const purchasePackage = async (
   packageType: keyof typeof PRODUCT_IDS
 ): Promise<CustomerInfo> => {
   try {
+    if (!Capacitor.isNativePlatform()) {
+      throw {
+        type: PurchaseErrorType.PRODUCT_NOT_AVAILABLE,
+        message: 'Purchases are only available on mobile devices',
+      } as PurchaseError;
+    }
+
     const package_ = await getPackage(packageType);
 
     if (!package_) {
@@ -174,7 +195,9 @@ export const purchasePackage = async (
     console.log('[Purchases] Initiating purchase:', package_.product.identifier);
 
     // Make the purchase
-    const { customerInfo } = await Purchases.purchasePackage(package_);
+    const { customerInfo } = await Purchases.purchasePackage({
+      aPackage: package_,
+    });
 
     // Check if user now has pro entitlement
     const hasProEntitlement = customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
@@ -190,7 +213,7 @@ export const purchasePackage = async (
     console.error('[Purchases] Purchase failed:', error);
 
     // Parse RevenueCat error codes
-    if (error.userCancelled) {
+    if (error.userCancelled || error.code === '1') {
       throw {
         type: PurchaseErrorType.USER_CANCELLED,
         message: 'Purchase was cancelled',
@@ -198,10 +221,26 @@ export const purchasePackage = async (
       } as PurchaseError;
     }
 
-    if (error.code === 'NETWORK_ERROR' || error.code === 'UNKNOWN_ERROR') {
+    if (error.code === '2' || error.networkError) {
       throw {
         type: PurchaseErrorType.NETWORK_ERROR,
         message: 'Network error. Please check your connection and try again.',
+        originalError: error,
+      } as PurchaseError;
+    }
+
+    if (error.code === '3' || error.productNotAvailable) {
+      throw {
+        type: PurchaseErrorType.PRODUCT_NOT_AVAILABLE,
+        message: 'Selected subscription package is not available',
+        originalError: error,
+      } as PurchaseError;
+    }
+
+    if (error.code === '4' || error.purchaseNotAllowed) {
+      throw {
+        type: PurchaseErrorType.PAYMENT_FAILED,
+        message: 'Purchase not allowed. Please check your payment settings.',
         originalError: error,
       } as PurchaseError;
     }
@@ -222,6 +261,11 @@ export const purchasePackage = async (
  */
 export const restorePurchases = async (): Promise<boolean> => {
   try {
+    if (!Capacitor.isNativePlatform()) {
+      console.warn('[Purchases] Not on native platform, cannot restore');
+      return false;
+    }
+
     console.log('[Purchases] Restoring purchases...');
 
     const { customerInfo } = await Purchases.restorePurchases();
@@ -248,9 +292,14 @@ export const restorePurchases = async (): Promise<boolean> => {
 export const addCustomerInfoUpdateListener = (
   callback: (customerInfo: CustomerInfo) => void
 ): void => {
+  if (!Capacitor.isNativePlatform()) {
+    console.warn('[Purchases] Not on native platform, cannot add listener');
+    return;
+  }
+
   Purchases.addCustomerInfoUpdateListener((customerInfo) => {
     console.log('[Purchases] Customer info updated');
-    callback(customerInfo);
+    callback(customerInfo.customerInfo);
   });
 };
 
@@ -322,7 +371,12 @@ const calculateSavings = (monthlyPrice: number, yearlyPrice: number): string => 
  */
 export const logCustomerInfo = async (): Promise<void> => {
   try {
-    const customerInfo = await Purchases.getCustomerInfo();
+    if (!Capacitor.isNativePlatform()) {
+      console.log('[Purchases] Not on native platform');
+      return;
+    }
+
+    const { customerInfo } = await Purchases.getCustomerInfo();
     console.log('[Purchases] Customer Info:', {
       userId: customerInfo.originalAppUserId,
       hasProEntitlement: customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined,
@@ -332,4 +386,11 @@ export const logCustomerInfo = async (): Promise<void> => {
   } catch (error) {
     console.error('[Purchases] Failed to log customer info:', error);
   }
+};
+
+/**
+ * Check if purchases are available on this platform
+ */
+export const isPurchasesAvailable = (): boolean => {
+  return Capacitor.isNativePlatform();
 };

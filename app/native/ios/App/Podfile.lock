@@ -18,6 +18,12 @@ PODS:
     - Capacitor
   - MichaelwolzCameraPreviewLite (7.1.0):
     - Capacitor
+  - PurchasesHybridCommon (17.16.1):
+    - RevenueCat (= 5.46.3)
+  - RevenueCat (5.46.3)
+  - RevenuecatPurchasesCapacitor (11.2.12):
+    - Capacitor
+    - PurchasesHybridCommon (= 17.16.1)
 
 DEPENDENCIES:
   - "Capacitor (from `../../../node_modules/@capacitor/ios`)"
@@ -30,6 +36,12 @@ DEPENDENCIES:
   - "CapacitorShare (from `../../../node_modules/@capacitor/share`)"
   - "EbarooniCapacitorCalendar (from `../../../node_modules/@ebarooni/capacitor-calendar`)"
   - "MichaelwolzCameraPreviewLite (from `../../../node_modules/@michaelwolz/camera-preview-lite`)"
+  - "RevenuecatPurchasesCapacitor (from `../../../node_modules/@revenuecat/purchases-capacitor`)"
+
+SPEC REPOS:
+  trunk:
+    - PurchasesHybridCommon
+    - RevenueCat
 
 EXTERNAL SOURCES:
   Capacitor:
@@ -52,6 +64,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@ebarooni/capacitor-calendar"
   MichaelwolzCameraPreviewLite:
     :path: "../../../node_modules/@michaelwolz/camera-preview-lite"
+  RevenuecatPurchasesCapacitor:
+    :path: "../../../node_modules/@revenuecat/purchases-capacitor"
 
 SPEC CHECKSUMS:
   Capacitor: 03bc7cbdde6a629a8b910a9d7d78c3cc7ed09ea7
@@ -64,7 +78,10 @@ SPEC CHECKSUMS:
   CapacitorShare: e573823f511f260f598d0423c33b1e3d7bbe5fd1
   EbarooniCapacitorCalendar: 4568a8a318b940245bf6e257a8b115626581bb7d
   MichaelwolzCameraPreviewLite: 04724eb9d11e2633d131ae911b74f5a5e7f83836
+  PurchasesHybridCommon: aa143077ae699019b615a9fe72cdf52b0ae5273e
+  RevenueCat: 635d32f21556b036ac6138a3ec44ac8e5a7c79b6
+  RevenuecatPurchasesCapacitor: d54057ab47d3ac3dbb7660cc524eab1c58d8c490
 
-PODFILE CHECKSUM: cf2f19dec3715acaf08b98afb5b7928dcec56455
+PODFILE CHECKSUM: b6fbf5ed43659fa3b243831673dda0ddf753ff9d
 
 COCOAPODS: 1.16.2

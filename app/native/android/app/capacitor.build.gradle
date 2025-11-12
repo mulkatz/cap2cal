@@ -16,6 +16,7 @@ dependencies {
     implementation project(':capacitor-share')
     implementation project(':ebarooni-capacitor-calendar')
     implementation project(':michaelwolz-camera-preview-lite')
+    implementation project(':revenuecat-purchases-capacitor')
     implementation project(':capacitor-native-settings')
 
 }

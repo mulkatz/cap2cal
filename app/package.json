@@ -9,7 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "format": "npm run  prettier \".\" --write \"**/*.{ts,tsx,md}\"",
-    "update-dependencies": "npm run ncu -u"
+    "update-dependencies": "npm run ncu -u",
+    "screenshots": "cd ../screenshots && npm run screenshots:all",
+    "screenshots:en": "cd ../screenshots && npm run screenshots:en",
+    "screenshots:de": "cd ../screenshots && npm run screenshots:de"
   },
   "dependencies": {
     "@capacitor/android": "^7.0.0",
@@ -22,6 +25,7 @@
     "@capacitor/share": "^7.0.1",
     "@ebarooni/capacitor-calendar": "^7.2.0",
     "@michaelwolz/camera-preview-lite": "7.1.0",
+    "@revenuecat/purchases-capacitor": "^11.2.12",
     "capacitor-native-settings": "^7.0.1",
     "dexie": "4.0.11",
     "dexie-react-hooks": "1.1.7",
@@ -34,7 +38,6 @@
     "react-hot-toast": "2.5.1",
     "react-i18next": "15.4.0",
     "react-modal-sheet": "4.0.1",
-    "react-native-purchases": "^9.6.4",
     "react-router-dom": "7.9.4",
     "react-spinners": "0.15.0",
     "react-zoom-pan-pinch": "^3.7.0",

@@ -20,7 +20,7 @@ import {
   addCustomerInfoUpdateListener,
   ENTITLEMENT_ID,
 } from '../services/purchases.service.ts';
-import type { CustomerInfo } from 'react-native-purchases';
+import type { CustomerInfo } from '@revenuecat/purchases-capacitor';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,

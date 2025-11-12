@@ -21,12 +21,15 @@ This guide walks you through setting up RevenueCat for in-app purchases in the C
 
 Cap2Cal uses RevenueCat to manage in-app subscriptions across iOS and Android. The implementation includes:
 
-- **Frontend**: React Native app with RevenueCat SDK integration
+- **Frontend**: React + Capacitor app with RevenueCat Capacitor plugin (`@revenuecat/purchases-capacitor`)
 - **Backend**: Firebase Cloud Functions webhook for subscription events
+- **Platform**: Web-based React app wrapped with Capacitor for native iOS/Android
 - **Pricing**:
   - Monthly: $0.99/month
   - Yearly: $9.99/year (Best Value - Save 17%)
 - **Entitlement**: `pro` entitlement grants unlimited captures
+
+**Note**: Purchases only work on native iOS/Android apps built with Capacitor. The web version does not support in-app purchases.
 
 ---
 
@@ -368,6 +371,47 @@ https://us-central1-cap2cal.cloudfunctions.net/revenuecatWebhook
 
 ---
 
+## Building the App
+
+Before testing, you need to build and deploy the Capacitor app to a device/simulator:
+
+### iOS Build
+
+```bash
+# Build the web app
+npm run build
+
+# Sync with Capacitor
+npx cap sync ios
+
+# Open in Xcode
+npx cap open ios
+```
+
+Then in Xcode:
+1. Select your development team in Signing & Capabilities
+2. Select a physical device or simulator
+3. Click Run (⌘R)
+
+### Android Build
+
+```bash
+# Build the web app
+npm run build
+
+# Sync with Capacitor
+npx cap sync android
+
+# Open in Android Studio
+npx cap open android
+```
+
+Then in Android Studio:
+1. Select a device or emulator
+2. Click Run
+
+---
+
 ## Testing
 
 ### 1. iOS Sandbox Testing
@@ -552,9 +596,45 @@ Alternative: Use license testing for faster testing without internal track:
 - For iOS: Settings → App Store → Check signed-in account
 - For Android: Play Store → Menu → Account → Verify account
 
+#### 6. "Purchases Not Available in Web Browser"
+
+**Symptoms**: Paywall shows but purchase doesn't work when running in web browser
+
+**Cause**: In-app purchases are only available on native iOS/Android platforms. The Capacitor plugin only works on real devices/simulators, not in web browsers.
+
+**Solution**:
+- Build and run the app on iOS/Android: `npx cap run ios` or `npx cap run android`
+- Do not test purchases in `npm run dev` (web browser)
+- The code checks `Capacitor.isNativePlatform()` and shows appropriate messages
+
 ---
 
 ## Useful Commands
+
+### Capacitor Commands
+
+```bash
+# Build web app and sync with native projects
+npm run build && npx cap sync
+
+# Run on iOS simulator
+npx cap run ios
+
+# Run on Android emulator/device
+npx cap run android
+
+# Open in Xcode
+npx cap open ios
+
+# Open in Android Studio
+npx cap open android
+
+# Update Capacitor plugins
+npm update @revenuecat/purchases-capacitor
+npx cap sync
+```
+
+### Firebase Commands
 
 ```bash
 # Check Firebase Functions config
