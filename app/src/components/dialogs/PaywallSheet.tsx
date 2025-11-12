@@ -9,16 +9,30 @@ interface PaywallSheetProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectPlan: (plan: 'monthly' | 'yearly') => void;
+  onRestorePurchases?: () => void;
+  loading?: boolean;
 }
 
 type PricingPlan = 'monthly' | 'yearly';
 
-export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onSelectPlan }) => {
+export const PaywallSheet: React.FC<PaywallSheetProps> = ({
+  isOpen,
+  onClose,
+  onSelectPlan,
+  onRestorePurchases,
+  loading = false,
+}) => {
   const { t } = useTranslation();
   const [selectedPlan, setSelectedPlan] = useState<PricingPlan>('yearly');
 
   const handleContinue = () => {
+    if (loading) return; // Prevent double-clicks during purchase
     onSelectPlan(selectedPlan);
+  };
+
+  const handleRestorePurchases = () => {
+    if (loading || !onRestorePurchases) return;
+    onRestorePurchases();
   };
 
   return (
@@ -72,12 +86,14 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
             <div className="mb-6 space-y-3">
               {/* Yearly Plan - BEST VALUE */}
               <button
-                onClick={() => setSelectedPlan('yearly')}
+                onClick={() => !loading && setSelectedPlan('yearly')}
+                disabled={loading}
                 className={cn(
                   'relative w-full overflow-hidden rounded-xl border-2 p-4 text-left transition-all duration-200',
                   selectedPlan === 'yearly'
                     ? 'border-highlight bg-gradient-to-r from-highlight/10 to-highlight/5 shadow-lg shadow-highlight/20'
-                    : 'border-accentElevated bg-primary/50'
+                    : 'border-accentElevated bg-primary/50',
+                  loading && 'cursor-not-allowed opacity-60'
                 )}>
                 {/* Best Value Badge */}
                 <div
@@ -115,12 +131,14 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
 
               {/* Monthly Plan */}
               <button
-                onClick={() => setSelectedPlan('monthly')}
+                onClick={() => !loading && setSelectedPlan('monthly')}
+                disabled={loading}
                 className={cn(
                   'relative w-full overflow-hidden rounded-xl border-2 p-4 text-left transition-all duration-200',
                   selectedPlan === 'monthly'
                     ? 'border-highlight bg-gradient-to-r from-highlight/10 to-highlight/5 shadow-lg shadow-highlight/20'
-                    : 'border-accentElevated bg-primary/50'
+                    : 'border-accentElevated bg-primary/50',
+                  loading && 'cursor-not-allowed opacity-60'
                 )}>
                 <div>
                   <p className="text-lg font-bold text-secondary">{t('dialogs.paywall.monthlyTitle')}</p>
@@ -189,22 +207,38 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({ isOpen, onClose, onS
 
             {/* CTA Button */}
             <CTAButton
-              text={t('dialogs.paywall.cta', {
-                plan: selectedPlan === 'yearly' ? t('dialogs.paywall.yearlyTitle') : t('dialogs.paywall.monthlyTitle'),
-              })}
+              text={
+                loading
+                  ? t('dialogs.paywall.processing') || 'Processing...'
+                  : t('dialogs.paywall.cta', {
+                      plan:
+                        selectedPlan === 'yearly' ? t('dialogs.paywall.yearlyTitle') : t('dialogs.paywall.monthlyTitle'),
+                    })
+              }
               onClick={handleContinue}
               highlight
               className="mb-3"
+              disabled={loading}
             />
 
             {/* Secondary actions */}
             <div className="flex flex-col items-center gap-2 text-center">
               <button
                 onClick={onClose}
-                className="text-sm text-secondary/60 transition-opacity hover:text-secondary/80">
+                disabled={loading}
+                className={cn(
+                  'text-sm text-secondary/60 transition-opacity hover:text-secondary/80',
+                  loading && 'cursor-not-allowed opacity-40'
+                )}>
                 {t('dialogs.paywall.notNow')}
               </button>
-              <button className="text-xs text-secondary/40 underline transition-opacity hover:text-secondary/60">
+              <button
+                onClick={handleRestorePurchases}
+                disabled={loading}
+                className={cn(
+                  'text-xs text-secondary/40 underline transition-opacity hover:text-secondary/60',
+                  loading && 'cursor-not-allowed opacity-30'
+                )}>
                 {t('dialogs.paywall.restorePurchases')}
               </button>
             </div>

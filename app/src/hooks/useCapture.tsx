@@ -21,14 +21,17 @@ import { useAppContext } from '../contexts/AppContext.tsx';
 import { AnalyticsEvent, AnalyticsParam, getEventFieldsPresence } from '../utils/analytics.ts';
 import { incrementCaptureCount, getCaptureCount, hasReachedLimit, resetCaptureCount } from '../utils/captureLimit.ts';
 import { logger } from '../utils/logger';
+import { purchasePackage, restorePurchases, PurchaseErrorType } from '../services/purchases.service.ts';
+import type { PurchaseError } from '../services/purchases.service.ts';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
   const [isPaywallOpen, setIsPaywallOpen] = useState(false);
+  const [purchaseLoading, setPurchaseLoading] = useState(false);
 
   const { t } = useTranslation();
   const dialogs = useDialogContext();
-  const { logAnalyticsEvent, trackPerformance, getAuthToken, featureFlags } = useFirebaseContext();
+  const { logAnalyticsEvent, trackPerformance, getAuthToken, featureFlags, refreshProStatus } = useFirebaseContext();
   const { setAppState } = useAppContext();
 
   const onCaptured = async (imgUrl: string, imageSource: 'camera' | 'gallery' | 'share' = 'camera') => {
@@ -230,20 +233,177 @@ export const useCapture = () => {
     });
   };
 
-  const handleSelectPlan = (plan: 'monthly' | 'yearly') => {
-    // TODO: Implement payment flow (e.g., RevenueCat)
+  const handleSelectPlan = async (plan: 'monthly' | 'yearly') => {
     logger.info('Paywall', `User selected plan: ${plan}`);
 
-    // Track plan selection
-    logAnalyticsEvent('paywall_plan_selected', {
-      plan: plan,
-      trigger: 'limit_reached',
+    // Track purchase initiation
+    logAnalyticsEvent(AnalyticsEvent.SUBSCRIPTION_PURCHASE_INITIATED, {
+      [AnalyticsParam.SUBSCRIPTION_PLAN]: plan,
+      source: 'paywall',
     });
 
-    // For now, just close the paywall
-    // In production, this would initiate the purchase flow
-    setIsPaywallOpen(false);
-    setAppState('home');
+    setPurchaseLoading(true);
+
+    try {
+      // Map plan selection to product ID
+      const packageType = plan === 'monthly' ? 'MONTHLY' : 'YEARLY';
+
+      // Initiate purchase flow
+      const customerInfo = await purchasePackage(packageType as 'MONTHLY' | 'YEARLY');
+
+      // Purchase successful
+      logger.info('Paywall', `Purchase successful for plan: ${plan}`);
+
+      // Track purchase success
+      logAnalyticsEvent(AnalyticsEvent.SUBSCRIPTION_PURCHASE_SUCCESS, {
+        [AnalyticsParam.SUBSCRIPTION_PLAN]: plan,
+        source: 'paywall',
+      });
+
+      // Refresh pro status (will trigger UI updates)
+      await refreshProStatus();
+
+      // Close paywall and show success toast
+      setIsPaywallOpen(false);
+      setAppState('home');
+
+      toast.success(t('toasts.subscription.success') || 'Welcome to Pro!', {
+        style: {
+          borderColor: '#2C4156',
+          backgroundColor: '#1E2E3F',
+          color: '#FDDCFF',
+        },
+        duration: 3000,
+      });
+    } catch (error: any) {
+      const purchaseError = error as PurchaseError;
+
+      // Handle user cancellation gracefully (don't show error)
+      if (purchaseError.type === PurchaseErrorType.USER_CANCELLED) {
+        logger.info('Paywall', 'User cancelled purchase');
+
+        logAnalyticsEvent(AnalyticsEvent.SUBSCRIPTION_PURCHASE_CANCELLED, {
+          [AnalyticsParam.SUBSCRIPTION_PLAN]: plan,
+          source: 'paywall',
+        });
+
+        // Don't close paywall, let user try again
+        setPurchaseLoading(false);
+        return;
+      }
+
+      // Handle other errors
+      logger.error('Paywall', `Purchase failed: ${purchaseError.message}`, purchaseError.originalError);
+
+      logAnalyticsEvent(AnalyticsEvent.SUBSCRIPTION_PURCHASE_FAILED, {
+        [AnalyticsParam.SUBSCRIPTION_PLAN]: plan,
+        [AnalyticsParam.ERROR_CODE]: purchaseError.type,
+        [AnalyticsParam.ERROR_MESSAGE]: purchaseError.message,
+        source: 'paywall',
+      });
+
+      // Show error toast
+      const errorMessage = getUserFriendlyErrorMessage(purchaseError.type, t);
+      toast.error(errorMessage, {
+        style: {
+          borderColor: '#2C4156',
+          backgroundColor: '#1E2E3F',
+          color: '#FDDCFF',
+        },
+        duration: 4000,
+      });
+    } finally {
+      setPurchaseLoading(false);
+    }
+  };
+
+  /**
+   * Handle restore purchases (for users who already purchased)
+   */
+  const handleRestorePurchases = async () => {
+    logger.info('Paywall', 'User requested to restore purchases');
+
+    setPurchaseLoading(true);
+
+    try {
+      const isPro = await restorePurchases();
+
+      if (isPro) {
+        logger.info('Paywall', 'Purchases restored successfully');
+
+        // Track restoration success
+        logAnalyticsEvent(AnalyticsEvent.SUBSCRIPTION_RESTORED, {
+          success: true,
+        });
+
+        // Refresh pro status
+        await refreshProStatus();
+
+        // Close paywall and show success
+        setIsPaywallOpen(false);
+        setAppState('home');
+
+        toast.success(t('toasts.subscription.restored') || 'Purchases restored!', {
+          style: {
+            borderColor: '#2C4156',
+            backgroundColor: '#1E2E3F',
+            color: '#FDDCFF',
+          },
+          duration: 3000,
+        });
+      } else {
+        logger.info('Paywall', 'No active subscriptions found to restore');
+
+        // Track restoration failure (no active subscription)
+        logAnalyticsEvent(AnalyticsEvent.SUBSCRIPTION_RESTORED, {
+          success: false,
+          reason: 'no_active_subscription',
+        });
+
+        toast.error(t('toasts.subscription.noPurchases') || 'No active subscriptions found', {
+          style: {
+            borderColor: '#2C4156',
+            backgroundColor: '#1E2E3F',
+            color: '#FDDCFF',
+          },
+          duration: 3000,
+        });
+      }
+    } catch (error: any) {
+      logger.error('Paywall', 'Failed to restore purchases', error);
+
+      logAnalyticsEvent(AnalyticsEvent.SUBSCRIPTION_RESTORED, {
+        success: false,
+        reason: 'error',
+      });
+
+      toast.error(t('toasts.subscription.restoreError') || 'Failed to restore purchases', {
+        style: {
+          borderColor: '#2C4156',
+          backgroundColor: '#1E2E3F',
+          color: '#FDDCFF',
+        },
+        duration: 3000,
+      });
+    } finally {
+      setPurchaseLoading(false);
+    }
+  };
+
+  /**
+   * Get user-friendly error message based on error type
+   */
+  const getUserFriendlyErrorMessage = (errorType: PurchaseErrorType, t: any): string => {
+    switch (errorType) {
+      case PurchaseErrorType.NETWORK_ERROR:
+        return t('toasts.subscription.networkError') || 'Network error. Please check your connection.';
+      case PurchaseErrorType.PAYMENT_FAILED:
+        return t('toasts.subscription.paymentFailed') || 'Payment failed. Please try again.';
+      case PurchaseErrorType.PRODUCT_NOT_AVAILABLE:
+        return t('toasts.subscription.productUnavailable') || 'This plan is currently unavailable.';
+      default:
+        return t('toasts.subscription.unknownError') || 'Something went wrong. Please try again.';
+    }
   };
 
   const toastError = () => {
@@ -397,9 +557,18 @@ export const useCapture = () => {
     onImportFile: handleFileChange,
     onImport,
     onCaptured,
-    paywallSheet: <PaywallSheet isOpen={isPaywallOpen} onClose={handlePaywallClose} onSelectPlan={handleSelectPlan} />,
+    paywallSheet: (
+      <PaywallSheet
+        isOpen={isPaywallOpen}
+        onClose={handlePaywallClose}
+        onSelectPlan={handleSelectPlan}
+        onRestorePurchases={handleRestorePurchases}
+        loading={purchaseLoading}
+      />
+    ),
     checkCaptureLimit,
     showPaywall,
     captureCount: getCaptureCount(),
+    purchaseLoading,
   };
 };

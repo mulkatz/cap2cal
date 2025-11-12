@@ -61,6 +61,17 @@ export const AnalyticsEvent = {
   FEEDBACK_SUBMITTED: 'feedback_submitted',
   HELP_VIEWED: 'help_viewed',
 
+  // Subscription & Monetization
+  PAYWALL_VIEWED: 'paywall_viewed',
+  SUBSCRIPTION_PURCHASE_INITIATED: 'subscription_purchase_initiated',
+  SUBSCRIPTION_PURCHASE_SUCCESS: 'subscription_purchase_success',
+  SUBSCRIPTION_PURCHASE_FAILED: 'subscription_purchase_failed',
+  SUBSCRIPTION_PURCHASE_CANCELLED: 'subscription_purchase_cancelled',
+  SUBSCRIPTION_ACTIVATED: 'subscription_activated',
+  SUBSCRIPTION_CANCELLED: 'subscription_cancelled',
+  SUBSCRIPTION_RESTORED: 'subscription_restored',
+  UPGRADE_BUTTON_CLICKED: 'upgrade_button_clicked',
+
   // Performance
   PERFORMANCE_TIMING: 'performance_timing',
 } as const;
@@ -118,6 +129,12 @@ export const AnalyticsParam = {
   // Session
   SESSION_DURATION_SEC: 'session_duration_sec',
   CAPTURES_IN_SESSION: 'captures_in_session',
+
+  // Subscription
+  SUBSCRIPTION_PLAN: 'subscription_plan', // 'monthly' | 'yearly'
+  SUBSCRIPTION_PRICE: 'subscription_price',
+  ERROR_CODE: 'error_code',
+  ERROR_MESSAGE: 'error_message',
 } as const;
 
 // ============================================================================
@@ -133,6 +150,8 @@ export const AnalyticsUserProperty = {
   TOTAL_SUCCESSES: 'total_successes',
   FIRST_CAPTURE_DATE: 'first_capture_date',
   LAST_CAPTURE_DATE: 'last_capture_date',
+  IS_PRO: 'is_pro',
+  SUBSCRIPTION_TYPE: 'subscription_type', // 'monthly' | 'yearly'
 } as const;
 
 // ============================================================================
