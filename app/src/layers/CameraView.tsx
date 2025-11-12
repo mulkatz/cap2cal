@@ -7,6 +7,7 @@ import { MiniButton } from '../components/buttons/MiniButton.tsx';
 import { IconChevronLeft } from '../assets/icons';
 import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
 import { AppState } from '../contexts/AppContext.tsx';
+import { CameraInstructionDialog } from '../components/dialogs/CameraInstructionDialog.tsx';
 
 interface CameraViewProps {
   onStreamCallback?: (running: boolean) => void;
@@ -25,6 +26,10 @@ export interface CameraRefProps {
 const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
   ({ onStreamCallback, onClose, appState, handleCapture }, ref) => {
     const [isPreviewRunning, setIsPreviewRunning] = useState(false);
+    const [showCameraInstruction, setShowCameraInstruction] = useState(false);
+    const [hasSeenCameraInstruction, setHasSeenCameraInstruction] = useState(() => {
+      return localStorage.getItem('hasSeenCameraInstruction') === 'true';
+    });
 
     // start when coming back from external link
     useEffect(() => {
@@ -146,6 +151,22 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
 
       await CameraPreview.start(options);
       setIsPreviewRunning(true);
+
+      // Show instruction dialog on first camera open
+      if (!hasSeenCameraInstruction) {
+        setShowCameraInstruction(true);
+      }
+    };
+
+    /**
+     * ───────────────────────────────────────────────────────────
+     *  Handle Camera Instruction Dialog Close
+     * ───────────────────────────────────────────────────────────
+     */
+    const handleInstructionClose = () => {
+      localStorage.setItem('hasSeenCameraInstruction', 'true');
+      setHasSeenCameraInstruction(true);
+      setShowCameraInstruction(false);
     };
 
     /**
@@ -515,6 +536,9 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
           onClick={onClose}
           className={'absolute left-[20px] top-[20px]'}
         />
+
+        {/* Camera Instruction Dialog */}
+        {showCameraInstruction && <CameraInstructionDialog onClose={handleInstructionClose} />}
       </>
     );
   }
