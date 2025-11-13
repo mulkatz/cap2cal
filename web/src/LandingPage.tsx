@@ -36,7 +36,7 @@ const IconCalendar = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="-mt-1 inline-block text-blue-600"
+    className="text-secondary"
     aria-hidden="true">
     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
     <line x1="16" y1="2" x2="16" y2="6"></line>
@@ -319,9 +319,7 @@ export default function LandingPage(): JSX.Element {
         <header className="sticky top-0 z-50 w-full border-b border-cardBorder/50 bg-primaryDark/90 backdrop-blur-lg">
           <div className="container mx-auto flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-2 text-2xl font-bold text-secondary">
-              <span className="text-highlight">
-                <IconCalendar />
-              </span>
+              <img src="/app-icon.png" alt="Cap2Cal" className="h-8 w-8 rounded-lg" />
               <span className="hidden sm:inline">Cap2Cal</span>
               <span className="sm:hidden">C2C</span>
             </div>
@@ -338,12 +336,12 @@ export default function LandingPage(): JSX.Element {
                 onClick={() => posthog.capture('navigation_clicked', { target: 'how-it-works', device: 'desktop' })}>
                 {t('nav.howItWorks')}
               </a>
-              <button
-                type="button"
-                onClick={() => handleDownloadClick('ios', 'header')}
-                className="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105">
+              <a
+                href="#download"
+                className="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105"
+                onClick={() => posthog.capture('navigation_clicked', { target: 'download', device: 'desktop' })}>
                 {t('nav.download')}
-              </button>
+              </a>
             </nav>
 
             <button
@@ -381,15 +379,15 @@ export default function LandingPage(): JSX.Element {
                     }}>
                     {t('nav.howItWorks')}
                   </a>
-                  <button
-                    type="button"
+                  <a
+                    href="#download"
+                    className="mt-4 w-full rounded-lg bg-black px-5 py-3 font-semibold text-white transition-transform hover:scale-105 text-center block"
                     onClick={() => {
-                      handleDownloadClick('ios', 'mobile-menu');
+                      posthog.capture('navigation_clicked', { target: 'download', device: 'mobile' });
                       handleCloseMobileMenu();
-                    }}
-                    className="mt-4 w-full rounded-lg bg-black px-5 py-3 font-semibold text-white transition-transform hover:scale-105">
+                    }}>
                     {t('nav.download')}
-                  </button>
+                  </a>
                 </div>
               </nav>
             </>
@@ -690,7 +688,7 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* Final CTA Section */}
-          <section className="relative overflow-hidden bg-gradient-to-b from-primaryElevated to-accent py-24">
+          <section id="download" className="relative overflow-hidden bg-gradient-to-b from-primaryElevated to-accent py-24">
             <div className="container relative mx-auto px-6 text-center">
               {/* Icon */}
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 shadow-lg shadow-highlight/30 ring-4 ring-highlight/20">
@@ -731,9 +729,7 @@ export default function LandingPage(): JSX.Element {
             <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               <div>
                 <div className="mb-4 flex items-center gap-2 text-xl font-bold text-secondary">
-                  <span className="text-highlight">
-                    <IconCalendar />
-                  </span>
+                  <img src="/app-icon.png" alt="Cap2Cal" className="h-7 w-7 rounded-lg" />
                   Cap2Cal
                 </div>
                 <p className="text-sm text-secondary/70">{t('footer.madeWith')}</p>
