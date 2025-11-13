@@ -41,7 +41,7 @@ const IconArrowLeft = () => (
 );
 
 export default function Privacy(): JSX.Element {
-  const { t } = useTranslation('landing');
+  const { t } = useTranslation('legal');
 
   useEffect(() => {
     window.scrollTo({
@@ -83,7 +83,7 @@ export default function Privacy(): JSX.Element {
             <div className="space-y-8 text-gray-700">
               <div>
                 <p className="mb-4 text-sm text-gray-500">
-                  {t('privacy.lastUpdated')}: October 27, 2024
+                  {t('privacy.lastUpdated')}
                 </p>
               </div>
 
@@ -91,6 +91,13 @@ export default function Privacy(): JSX.Element {
                 <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.intro.title')}</h2>
                 <p className="leading-relaxed">
                   {t('privacy.intro.content')}
+                </p>
+              </section>
+
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.principles.title')}</h2>
+                <p className="leading-relaxed">
+                  {t('privacy.principles.content')}
                 </p>
               </section>
 
@@ -104,13 +111,22 @@ export default function Privacy(): JSX.Element {
                     <strong>{t('privacy.collect.list.account.title')}:</strong> {t('privacy.collect.list.account.content')}
                   </li>
                   <li>
-                    <strong>{t('privacy.collect.list.email.title')}:</strong> {t('privacy.collect.list.email.content')}
+                    <strong>{t('privacy.collect.list.images.title')}:</strong> {t('privacy.collect.list.images.content')}
+                  </li>
+                  <li>
+                    <strong>{t('privacy.collect.list.events.title')}:</strong> {t('privacy.collect.list.events.content')}
                   </li>
                   <li>
                     <strong>{t('privacy.collect.list.usage.title')}:</strong> {t('privacy.collect.list.usage.content')}
                   </li>
                   <li>
                     <strong>{t('privacy.collect.list.technical.title')}:</strong> {t('privacy.collect.list.technical.content')}
+                  </li>
+                  <li>
+                    <strong>{t('privacy.collect.list.subscription.title')}:</strong> {t('privacy.collect.list.subscription.content')}
+                  </li>
+                  <li>
+                    <strong>{t('privacy.collect.list.calendar.title')}:</strong> {t('privacy.collect.list.calendar.content')}
                   </li>
                 </ul>
               </section>
@@ -126,7 +142,23 @@ export default function Privacy(): JSX.Element {
                   <li>{t('privacy.use.list.improve')}</li>
                   <li>{t('privacy.use.list.communicate')}</li>
                   <li>{t('privacy.use.list.security')}</li>
+                  <li>{t('privacy.use.list.personalize')}</li>
+                  <li>{t('privacy.use.list.comply')}</li>
                 </ul>
+              </section>
+
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.aiProcessing.title')}</h2>
+                <p className="leading-relaxed">
+                  {t('privacy.aiProcessing.content')}
+                </p>
+              </section>
+
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.dataStorage.title')}</h2>
+                <p className="leading-relaxed">
+                  {t('privacy.dataStorage.content')}
+                </p>
               </section>
 
               <section>
@@ -139,10 +171,16 @@ export default function Privacy(): JSX.Element {
                     <strong>{t('privacy.sharing.list.providers.title')}:</strong> {t('privacy.sharing.list.providers.content')}
                   </li>
                   <li>
+                    <strong>{t('privacy.sharing.list.calendar.title')}:</strong> {t('privacy.sharing.list.calendar.content')}
+                  </li>
+                  <li>
                     <strong>{t('privacy.sharing.list.legal.title')}:</strong> {t('privacy.sharing.list.legal.content')}
                   </li>
                   <li>
                     <strong>{t('privacy.sharing.list.business.title')}:</strong> {t('privacy.sharing.list.business.content')}
+                  </li>
+                  <li>
+                    <strong>{t('privacy.sharing.list.consent.title')}:</strong> {t('privacy.sharing.list.consent.content')}
                   </li>
                 </ul>
               </section>
@@ -173,7 +211,12 @@ export default function Privacy(): JSX.Element {
                   <li>{t('privacy.rights.list.restrict')}</li>
                   <li>{t('privacy.rights.list.portability')}</li>
                   <li>{t('privacy.rights.list.object')}</li>
+                  <li>{t('privacy.rights.list.withdraw')}</li>
+                  <li>{t('privacy.rights.list.complaint')}</li>
                 </ul>
+                <p className="mt-3 leading-relaxed">
+                  {t('privacy.rights.exercise')}
+                </p>
               </section>
 
               <section>
@@ -185,8 +228,41 @@ export default function Privacy(): JSX.Element {
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.thirdParty.title')}</h2>
+                <p className="mb-3 leading-relaxed">
+                  {t('privacy.thirdParty.intro')}
+                </p>
+                <ul className="list-inside list-disc space-y-2 pl-4">
+                  <li>{t('privacy.thirdParty.list.firebase')}</li>
+                  <li>{t('privacy.thirdParty.list.gemini')}</li>
+                  <li>{t('privacy.thirdParty.list.analytics')}</li>
+                  <li>{t('privacy.thirdParty.list.revenuecat')}</li>
+                  <li>{t('privacy.thirdParty.list.posthog')}</li>
+                  <li>{t('privacy.thirdParty.list.apple')}</li>
+                  <li>{t('privacy.thirdParty.list.google')}</li>
+                </ul>
+                <p className="mt-3 leading-relaxed">
+                  {t('privacy.thirdParty.responsibility')}
+                </p>
+              </section>
+
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.international.title')}</h2>
                 <p className="leading-relaxed">
-                  {t('privacy.thirdParty.content')}
+                  {t('privacy.international.content')}
+                </p>
+              </section>
+
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.california.title')}</h2>
+                <p className="leading-relaxed">
+                  {t('privacy.california.content')}
+                </p>
+              </section>
+
+              <section>
+                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.gdpr.title')}</h2>
+                <p className="leading-relaxed">
+                  {t('privacy.gdpr.content')}
                 </p>
               </section>
 
@@ -206,12 +282,16 @@ export default function Privacy(): JSX.Element {
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('privacy.contact.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.contact.content')}{' '}
-                  <a href="mailto:privacy@capture2calendar.app" className="font-medium text-blue-600 hover:underline">
-                    privacy@capture2calendar.app
-                  </a>
-                </p>
+                <div className="space-y-2 leading-relaxed">
+                  <p>{t('privacy.contact.content')}</p>
+                  <p>
+                    <a href="mailto:privacy@capture2calendar.app" className="font-medium text-blue-600 hover:underline">
+                      {t('privacy.contact.email')}
+                    </a>
+                  </p>
+                  <p className="text-sm">{t('privacy.contact.website')}</p>
+                  <p className="text-sm">{t('privacy.contact.address')}</p>
+                </div>
               </section>
             </div>
           </div>

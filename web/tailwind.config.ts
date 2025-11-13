@@ -5,6 +5,13 @@ const config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   prefix: '',
   theme: {
+    screens: {
+      'sm': '640px',
+      'md': '768px',
+      'lg': '900px',  // Custom: Two-column layout for device frame + promotional points
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
     fontFamily: {
       nunito: ['Nunito', 'sans-serif'],
     },

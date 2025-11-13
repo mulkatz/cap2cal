@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next)
   .init({
     defaultNS: 'landing',
-    ns: ['landing'],
+    ns: ['landing', 'legal'],
     fallbackLng: 'en',
     supportedLngs: ['en', 'de'],
     debug: false, // Disabled for production performance

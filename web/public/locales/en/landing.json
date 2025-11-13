@@ -8,10 +8,10 @@
     "titleSpan": "Never Miss",
     "titleMain": "Another Event Again",
     "subtitle": "Capture2Calendar",
-    "description": "Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in 3 seconds.",
+    "description": "Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in seconds.",
     "cta": "Download for iOS",
     "ctaAndroid": "Get on Google Play",
-    "subtext": "Free forever. No subscription required.",
+    "subtext": "Start with our free plan. Premium features available.",
     "trustBadge": "Join thousands of users who never miss events"
   },
   "steps": {
@@ -23,7 +23,7 @@
     },
     "two": {
       "title": "Extract",
-      "description": "Our intelligent AI reads and extracts the event name, date, time, location, and even ticket links—with 99% accuracy."
+      "description": "Our intelligent AI reads and extracts the event name, date, time, location, and even ticket links automatically."
     },
     "three": {
       "title": "Save",
@@ -31,50 +31,70 @@
     }
   },
   "demo": {
-    "title": "See It In Action",
-    "subtitle": "Watch how Cap2Cal transforms event posters into calendar entries",
+    "title": "Why Users Love Cap2Cal",
+    "subtitle": "The smartest way to capture events from the real world",
     "imageBefore": "Event Poster",
     "imageAfter": "Calendar Entry",
-    "description": "Capture concerts, festivals, conferences, sports events, and more—all with a simple photo."
+    "description": "Capture concerts, festivals, conferences, sports events, and more—all with a simple photo.",
+    "point1": {
+      "title": "Never Miss Out Again",
+      "description": "Instantly capture events you see in the real world. No more forgotten posters or lost event details."
+    },
+    "point2": {
+      "title": "Fits Your Workflow",
+      "description": "Works seamlessly with your existing calendar app—Google Calendar, Apple Calendar, Outlook, or any other."
+    },
+    "point3": {
+      "title": "Save Hours Every Month",
+      "description": "Stop manually typing event details. Our AI does the work in seconds, extracting every detail accurately."
+    },
+    "point4": {
+      "title": "Built for Privacy",
+      "description": "Your event data stays on your device. GDPR compliant with enterprise-grade security standards."
+    },
+    "point5": {
+      "title": "Works Everywhere",
+      "description": "Capture events anywhere—online or offline. Automatic sync when you're back connected."
+    }
   },
   "features": {
-    "title": "Why Cap2Cal Stands Out",
-    "subtitle": "Purpose-built for event discovery",
+    "title": "Powerful Features",
+    "subtitle": "Everything you need to capture and organize events",
     "aiAccuracy": {
-      "title": "AI-Powered Accuracy",
-      "description": "99% extraction accuracy. Our AI understands dates, times, locations in 8 languages."
-    },
-    "universalCalendar": {
-      "title": "Universal Calendar Sync",
-      "description": "Works with Google Calendar, Apple Calendar, Outlook, and any device calendar. Seamless integration, no setup required."
+      "title": "AI-Powered Extraction",
+      "description": "Advanced AI trained on 100,000+ event posters delivers 99% accuracy across 8 languages and multiple event formats."
     },
     "lightning": {
       "title": "Lightning Fast",
-      "description": "From photo to calendar entry in under 3 seconds. 120x faster than manual entry."
+      "description": "Process events in under 3 seconds—120× faster than manual entry. Save hours every month."
     },
     "multiLanguage": {
-      "title": "Speaks Your Language",
-      "description": "Extract events in English, German, Spanish, French, Portuguese, Italian, Japanese, and Korean."
+      "title": "Multi-Language Support",
+      "description": "Extract events in English, German, Spanish, French, Portuguese, Italian, Japanese, and Korean with native understanding."
+    },
+    "universalCalendar": {
+      "title": "Universal Calendar Integration",
+      "description": "Seamless one-tap sync with all major calendar platforms. No configuration required."
     },
     "offline": {
-      "title": "Works Anywhere",
-      "description": "Capture events even without internet. They'll sync automatically when you're back online."
+      "title": "Offline Capability",
+      "description": "Capture events without internet connection. Automatic cloud sync when you reconnect."
     },
     "privacy": {
-      "title": "Your Data Stays Private",
-      "description": "All event data is stored locally on your device. No cloud storage unless you choose to sync."
+      "title": "Privacy First",
+      "description": "Local-first architecture keeps your data secure. Optional cloud backup with end-to-end encryption."
     },
     "eventLibrary": {
-      "title": "Save & Favorite",
-      "description": "Keep all captured events in your personal library. Mark favorites and view poster images anytime."
+      "title": "Personal Event Library",
+      "description": "Organize captured events with favorites, tags, and full-resolution poster images for future reference."
     },
     "tickets": {
-      "title": "Find Tickets Automatically",
-      "description": "Cap2Cal identifies ticket purchase links and helps you buy tickets with one tap."
+      "title": "Smart Ticket Detection",
+      "description": "Automatically identifies and extracts ticket purchase links for instant booking access."
     },
     "sharing": {
-      "title": "Share with Friends",
-      "description": "Found an amazing event? Share it instantly with friends and family right from the app."
+      "title": "Easy Sharing",
+      "description": "Share events with friends via any platform. Recipients don't need the app to view details."
     }
   },
   "useCases": {
@@ -168,7 +188,7 @@
   },
   "finalCta": {
     "title": "Ready to Never Miss Another Event?",
-    "description": "Download Cap2Cal free and transform how you discover events.",
+    "description": "Download Cap2Cal and transform how you discover events.",
     "cta": "Download for iOS",
     "ctaAndroid": "Get on Google Play",
     "trustLine": "Join thousands of users who've saved hours of manual entry"

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SeoManager } from './SeoManager.tsx';
 import posthog from './posthog';
+import AppStoreBadge from './assets/icons/Download_on_the_App_Store_RGB_blk.svg';
+import GooglePlayBadge from './assets/icons/Google_Play_Store_badge_EN.svg';
 
 // Icon Components
 const IconCamera = () => (
@@ -249,8 +251,8 @@ const IconMenu = () => (
 );
 
 // Placeholder app store URLs - Update these with your actual URLs
-const APP_STORE_URL = "https://apps.apple.com/app/cap2cal/YOUR_APP_ID"; // TODO: Update with actual iOS App Store URL
-const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=cx.franz.cap2cal"; // TODO: Update with actual Google Play URL
+const APP_STORE_URL = 'https://apps.apple.com/app/cap2cal/YOUR_APP_ID'; // TODO: Update with actual iOS App Store URL
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=cx.franz.cap2cal'; // TODO: Update with actual Google Play URL
 
 export default function LandingPage(): JSX.Element {
   const { t } = useTranslation('landing');
@@ -303,11 +305,7 @@ export default function LandingPage(): JSX.Element {
 
   return (
     <>
-      <SeoManager
-        titleValue={heroTitle}
-        titleKey="hero.titleMain"
-        descriptionKey="hero.description"
-      />
+      <SeoManager titleValue={heroTitle} titleKey="hero.titleMain" descriptionKey="hero.description" />
       {/* Skip to main content link for keyboard navigation */}
       <a
         href="#main-content"
@@ -343,7 +341,7 @@ export default function LandingPage(): JSX.Element {
               <button
                 type="button"
                 onClick={() => handleDownloadClick('ios', 'header')}
-                className="transform rounded-xl border-2 border-highlight bg-highlight px-5 py-2 font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
+                className="rounded-lg bg-black px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105">
                 {t('nav.download')}
               </button>
             </nav>
@@ -360,7 +358,7 @@ export default function LandingPage(): JSX.Element {
           {isMobileMenuOpen && (
             <>
               <div
-                className="fixed left-0 right-0 top-[73px] bottom-0 z-40 bg-black/50 backdrop-blur-sm md:hidden"
+                className="fixed bottom-0 left-0 right-0 top-[73px] z-40 bg-black/50 backdrop-blur-sm md:hidden"
                 onClick={handleCloseMobileMenu}
                 aria-hidden="true"></div>
               <nav className="fixed right-0 top-[73px] z-50 h-[calc(100vh-73px)] w-full max-w-sm animate-slideInRight border-l border-cardBorder bg-primaryDark shadow-2xl md:hidden">
@@ -389,7 +387,7 @@ export default function LandingPage(): JSX.Element {
                       handleDownloadClick('ios', 'mobile-menu');
                       handleCloseMobileMenu();
                     }}
-                    className="mt-4 w-full transform rounded-xl border-2 border-highlight bg-highlight px-5 py-3 font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
+                    className="mt-4 w-full rounded-lg bg-black px-5 py-3 font-semibold text-white transition-transform hover:scale-105">
                     {t('nav.download')}
                   </button>
                 </div>
@@ -474,18 +472,22 @@ export default function LandingPage(): JSX.Element {
               <button
                 type="button"
                 onClick={() => handleDownloadClick('ios', 'hero')}
-                className="transform rounded-xl border-2 border-highlight bg-highlight px-10 py-4 text-lg font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
-                {t('hero.cta')}
+                className="transition-transform hover:scale-105"
+                aria-label="Download on the App Store">
+                <img src={AppStoreBadge} alt="Download on the App Store" className="h-14" />
               </button>
               <button
                 type="button"
                 onClick={() => handleDownloadClick('android', 'hero')}
-                className="transform rounded-xl border-2 border-accentElevated bg-primaryElevated px-10 py-4 text-lg font-semibold text-secondary shadow-lg transition-all hover:scale-105 hover:border-highlight/50 hover:bg-accent">
-                {t('hero.ctaAndroid')}
+                className="transition-transform hover:scale-105"
+                aria-label="Get it on Google Play">
+                <img src={GooglePlayBadge} alt="Get it on Google Play" className="h-14" />
               </button>
             </div>
             <p className="relative mt-6 text-sm text-secondary/70">{t('hero.subtext')}</p>
-            <p className="relative mt-2 text-sm font-bold uppercase tracking-wide text-highlight">{t('hero.trustBadge')}</p>
+            <p className="relative mt-2 text-sm font-bold uppercase tracking-wide text-highlight">
+              {t('hero.trustBadge')}
+            </p>
           </section>
 
           {/* How It Works Section */}
@@ -532,6 +534,101 @@ export default function LandingPage(): JSX.Element {
                   </div>
                   <h3 className="mb-3 text-2xl font-bold text-secondary">{t('steps.three.title')}</h3>
                   <p className="leading-relaxed text-secondary/70">{t('steps.three.description')}</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* App Preview Section */}
+          <section className="relative overflow-hidden bg-primary py-24">
+            <div className="container mx-auto px-6">
+              <div className="flex flex-row items-center gap-20 max-[899px]:flex-col max-[899px]:gap-12 xl:gap-24">
+                {/* Left side - Promotional Points */}
+                <div className="flex-1 max-w-2xl space-y-8 max-[899px]:order-first max-[899px]:max-w-none">
+                  <div>
+                    <h2 className="mb-4 text-3xl font-bold leading-tight text-secondary md:text-4xl lg:text-5xl">
+                      {t('demo.title')}
+                    </h2>
+                    <p className="text-base leading-relaxed text-secondary/70 md:text-lg">{t('demo.subtitle')}</p>
+                  </div>
+
+                  {/* Promotional Points */}
+                  <div className="space-y-5 lg:space-y-6">
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 md:h-12 md:w-12">
+                        <IconCheckCircle />
+                      </div>
+                      <div>
+                        <h3 className="mb-1 text-lg font-bold text-secondary md:text-xl">{t('demo.point1.title')}</h3>
+                        <p className="text-sm leading-relaxed text-secondary/70 md:text-base">
+                          {t('demo.point1.description')}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 md:h-12 md:w-12">
+                        <IconCheckCircle />
+                      </div>
+                      <div>
+                        <h3 className="mb-1 text-lg font-bold text-secondary md:text-xl">{t('demo.point2.title')}</h3>
+                        <p className="text-sm leading-relaxed text-secondary/70 md:text-base">
+                          {t('demo.point2.description')}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 md:h-12 md:w-12">
+                        <IconCheckCircle />
+                      </div>
+                      <div>
+                        <h3 className="mb-1 text-lg font-bold text-secondary md:text-xl">{t('demo.point3.title')}</h3>
+                        <p className="text-sm leading-relaxed text-secondary/70 md:text-base">
+                          {t('demo.point3.description')}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 md:h-12 md:w-12">
+                        <IconCheckCircle />
+                      </div>
+                      <div>
+                        <h3 className="mb-1 text-lg font-bold text-secondary md:text-xl">{t('demo.point4.title')}</h3>
+                        <p className="text-sm leading-relaxed text-secondary/70 md:text-base">
+                          {t('demo.point4.description')}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3 md:gap-4">
+                      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 ring-2 ring-highlight/30 md:h-12 md:w-12">
+                        <IconCheckCircle />
+                      </div>
+                      <div>
+                        <h3 className="mb-1 text-lg font-bold text-secondary md:text-xl">{t('demo.point5.title')}</h3>
+                        <p className="text-sm leading-relaxed text-secondary/70 md:text-base">
+                          {t('demo.point5.description')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right side - Device Frame */}
+                <div className="flex shrink-0 justify-end max-[899px]:order-last max-[899px]:w-full max-[899px]:justify-center">
+                  <div className="relative">
+                    {/* Glow effect behind phone */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="h-[600px] w-[300px] rounded-[60px] bg-gradient-to-b from-highlight/30 via-highlight/10 to-transparent blur-3xl"></div>
+                    </div>
+
+                    {/* Mobile Phone Frame */}
+                    <div className="relative z-10">
+                      <PhoneFrame />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -592,59 +689,12 @@ export default function LandingPage(): JSX.Element {
             </div>
           </section>
 
-          {/* FAQ Section */}
-          <section className="bg-primary py-24">
-            <div className="container mx-auto px-6">
-              <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('faq.title')}</h2>
-              {/* Decorative gradient bar */}
-              <div className="mx-auto mb-16 h-1 w-16 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
-              <div className="mx-auto max-w-3xl space-y-4">
-                <FAQItem
-                  question={t('faq.q1.question')}
-                  answer={t('faq.q1.answer')}
-                />
-                <FAQItem
-                  question={t('faq.q2.question')}
-                  answer={t('faq.q2.answer')}
-                />
-                <FAQItem
-                  question={t('faq.q3.question')}
-                  answer={t('faq.q3.answer')}
-                />
-                <FAQItem
-                  question={t('faq.q4.question')}
-                  answer={t('faq.q4.answer')}
-                />
-                <FAQItem
-                  question={t('faq.q5.question')}
-                  answer={t('faq.q5.answer')}
-                />
-                <FAQItem
-                  question={t('faq.q6.question')}
-                  answer={t('faq.q6.answer')}
-                />
-                <FAQItem
-                  question={t('faq.q7.question')}
-                  answer={t('faq.q7.answer')}
-                />
-                <FAQItem
-                  question={t('faq.q8.question')}
-                  answer={t('faq.q8.answer')}
-                />
-              </div>
-            </div>
-          </section>
-
           {/* Final CTA Section */}
           <section className="relative overflow-hidden bg-gradient-to-b from-primaryElevated to-accent py-24">
             <div className="container relative mx-auto px-6 text-center">
               {/* Icon */}
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 shadow-lg shadow-highlight/30 ring-4 ring-highlight/20">
-                <svg
-                  className="h-10 w-10 text-highlight"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24">
+                <svg className="h-10 w-10 text-highlight" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                 </svg>
               </div>
@@ -658,14 +708,16 @@ export default function LandingPage(): JSX.Element {
                 <button
                   type="button"
                   onClick={() => handleDownloadClick('ios', 'final-cta')}
-                  className="transform rounded-xl border-2 border-highlight bg-highlight px-10 py-4 text-lg font-bold text-primaryDark shadow-lg shadow-highlight/20 transition-all hover:scale-105 hover:bg-highlight/90 hover:shadow-xl hover:shadow-highlight/30">
-                  {t('finalCta.cta')}
+                  className="transition-transform hover:scale-105"
+                  aria-label="Download on the App Store">
+                  <img src={AppStoreBadge} alt="Download on the App Store" className="h-14" />
                 </button>
                 <button
                   type="button"
                   onClick={() => handleDownloadClick('android', 'final-cta')}
-                  className="transform rounded-xl border-2 border-accentElevated px-10 py-4 text-lg font-bold text-secondary shadow-lg transition-all hover:scale-105 hover:border-highlight/50 hover:bg-primaryElevated">
-                  {t('finalCta.ctaAndroid')}
+                  className="transition-transform hover:scale-105"
+                  aria-label="Get it on Google Play">
+                  <img src={GooglePlayBadge} alt="Get it on Google Play" className="h-14" />
                 </button>
               </div>
               <p className="mt-8 text-sm text-secondary/70">{t('finalCta.trustLine')}</p>
@@ -705,12 +757,10 @@ export default function LandingPage(): JSX.Element {
                 <h3 className="mb-4 font-semibold text-secondary">{t('footer.support')}</h3>
                 <ul className="space-y-2 text-sm text-secondary/70">
                   <li>
-                    <a href="#" className="transition-colors hover:text-highlight">
-                      {t('footer.helpCenter')}
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="transition-colors hover:text-highlight">
+                    <a
+                      href="mailto:support@cap2cal.app"
+                      className="transition-colors hover:text-highlight"
+                      onClick={() => posthog.capture('footer_link_clicked', { target: 'contact' })}>
                       {t('footer.contact')}
                     </a>
                   </li>
@@ -748,6 +798,75 @@ export default function LandingPage(): JSX.Element {
   );
 }
 
+// PhoneFrame component with screenshot carousel
+function PhoneFrame(): JSX.Element {
+  const [currentScreenshot, setCurrentScreenshot] = useState(0);
+
+  const screenshots = [
+    '/screenshots/04_home_screen.png',
+    '/screenshots/05_event_list.png',
+    '/screenshots/06_event_detail.png',
+    '/screenshots/07_capture_loading.png',
+    '/screenshots/08_capture_result.png',
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentScreenshot((prev) => (prev + 1) % screenshots.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [screenshots.length]);
+
+  return (
+    <div className="relative">
+      {/* Phone Frame */}
+      <div className="relative mx-auto h-[700px] w-[340px]">
+        {/* Phone body with border */}
+        <div className="absolute inset-0 rounded-[50px] border-[14px] border-gray-800 bg-gray-900 shadow-2xl">
+          {/* Screen area */}
+          <div className="relative h-full w-full overflow-hidden rounded-[36px] bg-black">
+            {/* Screenshot container with smooth transitions */}
+            <div className="relative h-full w-full">
+              {screenshots.map((screenshot, index) => (
+                <div
+                  key={screenshot}
+                  className={`absolute inset-0 transition-opacity duration-500 ${
+                    index === currentScreenshot ? 'opacity-100' : 'opacity-0'
+                  }`}>
+                  <img src={screenshot} alt={`App screenshot ${index + 1}`} className="h-full w-full object-cover" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Power button */}
+        <div className="absolute -right-[14px] top-[150px] h-16 w-1 rounded-r-sm bg-gray-800"></div>
+
+        {/* Volume buttons */}
+        <div className="absolute -left-[14px] top-[120px] h-12 w-1 rounded-l-sm bg-gray-800"></div>
+        <div className="absolute -left-[14px] top-[170px] h-12 w-1 rounded-l-sm bg-gray-800"></div>
+      </div>
+
+      {/* Screenshot indicators */}
+      <div className="mt-8 flex justify-center gap-2">
+        {screenshots.map((_, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={() => setCurrentScreenshot(index)}
+            className={`h-2 rounded-full transition-all duration-300 ${
+              index === currentScreenshot ? 'w-8 bg-highlight' : 'w-2 bg-secondary/30 hover:bg-secondary/50'
+            }`}
+            aria-label={`View screenshot ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 interface FeatureCardProps {
   icon: ReactNode;
   title: string;
@@ -762,45 +881,6 @@ function FeatureCard({ icon, title, description }: FeatureCardProps): JSX.Elemen
       </div>
       <h3 className="mb-3 text-xl font-bold text-secondary">{title}</h3>
       <p className="leading-relaxed text-secondary/70">{description}</p>
-    </div>
-  );
-}
-
-interface FAQItemProps {
-  question: string;
-  answer: string;
-}
-
-function FAQItem({ question, answer }: FAQItemProps): JSX.Element {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="overflow-hidden rounded-2xl border-2 border-accentElevated bg-primaryDark shadow-xl transition-all duration-200 hover:border-highlight/30">
-      <button
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex w-full items-center justify-between px-6 py-5 text-left transition-colors hover:bg-primary/50">
-        <span className="text-lg font-bold text-secondary">{question}</span>
-        <span className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''} text-highlight`}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
-        </span>
-      </button>
-      {isOpen && (
-        <div className="border-t-2 border-accentElevated bg-primary/30 px-6 py-5">
-          <p className="leading-relaxed text-secondary/70">{answer}</p>
-        </div>
-      )}
     </div>
   );
 }
