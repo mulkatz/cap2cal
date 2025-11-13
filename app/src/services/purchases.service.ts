@@ -1,9 +1,5 @@
 import { Purchases, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
-import type {
-  CustomerInfo,
-  PurchasesPackage,
-  PurchasesOfferings,
-} from '@revenuecat/purchases-capacitor';
+import type { CustomerInfo, PurchasesPackage, PurchasesOfferings } from '@revenuecat/purchases-capacitor';
 import { Capacitor } from '@capacitor/core';
 
 /**
@@ -11,8 +7,8 @@ import { Capacitor } from '@capacitor/core';
  * These should be configured in RevenueCat Dashboard and linked to App Store Connect / Google Play Console
  */
 export const PRODUCT_IDS = {
-  MONTHLY: 'cap2cal_pro_monthly', // $0.99/month
-  YEARLY: 'cap2cal_pro_yearly',   // $9.99/year
+  MONTHLY: 'subscription_monthly_1', // $0.99/month
+  YEARLY: 'subscription_yearly_1', // $9.99/year
 } as const;
 
 /**
@@ -53,9 +49,10 @@ export const initializePurchases = async (userId: string): Promise<void> => {
     }
 
     const platform = Capacitor.getPlatform();
-    const apiKey = platform === 'ios'
-      ? import.meta.env.VITE_REVENUECAT_API_KEY_IOS || ''
-      : import.meta.env.VITE_REVENUECAT_API_KEY_ANDROID || '';
+    const apiKey =
+      platform === 'ios'
+        ? import.meta.env.VITE_REVENUECAT_API_KEY_IOS || ''
+        : import.meta.env.VITE_REVENUECAT_API_KEY_ANDROID || '';
 
     if (!apiKey) {
       console.warn(`[Purchases] RevenueCat API key not configured for ${platform}. Purchases will not work.`);
@@ -114,7 +111,7 @@ export const getOfferings = async (): Promise<PurchasesOfferings | null> => {
       return null;
     }
 
-    const { offerings } = await Purchases.getOfferings();
+    const offerings = await Purchases.getOfferings();
 
     if (!offerings.current) {
       console.warn('[Purchases] No current offering available');
@@ -135,9 +132,7 @@ export const getOfferings = async (): Promise<PurchasesOfferings | null> => {
  * @param packageType - 'MONTHLY' or 'YEARLY'
  * @returns Promise<PurchasesPackage | null>
  */
-export const getPackage = async (
-  packageType: keyof typeof PRODUCT_IDS
-): Promise<PurchasesPackage | null> => {
+export const getPackage = async (packageType: keyof typeof PRODUCT_IDS): Promise<PurchasesPackage | null> => {
   try {
     const offerings = await getOfferings();
 
@@ -149,9 +144,7 @@ export const getPackage = async (
     const availablePackages = offerings.current.availablePackages;
     const packageId = PRODUCT_IDS[packageType];
 
-    const package_ = availablePackages.find(
-      (pkg) => pkg.product.identifier === packageId
-    );
+    const package_ = availablePackages.find((pkg) => pkg.product.identifier === packageId);
 
     if (!package_) {
       console.warn(`[Purchases] Package not found: ${packageId}`);
@@ -172,9 +165,7 @@ export const getPackage = async (
  * @returns Promise with customerInfo on success
  * @throws PurchaseError on failure
  */
-export const purchasePackage = async (
-  packageType: keyof typeof PRODUCT_IDS
-): Promise<CustomerInfo> => {
+export const purchasePackage = async (packageType: keyof typeof PRODUCT_IDS): Promise<CustomerInfo> => {
   try {
     if (!Capacitor.isNativePlatform()) {
       throw {
@@ -289,18 +280,17 @@ export const restorePurchases = async (): Promise<boolean> => {
  *
  * @param callback - Function to call when customer info updates
  */
-export const addCustomerInfoUpdateListener = (
-  callback: (customerInfo: CustomerInfo) => void
-): void => {
+export const addCustomerInfoUpdateListener = (callback: (customerInfo: CustomerInfo) => void): void => {
   if (!Capacitor.isNativePlatform()) {
     console.warn('[Purchases] Not on native platform, cannot add listener');
     return;
   }
 
-  Purchases.addCustomerInfoUpdateListener((customerInfo) => {
-    console.log('[Purchases] Customer info updated');
-    callback(customerInfo.customerInfo);
-  });
+  // TODO
+  // Purchases.addCustomerInfoUpdateListener((customerInfo) => {
+  //   console.log('[Purchases] Customer info updated');
+  //   callback(customerInfo.customerInfo);
+  // });
 };
 
 /**
@@ -321,13 +311,9 @@ export const getPricingInfo = async (): Promise<{
 
     const packages = offerings.current.availablePackages;
 
-    const monthlyPackage = packages.find(
-      (pkg) => pkg.product.identifier === PRODUCT_IDS.MONTHLY
-    );
+    const monthlyPackage = packages.find((pkg) => pkg.product.identifier === PRODUCT_IDS.MONTHLY);
 
-    const yearlyPackage = packages.find(
-      (pkg) => pkg.product.identifier === PRODUCT_IDS.YEARLY
-    );
+    const yearlyPackage = packages.find((pkg) => pkg.product.identifier === PRODUCT_IDS.YEARLY);
 
     const monthlyInfo = monthlyPackage
       ? {
@@ -340,10 +326,7 @@ export const getPricingInfo = async (): Promise<{
       ? {
           price: yearlyPackage.product.priceString,
           pricePerMonth: `${(yearlyPackage.product.price / 12).toFixed(2)}`,
-          savings: calculateSavings(
-            monthlyPackage?.product.price || 0,
-            yearlyPackage.product.price
-          ),
+          savings: calculateSavings(monthlyPackage?.product.price || 0, yearlyPackage.product.price),
         }
       : null;
 
