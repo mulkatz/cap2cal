@@ -381,7 +381,7 @@ export default function LandingPage(): JSX.Element {
                   </a>
                   <a
                     href="#download"
-                    className="mt-4 w-full rounded-lg bg-black px-5 py-3 font-semibold text-white transition-transform hover:scale-105 text-center block"
+                    className="mt-4 block w-full rounded-lg bg-black px-5 py-3 text-center font-semibold text-white transition-transform hover:scale-105"
                     onClick={() => {
                       posthog.capture('navigation_clicked', { target: 'download', device: 'mobile' });
                       handleCloseMobileMenu();
@@ -489,7 +489,7 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* How It Works Section */}
-          <section id="how-it-works" className="bg-primary py-24">
+          <section id="how-it-works" className="bg-primaryElevated py-24">
             <div className="container mx-auto px-6">
               <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('steps.title')}</h2>
               <p className="mb-4 text-center text-xl leading-relaxed text-secondary/70">{t('steps.subtitle')}</p>
@@ -538,11 +538,13 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* App Preview Section */}
-          <section className="relative overflow-hidden bg-primary py-24">
+          <section
+            className="relative overflow-hidden py-24"
+            style={{ backgroundImage: 'linear-gradient(240deg, #2b3f54 0%, #1A2632 100%)' }}>
             <div className="container mx-auto px-6">
               <div className="flex flex-row items-center gap-20 max-[899px]:flex-col max-[899px]:gap-12 xl:gap-24">
                 {/* Left side - Promotional Points */}
-                <div className="flex-1 max-w-2xl space-y-8 max-[899px]:order-first max-[899px]:max-w-none">
+                <div className="max-w-2xl flex-1 space-y-8 max-[899px]:order-first max-[899px]:max-w-none">
                   <div>
                     <h2 className="mb-4 text-3xl font-bold leading-tight text-secondary md:text-4xl lg:text-5xl">
                       {t('demo.title')}
@@ -633,57 +635,59 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* Features Section */}
-          <section id="features" className="container mx-auto px-6 py-24">
-            <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('features.title')}</h2>
-            <p className="mb-4 text-center text-xl leading-relaxed text-secondary/70">{t('features.subtitle')}</p>
-            {/* Decorative gradient bar */}
-            <div className="mx-auto mb-16 h-1 w-16 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-              <FeatureCard
-                icon={<IconRobot />}
-                title={t('features.aiAccuracy.title')}
-                description={t('features.aiAccuracy.description')}
-              />
-              <FeatureCard
-                icon={<IconCalendar />}
-                title={t('features.universalCalendar.title')}
-                description={t('features.universalCalendar.description')}
-              />
-              <FeatureCard
-                icon={<IconZap />}
-                title={t('features.lightning.title')}
-                description={t('features.lightning.description')}
-              />
-              <FeatureCard
-                icon={<IconGlobe />}
-                title={t('features.multiLanguage.title')}
-                description={t('features.multiLanguage.description')}
-              />
-              <FeatureCard
-                icon={<IconWifi />}
-                title={t('features.offline.title')}
-                description={t('features.offline.description')}
-              />
-              <FeatureCard
-                icon={<IconLock />}
-                title={t('features.privacy.title')}
-                description={t('features.privacy.description')}
-              />
-              <FeatureCard
-                icon={<IconHeart />}
-                title={t('features.eventLibrary.title')}
-                description={t('features.eventLibrary.description')}
-              />
-              <FeatureCard
-                icon={<IconTicket />}
-                title={t('features.tickets.title')}
-                description={t('features.tickets.description')}
-              />
-              <FeatureCard
-                icon={<IconShare />}
-                title={t('features.sharing.title')}
-                description={t('features.sharing.description')}
-              />
+          <section id="features" className="bg-primaryElevated py-24">
+            <div className="container mx-auto px-6">
+              <h2 className="mb-4 text-center text-4xl font-bold text-secondary">{t('features.title')}</h2>
+              <p className="mb-4 text-center text-xl leading-relaxed text-secondary/70">{t('features.subtitle')}</p>
+              {/* Decorative gradient bar */}
+              <div className="mx-auto mb-16 h-1 w-16 rounded-full bg-gradient-to-r from-highlight/50 to-highlight"></div>
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <FeatureCard
+                  icon={<IconRobot />}
+                  title={t('features.aiAccuracy.title')}
+                  description={t('features.aiAccuracy.description')}
+                />
+                <FeatureCard
+                  icon={<IconCalendar />}
+                  title={t('features.universalCalendar.title')}
+                  description={t('features.universalCalendar.description')}
+                />
+                <FeatureCard
+                  icon={<IconZap />}
+                  title={t('features.lightning.title')}
+                  description={t('features.lightning.description')}
+                />
+                <FeatureCard
+                  icon={<IconGlobe />}
+                  title={t('features.multiLanguage.title')}
+                  description={t('features.multiLanguage.description')}
+                />
+                <FeatureCard
+                  icon={<IconWifi />}
+                  title={t('features.offline.title')}
+                  description={t('features.offline.description')}
+                />
+                <FeatureCard
+                  icon={<IconLock />}
+                  title={t('features.privacy.title')}
+                  description={t('features.privacy.description')}
+                />
+                <FeatureCard
+                  icon={<IconHeart />}
+                  title={t('features.eventLibrary.title')}
+                  description={t('features.eventLibrary.description')}
+                />
+                <FeatureCard
+                  icon={<IconTicket />}
+                  title={t('features.tickets.title')}
+                  description={t('features.tickets.description')}
+                />
+                <FeatureCard
+                  icon={<IconShare />}
+                  title={t('features.sharing.title')}
+                  description={t('features.sharing.description')}
+                />
+              </div>
             </div>
           </section>
 
