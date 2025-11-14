@@ -23,11 +23,11 @@
       },
       "extract": {
         "success": "Captured!",
-        "error": "This didn't work."
+        "error": "Couldn't capture that."
       }
     },
     "sheet": {
-      "header": "Your Captures",
+      "header": "Your Events",
       "noFavouritesYet": "No favourites yet"
     },
     "dialogs": {
@@ -38,11 +38,11 @@
         },
         "howItWorks": {
           "title": "How It Works",
-          "step1Title": "Capture",
+          "step1Title": "Snap a Photo",
           "step1Description": "Take a photo or import anything with date information on it",
-          "step2Title": "Extract & Save",
+          "step2Title": "Read & Save",
           "step2Description": "AI reads all details and saves the event in your app library",
-          "step3Title": "Access Anytime",
+          "step3Title": "Always Available",
           "step3Description": "Export to calendar, share events, buy tickets, and navigate to locations"
         },
         "tickets": {
@@ -50,19 +50,19 @@
           "subtitle": "Never miss out on your favourite events. Find and purchase tickets directly from the app.",
           "feature1": "Search events near you with integrated ticket search",
           "feature2": "Compare prices across multiple vendors instantly",
-          "feature3": "Secure checkout - book your spot in seconds",
+          "feature3": "Secure checkout — book your spot in seconds",
           "exampleLabel": "Example",
           "buyButton": "Get Tickets"
         },
         "getStarted": {
           "title": "Ready to Get Started?",
-          "subtitle": "Everything you need to never miss an event again",
-          "bullet1": "Instant event extraction and storage",
+          "subtitle": "Everything you need to never miss another event",
+          "bullet1": "Instant event capture and storage",
           "bullet2": "Export to all your calendars",
-          "bullet3": "Access tickets, sharing, and navigation",
-          "permissionsTitle": "We'll need access to:",
-          "permissionCamera": "Camera - to capture event information",
-          "permissionCalendar": "Calendar - to save your events"
+          "bullet3": "Access tickets, share events, and navigate",
+          "permissionsTitle": "Quick permissions we'll need:",
+          "permissionCamera": "Camera — so you can snap events",
+          "permissionCalendar": "Calendar — so we can save your events"
         },
         "navigation": {
           "next": "Next",
@@ -76,10 +76,10 @@
       },
       "feedback": {
         "title": "Send Feedback",
-        "description": "This App is under development - feedback in any kind of way is very appreciated!",
+        "description": "We're constantly improving Cap2Cal. Your feedback helps us build a better app!",
         "idea": "Idea",
         "bug": "Bug",
-        "inputPlaceholder": "Put your feedback in here...",
+        "inputPlaceholder": "Share your thoughts...",
         "send": "Send"
       },
       "export": {
@@ -90,11 +90,11 @@
         "generalAdvice": "Oops! Couldn’t grab all the event details. Try a clearer picture — blurs or missing info can trip us up!"
       },
       "permissionDenied": {
-        "title": "Permission denied",
-        "cameraAdvice": "You haven't granted permission to use the camera. To use Cap2Cal allow camera access in the app settings",
-        "calendarAdvice": "You haven't granted permission to access your calendar. To use the calendar export allow calendar access in the app settings",
-        "photosAdvice": "You haven't granted permission to access your photos. To use photo import allow photo library access in the app settings",
-        "toSettings": "App Settings"
+        "title": "Permission Needed",
+        "cameraAdvice": "We can't snap events without camera access. Grant permission in your settings to start capturing.",
+        "calendarAdvice": "We can't save events without calendar access. Grant permission in your settings to use this feature.",
+        "photosAdvice": "We can't import photos without library access. Grant permission in your settings to use this feature.",
+        "toSettings": "Go to Settings"
       },
       "upgrade": {
         "title": "Capture Limit Reached",
