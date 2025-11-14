@@ -320,21 +320,21 @@ export default function LandingPage(): JSX.Element {
           <div className="container mx-auto flex items-center justify-between px-6 py-4">
             <div className="flex items-center gap-2 text-2xl font-bold text-secondary">
               <img src="/app-icon.png" alt="Cap2Cal" className="h-8 w-8 rounded-lg" />
-              <span className="hidden sm:inline">Cap2Cal</span>
-              <span className="sm:hidden">C2C</span>
+              <span className="hidden sm:inline">Capture2Calendar</span>
+              <span className="sm:hidden">Cap2Cal</span>
             </div>
             <nav className="hidden items-center space-x-6 md:flex">
-              <a
-                href="#features"
-                className="font-medium text-secondary/80 transition-colors hover:text-highlight"
-                onClick={() => posthog.capture('navigation_clicked', { target: 'features', device: 'desktop' })}>
-                {t('nav.features')}
-              </a>
               <a
                 href="#how-it-works"
                 className="font-medium text-secondary/80 transition-colors hover:text-highlight"
                 onClick={() => posthog.capture('navigation_clicked', { target: 'how-it-works', device: 'desktop' })}>
                 {t('nav.howItWorks')}
+              </a>
+              <a
+                href="#features"
+                className="font-medium text-secondary/80 transition-colors hover:text-highlight"
+                onClick={() => posthog.capture('navigation_clicked', { target: 'features', device: 'desktop' })}>
+                {t('nav.features')}
               </a>
               <a
                 href="#download"
@@ -362,15 +362,6 @@ export default function LandingPage(): JSX.Element {
               <nav className="fixed right-0 top-[73px] z-50 h-[calc(100vh-73px)] w-full max-w-sm animate-slideInRight border-l border-cardBorder bg-primaryDark shadow-2xl md:hidden">
                 <div className="flex flex-col space-y-1 p-6">
                   <a
-                    href="#features"
-                    className="rounded-lg px-4 py-3 font-medium text-secondary/80 transition-colors hover:bg-accent hover:text-highlight"
-                    onClick={() => {
-                      posthog.capture('navigation_clicked', { target: 'features', device: 'mobile' });
-                      handleCloseMobileMenu();
-                    }}>
-                    {t('nav.features')}
-                  </a>
-                  <a
                     href="#how-it-works"
                     className="rounded-lg px-4 py-3 font-medium text-secondary/80 transition-colors hover:bg-accent hover:text-highlight"
                     onClick={() => {
@@ -378,6 +369,15 @@ export default function LandingPage(): JSX.Element {
                       handleCloseMobileMenu();
                     }}>
                     {t('nav.howItWorks')}
+                  </a>
+                  <a
+                    href="#features"
+                    className="rounded-lg px-4 py-3 font-medium text-secondary/80 transition-colors hover:bg-accent hover:text-highlight"
+                    onClick={() => {
+                      posthog.capture('navigation_clicked', { target: 'features', device: 'mobile' });
+                      handleCloseMobileMenu();
+                    }}>
+                    {t('nav.features')}
                   </a>
                   <a
                     href="#download"
@@ -396,7 +396,9 @@ export default function LandingPage(): JSX.Element {
 
         <main id="main-content">
           {/* Hero Section */}
-          <section className="container relative mx-auto overflow-hidden px-6 pb-32 pt-24 text-center">
+          <section className="relative mx-auto overflow-hidden pb-32 pt-24 text-center">
+            <div className="magicpattern pointer-events-none absolute inset-0" aria-hidden="true"></div>
+
             {/* Hero Visualization */}
             <div className="relative mb-8 flex w-full items-center justify-center">
               <div className="relative flex items-center justify-center gap-3 sm:gap-4">
@@ -692,7 +694,11 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* Final CTA Section */}
-          <section id="download" className="relative overflow-hidden bg-gradient-to-b from-primaryElevated to-accent py-24">
+          <section
+            id="download"
+            className="relative overflow-hidden bg-gradient-to-b from-primaryElevated to-accent py-24">
+            <div className="magicpattern pointer-events-none absolute inset-0" aria-hidden="true"></div>
+
             <div className="container relative mx-auto px-6 text-center">
               {/* Icon */}
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 shadow-lg shadow-highlight/30 ring-4 ring-highlight/20">
@@ -742,13 +748,13 @@ export default function LandingPage(): JSX.Element {
                 <h3 className="mb-4 font-semibold text-secondary">{t('footer.features')}</h3>
                 <ul className="space-y-2 text-sm text-secondary/70">
                   <li>
-                    <a href="#features" className="transition-colors hover:text-highlight">
-                      {t('nav.features')}
+                    <a href="#how-it-works" className="transition-colors hover:text-highlight">
+                      {t('nav.howItWorks')}
                     </a>
                   </li>
                   <li>
-                    <a href="#how-it-works" className="transition-colors hover:text-highlight">
-                      {t('nav.howItWorks')}
+                    <a href="#features" className="transition-colors hover:text-highlight">
+                      {t('nav.features')}
                     </a>
                   </li>
                 </ul>
