@@ -6,9 +6,9 @@
   },
   "hero": {
     "titleSpan": "Never Miss",
-    "titleMain": "Another Event Again",
+    "titleMain": "Another Event",
     "subtitle": "Capture2Calendar",
-    "description": "Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in seconds.",
+    "description": "Posters, flyers, tickets, social posts — snap any event and instantly add it to your calendar. AI-powered capture in seconds.",
     "cta": "Download for iOS",
     "ctaAndroid": "Get on Google Play",
     "subtext": "Start with our free plan. Premium features available.",
@@ -58,8 +58,8 @@
     }
   },
   "features": {
-    "title": "Powerful Features",
-    "subtitle": "Everything you need to capture and organize events",
+    "title": "Everything You Need",
+    "subtitle": "Built to capture and organize events effortlessly",
     "aiAccuracy": {
       "title": "AI-Powered Extraction",
       "description": "Advanced AI trained on 100,000+ event posters delivers 99% accuracy across 8 languages and multiple event formats."

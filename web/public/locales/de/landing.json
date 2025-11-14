@@ -1,14 +1,14 @@
 {
   "nav": {
-    "features": "Funktionen",
-    "howItWorks": "So funktioniert's",
+    "features": "Features",
+    "howItWorks": "So geht's",
     "download": "Download"
   },
   "hero": {
     "titleSpan": "Verpasse nie wieder",
     "titleMain": "ein Event",
     "subtitle": "Capture2Calendar",
-    "description": "Fotografiere ein Event-Poster und füge es sofort deinem Kalender hinzu. KI-gestützte Event-Erfassung in Sekunden.",
+    "description": "Poster, Flyer, Tickets, Social Posts — fotografiere jede Art von Event und füge es in Sekunden deinem Kalender hinzu. KI-gestützte Erfassung.",
     "cta": "Download für iOS",
     "ctaAndroid": "Jetzt bei Google Play",
     "subtext": "Starte mit unserem kostenlosen Plan. Premium-Funktionen verfügbar.",
@@ -45,11 +45,11 @@
       "description": "Funktioniert nahtlos mit deiner bestehenden Kalender-App—Google Kalender, Apple Kalender, Outlook oder andere."
     },
     "point3": {
-      "title": "Spare Stunden jeden Monat",
+      "title": "Schluss mit Abtippen",
       "description": "Höre auf, Event-Details manuell einzutippen. Unsere KI erledigt die Arbeit in Sekunden und extrahiert jedes Detail präzise."
     },
     "point4": {
-      "title": "Datenschutz im Fokus",
+      "title": "Deine Daten bleiben sicher",
       "description": "Deine Event-Daten bleiben auf deinem Gerät. DSGVO-konform mit Sicherheitsstandards auf Unternehmensniveau."
     },
     "point5": {
@@ -58,8 +58,8 @@
     }
   },
   "features": {
-    "title": "Leistungsstarke Funktionen",
-    "subtitle": "Alles, was du zum Erfassen und Organisieren von Events brauchst",
+    "title": "Das steckt drin",
+    "subtitle": "Alles für deine perfekte Event-Planung",
     "aiAccuracy": {
       "title": "KI-gestützte Extraktion",
       "description": "Fortschrittliche KI, trainiert mit 100.000+ Event-Postern, liefert 99% Genauigkeit in 8 Sprachen und mehreren Event-Formaten."
@@ -81,7 +81,7 @@
       "description": "Erfasse Events ohne Internetverbindung. Automatische Cloud-Synchronisation bei erneuter Verbindung."
     },
     "privacy": {
-      "title": "Datenschutz zuerst",
+      "title": "Deine Daten bleiben privat",
       "description": "Local-First-Architektur hält deine Daten sicher. Optionales Cloud-Backup mit Ende-zu-Ende-Verschlüsselung."
     },
     "eventLibrary": {
@@ -98,8 +98,8 @@
     }
   },
   "useCases": {
-    "title": "Perfekt für alle, die Live-Events lieben",
-    "subtitle": "Von Konzerten bis Konferenzen, Cap2Cal hat alles im Griff",
+    "title": "Für alle, die Events lieben",
+    "subtitle": "Von Konzerten bis Konferenzen — Cap2Cal hat alles im Griff",
     "concert": {
       "title": "Konzert-Fans",
       "description": "Erfasse Konzertplakate, Festival-Lineups und verpasse nie wieder deine Lieblingskünstler."
@@ -109,7 +109,7 @@
       "description": "Wenn Festival-Lineups veröffentlicht werden, erfasse 30+ Künstler, die du sehen willst, in unter 2 Minuten."
     },
     "professional": {
-      "title": "Vielbeschäftigte Profis",
+      "title": "Professionals & Vielbeschäftigte",
       "description": "Konferenzen, Workshops, Networking-Events—halte deinen beruflichen Kalender mühelos organisiert."
     },
     "student": {
@@ -187,7 +187,7 @@
     }
   },
   "finalCta": {
-    "title": "Bereit, nie wieder ein Event zu verpassen?",
+    "title": "Bereit? Nie wieder ein Event verpassen!",
     "description": "Lade Cap2Cal herunter und verwandle, wie du Events entdeckst.",
     "cta": "Download für iOS",
     "ctaAndroid": "Jetzt bei Google Play",
@@ -195,10 +195,10 @@
   },
   "footer": {
     "copyright": "© {{year}} Capture2Calendar. Alle Rechte vorbehalten.",
-    "madeWith": "Mit ❤️ für Event-Liebhaber überall gemacht.",
+    "madeWith": "Gemacht mit ❤️ für alle, die gerne unterwegs sind.",
     "about": "Über uns",
-    "features": "Funktionen",
-    "howItWorks": "So funktioniert's",
+    "features": "Features",
+    "howItWorks": "So geht's",
     "support": "Support",
     "helpCenter": "Hilfe-Center",
     "contact": "Kontakt",

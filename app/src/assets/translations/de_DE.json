@@ -10,7 +10,7 @@
       "onlyFavourites": "Nur Favoriten",
       "sortBy": "Sortieren nach",
       "ctaStart": "Foto",
-      "yourCaptures": "Deine Aufnahmen",
+      "yourCaptures": "Deine Events",
       "searchTickets": "Nach Tickets suchen",
       "buyTickets": "Tickets kaufen",
       "noTicketsAvailable": "keine Tickets verfügbar",
@@ -37,12 +37,12 @@
           "subtitle": "Poster, Flyer, Social Posts, Einladungen, handgeschriebene Notizen — wir erledigen den Rest"
         },
         "howItWorks": {
-          "title": "So funktioniert's",
-          "step1Title": "Erfassen",
+          "title": "So geht's",
+          "step1Title": "Fotografieren",
           "step1Description": "Mache ein Foto oder importiere eine Datei mit Datumsinformationen",
-          "step2Title": "Extrahieren & Speichern",
+          "step2Title": "Auslesen & Speichern",
           "step2Description": "KI liest alle Details und speichert das Event in deiner App-Bibliothek",
-          "step3Title": "Jederzeit Zugriff",
+          "step3Title": "Immer dabei",
           "step3Description": "In Kalender exportieren, Events teilen, Tickets kaufen und zur Location navigieren"
         },
         "tickets": {
@@ -55,14 +55,14 @@
           "buyButton": "Tickets kaufen"
         },
         "getStarted": {
-          "title": "Bereit loszulegen?",
-          "subtitle": "Alles was du brauchst, um nie wieder ein Event zu verpassen",
+          "title": "Bereit, loszulegen?",
+          "subtitle": "Alles, was du brauchst, um kein Event mehr zu verpassen",
           "bullet1": "Sofortige Event-Extraktion und Speicherung",
           "bullet2": "Export in alle deine Kalender",
           "bullet3": "Zugriff auf Tickets, Teilen und Navigation",
-          "permissionsTitle": "Wir benötigen Zugriff auf:",
-          "permissionCamera": "Kamera - um Event-Informationen zu erfassen",
-          "permissionCalendar": "Kalender - um deine Events zu speichern"
+          "permissionsTitle": "Dafür brauchen wir kurz:",
+          "permissionCamera": "Kamera — damit du Events fotografieren kannst",
+          "permissionCalendar": "Kalender — damit wir deine Events speichern können"
         },
         "navigation": {
           "next": "Weiter",
@@ -91,10 +91,10 @@
       },
       "permissionDenied": {
         "title": "Zugriff verweigert",
-        "cameraAdvice": "Du hast den Zugriff auf die Kamera verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
-        "calendarAdvice": "Du hast den Zugriff auf deinen Kalender verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
-        "photosAdvice": "Du hast den Zugriff auf deine Fotos verweigert. Bitte gehe in die App Einstellung und erlaube den Zugriff.",
-        "toSettings": "App Einstellungen"
+        "cameraAdvice": "Ohne Kamera-Zugriff können wir keine Events fotografieren. Gib uns kurz die Erlaubnis in den Einstellungen.",
+        "calendarAdvice": "Ohne Kalender-Zugriff können wir deine Events nicht speichern. Gib uns kurz die Erlaubnis in den Einstellungen.",
+        "photosAdvice": "Ohne Foto-Zugriff können wir keine Bilder importieren. Gib uns kurz die Erlaubnis in den Einstellungen.",
+        "toSettings": "Zu den Einstellungen"
       },
       "upgrade": {
         "title": "Erfassungslimit erreicht",
