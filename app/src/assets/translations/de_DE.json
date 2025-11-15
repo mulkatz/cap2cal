@@ -64,6 +64,12 @@
           "permissionCamera": "Kamera — damit du Events fotografieren kannst",
           "permissionCalendar": "Kalender — damit wir deine Events speichern können"
         },
+        "cameraInstruction": {
+          "title": "Datumsinformationen erfassen",
+          "description1": "Um deine Events korrekt zu erkennen, mache bitte ein Foto, auf dem die Datumsinformationen klar zu sehen sind.",
+          "description2": "Das kann ein Ticket, Flyer oder jedes andere Dokument mit Event-Datum sein.",
+          "button": "Alles klar!"
+        },
         "navigation": {
           "next": "Weiter",
           "skip": "Überspringen",

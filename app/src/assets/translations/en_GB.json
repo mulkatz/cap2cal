@@ -64,6 +64,12 @@
           "permissionCamera": "Camera — so you can snap events",
           "permissionCalendar": "Calendar — so we can save your events"
         },
+        "cameraInstruction": {
+          "title": "Capture Date Information",
+          "description1": "To help us accurately identify your events, please take a photo that clearly shows the date information.",
+          "description2": "This could be a ticket, flyer, or any document containing the event date.",
+          "button": "Got it!"
+        },
         "navigation": {
           "next": "Next",
           "skip": "Skip",

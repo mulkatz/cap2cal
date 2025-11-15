@@ -242,7 +242,11 @@ export const App = () => {
       await onCaptured(imageUrl, 'gallery');
     } catch (error) {
       // This catch block will handle cases where the user cancels the photo picker
-      logger.debug('Gallery', 'User cancelled photo picker or error occurred', error instanceof Error ? error : undefined);
+      logger.debug(
+        'Gallery',
+        'User cancelled photo picker or error occurred',
+        error instanceof Error ? error : undefined
+      );
     }
   };
 
@@ -398,7 +402,7 @@ export const App = () => {
   return (
     <main>
       <>
-        <div className={'relative flex h-[100vh] w-full flex-col overflow-hidden'}>
+        <div className={'relative flex h-[100dvh] w-full flex-col overflow-hidden'}>
           <CameraView
             ref={cameraRef}
             onStreamCallback={onStreamCallback}
