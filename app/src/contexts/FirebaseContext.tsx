@@ -47,40 +47,23 @@ let firebaseAuth: any;
 try {
   const platform = typeof Capacitor !== 'undefined' ? Capacitor.getPlatform() : 'web';
 
-  console.log('[Firebase] Starting initialization...', {
-    platform: platform,
-    hasConfig: !!firebaseConfig.apiKey,
-  });
-
   firebaseApp = initializeApp(firebaseConfig);
   firebaseAnalytics = getAnalytics(firebaseApp);
   firebaseFirestore = getFirestore(firebaseApp);
 
-  // CRITICAL FIX: Use initializeAuth with indexedDBLocalPersistence for native platforms
+  // CRITICAL: Use initializeAuth with indexedDBLocalPersistence for native platforms
   // This is required for Firebase Auth to work in iOS/Android WKWebView
   if (platform === 'ios' || platform === 'android') {
-    console.log('[Firebase] Native platform detected, using indexedDBLocalPersistence');
     firebaseAuth = initializeAuth(firebaseApp, {
       persistence: indexedDBLocalPersistence,
     });
   } else {
-    console.log('[Firebase] Web platform detected, using default getAuth');
     firebaseAuth = getAuth(firebaseApp);
   }
 
-  console.log('[Firebase] ✅ Initialized successfully at module level (singleton)');
-  console.log('[Firebase] Auth initialized:', {
-    platform: platform,
-    authExists: !!firebaseAuth,
-    currentUser: firebaseAuth?.currentUser?.uid || 'null',
-  });
+  console.log('[Firebase] Initialized successfully');
 } catch (error: any) {
-  console.error('[Firebase] ❌ Failed to initialize:', error);
-  console.error('[Firebase] Error details:', {
-    message: error?.message,
-    code: error?.code,
-    stack: error?.stack,
-  });
+  console.error('[Firebase] Failed to initialize:', error);
 }
 
 // Define the types for the context
@@ -161,24 +144,8 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
     let isSubscribed = true;
     let hasAttemptedSignIn = false;
 
-    const platform = Capacitor.getPlatform();
-    const isIOS = platform === 'ios';
-
-    console.log(`[Auth] Setting up auth for platform: ${platform}`);
-    console.log('[Auth] Auth object:', auth ? 'exists' : 'NULL');
-    console.log('[Auth] Auth current user:', auth?.currentUser?.uid || 'null');
-
-    if (!auth) {
-      console.error('[Auth] ❌ CRITICAL: Auth object is null/undefined!');
-      return;
-    }
-
-    // IMPORTANT: Set up onAuthStateChanged listener FIRST
-    console.log('[Auth] Registering onAuthStateChanged listener...');
-
-    const handleAuthStateChange = async (user: any) => {
-      console.log('[Auth] 🔄 Auth state changed:', user ? `user authenticated: ${user.uid}` : 'no user');
-
+    // Set up onAuthStateChanged listener
+    const unsubscribe = auth.onAuthStateChanged(async (user: User | null) => {
       if (isSubscribed) {
         setUser(user);
       }
@@ -187,66 +154,25 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
       if (!user && !hasAttemptedSignIn && isSubscribed) {
         hasAttemptedSignIn = true;
 
-        // On iOS, wait a bit for the bridge to be ready
-        if (isIOS) {
-          console.log('[Auth] iOS detected - waiting 500ms for Capacitor bridge');
-          await new Promise((resolve) => setTimeout(resolve, 500));
-        }
-
-        console.log('[Auth] No user found, attempting anonymous sign-in...');
-
         try {
-          // Add timeout wrapper around signInAnonymously to prevent hanging
-          const signInPromise = signInAnonymously(auth);
-          const timeoutPromise = new Promise((_, reject) =>
-            setTimeout(() => reject(new Error('signInAnonymously timeout after 5 seconds')), 5000)
-          );
-
-          const result = (await Promise.race([signInPromise, timeoutPromise])) as any;
-          console.log('[Auth] ✅ Anonymous sign-in successful:', result?.user?.uid || 'unknown uid');
-
-          if (result?.user) {
-            setUser(result.user);
-          }
+          const result = await signInAnonymously(auth);
+          console.log('[Auth] Anonymous sign-in successful:', result.user.uid);
         } catch (error: any) {
-          console.error('[Auth] ❌ Anonymous sign-in failed:', error);
-          console.error('[Auth] Error code:', error?.code);
-          console.error('[Auth] Error message:', error?.message);
-          console.error('[Auth] Error stack:', error?.stack);
+          console.error('[Auth] Anonymous sign-in failed:', error);
 
-          // Check for specific error codes
+          // Log specific error codes for troubleshooting
           if (error?.code === 'auth/configuration-not-found') {
-            console.error('⚠️ Anonymous authentication is not enabled in Firebase Console');
-            console.error('Enable it: Firebase Console → Authentication → Sign-in method → Anonymous');
+            console.error('Anonymous authentication is not enabled in Firebase Console');
           } else if (error?.code === 'auth/unauthorized-domain') {
-            console.error('⚠️ Domain not authorized in Firebase Console');
-          } else if (error?.message?.includes('timeout')) {
-            console.error('⚠️ Sign-in timed out - Firebase Auth may be blocked on iOS');
-            console.error('This could be a Firebase SDK compatibility issue with Capacitor iOS');
+            console.error('Domain not authorized in Firebase Console');
           }
         }
       }
-    };
-
-    const unsubscribe = auth.onAuthStateChanged(handleAuthStateChange);
-
-    console.log('[Auth] Listener registered, unsubscribe function:', unsubscribe ? 'exists' : 'NULL');
-
-    // Fallback: If listener doesn't fire within 2 seconds, manually trigger it
-    const fallbackTimer = setTimeout(() => {
-      if (isSubscribed && !hasAttemptedSignIn) {
-        console.warn('[Auth] ⚠️ Listener did not fire automatically, manually triggering...');
-        handleAuthStateChange(auth.currentUser);
-      }
-    }, 2000);
+    });
 
     return () => {
-      console.log('[Auth] Cleaning up auth listener');
       isSubscribed = false;
-      clearTimeout(fallbackTimer);
-      if (unsubscribe) {
-        unsubscribe();
-      }
+      unsubscribe();
     };
   }, []);
 
@@ -390,19 +316,10 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const getAuthToken = async (): Promise<string | null> => {
     if (!user) {
-      const platform = Capacitor.getPlatform();
-      console.warn(`[Auth] Cannot get auth token - user not authenticated (platform: ${platform})`);
-      console.warn('[Auth] This usually indicates Firebase auth initialization failed or is still pending');
+      console.warn('[Auth] Cannot get auth token - user not authenticated');
       return null;
     }
-    try {
-      const token = await user.getIdToken();
-      console.log('[Auth] Successfully retrieved auth token');
-      return token;
-    } catch (error) {
-      console.error('[Auth] Failed to get ID token:', error);
-      return null;
-    }
+    return await user.getIdToken();
   };
 
   return (

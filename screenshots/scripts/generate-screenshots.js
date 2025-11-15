@@ -16,8 +16,8 @@ const CONFIG = {
   viewport: {
     // width: 1290,  // iPhone 15 Pro Max width (430px * 3)
     // height: 2796, // iPhone 15 Pro Max height (932px * 3)
-    width: 430, // iPhone 15 Pro Max width (430px * 3)
-    height: 932, // iPhone 15 Pro Max height (932px * 3)
+    width: 414, // iPhone 15 Pro Max width (430px * 3)
+    height: 896, // iPhone 15 Pro Max height (932px * 3)
     deviceScaleFactor: 3,
   },
   screenshotDelay: 1000, // Wait time before taking screenshot
@@ -227,7 +227,7 @@ async function captureCaptureFlow(page, language, outputDir) {
         </div>
       </div>
     `;
-    document.body.insertAdjacentHTML('beforeend', loadingHtml);
+    document.body.insertAdjacentHTML("beforeend", loadingHtml);
   });
 
   await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
@@ -240,7 +240,9 @@ async function captureCaptureFlow(page, language, outputDir) {
   // Step 2: Replace with result state
   await page.evaluate((eventData) => {
     // Remove loading
-    const loadingEl = document.querySelector('[data-testid="loading-dialog"]')?.closest('.fixed');
+    const loadingEl = document
+      .querySelector('[data-testid="loading-dialog"]')
+      ?.closest(".fixed");
     if (loadingEl) loadingEl.remove();
 
     // Create result dialog
@@ -251,7 +253,7 @@ async function captureCaptureFlow(page, language, outputDir) {
           <div class="my-auto px-6">
             <div class="bg-primaryDark rounded-xl p-6 shadow-2xl max-w-md mx-auto border border-white/10">
               <div class="mb-2 flex items-start justify-between">
-                <span class="inline-block px-3 py-1 bg-highlight/20 text-highlight text-xs font-semibold rounded-full">${eventData.kind || 'Event'}</span>
+                <span class="inline-block px-3 py-1 bg-highlight/20 text-highlight text-xs font-semibold rounded-full">${eventData.kind || "Event"}</span>
               </div>
               <h2 class="text-2xl font-bold text-white mb-4 leading-tight">${eventData.title}</h2>
               <div class="text-secondary space-y-3">
@@ -259,24 +261,32 @@ async function captureCaptureFlow(page, language, outputDir) {
                   <span class="text-xl">📅</span>
                   <div>
                     <div class="font-semibold text-white">${eventData.dateTimeFrom.date}</div>
-                    <div class="text-sm opacity-80">${eventData.dateTimeFrom.time || ''}</div>
+                    <div class="text-sm opacity-80">${eventData.dateTimeFrom.time || ""}</div>
                   </div>
                 </div>
-                ${eventData.location?.city ? `
+                ${
+                  eventData.location?.city
+                    ? `
                 <div class="flex items-start gap-3">
                   <span class="text-xl">📍</span>
                   <div>
                     <div class="font-semibold text-white">${eventData.location.city}</div>
-                    ${eventData.location.address ? `<div class="text-sm opacity-80">${eventData.location.address}</div>` : ''}
+                    ${eventData.location.address ? `<div class="text-sm opacity-80">${eventData.location.address}</div>` : ""}
                   </div>
                 </div>
-                ` : ''}
-                ${eventData.description?.short ? `
+                `
+                    : ""
+                }
+                ${
+                  eventData.description?.short
+                    ? `
                 <div class="flex items-start gap-3">
                   <span class="text-xl">ℹ️</span>
                   <p class="text-sm opacity-90 leading-relaxed">${eventData.description.short}</p>
                 </div>
-                ` : ''}
+                `
+                    : ""
+                }
               </div>
             </div>
           </div>
@@ -290,7 +300,7 @@ async function captureCaptureFlow(page, language, outputDir) {
         </div>
       </div>
     `;
-    document.body.insertAdjacentHTML('beforeend', resultHtml);
+    document.body.insertAdjacentHTML("beforeend", resultHtml);
   }, mockEvent);
 
   await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
