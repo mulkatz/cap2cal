@@ -151,6 +151,7 @@ export const findTickets = async (query: string, i18n: string): Promise<ApiFindR
 export interface FeatureFlags {
   paid_only: boolean;
   free_capture_limit: number;
+  in_app_rating?: boolean; // Enable/disable in-app review prompts (default: true)
 }
 
 /**

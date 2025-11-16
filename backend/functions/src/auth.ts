@@ -20,6 +20,7 @@ interface ValidationResult {
 interface RemoteConfigValues {
   paidOnly: boolean;
   freeLimit: number;
+  inAppRating: boolean;
 }
 
 /**
@@ -30,6 +31,7 @@ export async function getRemoteConfigValues(): Promise<RemoteConfigValues> {
   // Default values (fallback if Remote Config fails)
   let paidOnly = false;
   let freeLimit = 5;
+  let inAppRating = true; // Default: enabled
 
   try {
     const template = await remoteConfig.getTemplate();
@@ -42,6 +44,7 @@ export async function getRemoteConfigValues(): Promise<RemoteConfigValues> {
 
     const paidOnlyParam = template.parameters['paid_only'];
     const freeLimitParam = template.parameters['free_capture_limit'];
+    const inAppRatingParam = template.parameters['in_app_rating'];
 
     // Debug logging for individual parameters
     if (paidOnlyParam) {
@@ -60,16 +63,26 @@ export async function getRemoteConfigValues(): Promise<RemoteConfigValues> {
       logger.warn('[Remote Config] free_capture_limit parameter not found in template');
     }
 
+    if (inAppRatingParam) {
+      logger.info('[Remote Config] inAppRating parameter', {
+        defaultValue: inAppRatingParam.defaultValue,
+      });
+    } else {
+      logger.warn('[Remote Config] in_app_rating parameter not found in template, using default: true');
+    }
+
     // Extract values from Remote Config parameters
     const paidOnlyValue = paidOnlyParam?.defaultValue as { value?: string } | undefined;
     const freeLimitValue = freeLimitParam?.defaultValue as { value?: string } | undefined;
+    const inAppRatingValue = inAppRatingParam?.defaultValue as { value?: string } | undefined;
 
     paidOnly = paidOnlyValue?.value === 'true' || false;
-    freeLimit = freeLimitValue?.value
-      ? parseInt(freeLimitValue.value, 10)
-      : 5;
+    freeLimit = freeLimitValue?.value ? parseInt(freeLimitValue.value, 10) : 5;
+    inAppRating = inAppRatingValue?.value === 'false' ? false : true; // Default to true unless explicitly false
 
-    logger.info(`[Remote Config] Parsed values: paid_only=${paidOnly}, free_capture_limit=${freeLimit}`);
+    logger.info(
+      `[Remote Config] Parsed values: paid_only=${paidOnly}, free_capture_limit=${freeLimit}, in_app_rating=${inAppRating}`
+    );
   } catch (error: any) {
     logger.warn('Could not fetch Remote Config, using defaults', {
       error: error.message,
@@ -78,7 +91,7 @@ export async function getRemoteConfigValues(): Promise<RemoteConfigValues> {
     // Use default values (already set above)
   }
 
-  return { paidOnly, freeLimit };
+  return { paidOnly, freeLimit, inAppRating };
 }
 
 export async function validateCaptureRequest(request: Request): Promise<ValidationResult> {

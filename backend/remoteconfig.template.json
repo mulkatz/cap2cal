@@ -11,6 +11,12 @@
         "value": "100"
       },
       "valueType": "NUMBER"
+    },
+    "in_app_rating": {
+      "defaultValue": {
+        "value": "true"
+      },
+      "valueType": "BOOLEAN"
     }
   },
   "version": {

@@ -1949,6 +1949,11 @@ video {
   padding-bottom: 0.875rem;
 }
 
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 .py-5 {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
@@ -2191,6 +2196,11 @@ video {
 
 .tracking-widest {
   letter-spacing: 0.1em;
+}
+
+.text-accent {
+  --tw-text-opacity: 1;
+  color: rgb(44 65 86 / var(--tw-text-opacity, 1));
 }
 
 .text-accentElevated {
@@ -2685,6 +2695,11 @@ body {
   border-color: rgb(230 222 77 / 0.3);
 }
 
+.hover\:bg-primaryElevated:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 65 86 / var(--tw-bg-opacity, 1));
+}
+
 .hover\:bg-slate-700\/80:hover {
   background-color: rgb(51 65 85 / 0.8);
 }
@@ -2783,6 +2798,11 @@ body {
 .active\:bg-clickHighLight:active {
   --tw-bg-opacity: 1;
   background-color: rgb(230 222 77 / var(--tw-bg-opacity, 1));
+}
+
+.active\:bg-primaryElevated:active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(44 65 86 / var(--tw-bg-opacity, 1));
 }
 
 .active\:bg-slate-700:active {

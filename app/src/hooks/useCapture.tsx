@@ -23,6 +23,11 @@ import { incrementCaptureCount, getCaptureCount, hasReachedLimit, resetCaptureCo
 import { logger } from '../utils/logger';
 import { purchasePackage, restorePurchases, PurchaseErrorType } from '../services/purchases.service.ts';
 import type { PurchaseError } from '../services/purchases.service.ts';
+import {
+  shouldShowReviewPrompt,
+  resetReviewPromptTracking,
+  getReviewPromptDebugInfo,
+} from '../utils/reviewPrompt.ts';
 
 export const useCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string>();
@@ -510,6 +515,25 @@ export const useCapture = () => {
         return limitReached;
       };
 
+      // Review prompt dev functions
+      (window as any).__shouldShowReviewPrompt = () => {
+        const count = getCaptureCount();
+        const shouldShow = shouldShowReviewPrompt(count);
+        logger.debug('DevTools', `Should show review prompt: ${shouldShow} (count: ${count})`);
+        return shouldShow;
+      };
+
+      (window as any).__resetReviewPrompt = () => {
+        resetReviewPromptTracking();
+        logger.debug('DevTools', 'Reset review prompt tracking');
+      };
+
+      (window as any).__reviewPromptInfo = () => {
+        const info = getReviewPromptDebugInfo();
+        logger.debug('DevTools', 'Review prompt info:', info);
+        return info;
+      };
+
       logger.info('DevTools', '🧪 Paywall dev functions available:');
       logger.info('DevTools', '  - window.__triggerPaywall() - Show paywall sheet');
       logger.info('DevTools', '  - window.__triggerError("LIMIT_REACHED") - Trigger limit reached error');
@@ -519,6 +543,17 @@ export const useCapture = () => {
       logger.info('DevTools', '  - window.__incrementCaptureCount() - Increment capture count');
       logger.info('DevTools', '  - window.__resetCaptureCount() - Reset capture count to 0');
       logger.info('DevTools', '  - window.__checkLimit() - Check if limit is reached');
+      logger.info('DevTools', '🧪 Review prompt dev functions available:');
+      logger.info('DevTools', '  - window.__shouldShowReviewPrompt() - Check if review prompt should show');
+      logger.info('DevTools', '  - window.__resetReviewPrompt() - Reset review prompt tracking');
+      logger.info('DevTools', '  - window.__reviewPromptInfo() - Get review prompt debug info');
+      logger.info('DevTools', '');
+      logger.info('DevTools', '💡 Testing in-app review:');
+      logger.info('DevTools', '  1. Complete 3 captures (or use __incrementCaptureCount() 3 times)');
+      logger.info('DevTools', '  2. Close result dialog to return to home');
+      logger.info('DevTools', '  3. Review prompt should appear after 1 second');
+      logger.info('DevTools', '  4. Click "Yes!" to trigger native review (logs in dev mode)');
+      logger.info('DevTools', '  Note: Native dialogs only appear in TestFlight/Production builds');
 
       return () => {
         // Cleanup on unmount
@@ -528,6 +563,9 @@ export const useCapture = () => {
         delete (window as any).__incrementCaptureCount;
         delete (window as any).__resetCaptureCount;
         delete (window as any).__checkLimit;
+        delete (window as any).__shouldShowReviewPrompt;
+        delete (window as any).__resetReviewPrompt;
+        delete (window as any).__reviewPromptInfo;
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

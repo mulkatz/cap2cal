@@ -88,6 +88,13 @@
         "inputPlaceholder": "Share your thoughts...",
         "send": "Send"
       },
+      "appLikePrompt": {
+        "title": "Are you enjoying cap2cal?",
+        "description": "We'd love to hear your thoughts!",
+        "yes": "Yes, I love it!",
+        "notReally": "Not really",
+        "dismiss": "Maybe later"
+      },
       "export": {
         "title": "Export to"
       },

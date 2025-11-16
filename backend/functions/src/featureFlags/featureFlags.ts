@@ -13,7 +13,8 @@ import { getRemoteConfigValues } from '../auth';
  * Response:
  * {
  *   "paid_only": boolean,
- *   "free_capture_limit": number
+ *   "free_capture_limit": number,
+ *   "in_app_rating": boolean
  * }
  */
 export const featureFlags = onRequest(
@@ -31,14 +32,17 @@ export const featureFlags = onRequest(
 
     try {
       // Get Remote Config values using shared function
-      const { paidOnly, freeLimit } = await getRemoteConfigValues();
+      const { paidOnly, freeLimit, inAppRating } = await getRemoteConfigValues();
 
-      logger.info(`[Feature Flags] Returning: paid_only=${paidOnly}, free_capture_limit=${freeLimit}`);
+      logger.info(
+        `[Feature Flags] Returning: paid_only=${paidOnly}, free_capture_limit=${freeLimit}, in_app_rating=${inAppRating}`
+      );
 
       // Return the feature flags
       response.status(200).json({
         paid_only: paidOnly,
         free_capture_limit: freeLimit,
+        in_app_rating: inAppRating,
       });
     } catch (error: any) {
       logger.error('Error fetching feature flags', error);

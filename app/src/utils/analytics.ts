@@ -61,6 +61,15 @@ export const AnalyticsEvent = {
   FEEDBACK_SUBMITTED: 'feedback_submitted',
   HELP_VIEWED: 'help_viewed',
 
+  // In-App Review
+  REVIEW_PROMPT_SHOWN: 'review_prompt_shown',
+  REVIEW_PROMPT_LIKED: 'review_prompt_liked',
+  REVIEW_PROMPT_DISLIKED: 'review_prompt_disliked',
+  REVIEW_PROMPT_DISMISSED: 'review_prompt_dismissed',
+  NATIVE_REVIEW_TRIGGERED: 'native_review_triggered',
+  NATIVE_REVIEW_SUCCESS: 'native_review_success',
+  NATIVE_REVIEW_ERROR: 'native_review_error',
+
   // Subscription & Monetization
   PAYWALL_VIEWED: 'paywall_viewed',
   SUBSCRIPTION_PURCHASE_INITIATED: 'subscription_purchase_initiated',

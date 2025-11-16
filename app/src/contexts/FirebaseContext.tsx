@@ -123,6 +123,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
           setFeatureFlags({
             paid_only: false,
             free_capture_limit: 5,
+            in_app_rating: true,
           });
         }
       } catch (error) {
@@ -131,6 +132,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         setFeatureFlags({
           paid_only: false,
           free_capture_limit: 5,
+          in_app_rating: true,
         });
       } finally {
         setFeatureFlagsLoading(false);

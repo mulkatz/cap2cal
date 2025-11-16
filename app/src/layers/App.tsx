@@ -20,6 +20,10 @@ import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam } from '../utils/analytics.ts';
 import { Onboarding } from '../components/onboarding/Onboarding.tsx';
 import { logger } from '../utils/logger';
+import { shouldShowReviewPrompt, markReviewPromptShown } from '../utils/reviewPrompt.ts';
+import { getCaptureCount } from '../utils/captureLimit.ts';
+import { AppLikePrompt } from '../components/dialogs/AppLikePrompt.atom.tsx';
+import { InAppReview } from '@capacitor-community/in-app-review';
 
 initI18n();
 
@@ -42,6 +46,8 @@ export const App = () => {
     return localStorage.getItem('hasSeenOnboarding') === 'true';
   });
   const [isShareIntentUser, setIsShareIntentUser] = useState(false);
+  const [previousCaptureCount, setPreviousCaptureCount] = useState(() => getCaptureCount());
+  const [previousAppState, setPreviousAppState] = useState(appState);
 
   useEffect(() => {
     setTimeout(() => {
@@ -113,6 +119,68 @@ export const App = () => {
     };
   }, [onCaptured, logAnalyticsEvent, setAnalyticsUserProperty, hasSeenOnboarding]);
 
+  // Handle in-app review prompt
+  useEffect(() => {
+    const currentCaptureCount = getCaptureCount();
+
+    // Check if we just returned to home after a state change
+    const justReturnedHome = appState === 'home' && previousAppState !== 'home';
+
+    // Check if capture count increased (successful capture)
+    const hadSuccessfulCapture = currentCaptureCount > previousCaptureCount;
+
+    // Update tracking states
+    setPreviousAppState(appState);
+    if (hadSuccessfulCapture) {
+      setPreviousCaptureCount(currentCaptureCount);
+    }
+
+    // Only proceed if we just returned home after a successful capture
+    if (!justReturnedHome || !hadSuccessfulCapture) {
+      return;
+    }
+
+    // Check if in-app rating is enabled via feature flag
+    const isInAppRatingEnabled = featureFlags?.in_app_rating ?? true;
+    if (!isInAppRatingEnabled) {
+      logger.debug('ReviewPrompt', 'In-app rating disabled via feature flag');
+      return;
+    }
+
+    // Check if we should show the review prompt
+    if (!shouldShowReviewPrompt(currentCaptureCount)) {
+      return;
+    }
+
+    // Add a short delay before showing the prompt (1 second)
+    const timeoutId = setTimeout(() => {
+      logger.info('ReviewPrompt', 'Showing app like prompt');
+
+      // Mark as shown
+      markReviewPromptShown();
+
+      // Log analytics event
+      logAnalyticsEvent(AnalyticsEvent.REVIEW_PROMPT_SHOWN, {
+        capture_count: currentCaptureCount,
+      });
+
+      // Show the dialog
+      dialogs.push(
+        <Dialog
+          onClose={() => {
+            logAnalyticsEvent(AnalyticsEvent.REVIEW_PROMPT_DISMISSED);
+            dialogs.pop();
+          }}>
+          <Card>
+            <AppLikePrompt onLike={handleAppLiked} onDislike={handleAppDisliked} />
+          </Card>
+        </Dialog>
+      );
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [appState, previousAppState, previousCaptureCount, featureFlags, logAnalyticsEvent, dialogs]);
+
   const hasSavedEvents =
     useLiveQuery(async () => {
       return (await db.eventItems.count()) > 0;
@@ -121,6 +189,59 @@ export const App = () => {
   const handleOnboardingComplete = () => {
     localStorage.setItem('hasSeenOnboarding', 'true');
     setHasSeenOnboarding(true);
+  };
+
+  /**
+   * Handle when user clicks "Yes, I love it!" on the app like prompt
+   */
+  const handleAppLiked = async () => {
+    logger.info('ReviewPrompt', 'User liked the app, triggering native review');
+
+    try {
+      // Request native in-app review
+      await InAppReview.requestReview();
+
+      // Log success
+      logAnalyticsEvent(AnalyticsEvent.NATIVE_REVIEW_TRIGGERED);
+      logger.info('ReviewPrompt', 'Native review dialog requested successfully');
+
+      // In development, show a toast since native dialog won't appear
+      if (import.meta.env.DEV) {
+        const platform = Capacitor.getPlatform();
+        logger.info('ReviewPrompt', `[DEV MODE] Native review dialog requested (${platform})`);
+        logger.info('ReviewPrompt', '[DEV MODE] In production, this would show the App Store/Play Store review dialog');
+      }
+    } catch (error) {
+      // Log error but don't show to user (native review is best-effort)
+      logger.error('ReviewPrompt', 'Failed to trigger native review', error instanceof Error ? error : undefined);
+      logAnalyticsEvent(AnalyticsEvent.NATIVE_REVIEW_ERROR, {
+        error: error instanceof Error ? error.message : 'Unknown error',
+      });
+    }
+  };
+
+  /**
+   * Handle when user clicks "Not really" on the app like prompt
+   */
+  const handleAppDisliked = () => {
+    logger.info('ReviewPrompt', 'User disliked the app, showing feedback dialog');
+
+    // Show feedback dialog
+    if (!showFeedback) {
+      setShowFeedback(true);
+
+      dialogs.push(
+        <Dialog
+          onClose={() => {
+            dialogs.pop();
+            setShowFeedback(false);
+          }}>
+          <Card>
+            <Feedback />
+          </Card>
+        </Dialog>
+      );
+    }
   };
 
   const onHistory = () => setListViewOpen(!listViewOpen);
