@@ -1,6 +1,6 @@
 import imgHero from '../assets/images/home-hero.png';
 import { useAppContext } from '../contexts/AppContext.tsx';
-import { IconBulb, IconBurger, IconDownload, IconHeroText } from '../assets/icons';
+import { IconBulb, IconBurger, IconDownload, IconHeroIcon, IconHeroText } from '../assets/icons';
 import React from 'react';
 import { cn } from '../utils.ts';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
@@ -46,7 +46,8 @@ export const SplashView = ({
           )}></div>
         <div className={'absolute inset-0 flex items-center justify-center'}>
           <div className="flex h-full w-3/5 max-w-[320px] flex-col items-center justify-center mb-safe-offset-40">
-            <img className={'h-auto w-full object-contain'} src={imgHero} alt="Hero" />
+            <IconHeroIcon />
+            {/*<img className={'h-auto w-full object-contain'} src={imgHero} alt="Hero" />*/}
             <IconHeroText width={'100%'} />
           </div>
           <div className={'absolute bottom-0 z-20 ml-auto w-full text-[12px] text-secondary opacity-70'}>
