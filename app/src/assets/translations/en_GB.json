@@ -141,6 +141,38 @@
         "restorePurchases": "Restore Purchases",
         "legalText": "Subscription auto-renews unless canceled. Cancel anytime in Settings."
       },
+      "settings": {
+        "title": "Settings",
+        "preferences": "Preferences",
+        "language": "Language",
+        "theme": "Theme",
+        "vibration": "Vibration",
+        "vibrationDescription": "Haptic feedback for button presses and interactions",
+        "appearance": "Appearance",
+        "privacy": "Privacy & Data",
+        "analytics": "Analytics",
+        "analyticsDescription": "Help us improve by sharing anonymous usage data",
+        "dataManagement": "Data Management",
+        "exportData": "Download My Data",
+        "exportDataDescription": "Export all your events as JSON",
+        "clearStorage": "Clear Storage",
+        "clearStorageDescription": "Delete all saved events from your device",
+        "deleteAccount": "Delete My Account",
+        "deleteAccountDescription": "Permanently delete all data and your account",
+        "other": "Other",
+        "giveFeedback": "Give Feedback",
+        "privacyPolicy": "Privacy Policy",
+        "imprint": "Imprint",
+        "about": "About",
+        "version": "Version",
+        "confirmClearStorage": "Clear all events?",
+        "confirmClearStorageMessage": "This will delete all saved events from your device. This action cannot be undone.",
+        "confirmDeleteAccount": "Delete your account?",
+        "confirmDeleteAccountMessage": "This will permanently delete all your data and your account. This action cannot be undone.",
+        "themeLight": "Light",
+        "themeDark": "Dark",
+        "themeSystem": "System"
+      },
       "loading": {
         "phrases": {
           "phrase1": {

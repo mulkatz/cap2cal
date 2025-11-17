@@ -141,6 +141,38 @@
         "restorePurchases": "Käufe wiederherstellen",
         "legalText": "Das Abo verlängert sich automatisch, sofern nicht gekündigt. Jederzeit in den Einstellungen kündbar."
       },
+      "settings": {
+        "title": "Einstellungen",
+        "preferences": "Präferenzen",
+        "language": "Sprache",
+        "theme": "Design",
+        "vibration": "Vibration",
+        "vibrationDescription": "Haptisches Feedback bei Interaktionen",
+        "appearance": "Darstellung",
+        "privacy": "Datenschutz & Daten",
+        "analytics": "Analysen",
+        "analyticsDescription": "Hilf uns durch anonyme Nutzungsdaten die App zu verbessern",
+        "dataManagement": "Datenverwaltung",
+        "exportData": "Meine Daten herunterladen",
+        "exportDataDescription": "Exportiere alle deine Events als JSON",
+        "clearStorage": "Speicher leeren",
+        "clearStorageDescription": "Lösche alle gespeicherten Events von deinem Gerät",
+        "deleteAccount": "Konto löschen",
+        "deleteAccountDescription": "Lösche dauerhaft alle Daten und dein Konto",
+        "other": "Weiteres",
+        "giveFeedback": "Feedback geben",
+        "privacyPolicy": "Datenschutzerklärung",
+        "imprint": "Impressum",
+        "about": "Über",
+        "version": "Version",
+        "confirmClearStorage": "Alle Events löschen?",
+        "confirmClearStorageMessage": "Dies löscht alle gespeicherten Events von deinem Gerät. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "confirmDeleteAccount": "Dein Konto löschen?",
+        "confirmDeleteAccountMessage": "Dies löscht dauerhaft alle deine Daten und dein Konto. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "themeLight": "Hell",
+        "themeDark": "Dunkel",
+        "themeSystem": "System"
+      },
       "loading": {
         "phrases": {
           "phrase1": {

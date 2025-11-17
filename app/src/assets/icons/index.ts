@@ -23,3 +23,4 @@ export { default as IconHeroIcon } from './hero2.svg?react';
 export { default as IconImages } from './images.svg?react';
 export { default as IconCalendar } from './calendar.svg?react';
 export { default as IconPlus } from './plus-square.svg?react';
+export { default as IconSettings } from './settings.svg?react';

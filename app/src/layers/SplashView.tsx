@@ -10,6 +10,7 @@ import {
   IconHeroText,
   IconImages,
   IconPlus,
+  IconSettings,
 } from '../assets/icons';
 import React from 'react';
 import { cn } from '../utils.ts';
@@ -27,6 +28,7 @@ export const SplashView = ({
   isFeedbackVisible,
   onShowPaywall,
   hasReachedCaptureLimit,
+  onSettings,
 }: {
   onImport: () => void;
   onHistory: () => void;
@@ -37,6 +39,7 @@ export const SplashView = ({
   isFeedbackVisible: boolean;
   onShowPaywall?: (trigger: string) => void;
   hasReachedCaptureLimit?: boolean;
+  onSettings: () => void;
 }) => {
   const { version } = useAppContext();
   const { t } = useTranslation();
@@ -103,6 +106,13 @@ export const SplashView = ({
           elevate={false}
         />
       )}
+
+      <MiniButton
+        icon={<IconSettings width={28} height={28} />}
+        onClick={onSettings}
+        className={'absolute right-[20px] z-50 bottom-safe-offset-2.5'}
+        data-testid="settings-button"
+      />
 
       <CaptureSheet isOpen={isListViewOpen} onClose={onCloseListViewOpen} />
     </>

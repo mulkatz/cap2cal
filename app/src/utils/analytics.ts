@@ -61,6 +61,13 @@ export const AnalyticsEvent = {
   FEEDBACK_SUBMITTED: 'feedback_submitted',
   HELP_VIEWED: 'help_viewed',
 
+  // Settings
+  SETTINGS_OPENED: 'settings_opened',
+  SETTINGS_CHANGED: 'settings_changed',
+  DATA_EXPORTED: 'data_exported',
+  STORAGE_CLEARED: 'storage_cleared',
+  ACCOUNT_DELETED: 'account_deleted',
+
   // In-App Review
   REVIEW_PROMPT_SHOWN: 'review_prompt_shown',
   REVIEW_PROMPT_LIKED: 'review_prompt_liked',
