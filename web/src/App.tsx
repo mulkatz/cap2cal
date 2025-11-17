@@ -8,8 +8,6 @@ import LandingPage from './LandingPage';
 // Lazy load: Secondary pages (load on demand)
 const Terms = lazy(() => import('./Terms'));
 const Privacy = lazy(() => import('./Privacy'));
-const Verify = lazy(() => import('./Verify'));
-const Unsubscribe = lazy(() => import('./Unsubscribe'));
 const DownloadPage = lazy(() => import('./pages/DownloadPage').then((module) => ({ default: module.DownloadPage })));
 
 const Loader = () => (
@@ -45,22 +43,6 @@ function AppContent() {
         element={
           <Suspense fallback={<Loader />}>
             <Privacy />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/verify"
-        element={
-          <Suspense fallback={<Loader />}>
-            <Verify />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/unsubscribe"
-        element={
-          <Suspense fallback={<Loader />}>
-            <Unsubscribe />
           </Suspense>
         }
       />

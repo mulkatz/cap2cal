@@ -33,20 +33,4 @@
     <priority>0.5</priority>
   </url>
 
-  <!-- Verify Page -->
-  <url>
-    <loc>https://cap2cal.app/verify</loc>
-    <lastmod>2025-11-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
-  <!-- Unsubscribe Page -->
-  <url>
-    <loc>https://cap2cal.app/unsubscribe</loc>
-    <lastmod>2025-11-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-
 </urlset>

@@ -5,7 +5,6 @@ import './index.css';
 import App from './App.tsx';
 import { HelmetProvider } from 'react-helmet-async'
 import './i18n.ts';
-import './firebase.ts';
 import './posthog.ts';
 
 createRoot(document.getElementById('root')!).render(
