@@ -25,7 +25,7 @@ function AppContent() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route
-        path="/download"
+        path="/invite"
         element={
           <Suspense fallback={<Loader />}>
             <DownloadPage />
