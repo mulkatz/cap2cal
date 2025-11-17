@@ -10,6 +10,7 @@ const Terms = lazy(() => import('./Terms'));
 const Privacy = lazy(() => import('./Privacy'));
 const Verify = lazy(() => import('./Verify'));
 const Unsubscribe = lazy(() => import('./Unsubscribe'));
+const DownloadPage = lazy(() => import('./pages/DownloadPage').then((module) => ({ default: module.DownloadPage })));
 
 const Loader = () => (
   <div style={{ display: 'grid', placeItems: 'center', height: '100vh' }}>
@@ -23,6 +24,14 @@ function AppContent() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route
+        path="/download"
+        element={
+          <Suspense fallback={<Loader />}>
+            <DownloadPage />
+          </Suspense>
+        }
+      />
       <Route
         path="/terms"
         element={

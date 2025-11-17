@@ -6,6 +6,8 @@ import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import { SettingSection, SettingItem, SettingToggle, SettingDivider } from './SettingItem';
 import { IconChevronLeft } from '../../assets/icons';
 import { Feedback } from '../dialogs/Feedback.atom';
+import { Dialog } from '../Dialog';
+import { Card } from '../Card.group';
 import { exportUserData, clearLocalStorage, deleteAllUserData } from '../../utils/dataManagement';
 import toast from 'react-hot-toast';
 import { AnalyticsEvent } from '../../utils/analytics';
@@ -140,15 +142,57 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   };
 
   const handleFeedback = () => {
-    dialogs.push(<Feedback />);
+    logAnalyticsEvent(AnalyticsEvent.FEEDBACK_OPENED);
+
+    dialogs.push(
+      <Dialog
+        onClose={() => {
+          dialogs.pop();
+        }}>
+        <Card>
+          <Feedback />
+        </Card>
+      </Dialog>
+    );
   };
 
   const handlePrivacyPolicy = () => {
     window.open('https://cap2cal.app/privacy', '_blank');
   };
 
-  const handleImprint = () => {
-    window.open('https://cap2cal.app/imprint', '_blank');
+  const handleTerms = () => {
+    window.open('https://cap2cal.app/terms', '_blank');
+  };
+
+  const handleWebsite = () => {
+    window.open('https://cap2cal.app', '_blank');
+  };
+
+  const handleInviteFriends = () => {
+    // Smart download link with platform detection
+    // iOS users → Auto-redirect to App Store
+    // Android users → Auto-redirect to Play Store
+    // Desktop users → Show both options
+    const shareLink = 'https://cap2cal.app/download';
+
+    // Use native share if available
+    if (navigator.share) {
+      navigator.share({
+        title: 'Cap2Cal - AI Event Capture',
+        text: 'Check out Cap2Cal! Turn any event poster into a calendar entry with AI.',
+        url: shareLink,
+      }).then(() => {
+        logAnalyticsEvent(AnalyticsEvent.EVENT_SHARED, {
+          share_method: 'invite_friends',
+        });
+      }).catch((error) => {
+        console.log('Error sharing:', error);
+      });
+    } else {
+      // Fallback: Copy to clipboard
+      navigator.clipboard.writeText(shareLink);
+      toast.success('Invite link copied to clipboard!');
+    }
   };
 
   const getLanguageDisplay = () => {
@@ -236,18 +280,27 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
 
           {/* Other Section */}
           <SettingSection title={t('dialogs.settings.other')}>
+            <SettingItem label={t('dialogs.settings.inviteFriends')} onClick={handleInviteFriends} />
+
             <SettingItem label={t('dialogs.settings.giveFeedback')} onClick={handleFeedback} />
+
+            <SettingItem label={t('dialogs.settings.website')} onClick={handleWebsite} />
 
             <SettingItem label={t('dialogs.settings.privacyPolicy')} onClick={handlePrivacyPolicy} />
 
-            <SettingItem label={t('dialogs.settings.imprint')} onClick={handleImprint} />
+            <SettingItem label={t('dialogs.settings.terms')} onClick={handleTerms} />
           </SettingSection>
 
           <SettingDivider />
 
           {/* About Section */}
           <SettingSection title={t('dialogs.settings.about')}>
-            <SettingItem label={t('dialogs.settings.version')} value={`v${version}`} />
+            <div className="rounded-lg border-[1px] border-accentElevated bg-primaryElevated px-4 py-3">
+              <div className="flex w-full items-center justify-between">
+                <span className="text-[16px] font-medium text-secondary">{t('dialogs.settings.version')}</span>
+                <span className="text-[14px] text-secondary/70">v{version}</span>
+              </div>
+            </div>
           </SettingSection>
 
           {/* Bottom spacing for safe area */}

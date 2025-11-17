@@ -102,7 +102,7 @@ export const SplashView = ({
         <MiniButton
           icon={<IconBulb width={30} height={30} />}
           onClick={onFeedback}
-          className={'absolute left-[10px] z-50 bottom-safe-offset-2.5'}
+          className={'absolute left-[10px] z-10 bottom-safe-offset-2.5'}
           elevate={false}
         />
       )}
@@ -110,7 +110,7 @@ export const SplashView = ({
       <MiniButton
         icon={<IconSettings width={28} height={28} />}
         onClick={onSettings}
-        className={'absolute right-[20px] z-50 bottom-safe-offset-2.5'}
+        className={'absolute right-[20px] z-10 bottom-safe-offset-2.5'}
         data-testid="settings-button"
       />
 
