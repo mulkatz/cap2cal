@@ -1,7 +1,8 @@
 {
-  "name": "Cap2Cal - Never Miss Another Event",
-  "short_name": "Cap2Cal",
-  "description": "Snap a photo of any event poster and instantly add it to your calendar. AI-powered event capture in 3 seconds.",
+  "name": "Capture2Calendar (Cap2Cal) - Never Miss Another Event",
+  "short_name": "Capture2Calendar",
+  "description": "Capture2Calendar - Turn any photo, poster, or flyer into a calendar event instantly. AI-powered photo to calendar conversion. AI-powered event capture in 3 seconds.",
+  "categories": ["productivity", "utilities", "lifestyle"],
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
