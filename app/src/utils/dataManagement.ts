@@ -8,7 +8,7 @@ import toast from 'react-hot-toast';
 export const exportUserData = async (): Promise<void> => {
   try {
     // Get all events from IndexedDB
-    const events = await db.events.toArray();
+    const events = await db.eventItems.toArray();
 
     const auth = getAuth();
     const currentUser = auth.currentUser;
@@ -21,14 +21,27 @@ export const exportUserData = async (): Promise<void> => {
       events: events.map(event => ({
         id: event.id,
         title: event.title,
-        date: event.date,
-        time: event.time,
-        location: event.location,
-        description: event.description,
-        favorite: event.favorite,
-        ticketLink: event.ticketLink,
-        createdAt: event.createdAt,
-        calendarEventId: event.calendarEventId,
+        kind: event.kind,
+        tags: event.tags,
+        dateFrom: event.dateTimeFrom.date,
+        timeFrom: event.dateTimeFrom.time,
+        dateTo: event.dateTimeTo?.date,
+        timeTo: event.dateTimeTo?.time,
+        location: {
+          city: event.location?.city,
+          address: event.location?.address,
+        },
+        description: {
+          short: event.description.short,
+          long: event.description.long,
+        },
+        agenda: event.agenda,
+        favorite: event.isFavorite,
+        ticketLink: event.alreadyFetchedTicketLink || event.ticketDirectLink,
+        ticketSearchQuery: event.ticketSearchQuery,
+        ticketAvailableProbability: event.ticketAvailableProbability,
+        links: event.links,
+        timestamp: event.timestamp,
         // Exclude imageData to keep file size reasonable
       })),
       totalEvents: events.length,
@@ -66,7 +79,7 @@ export const deleteAllUserData = async (): Promise<void> => {
     const currentUser = auth.currentUser;
 
     // 1. Delete all local data from IndexedDB
-    await db.events.clear();
+    await db.eventItems.clear();
 
     // 2. Clear localStorage (except essential app data)
     const keysToKeep = ['i18nextLng']; // Keep language preference
@@ -105,7 +118,7 @@ export const deleteAllUserData = async (): Promise<void> => {
 export const clearLocalStorage = async (): Promise<void> => {
   try {
     // Clear all events from IndexedDB
-    await db.events.clear();
+    await db.eventItems.clear();
 
     // Clear capture count
     localStorage.removeItem('captureCount');
