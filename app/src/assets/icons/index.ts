@@ -20,3 +20,6 @@ export { default as IconTriangleRight } from './triangle_right.svg?react';
 export { default as IconChevronLeft } from './chevron-left.svg?react';
 export { default as IconCheck } from './check.svg?react';
 export { default as IconHeroIcon } from './hero2.svg?react';
+export { default as IconImages } from './images.svg?react';
+export { default as IconCalendar } from './calendar.svg?react';
+export { default as IconPlus } from './plus-square.svg?react';

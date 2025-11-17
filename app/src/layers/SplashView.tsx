@@ -1,6 +1,16 @@
 import imgHero from '../assets/images/home-hero.png';
 import { useAppContext } from '../contexts/AppContext.tsx';
-import { IconBulb, IconBurger, IconDownload, IconHeroIcon, IconHeroText } from '../assets/icons';
+import {
+  IconBulb,
+  IconBurger,
+  IconCalendar,
+  IconCamera3,
+  IconDownload,
+  IconHeroIcon,
+  IconHeroText,
+  IconImages,
+  IconPlus,
+} from '../assets/icons';
 import React from 'react';
 import { cn } from '../utils.ts';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
@@ -71,14 +81,14 @@ export const SplashView = ({
       )}
 
       <MiniButton
-        icon={<IconDownload width={34} height={34} />}
+        icon={<IconPlus width={30} height={30} />}
         onClick={onImport}
         className={'absolute left-[20px] top-[20px]'}
         data-testid="import-button"
       />
 
       <MiniButton
-        icon={<IconBurger width={34} height={34} />}
+        icon={<IconCalendar width={30} height={30} />}
         onClick={onHistory}
         className={'absolute right-[20px] top-[20px]'}
         visible={hasSavedEvents}

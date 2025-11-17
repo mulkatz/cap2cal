@@ -4,7 +4,7 @@ import { getSafeAreaTopHeight } from '../utils.ts';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
-import { IconChevronLeft } from '../assets/icons';
+import { IconCamera3, IconChevronLeft } from '../assets/icons';
 import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
 import { AppState } from '../contexts/AppContext.tsx';
 import { CameraInstructionDialog } from '../components/dialogs/CameraInstructionDialog.tsx';
@@ -528,8 +528,17 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         <span className={'pt-safe'} />
         <div id="cameraPreview" className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover" />
         {!isPreviewRunning && <div className="absolute inset-0 z-0 bg-black" />}
-        <div className={'absolute left-0 right-0 z-10 flex justify-center bottom-safe-offset-36'}>
-          <CaptureButton onClick={handleCapture} state={appState} />
+        <div className={'absolute left-0 right-0 z-10 flex justify-center !overflow-visible bottom-safe-offset-36'}>
+          {/*<CaptureButton onClick={handleCapture} state={appState} />*/}
+
+          <button
+            className={
+              'z-50 flex min-w-60 items-center justify-center gap-2 overflow-visible rounded-full bg-highlight px-6 py-4 text-2xl font-bold text-primary' +
+              ' border-2 border-primary/20 shadow-md shadow-highlight/30' // <-- Add these classes
+            }>
+            <IconCamera3 width={28} height={28} />
+            <span>Capture</span>
+          </button>
         </div>
 
         <MiniButton
