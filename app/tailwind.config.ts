@@ -31,8 +31,19 @@ const config = {
         'accordion-left': 'accordion-down 0.3s ease-out',
         fadeInTranslateY: 'fadeInTranslateY 0.22s ease-out',
         myAnim: 'myAnim 0.3s ease-in-out forwards',
+        ripple: 'ripple 0.6s ease-out',
       },
       keyframes: {
+        ripple: {
+          '0%': {
+            transform: 'scale(0)',
+            opacity: '1',
+          },
+          '100%': {
+            transform: 'scale(1)',
+            opacity: '0',
+          },
+        },
         wiggle: {
           '0%, 100%': { transform: 'rotate(-3deg)' },
           '50%': { transform: 'rotate(3deg)' },

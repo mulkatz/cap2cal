@@ -20,6 +20,7 @@ import { MiniButton } from '../components/buttons/MiniButton.tsx';
 import { CaptureSheet } from '../components/Sheet.tsx';
 import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
+import { useRipple } from '../hooks/useRipple.tsx';
 
 export const SplashView = ({
   isLoading,
@@ -49,9 +50,15 @@ export const SplashView = ({
   onCapture: () => void;
 }) => {
   const { t } = useTranslation();
+  const { ripples, addRipple } = useRipple();
 
   const handleUpgradeClick = () => {
     onShowPaywall?.('upgrade_button_click');
+  };
+
+  const handleCaptureClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    addRipple(event);
+    onCapture();
   };
 
   return (
@@ -88,11 +95,25 @@ export const SplashView = ({
 
       <div className={'absolute left-0 right-0 z-10 flex justify-center !overflow-visible bottom-safe-offset-[20vh]'}>
         <button
-          onClick={onCapture}
+          onClick={handleCaptureClick}
           className={
-            'z-50 flex min-w-60 items-center justify-center gap-2 overflow-visible rounded-full bg-highlight px-6 py-4 text-2xl font-bold text-primary' +
+            'relative z-50 flex min-w-60 items-center justify-center gap-2 overflow-hidden rounded-full bg-highlight px-6 py-4 text-2xl font-bold text-primary' +
             ' shadow-md shadow-highlight/30' // <-- Add these classes
           }>
+          {/* Ripple effects */}
+          {ripples.map((ripple) => (
+            <span
+              key={ripple.key}
+              className="absolute animate-ripple rounded-full bg-white/30"
+              style={{
+                left: ripple.x - ripple.size / 2,
+                top: ripple.y - ripple.size / 2,
+                width: ripple.size,
+                height: ripple.size,
+              }}
+            />
+          ))}
+
           {isLoading && (
             // <div className={'flex h-[24px] w-[24px] items-center justify-center'}>
             <ClipLoader
@@ -125,12 +146,14 @@ export const SplashView = ({
         data-testid="history-button"
       />
 
-      <div
+      <button
+        onClick={onSettings}
         className={
-          'absolute right-[10px] top-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 transition-all duration-[300ms] ease-out'
-        }>
+          'absolute right-[10px] top-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 transition-all duration-[300ms] ease-out hover:bg-primaryElevated/50'
+        }
+        data-testid="settings-button">
         <IconGear width={34} height={34} />
-      </div>
+      </button>
 
       <CaptureSheet isOpen={isListViewOpen} onClose={onCloseListViewOpen} />
     </>

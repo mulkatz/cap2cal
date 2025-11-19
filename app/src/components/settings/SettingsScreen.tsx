@@ -59,10 +59,12 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     toast.success(enabled ? t('toasts.settings.analyticsEnabled') : t('toasts.settings.analyticsDisabled'));
   };
 
-  const handleLanguageChange = () => {
+  const handleLanguageChange = async () => {
     // Toggle between English and German for now
-    const newLang = i18n.language === 'en' ? 'de' : 'en';
-    i18n.changeLanguage(newLang);
+    const currentLang = i18n.language.startsWith('en') ? 'en' : 'de';
+    const newLang = currentLang === 'en' ? 'de' : 'en';
+
+    await i18n.changeLanguage(newLang);
     localStorage.setItem('i18nextLng', newLang);
 
     logAnalyticsEvent(AnalyticsEvent.SETTINGS_CHANGED, {
@@ -196,7 +198,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   };
 
   const getLanguageDisplay = () => {
-    return i18n.language === 'en' ? 'English' : 'Deutsch';
+    return i18n.language.startsWith('en') ? 'English' : 'Deutsch';
   };
 
   const getThemeDisplay = () => {
