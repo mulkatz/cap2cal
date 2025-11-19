@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from '@michaelwolz/camera-preview-lite';
-import { getSafeAreaTopHeight } from '../utils.ts';
+import { cn, getSafeAreaTopHeight } from '../utils.ts';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
@@ -9,6 +9,7 @@ import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
 import { AppState } from '../contexts/AppContext.tsx';
 import { CameraInstructionDialog } from '../components/dialogs/CameraInstructionDialog.tsx';
 import { logger } from '../utils/logger';
+import imgButton from '../assets/images/icon.png';
 
 interface CameraViewProps {
   onStreamCallback?: (running: boolean) => void;
@@ -528,21 +529,27 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         <span className={'pt-safe'} />
         <div id="cameraPreview" className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover" />
         {!isPreviewRunning && <div className="absolute inset-0 z-0 bg-black" />}
-        <div className={'absolute left-0 right-0 z-10 flex justify-center !overflow-visible bottom-safe-offset-36'}>
-          {/*<CaptureButton onClick={handleCapture} state={appState} />*/}
 
-          <button
-            className={
-              'z-50 flex min-w-60 items-center justify-center gap-2 overflow-visible rounded-full bg-highlight px-6 py-4 text-2xl font-bold text-primary' +
-              ' border-2 border-primary/20 shadow-md shadow-highlight/30' // <-- Add these classes
-            }>
-            <IconCamera3 width={28} height={28} />
-            <span>Capture</span>
-          </button>
-        </div>
+        {isPreviewRunning && (
+          <div className={'absolute left-0 right-0 z-10 flex justify-center !overflow-visible bottom-safe-offset-36'}>
+            {/*<CaptureButton onClick={handleCapture} state={appState} />*/}
+
+            <button
+              onClick={handleCapture}
+              className={cn(
+                'flex h-[80px] w-[80px] origin-center items-center justify-center',
+                // 'rounded-lg border-none bg-gradient-to-t from-[#1E96C8] to-[#37AEE2] text-base text-white',
+                // "cursor-pointer select-none hover:from-[#17759C] hover:to-[#1D95C9]",
+                'rounded-full border-none text-white shadow-[0_4px_14px_rgba(0,0,0,0.7)]',
+                'cursor-pointer'
+              )}>
+              <img src={imgButton} alt="process" className="w-full" />
+            </button>
+          </div>
+        )}
 
         <MiniButton
-          icon={<IconChevronLeft width={34} height={34} />}
+          icon={<IconChevronLeft width={26} height={26} />}
           onClick={onClose}
           className={'absolute left-[20px] top-[20px]'}
         />

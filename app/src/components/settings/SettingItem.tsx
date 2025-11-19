@@ -4,7 +4,13 @@ import { cn } from '../../utils';
 export const SettingSection = ({ title, children }: { title?: string; children: ReactNode }) => {
   return (
     <div className="flex w-full flex-col gap-3">
-      {title && <div className="px-1 text-[14px] font-semibold text-secondary/60">{title}</div>}
+      {title && (
+        <div className="flex items-center gap-3">
+          <div className="h-[1px] flex-1 bg-accent/30" />
+          <div className="text-[14px] font-semibold text-secondary/60">{title}</div>
+          <div className="h-[1px] flex-1 bg-accent/30" />
+        </div>
+      )}
       <div className="flex flex-col gap-3">{children}</div>
     </div>
   );
@@ -61,7 +67,7 @@ export const SettingToggle = ({
         <div
           className={cn(
             'relative h-6 w-11 rounded-full transition-colors',
-            checked ? 'bg-highlight' : 'bg-accent'
+            checked ? 'bg-highlight' : 'bg-secondary/30'
           )}>
           <div
             className={cn(

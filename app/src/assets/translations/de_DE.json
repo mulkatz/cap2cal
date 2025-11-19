@@ -14,7 +14,9 @@
       "searchTickets": "Nach Tickets suchen",
       "buyTickets": "Tickets kaufen",
       "noTicketsAvailable": "keine Tickets verfügbar",
-      "getTicket": "Ticket holen"
+      "getTicket": "Ticket holen",
+      "agenda": "Programm",
+      "legal": "Rechtliches"
     },
     "toasts": {
       "feedback": {
@@ -24,6 +26,28 @@
       "extract": {
         "success": "Erfolgreich erfasst!",
         "error": "Das hat leider nicht funktioniert."
+      },
+      "subscription": {
+        "success": "Willkommen bei Pro!",
+        "restored": "Käufe wiederhergestellt!",
+        "noPurchases": "Keine aktiven Abonnements gefunden",
+        "restoreError": "Käufe konnten nicht wiederhergestellt werden"
+      },
+      "dataManagement": {
+        "exportSuccess": "Daten erfolgreich exportiert",
+        "exportError": "Datenexport fehlgeschlagen",
+        "deleteSuccess": "Alle Daten erfolgreich gelöscht",
+        "deleteError": "Löschen der Daten fehlgeschlagen",
+        "clearSuccess": "Speicher erfolgreich geleert",
+        "clearError": "Speicher konnte nicht geleert werden",
+        "reAuthRequired": "Bitte melde dich erneut an, um dein Konto zu löschen"
+      },
+      "settings": {
+        "analyticsEnabled": "Analysen aktiviert",
+        "analyticsDisabled": "Analysen deaktiviert",
+        "languageChanged": "Sprache geändert",
+        "themeSoon": "Theme-Unterstützung kommt bald!",
+        "inviteLinkCopied": "Einladungslink in Zwischenablage kopiert!"
       }
     },
     "sheet": {
@@ -94,6 +118,18 @@
         "yes": "Ja, ich liebe es!",
         "notReally": "Nicht wirklich",
         "dismiss": "Vielleicht später"
+      },
+      "privacyConsent": {
+        "title": "Willkommen bei Capture2Calendar",
+        "intro": "Deine Privatsphäre ist uns wichtig. Das solltest du wissen:",
+        "imageProcessingTitle": "Bildverarbeitung:",
+        "imageProcessingDescription": "Deine Fotos werden an Googles Gemini KI gesendet, um Event-Informationen zu extrahieren. Bilder werden nicht auf unseren Servern gespeichert.",
+        "analyticsTitle": "Analysen:",
+        "analyticsDescription": "Wir sammeln anonyme Nutzungsdaten, um die App zu verbessern. Du kannst dies jederzeit in den Einstellungen deaktivieren.",
+        "yourRightsTitle": "Deine Rechte:",
+        "yourRightsDescription": "Du kannst alle deine Daten jederzeit in den Einstellungen exportieren oder löschen.",
+        "privacyPolicyLink": "Vollständige Datenschutzerklärung lesen",
+        "acceptButton": "Akzeptieren & Fortfahren"
       },
       "export": {
         "title": "Exportieren"

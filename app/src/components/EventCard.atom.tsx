@@ -167,7 +167,7 @@ const EventCardAtom = React.memo(({
                 <div
                   className={'mb-1 flex cursor-pointer items-center gap-1.5'}
                   onClick={() => setAgendaExpanded((prev) => !prev)}>
-                  Agenda
+                  {t('general.agenda')}
                   <IconTriangleRight
                     width={10}
                     height={10}

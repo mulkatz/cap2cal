@@ -21,7 +21,7 @@ import { useAppContext } from '../contexts/AppContext.tsx';
 import { AnalyticsEvent, AnalyticsParam, getEventFieldsPresence } from '../utils/analytics.ts';
 import { incrementCaptureCount, getCaptureCount, hasReachedLimit, resetCaptureCount } from '../utils/captureLimit.ts';
 import { logger } from '../utils/logger';
-import { purchasePackage, restorePurchases, PurchaseErrorType } from '../services/purchases.service.ts';
+import { purchasePackage, restorePurchases, PurchaseErrorType, isRevenueCatEnabled } from '../services/purchases.service.ts';
 import type { PurchaseError } from '../services/purchases.service.ts';
 import {
   shouldShowReviewPrompt,
@@ -206,16 +206,31 @@ export const useCapture = () => {
   };
 
   const pushError = (reason: ExtractionError) => {
-    // Show paywall sheet if limit is reached
+    // Show paywall sheet if limit is reached (only if RevenueCat is enabled)
     if (reason === 'LIMIT_REACHED') {
       dialogs.pop(); // Remove loading dialog
-      setIsPaywallOpen(true);
 
-      // Track paywall view
-      logAnalyticsEvent('paywall_viewed', {
-        trigger: 'limit_reached',
-      });
-      return;
+      // Only show paywall if RevenueCat is enabled
+      if (isRevenueCatEnabled()) {
+        setIsPaywallOpen(true);
+
+        // Track paywall view
+        logAnalyticsEvent('paywall_viewed', {
+          trigger: 'limit_reached',
+        });
+        return;
+      } else {
+        // RevenueCat disabled - show generic error instead
+        logger.info('Paywall', 'Limit reached but RevenueCat is disabled');
+        dialogs.replace(
+          <Dialog onClose={popAndBackHome} full>
+            <Card>
+              <NotCaptured reason="UNKNOWN" onClose={popAndBackHome} />
+            </Card>
+          </Dialog>
+        );
+        return;
+      }
     }
 
     // Show regular error dialog for other errors

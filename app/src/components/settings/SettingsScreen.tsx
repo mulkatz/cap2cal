@@ -56,7 +56,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       value: enabled,
     });
 
-    toast.success(enabled ? 'Analytics enabled' : 'Analytics disabled');
+    toast.success(enabled ? t('toasts.settings.analyticsEnabled') : t('toasts.settings.analyticsDisabled'));
   };
 
   const handleLanguageChange = () => {
@@ -70,7 +70,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       value: newLang,
     });
 
-    toast.success('Language changed');
+    toast.success(t('toasts.settings.languageChanged'));
   };
 
   const handleThemeChange = () => {
@@ -88,7 +88,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     });
 
     // TODO: Implement theme switching in the app
-    toast('Theme support coming soon!');
+    toast(t('toasts.settings.themeSoon'));
   };
 
   const handleExportData = async () => {
@@ -191,7 +191,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     } else {
       // Fallback: Copy to clipboard
       navigator.clipboard.writeText(shareLink);
-      toast.success('Invite link copied to clipboard!');
+      toast.success(t('toasts.settings.inviteLinkCopied'));
     }
   };
 
@@ -227,11 +227,11 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
               onClick={handleLanguageChange}
             />
 
-            <SettingItem
+            {/* <SettingItem
               label={t('dialogs.settings.theme')}
               value={getThemeDisplay()}
               onClick={handleThemeChange}
-            />
+            /> */}
 
             <SettingToggle
               label={t('dialogs.settings.vibration')}
@@ -241,9 +241,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
             />
           </SettingSection>
 
-          <SettingDivider />
-
-          {/* Privacy & Data Section */}
+          {/* Privacy Section */}
           <SettingSection title={t('dialogs.settings.privacy')}>
             <SettingToggle
               label={t('dialogs.settings.analytics')}
@@ -253,15 +251,13 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
             />
           </SettingSection>
 
-          <SettingDivider />
-
           {/* Data Management Section */}
           <SettingSection title={t('dialogs.settings.dataManagement')}>
-            <SettingItem
+            {/* <SettingItem
               label={t('dialogs.settings.exportData')}
               description={t('dialogs.settings.exportDataDescription')}
               onClick={handleExportData}
-            />
+            /> */}
 
             <SettingItem
               label={t('dialogs.settings.clearStorage')}
@@ -269,39 +265,33 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
               onClick={handleClearStorage}
             />
 
-            <SettingItem
+            {/* <SettingItem
               label={t('dialogs.settings.deleteAccount')}
               description={t('dialogs.settings.deleteAccountDescription')}
               onClick={handleDeleteAccount}
-            />
+            /> */}
           </SettingSection>
 
-          <SettingDivider />
+          {/* About Section */}
+          <SettingSection title={t('dialogs.settings.about')}>
+            <SettingItem label={t('dialogs.settings.website')} onClick={handleWebsite} />
 
-          {/* Other Section */}
-          <SettingSection title={t('dialogs.settings.other')}>
             <SettingItem label={t('dialogs.settings.inviteFriends')} onClick={handleInviteFriends} />
 
             <SettingItem label={t('dialogs.settings.giveFeedback')} onClick={handleFeedback} />
+          </SettingSection>
 
-            <SettingItem label={t('dialogs.settings.website')} onClick={handleWebsite} />
-
+          {/* Legal Section */}
+          <SettingSection title={t('general.legal')}>
             <SettingItem label={t('dialogs.settings.privacyPolicy')} onClick={handlePrivacyPolicy} />
 
             <SettingItem label={t('dialogs.settings.terms')} onClick={handleTerms} />
           </SettingSection>
 
-          <SettingDivider />
-
-          {/* About Section */}
-          <SettingSection title={t('dialogs.settings.about')}>
-            <div className="rounded-lg border-[1px] border-accentElevated bg-primaryElevated px-4 py-3">
-              <div className="flex w-full items-center justify-between">
-                <span className="text-[16px] font-medium text-secondary">{t('dialogs.settings.version')}</span>
-                <span className="text-[14px] text-secondary/70">v{version}</span>
-              </div>
-            </div>
-          </SettingSection>
+          {/* Version - centered at bottom */}
+          <div className="flex justify-center py-4">
+            <span className="text-[14px] text-secondary/70">v{version}</span>
+          </div>
 
           {/* Bottom spacing for safe area */}
           <div className="h-safe-area-inset-bottom" />

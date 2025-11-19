@@ -40,5 +40,5 @@ export const useDialogContext = () => {
 
 export const DialogStack: React.FC = () => {
   const { stack } = useDialogContext();
-  return <div className={'fixed z-40'}>{stack.length > 0 && stack[stack.length - 1]}</div>;
+  return <div className={'fixed z-[70]'}>{stack.length > 0 && stack[stack.length - 1]}</div>;
 };

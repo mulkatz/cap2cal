@@ -14,7 +14,9 @@
       "searchTickets": "Search for Tickets",
       "buyTickets": "Buy Tickets",
       "noTicketsAvailable": "No Tickets available",
-      "getTicket": "Get Ticket"
+      "getTicket": "Get Ticket",
+      "agenda": "Agenda",
+      "legal": "Legal"
     },
     "toasts": {
       "feedback": {
@@ -24,6 +26,28 @@
       "extract": {
         "success": "Captured!",
         "error": "Couldn't capture that."
+      },
+      "subscription": {
+        "success": "Welcome to Pro!",
+        "restored": "Purchases restored!",
+        "noPurchases": "No active subscriptions found",
+        "restoreError": "Failed to restore purchases"
+      },
+      "dataManagement": {
+        "exportSuccess": "Data exported successfully",
+        "exportError": "Failed to export data",
+        "deleteSuccess": "All data deleted successfully",
+        "deleteError": "Failed to delete data",
+        "clearSuccess": "Storage cleared successfully",
+        "clearError": "Failed to clear storage",
+        "reAuthRequired": "Please log in again to delete your account"
+      },
+      "settings": {
+        "analyticsEnabled": "Analytics enabled",
+        "analyticsDisabled": "Analytics disabled",
+        "languageChanged": "Language changed",
+        "themeSoon": "Theme support coming soon!",
+        "inviteLinkCopied": "Invite link copied to clipboard!"
       }
     },
     "sheet": {
@@ -94,6 +118,18 @@
         "yes": "Yes, I love it!",
         "notReally": "Not really",
         "dismiss": "Maybe later"
+      },
+      "privacyConsent": {
+        "title": "Welcome to Capture2Calendar",
+        "intro": "We care about your privacy. Here's what you should know:",
+        "imageProcessingTitle": "Image Processing:",
+        "imageProcessingDescription": "Photos you capture are sent to Google's Gemini AI to extract event information. Images are not stored on our servers.",
+        "analyticsTitle": "Analytics:",
+        "analyticsDescription": "We collect anonymous usage data to improve the app. You can disable this anytime in Settings.",
+        "yourRightsTitle": "Your Rights:",
+        "yourRightsDescription": "You can export or delete all your data at any time from the Settings screen.",
+        "privacyPolicyLink": "Read full Privacy Policy",
+        "acceptButton": "Accept & Continue"
       },
       "export": {
         "title": "Export to"

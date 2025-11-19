@@ -1,6 +1,7 @@
 import { db } from '../models/db';
 import { getAuth, deleteUser as firebaseDeleteUser } from 'firebase/auth';
 import toast from 'react-hot-toast';
+import i18next from 'i18next';
 
 /**
  * Export all user data to a JSON file
@@ -62,10 +63,10 @@ export const exportUserData = async (): Promise<void> => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    toast.success('Data exported successfully');
+    toast.success(i18next.t('toasts.dataManagement.exportSuccess'));
   } catch (error) {
     console.error('Export failed:', error);
-    toast.error('Failed to export data');
+    toast.error(i18next.t('toasts.dataManagement.exportError'));
     throw error;
   }
 };
@@ -98,16 +99,16 @@ export const deleteAllUserData = async (): Promise<void> => {
       } catch (error: any) {
         // If user needs to re-authenticate, guide them
         if (error.code === 'auth/requires-recent-login') {
-          toast.error('Please log in again to delete your account');
+          toast.error(i18next.t('toasts.dataManagement.reAuthRequired'));
           throw error;
         }
       }
     }
 
-    toast.success('All data deleted successfully');
+    toast.success(i18next.t('toasts.dataManagement.deleteSuccess'));
   } catch (error) {
     console.error('Delete failed:', error);
-    toast.error('Failed to delete data');
+    toast.error(i18next.t('toasts.dataManagement.deleteError'));
     throw error;
   }
 };
@@ -124,10 +125,10 @@ export const clearLocalStorage = async (): Promise<void> => {
     localStorage.removeItem('captureCount');
     localStorage.removeItem('successfulCaptureCount');
 
-    toast.success('Storage cleared successfully');
+    toast.success(i18next.t('toasts.dataManagement.clearSuccess'));
   } catch (error) {
     console.error('Clear storage failed:', error);
-    toast.error('Failed to clear storage');
+    toast.error(i18next.t('toasts.dataManagement.clearError'));
     throw error;
   }
 };

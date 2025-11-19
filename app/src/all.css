@@ -624,7 +624,7 @@ video {
   top: -1.5rem;
 }
 
-.bottom-0 {
+.bottom-\[0px\] {
   bottom: 0px;
 }
 
@@ -636,8 +636,8 @@ video {
   left: 50%;
 }
 
-.left-\[10px\] {
-  left: 10px;
+.left-\[0px\] {
+  left: 0px;
 }
 
 .left-\[20px\] {
@@ -656,8 +656,12 @@ video {
   right: 1rem;
 }
 
-.right-\[20px\] {
-  right: 20px;
+.right-\[0px\] {
+  right: 0px;
+}
+
+.right-\[10px\] {
+  right: 10px;
 }
 
 .top-0 {
@@ -670,6 +674,10 @@ video {
 
 .top-\[-1px\] {
   top: -1px;
+}
+
+.top-\[10px\] {
+  top: 10px;
 }
 
 .top-\[20px\] {
@@ -704,10 +712,6 @@ video {
   z-index: 10;
 }
 
-.z-20 {
-  z-index: 20;
-}
-
 .z-30 {
   z-index: 30;
 }
@@ -722,6 +726,14 @@ video {
 
 .z-\[100\] {
   z-index: 100;
+}
+
+.z-\[60\] {
+  z-index: 60;
+}
+
+.z-\[70\] {
+  z-index: 70;
 }
 
 .mx-4 {
@@ -783,6 +795,10 @@ video {
 
 .mb-8 {
   margin-bottom: 2rem;
+}
+
+.mb-\[20vh\] {
+  margin-bottom: 20vh;
 }
 
 .ml-6 {
@@ -1385,6 +1401,10 @@ video {
   border-radius: 14px;
 }
 
+.rounded-\[16px\] {
+  border-radius: 16px;
+}
+
 .rounded-\[4px\] {
   border-radius: 4px;
 }
@@ -1528,14 +1548,6 @@ video {
   border-color: rgb(230 222 77 / 0.3);
 }
 
-.border-primary\/20 {
-  border-color: rgb(30 46 63 / 0.2);
-}
-
-.border-primary\/30 {
-  border-color: rgb(30 46 63 / 0.3);
-}
-
 .border-secondary {
   border-color: #E0FDDCFF;
 }
@@ -1547,6 +1559,10 @@ video {
 
 .border-slate-700\/60 {
   border-color: rgb(51 65 85 / 0.6);
+}
+
+.border-transparent {
+  border-color: transparent;
 }
 
 .border-warn {
@@ -1661,6 +1677,10 @@ video {
   background-color: rgb(44 65 86 / var(--tw-bg-opacity, 1));
 }
 
+.bg-primaryElevated\/0 {
+  background-color: rgb(44 65 86 / 0);
+}
+
 .bg-primaryElevated\/50 {
   background-color: rgb(44 65 86 / 0.5);
 }
@@ -1672,6 +1692,10 @@ video {
 
 .bg-secondary {
   background-color: #E0FDDCFF;
+}
+
+.bg-secondary\/30 {
+  background-color: rgb(224 253 220 / 0.3);
 }
 
 .bg-slate-300 {
@@ -1932,11 +1956,6 @@ video {
 
 .p-8 {
   padding: 2rem;
-}
-
-.px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
 }
 
 .px-1\.5 {
@@ -2633,16 +2652,12 @@ video {
   bottom: calc(env(safe-area-inset-bottom) + 0px);
 }
 
-.bottom-safe-offset-2\.5 {
-  bottom: calc(env(safe-area-inset-bottom) + 0.625rem);
-}
-
 .bottom-safe-offset-36 {
   bottom: calc(env(safe-area-inset-bottom) + 9rem);
 }
 
-.mb-safe-offset-40 {
-  margin-bottom: calc(env(safe-area-inset-bottom) + 10rem);
+.bottom-safe-offset-\[20vh\] {
+  bottom: calc(env(safe-area-inset-bottom) + 20vh);
 }
 
 .pb-safe-offset-12 {

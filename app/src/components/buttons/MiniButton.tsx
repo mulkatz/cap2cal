@@ -21,15 +21,14 @@ export const MiniButton = ({
       onClick={onClick}
       data-testid={dataTestId}
       className={cn(
-        'flex cursor-pointer items-center justify-center p-2 text-[16px] text-primary',
+        'flex cursor-pointer items-center justify-center p-4 text-[14px] text-highlight',
         'transform transition-all duration-[300ms] ease-out', // Ensure transform utilities are enabled
         // 'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2', // Optional: Added focus styles for accessibility & beauty
         // 'opacity-100 active:text-clickHighLight',
         'opacity-100',
-        'rounded-lg border-[2px] bg-highlight shadow-md shadow-highlight/30',
+        'rounded-full bg-primaryElevated drop-shadow-lg',
         // "cursor-pointer select-none hover:from-[#17759C] hover:to-[#1D95C9]",
         'cursor-pointer select-none',
-        'border-[2px] border-primary/30',
         {
           // Styles for the elevated and inner shadow look
           'hover:shadow-xl active:translate-y-px active:shadow-md': elevate,

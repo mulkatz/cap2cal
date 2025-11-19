@@ -53,6 +53,7 @@ export const App = () => {
   const [isShareIntentUser, setIsShareIntentUser] = useState(false);
   const [previousCaptureCount, setPreviousCaptureCount] = useState(() => getCaptureCount());
   const [previousAppState, setPreviousAppState] = useState(appState);
+  const [isHandlingCaptureRequest, setIsHandlingCaptureRequest] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -422,9 +423,14 @@ export const App = () => {
     }
   };
 
+  const onHandleCapture = async () => {
+    setIsHandlingCaptureRequest(true);
+    await handleCapture();
+    setIsHandlingCaptureRequest(false);
+  };
+
   const handleCapture = async () => {
     console.log('check permissions', Capacitor.getPlatform());
-
     // Check capture limit before opening camera
     if (featureFlags && !featureFlagsLoading) {
       const limitReached = checkCaptureLimit();
@@ -569,6 +575,8 @@ export const App = () => {
 
           {(appState === 'loading' || appState === 'home') && (
             <SplashView
+              isLoading={isHandlingCaptureRequest}
+              onCapture={onHandleCapture}
               hasSavedEvents={hasSavedEvents}
               isListViewOpen={listViewOpen}
               onCloseListViewOpen={() => setListViewOpen(false)}

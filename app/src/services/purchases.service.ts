@@ -42,6 +42,13 @@ export interface PurchaseError {
  */
 export const initializePurchases = async (userId: string): Promise<void> => {
   try {
+    // Check if RevenueCat is enabled via environment variable
+    const isEnabled = import.meta.env.VITE_REVENUECAT_ENABLED === 'true';
+    if (!isEnabled) {
+      console.log('[Purchases] RevenueCat is disabled via VITE_REVENUECAT_ENABLED flag');
+      return;
+    }
+
     // Check if running on native platform
     if (!Capacitor.isNativePlatform()) {
       console.warn('[Purchases] Not running on native platform, purchases disabled');
@@ -375,5 +382,13 @@ export const logCustomerInfo = async (): Promise<void> => {
  * Check if purchases are available on this platform
  */
 export const isPurchasesAvailable = (): boolean => {
-  return Capacitor.isNativePlatform();
+  const isEnabled = import.meta.env.VITE_REVENUECAT_ENABLED === 'true';
+  return isEnabled && Capacitor.isNativePlatform();
+};
+
+/**
+ * Check if RevenueCat is enabled via environment variable
+ */
+export const isRevenueCatEnabled = (): boolean => {
+  return import.meta.env.VITE_REVENUECAT_ENABLED === 'true';
 };

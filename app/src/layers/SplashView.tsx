@@ -6,8 +6,10 @@ import {
   IconCalendar,
   IconCamera3,
   IconDownload,
+  IconGear,
   IconHeroIcon,
   IconHeroText,
+  IconImage,
   IconImages,
   IconPlus,
   IconSettings,
@@ -17,8 +19,10 @@ import { cn } from '../utils.ts';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
 import { CaptureSheet } from '../components/Sheet.tsx';
 import { useTranslation } from 'react-i18next';
+import { ClipLoader } from 'react-spinners';
 
 export const SplashView = ({
+  isLoading,
   onImport,
   onHistory,
   hasSavedEvents,
@@ -29,7 +33,9 @@ export const SplashView = ({
   onShowPaywall,
   hasReachedCaptureLimit,
   onSettings,
+  onCapture,
 }: {
+  isLoading: boolean;
   onImport: () => void;
   onHistory: () => void;
   hasSavedEvents: boolean;
@@ -40,8 +46,8 @@ export const SplashView = ({
   onShowPaywall?: (trigger: string) => void;
   hasReachedCaptureLimit?: boolean;
   onSettings: () => void;
+  onCapture: () => void;
 }) => {
-  const { version } = useAppContext();
   const { t } = useTranslation();
 
   const handleUpgradeClick = () => {
@@ -58,13 +64,10 @@ export const SplashView = ({
             // 'bg-[radial-gradient(#444cf7_0.5px,transparent_0.5px)] opacity-80 [background-size:20px_20px]'
           )}></div>
         <div className={'absolute inset-0 flex items-center justify-center'}>
-          <div className="flex h-full w-3/5 max-w-[320px] flex-col items-center justify-center mb-safe-offset-40">
+          <div className="mb-[20vh] flex h-full w-3/5 max-w-[320px] flex-col items-center justify-center">
             <IconHeroIcon />
             {/*<img className={'h-auto w-full object-contain'} src={imgHero} alt="Hero" />*/}
             <IconHeroText width={'100%'} />
-          </div>
-          <div className={'absolute bottom-0 z-20 ml-auto w-full text-[12px] text-secondary opacity-70'}>
-            v{version}
           </div>
         </div>
       </div>
@@ -83,36 +86,51 @@ export const SplashView = ({
         </div>
       )}
 
+      <div className={'absolute left-0 right-0 z-10 flex justify-center !overflow-visible bottom-safe-offset-[20vh]'}>
+        <button
+          onClick={onCapture}
+          className={
+            'z-50 flex min-w-60 items-center justify-center gap-2 overflow-visible rounded-full bg-highlight px-6 py-4 text-2xl font-bold text-primary' +
+            ' shadow-md shadow-highlight/30' // <-- Add these classes
+          }>
+          {isLoading && (
+            // <div className={'flex h-[24px] w-[24px] items-center justify-center'}>
+            <ClipLoader
+              className={'mb-0.5'}
+              color={'#1E2E3F'}
+              size={28}
+              cssOverride={{
+                borderWidth: 3,
+              }}
+            />
+            // </div>
+          )}
+          {!isLoading && <IconCamera3 width={28} height={28} className={'mb-0.5'} />}
+          <span>Capture</span>
+        </button>
+      </div>
+
       <MiniButton
-        icon={<IconPlus width={30} height={30} />}
+        icon={<IconImage width={26} height={26} />}
         onClick={onImport}
-        className={'absolute left-[20px] top-[20px]'}
+        className={'absolute bottom-[0px] left-[0px]'}
         data-testid="import-button"
       />
 
       <MiniButton
-        icon={<IconCalendar width={30} height={30} />}
+        icon={<IconCalendar width={26} height={26} />}
         onClick={onHistory}
-        className={'absolute right-[20px] top-[20px]'}
+        className={'absolute bottom-[0px] right-[0px]'}
         visible={hasSavedEvents}
         data-testid="history-button"
       />
 
-      {isFeedbackVisible && (
-        <MiniButton
-          icon={<IconBulb width={30} height={30} />}
-          onClick={onFeedback}
-          className={'absolute left-[10px] z-10 bottom-safe-offset-2.5'}
-          elevate={false}
-        />
-      )}
-
-      <MiniButton
-        icon={<IconSettings width={28} height={28} />}
-        onClick={onSettings}
-        className={'absolute right-[20px] z-10 bottom-safe-offset-2.5'}
-        data-testid="settings-button"
-      />
+      <div
+        className={
+          'absolute right-[10px] top-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 transition-all duration-[300ms] ease-out'
+        }>
+        <IconGear width={34} height={34} />
+      </div>
 
       <CaptureSheet isOpen={isListViewOpen} onClose={onCloseListViewOpen} />
     </>

@@ -16,7 +16,7 @@ export const Dialog = ({
   return (
     <div
       className={cn(
-        'fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6',
+        'fixed inset-0 z-[60] flex max-h-screen items-center justify-center p-6',
         full && "magicpattern"
       )}
       onClick={closeOnClickOutside ? onClose : undefined}>

@@ -33,7 +33,7 @@ export const CaptureButton = ({ onClick, state }: { onClick: () => void; state: 
           <div onClick={onClick} className="flex items-center gap-[8px] px-[46px] py-[10px]">
             {state === 'loading' && (
               <div className={'flex h-[24px] w-[24px] items-center justify-center'}>
-                <ClipLoader color={'#FFFFFF'} size={24} />
+                <ClipLoader color={'#FFFFFF'} size={24} loading={false} />
               </div>
             )}
             {state === 'home' && <IconCamera3 width={24} height={24} className={'mb-0.5'} />}
