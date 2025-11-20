@@ -34,10 +34,10 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
           return sortByFilter === 'time'
             ? items.sort((a, b) => b.timestamp - a.timestamp) // Sort by time
             : items.sort((a, b) => {
-                const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
-                const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
-                return startB - startA;
-              });
+              const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
+              const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
+              return startB - startA;
+            });
         }),
     [favouritesFilter, sortByFilter] // Removed db.eventItems as it's stable
   );
