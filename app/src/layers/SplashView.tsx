@@ -93,7 +93,7 @@ export const SplashView = ({
         </div>
       )}
 
-      <div className={'absolute left-0 right-0 z-10 flex justify-center !overflow-visible bottom-safe-offset-[20vh]'}>
+      <div className={'absolute bottom-[20vh] left-0 right-0 z-10 flex justify-center !overflow-visible'}>
         <button
           onClick={handleCaptureClick}
           className={
@@ -134,14 +134,14 @@ export const SplashView = ({
       <MiniButton
         icon={<IconImage width={26} height={26} />}
         onClick={onImport}
-        className={'absolute bottom-[0px] left-[0px]'}
+        className={'absolute left-4 bottom-safe-offset-5'}
         data-testid="import-button"
       />
 
       <MiniButton
         icon={<IconCalendar width={26} height={26} />}
         onClick={onHistory}
-        className={'absolute bottom-[0px] right-[0px]'}
+        className={'absolute right-4 bottom-safe-offset-5'}
         visible={hasSavedEvents}
         data-testid="history-button"
       />
@@ -149,7 +149,7 @@ export const SplashView = ({
       <button
         onClick={onSettings}
         className={
-          'absolute right-[10px] top-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 transition-all duration-[300ms] ease-out hover:bg-primaryElevated/50'
+          'absolute right-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 transition-all duration-[300ms] ease-out top-safe-offset-0 hover:bg-primaryElevated/50'
         }
         data-testid="settings-button">
         <IconGear width={34} height={34} />

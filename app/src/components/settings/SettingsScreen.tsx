@@ -21,12 +21,8 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   const { logAnalyticsEvent } = useFirebaseContext();
 
   // Get current settings from localStorage
-  const [vibrationEnabled, setVibrationEnabled] = useState(
-    () => localStorage.getItem('vibrationEnabled') !== 'false'
-  );
-  const [analyticsEnabled, setAnalyticsEnabled] = useState(
-    () => localStorage.getItem('analyticsEnabled') !== 'false'
-  );
+  const [vibrationEnabled, setVibrationEnabled] = useState(() => localStorage.getItem('vibrationEnabled') !== 'false');
+  const [analyticsEnabled, setAnalyticsEnabled] = useState(() => localStorage.getItem('analyticsEnabled') !== 'false');
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>(
     () => (localStorage.getItem('theme') as 'light' | 'dark' | 'system') || 'system'
   );
@@ -179,17 +175,20 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
 
     // Use native share if available
     if (navigator.share) {
-      navigator.share({
-        title: 'Cap2Cal - AI Event Capture',
-        text: 'Check out Cap2Cal! Turn any event poster into a calendar entry with AI.',
-        url: shareLink,
-      }).then(() => {
-        logAnalyticsEvent(AnalyticsEvent.EVENT_SHARED, {
-          share_method: 'invite_friends',
+      navigator
+        .share({
+          title: 'Cap2Cal - AI Event Capture',
+          text: 'Check out Cap2Cal! Turn any event poster into a calendar entry with AI.',
+          url: shareLink,
+        })
+        .then(() => {
+          logAnalyticsEvent(AnalyticsEvent.EVENT_SHARED, {
+            share_method: 'invite_friends',
+          });
+        })
+        .catch((error) => {
+          console.log('Error sharing:', error);
         });
-      }).catch((error) => {
-        console.log('Error sharing:', error);
-      });
     } else {
       // Fallback: Copy to clipboard
       navigator.clipboard.writeText(shareLink);
@@ -208,7 +207,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-primary">
       {/* Header */}
-      <div className="flex h-16 items-center justify-between border-b border-accent/30 px-4">
+      <div className="flex h-16 items-center justify-between border-b border-accent/30 px-4 pt-safe-offset-3">
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-secondary transition-colors active:text-highlight">
@@ -219,10 +218,10 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto px-4 py-6">
-        <div className="mx-auto flex max-w-2xl flex-col gap-6">
+      <div className="flex-1 overflow-y-auto px-4 pt-3 pb-safe-offset-0">
+        <div className="mx-auto flex max-w-2xl flex-col gap-4">
           {/* Preferences Section */}
-          <SettingSection title={t('dialogs.settings.preferences')}>
+          <SettingSection>
             <SettingItem
               label={t('dialogs.settings.language')}
               value={getLanguageDisplay()}
@@ -243,8 +242,10 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
             />
           </SettingSection>
 
+          <SettingDivider />
+
           {/* Privacy Section */}
-          <SettingSection title={t('dialogs.settings.privacy')}>
+          <SettingSection>
             <SettingToggle
               label={t('dialogs.settings.analytics')}
               description={t('dialogs.settings.analyticsDescription')}
@@ -253,8 +254,10 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
             />
           </SettingSection>
 
+          <SettingDivider />
+
           {/* Data Management Section */}
-          <SettingSection title={t('dialogs.settings.dataManagement')}>
+          <SettingSection>
             {/* <SettingItem
               label={t('dialogs.settings.exportData')}
               description={t('dialogs.settings.exportDataDescription')}
@@ -274,8 +277,10 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
             /> */}
           </SettingSection>
 
+          <SettingDivider />
+
           {/* About Section */}
-          <SettingSection title={t('dialogs.settings.about')}>
+          <SettingSection>
             <SettingItem label={t('dialogs.settings.website')} onClick={handleWebsite} />
 
             <SettingItem label={t('dialogs.settings.inviteFriends')} onClick={handleInviteFriends} />
@@ -283,8 +288,10 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
             <SettingItem label={t('dialogs.settings.giveFeedback')} onClick={handleFeedback} />
           </SettingSection>
 
+          <SettingDivider />
+
           {/* Legal Section */}
-          <SettingSection title={t('general.legal')}>
+          <SettingSection>
             <SettingItem label={t('dialogs.settings.privacyPolicy')} onClick={handlePrivacyPolicy} />
 
             <SettingItem label={t('dialogs.settings.terms')} onClick={handleTerms} />
@@ -296,7 +303,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
           </div>
 
           {/* Bottom spacing for safe area */}
-          <div className="h-safe-area-inset-bottom" />
+          {/*<div className="h-safe-area-inset-bottom" />*/}
         </div>
       </div>
     </div>

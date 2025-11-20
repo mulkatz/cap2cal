@@ -573,6 +573,7 @@ export const App = () => {
         {paywallSheet}
 
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
+        {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
         <input
           type="file"
           accept=".jpg,.jpeg,.png"

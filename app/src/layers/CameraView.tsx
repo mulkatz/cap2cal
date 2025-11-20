@@ -531,7 +531,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         {!isPreviewRunning && <div className="absolute inset-0 z-0 bg-black" />}
 
         {isPreviewRunning && (
-          <div className={'absolute left-0 right-0 z-10 flex justify-center !overflow-visible bottom-safe-offset-36'}>
+          <div className={'absolute left-0 right-0 flex justify-center !overflow-visible bottom-safe-offset-36'}>
             {/*<CaptureButton onClick={handleCapture} state={appState} />*/}
 
             <button
@@ -551,7 +551,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         <MiniButton
           icon={<IconChevronLeft width={26} height={26} />}
           onClick={onClose}
-          className={'absolute left-[20px] top-[20px]'}
+          className={'absolute left-4 top-safe-offset-5'}
         />
 
         {/* Camera Instruction Dialog */}

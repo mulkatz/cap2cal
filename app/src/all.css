@@ -624,8 +624,8 @@ video {
   top: -1.5rem;
 }
 
-.bottom-\[0px\] {
-  bottom: 0px;
+.bottom-\[20vh\] {
+  bottom: 20vh;
 }
 
 .left-0 {
@@ -636,12 +636,8 @@ video {
   left: 50%;
 }
 
-.left-\[0px\] {
-  left: 0px;
-}
-
-.left-\[20px\] {
-  left: 20px;
+.left-4 {
+  left: 1rem;
 }
 
 .right-0 {
@@ -654,10 +650,6 @@ video {
 
 .right-4 {
   right: 1rem;
-}
-
-.right-\[0px\] {
-  right: 0px;
 }
 
 .right-\[10px\] {
@@ -674,14 +666,6 @@ video {
 
 .top-\[-1px\] {
   top: -1px;
-}
-
-.top-\[10px\] {
-  top: 10px;
-}
-
-.top-\[20px\] {
-  top: 20px;
 }
 
 .top-\[2px\] {
@@ -1321,10 +1305,6 @@ video {
 
 .gap-5 {
   gap: 1.25rem;
-}
-
-.gap-6 {
-  gap: 1.5rem;
 }
 
 .gap-\[8px\] {
@@ -2126,6 +2106,10 @@ video {
   padding-top: 0.5rem;
 }
 
+.pt-3 {
+  padding-top: 0.75rem;
+}
+
 .pt-4 {
   padding-top: 1rem;
 }
@@ -2672,8 +2656,12 @@ video {
   bottom: calc(env(safe-area-inset-bottom) + 9rem);
 }
 
-.bottom-safe-offset-\[20vh\] {
-  bottom: calc(env(safe-area-inset-bottom) + 20vh);
+.bottom-safe-offset-5 {
+  bottom: calc(env(safe-area-inset-bottom) + 1.25rem);
+}
+
+.pb-safe-offset-0 {
+  padding-bottom: calc(env(safe-area-inset-bottom) + 0px);
 }
 
 .pb-safe-offset-12 {
@@ -2682,6 +2670,18 @@ video {
 
 .pb-safe-offset-8 {
   padding-bottom: calc(env(safe-area-inset-bottom) + 2rem);
+}
+
+.pt-safe-offset-3 {
+  padding-top: calc(env(safe-area-inset-top) + 0.75rem);
+}
+
+.top-safe-offset-0 {
+  top: calc(env(safe-area-inset-top) + 0px);
+}
+
+.top-safe-offset-5 {
+  top: calc(env(safe-area-inset-top) + 1.25rem);
 }
 
 .\[-\:\.\] {
@@ -2693,50 +2693,9 @@ video {
 }
 
 body {
-  padding-top: env(safe-area-inset-top, 0);
-  /* For iOS Safe Area (top inset) */
-  padding-bottom: env(safe-area-inset-bottom, 0);
-  /* For iOS Safe Area (bottom inset) */
-  padding-left: env(safe-area-inset-left, 0);
-  /* For iOS Safe Area (left inset) */
-  padding-right: env(safe-area-inset-right, 0);
-  /* For iOS Safe Area (right inset) */
-  /*background-color: #1E2E3F; !* Your tint color *!*/
   margin: 0;
   font-family: 'Nunito', sans-serif;
-  /*touch-action: pan-x pan-y;*/
   background: black;
-}
-
-/** {*/
-
-/*  will-change: transform, opacity;*/
-
-/*}*/
-
-.p-safe {
-  padding-top: env(safe-area-inset-top);
-  padding-right: env(safe-area-inset-right);
-  padding-bottom: env(safe-area-inset-bottom);
-  padding-left: env(safe-area-inset-left);
-}
-
-.px-safe {
-  padding-right: env(safe-area-inset-right);
-  padding-left: env(safe-area-inset-left);
-}
-
-.py-safe {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.pt-safe {
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Additional styles to ensure proper tinting */
