@@ -61,8 +61,8 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
 
   const handleLanguageChange = async () => {
     // Toggle between English and German for now
-    const currentLang = i18n.language.startsWith('en') ? 'en' : 'de';
-    const newLang = currentLang === 'en' ? 'de' : 'en';
+    const currentLang = i18n.language.startsWith('en') ? 'en-GB' : 'de-DE';
+    const newLang = currentLang === 'en-GB' ? 'de-DE' : 'en-GB';
 
     await i18n.changeLanguage(newLang);
     localStorage.setItem('i18nextLng', newLang);

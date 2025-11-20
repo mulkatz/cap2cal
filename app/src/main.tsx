@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { I18nextProvider } from 'react-i18next';
 
 import './index.css';
 import './embla.css';
@@ -14,24 +15,30 @@ import { AppProvider } from './contexts/AppContext.tsx';
 import { EffectProvider } from './contexts/EffectsContext.tsx';
 import { Playground } from './components/Playground.tsx';
 import { PrivacyPage } from './components/PrivacyPage.tsx';
+import { initI18n, i18next } from './helper/i18nHelper';
+
+// Initialize i18n before rendering
+initI18n();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AppProvider>
-      <EffectProvider>
-        <FirebaseProvider>
-          <DialogProvider>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="/privacy-policy" element={<PrivacyPage />} />
-                {/*<Route path="/imprint" element={<ImprintPage />} />*/}
-                <Route path="*" element={<Navigate to="/" replace />} />
-              </Routes>
-            </BrowserRouter>
-          </DialogProvider>
-        </FirebaseProvider>
-      </EffectProvider>
-    </AppProvider>
+    <I18nextProvider i18n={i18next}>
+      <AppProvider>
+        <EffectProvider>
+          <FirebaseProvider>
+            <DialogProvider>
+              <BrowserRouter>
+                <Routes>
+                  <Route path="/" element={<App />} />
+                  <Route path="/privacy-policy" element={<PrivacyPage />} />
+                  {/*<Route path="/imprint" element={<ImprintPage />} />*/}
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </BrowserRouter>
+            </DialogProvider>
+          </FirebaseProvider>
+        </EffectProvider>
+      </AppProvider>
+    </I18nextProvider>
   </StrictMode>
 );

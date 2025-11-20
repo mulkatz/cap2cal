@@ -13,7 +13,7 @@ export function initI18n() {
     .use(initReactI18next)
     .init({
       detection: {
-        order: ['querystring', 'navigator'],
+        order: ['localStorage', 'querystring', 'navigator'],
       },
       debug: false,
       fallbackLng: 'en-GB',
@@ -34,3 +34,6 @@ export function initI18n() {
       // i18next.changeLanguage('da-DK');
     });
 }
+
+// Export the i18next instance so it can be used with I18nextProvider
+export { i18next };

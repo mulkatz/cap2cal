@@ -10,7 +10,6 @@ import { Dialog } from '../components/Dialog.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { Feedback } from '../components/dialogs/Feedback.atom.tsx';
 import { SettingsScreen } from '../components/settings/SettingsScreen.tsx';
-import { initI18n } from '../helper/i18nHelper.ts';
 import { Effects, useEffectContext } from '../contexts/EffectsContext.tsx';
 import { Camera, CameraResultType, CameraSource, PermissionStatus } from '@capacitor/camera';
 import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.atom.tsx';
@@ -25,8 +24,6 @@ import { shouldShowReviewPrompt, markReviewPromptShown } from '../utils/reviewPr
 import { getCaptureCount } from '../utils/captureLimit.ts';
 import { AppLikePrompt } from '../components/dialogs/AppLikePrompt.atom.tsx';
 import { InAppReview } from '@capacitor-community/in-app-review';
-
-initI18n();
 
 const isFeedbackVisible = false;
 
