@@ -10,7 +10,6 @@ import { Dialog } from '../components/Dialog.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { Feedback } from '../components/dialogs/Feedback.atom.tsx';
 import { SettingsScreen } from '../components/settings/SettingsScreen.tsx';
-import { PrivacyConsent } from '../components/dialogs/PrivacyConsent.atom.tsx';
 import { initI18n } from '../helper/i18nHelper.ts';
 import { Effects, useEffectContext } from '../contexts/EffectsContext.tsx';
 import { Camera, CameraResultType, CameraSource, PermissionStatus } from '@capacitor/camera';
@@ -46,9 +45,6 @@ export const App = () => {
   const [initialised, setInitialised] = useState(false);
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(() => {
     return localStorage.getItem('hasSeenOnboarding') === 'true';
-  });
-  const [hasAcceptedPrivacy, setHasAcceptedPrivacy] = useState(() => {
-    return localStorage.getItem('hasAcceptedPrivacy') === 'true';
   });
   const [isShareIntentUser, setIsShareIntentUser] = useState(false);
   const [previousCaptureCount, setPreviousCaptureCount] = useState(() => getCaptureCount());
@@ -534,23 +530,6 @@ export const App = () => {
       }
     }
   }, [appState]);
-
-  // Show privacy consent dialog if user hasn't accepted it yet
-  if (!hasAcceptedPrivacy) {
-    return (
-      <main>
-        <div className="flex h-[100dvh] w-full items-center justify-center bg-primary">
-          <div className="w-full max-w-md">
-            <Dialog onClose={() => {}}>
-              <Card>
-                <PrivacyConsent onAccept={() => setHasAcceptedPrivacy(true)} />
-              </Card>
-            </Dialog>
-          </div>
-        </div>
-      </main>
-    );
-  }
 
   // Show onboarding if user hasn't seen it yet
   if (!hasSeenOnboarding) {
