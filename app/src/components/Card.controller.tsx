@@ -23,8 +23,10 @@ import { CalendarPermissionScope, CapacitorCalendar } from '@ebarooni/capacitor-
 import { PermissionDeniedAtom } from './dialogs/PermissionDenied.atom.tsx';
 import React, { useCallback, useMemo } from 'react';
 import { EventCardAtom2 } from './EventCard2.atom.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
+  const { t } = useTranslation();
   const dialogs = useDialogContext();
 
   // Optimized: Only query image when needed, with proper dependencies
@@ -69,11 +71,11 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
 
       // 4. Share the file
       await Share.share({
-        title: `Share ${fileName}`,
-        text: `Check out this PDF: ${fileName}`,
+        title: t('share.shareFile', { fileName }),
+        text: t('share.checkOutPdf', { fileName }),
         files: [nativePath], // Use the 'files' array for local file URIs
         // url: nativePath, // Alternatively, for a single file, 'url' can also work
-        dialogTitle: `Share ${fileName}`,
+        dialogTitle: t('share.shareFile', { fileName }),
       });
 
       console.log('PDF shared successfully');
@@ -94,12 +96,12 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
 
   async function shareContent() {
     const item = {
-      title: 'Capture2Calendar',
-      description: 'Easily add events to your calendar from photos!',
+      title: t('share.appTitle'),
+      description: t('share.appDescription'),
       link: 'https://cap2cal.app',
     };
 
-    const message = `Check out this awesome tool: ${item.title}\n${item.description}\nVisit: ${item.link}`;
+    const message = t('share.checkOutTool', { title: item.title, description: item.description, link: item.link });
 
     if (navigator.share) {
       try {
@@ -249,7 +251,7 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
       // 3. CREATE NATIVE EVENT
       // ---------------------------------
       await CapacitorCalendar.createEventWithPrompt({
-        title: title || 'New Event',
+        title: title || t('general.newEvent'),
         description: description?.long || description?.short || '',
         location: locationString,
         startDate: startDateTime.getTime(),

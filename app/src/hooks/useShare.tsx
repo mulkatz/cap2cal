@@ -1,7 +1,9 @@
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory } from '@capacitor/filesystem';
+import { useTranslation } from 'react-i18next';
 
 export const useShare = () => {
+  const { t } = useTranslation();
   const sharePdfFile = async (pdfBase64Data: string, fileName: string) => {
     try {
       const writeFileResult = await Filesystem.writeFile({
@@ -18,10 +20,10 @@ export const useShare = () => {
       }
 
       await Share.share({
-        title: `Share ${fileName}`,
-        text: `Check out this PDF: ${fileName}`,
+        title: t('share.shareFile', { fileName }),
+        text: t('share.checkOutPdf', { fileName }),
         files: [nativePath],
-        dialogTitle: `Share ${fileName}`,
+        dialogTitle: t('share.shareFile', { fileName }),
       });
     } catch (error) {
       // Error handling could be enhanced here
@@ -29,7 +31,7 @@ export const useShare = () => {
   };
 
   const shareContent = async (item: { title: string; description: string; link: string }) => {
-    const message = `Check out this awesome tool: ${item.title}\n${item.description}\nVisit: ${item.link}`;
+    const message = t('share.checkOutTool', { title: item.title, description: item.description, link: item.link });
 
     if (navigator.share) {
       try {

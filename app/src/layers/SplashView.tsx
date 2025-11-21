@@ -127,7 +127,7 @@ export const SplashView = ({
             // </div>
           )}
           {!isLoading && <IconCamera3 width={28} height={28} className={'mb-0.5'} />}
-          <span>Capture</span>
+          <span>{t('general.capture')}</span>
         </button>
       </div>
 

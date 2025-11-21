@@ -206,8 +206,8 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     if (navigator.share) {
       navigator
         .share({
-          title: 'Cap2Cal - AI Event Capture',
-          text: 'Check out Cap2Cal! Turn any event poster into a calendar entry with AI.',
+          title: t('share.title'),
+          text: t('share.text'),
           url: shareLink,
         })
         .then(() => {
@@ -226,7 +226,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   };
 
   const getLanguageDisplay = () => {
-    return i18n.language.startsWith('en') ? 'English' : 'Deutsch';
+    return i18n.language.startsWith('en') ? t('dialogs.settings.languageEnglish') : t('dialogs.settings.languageGerman');
   };
 
   const getThemeDisplay = () => {

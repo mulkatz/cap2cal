@@ -21,9 +21,9 @@ export const ExportChooser = ({
       <div className={'mb-3 flex w-full flex-col items-center justify-center gap-5 px-3 pt-[13px] text-center'}>
         <div className={'text-[22px] font-semibold opacity-90'}>{t('dialogs.export.title')}</div>
         <div className={'flex flex-col gap-4'}>
-          {onApple && <Entry icon={<IconAppleCalendar />} text={'Apple Calendar'} onClick={onApple} />}
-          {onGoogle && <Entry icon={<IconGoogleCalendar />} text={'Google Calendar'} onClick={onGoogle} />}
-          {onOutlook && <Entry icon={<IconOutlookCalendar />} text={'Microsoft Outlook'} onClick={onOutlook} />}
+          {onApple && <Entry icon={<IconAppleCalendar />} text={t('dialogs.export.appleCalendar')} onClick={onApple} />}
+          {onGoogle && <Entry icon={<IconGoogleCalendar />} text={t('dialogs.export.googleCalendar')} onClick={onGoogle} />}
+          {onOutlook && <Entry icon={<IconOutlookCalendar />} text={t('dialogs.export.microsoftOutlook')} onClick={onOutlook} />}
         </div>
       </div>
       <CTAButton text={t('general.cancel')} onClick={onClose} />

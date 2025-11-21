@@ -4,8 +4,10 @@ import { useDialogContext } from '../contexts/DialogContext.tsx';
 import { Dialog } from '../components/Dialog.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.atom.tsx';
+import { useTranslation } from 'react-i18next';
 
 export const useCalendarExport = () => {
+  const { t } = useTranslation();
   const dialogs = useDialogContext();
 
   const exportToCalendar = async (event: CaptureEvent): Promise<void> => {
@@ -58,7 +60,7 @@ export const useCalendarExport = () => {
       }
 
       await CapacitorCalendar.createEventWithPrompt({
-        title: title || 'New Event',
+        title: title || t('general.newEvent'),
         description: description?.long || description?.short || '',
         location: locationString,
         startDate: startDateTime.getTime(),

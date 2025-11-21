@@ -16,7 +16,21 @@
       "noTicketsAvailable": "No Tickets available",
       "getTicket": "Get Ticket",
       "agenda": "Agenda",
-      "legal": "Legal"
+      "legal": "Legal",
+      "capture": "Capture",
+      "newEvent": "New Event"
+    },
+    "share": {
+      "title": "Cap2Cal - AI Event Capture",
+      "text": "Check out Cap2Cal! Turn any event poster into a calendar entry with AI.",
+      "shareFile": "Share {{fileName}}",
+      "checkOutPdf": "Check out this PDF: {{fileName}}",
+      "checkOutTool": "Check out this awesome tool: {{title}}\n{{description}}\nVisit: {{link}}",
+      "appTitle": "Capture2Calendar",
+      "appDescription": "Easily add events to your calendar from photos!"
+    },
+    "errors": {
+      "failedProcessSharedImage": "Failed to process shared image. Please try again."
     },
     "toasts": {
       "feedback": {
@@ -134,7 +148,10 @@
         "acceptButton": "Accept & Continue"
       },
       "export": {
-        "title": "Export to"
+        "title": "Export to",
+        "appleCalendar": "Apple Calendar",
+        "googleCalendar": "Google Calendar",
+        "microsoftOutlook": "Microsoft Outlook"
       },
       "notCaptured": {
         "title": "Couldn't Capture",
@@ -211,7 +228,9 @@
         "confirmDeleteAccountMessage": "This will permanently delete all your data and your account. This action cannot be undone.",
         "themeLight": "Light",
         "themeDark": "Dark",
-        "themeSystem": "System"
+        "themeSystem": "System",
+        "languageEnglish": "English",
+        "languageGerman": "Deutsch"
       },
       "loading": {
         "phrases": {

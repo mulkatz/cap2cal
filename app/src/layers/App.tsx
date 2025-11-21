@@ -24,10 +24,12 @@ import { shouldShowReviewPrompt, markReviewPromptShown } from '../utils/reviewPr
 import { getCaptureCount } from '../utils/captureLimit.ts';
 import { AppLikePrompt } from '../components/dialogs/AppLikePrompt.atom.tsx';
 import { InAppReview } from '@capacitor-community/in-app-review';
+import { useTranslation } from 'react-i18next';
 
 const isFeedbackVisible = false;
 
 export const App = () => {
+  const { t } = useTranslation();
   const { splash } = useEffectContext();
   useDisableOverscroll();
 
@@ -104,7 +106,7 @@ export const App = () => {
         dialogs.push(
           <Dialog onClose={dialogs.pop}>
             <Card>
-              <div>Failed to process shared image. Please try again.</div>
+              <div>{t('errors.failedProcessSharedImage')}</div>
             </Card>
           </Dialog>
         );

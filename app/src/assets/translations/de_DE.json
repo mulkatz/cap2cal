@@ -16,7 +16,21 @@
       "noTicketsAvailable": "keine Tickets verfügbar",
       "getTicket": "Ticket holen",
       "agenda": "Programm",
-      "legal": "Rechtliches"
+      "legal": "Rechtliches",
+      "capture": "Erfassen",
+      "newEvent": "Neues Event"
+    },
+    "share": {
+      "title": "Cap2Cal - KI Event-Erfassung",
+      "text": "Schau dir Cap2Cal an! Verwandle jedes Event-Poster in einen Kalendereintrag mit KI.",
+      "shareFile": "{{fileName}} teilen",
+      "checkOutPdf": "Schau dir dieses PDF an: {{fileName}}",
+      "checkOutTool": "Schau dir dieses tolle Tool an: {{title}}\n{{description}}\nBesuche: {{link}}",
+      "appTitle": "Capture2Calendar",
+      "appDescription": "Füge Events ganz einfach aus Fotos zu deinem Kalender hinzu!"
+    },
+    "errors": {
+      "failedProcessSharedImage": "Geteiltes Bild konnte nicht verarbeitet werden. Bitte versuche es erneut."
     },
     "toasts": {
       "feedback": {
@@ -134,7 +148,10 @@
         "acceptButton": "Akzeptieren & Fortfahren"
       },
       "export": {
-        "title": "Exportieren"
+        "title": "Exportieren",
+        "appleCalendar": "Apple Kalender",
+        "googleCalendar": "Google Kalender",
+        "microsoftOutlook": "Microsoft Outlook"
       },
       "notCaptured": {
         "title": "Konnte nicht erfassen",
@@ -211,7 +228,9 @@
         "confirmDeleteAccountMessage": "Dies löscht dauerhaft alle deine Daten und dein Konto. Diese Aktion kann nicht rückgängig gemacht werden.",
         "themeLight": "Hell",
         "themeDark": "Dunkel",
-        "themeSystem": "System"
+        "themeSystem": "System",
+        "languageEnglish": "English",
+        "languageGerman": "Deutsch"
       },
       "loading": {
         "phrases": {
