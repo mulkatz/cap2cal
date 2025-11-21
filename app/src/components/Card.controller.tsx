@@ -32,8 +32,8 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
   // Optimized: Only query image when needed, with proper dependencies
   const img = useLiveQuery(async () => await db.images.where('id').equals(data.id).first(), [data.id]) || null;
 
-  // Use data prop directly instead of querying again
-  const item = data;
+  // Query from database to get live updates (e.g., when favorite state changes)
+  const item = useLiveQuery(async () => await db.eventItems.where('id').equals(data.id).first(), [data.id]) ?? data;
   if (!item) return null;
 
   const onFavourite = useCallback(async () => {
