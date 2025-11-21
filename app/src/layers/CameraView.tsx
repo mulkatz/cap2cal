@@ -147,6 +147,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         // width: screenWidth,
         // height: screenHeight - safeAreaTopPx,
         toBack: true,
+        lockAndroidOrientation: true,
 
         y: safeAreaTopPx,
       };

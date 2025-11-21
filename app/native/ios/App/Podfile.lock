@@ -14,6 +14,8 @@ PODS:
     - Capacitor
   - CapacitorNativeSettings (7.0.1):
     - Capacitor
+  - CapacitorScreenOrientation (7.0.2):
+    - Capacitor
   - CapacitorShare (7.0.1):
     - Capacitor
   - EbarooniCapacitorCalendar (7.2.0):
@@ -36,6 +38,7 @@ DEPENDENCIES:
   - "CapacitorFilesystem (from `../../../node_modules/@capacitor/filesystem`)"
   - "CapacitorHaptics (from `../../../node_modules/@capacitor/haptics`)"
   - CapacitorNativeSettings (from `../../../node_modules/capacitor-native-settings`)
+  - "CapacitorScreenOrientation (from `../../../node_modules/@capacitor/screen-orientation`)"
   - "CapacitorShare (from `../../../node_modules/@capacitor/share`)"
   - "EbarooniCapacitorCalendar (from `../../../node_modules/@ebarooni/capacitor-calendar`)"
   - "MichaelwolzCameraPreviewLite (from `../../../node_modules/@michaelwolz/camera-preview-lite`)"
@@ -63,6 +66,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@capacitor/haptics"
   CapacitorNativeSettings:
     :path: "../../../node_modules/capacitor-native-settings"
+  CapacitorScreenOrientation:
+    :path: "../../../node_modules/@capacitor/screen-orientation"
   CapacitorShare:
     :path: "../../../node_modules/@capacitor/share"
   EbarooniCapacitorCalendar:
@@ -81,6 +86,7 @@ SPEC CHECKSUMS:
   CapacitorFilesystem: e6261c410436f54908c11f94336c5b58286b1db0
   CapacitorHaptics: 1f1e17041f435d8ead9ff2a34edd592c6aa6a8d6
   CapacitorNativeSettings: bef37b3c7e2184da7416a3f162c71de19fd27593
+  CapacitorScreenOrientation: e0d5b9ef293b269b8f93373355d5b276f50fabea
   CapacitorShare: e573823f511f260f598d0423c33b1e3d7bbe5fd1
   EbarooniCapacitorCalendar: 4568a8a318b940245bf6e257a8b115626581bb7d
   MichaelwolzCameraPreviewLite: 04724eb9d11e2633d131ae911b74f5a5e7f83836
@@ -88,6 +94,6 @@ SPEC CHECKSUMS:
   RevenueCat: 635d32f21556b036ac6138a3ec44ac8e5a7c79b6
   RevenuecatPurchasesCapacitor: d54057ab47d3ac3dbb7660cc524eab1c58d8c490
 
-PODFILE CHECKSUM: f6e6478fae2b91460419cced25404f3396f9db6d
+PODFILE CHECKSUM: 47cecd12482eb36221f48328677891b2dc1f83d1
 
 COCOAPODS: 1.16.2

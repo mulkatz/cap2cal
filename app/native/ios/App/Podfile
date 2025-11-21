@@ -16,6 +16,7 @@ def capacitor_pods
   pod 'CapacitorCamera', :path => '../../../node_modules/@capacitor/camera'
   pod 'CapacitorFilesystem', :path => '../../../node_modules/@capacitor/filesystem'
   pod 'CapacitorHaptics', :path => '../../../node_modules/@capacitor/haptics'
+  pod 'CapacitorScreenOrientation', :path => '../../../node_modules/@capacitor/screen-orientation'
   pod 'CapacitorShare', :path => '../../../node_modules/@capacitor/share'
   pod 'EbarooniCapacitorCalendar', :path => '../../../node_modules/@ebarooni/capacitor-calendar'
   pod 'MichaelwolzCameraPreviewLite', :path => '../../../node_modules/@michaelwolz/camera-preview-lite'

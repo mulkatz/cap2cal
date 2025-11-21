@@ -25,6 +25,7 @@ import { getCaptureCount } from '../utils/captureLimit.ts';
 import { AppLikePrompt } from '../components/dialogs/AppLikePrompt.atom.tsx';
 import { InAppReview } from '@capacitor-community/in-app-review';
 import { useTranslation } from 'react-i18next';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 
 const isFeedbackVisible = false;
 
@@ -207,6 +208,10 @@ export const App = () => {
 
     return () => clearTimeout(timeoutId);
   }, [appState, previousAppState, previousCaptureCount, featureFlags, logAnalyticsEvent, dialogs]);
+
+  useEffect(() => {
+    ScreenOrientation.lock({ orientation: 'portrait' });
+  }, []);
 
   const hasSavedEvents =
     useLiveQuery(async () => {
