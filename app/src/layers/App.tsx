@@ -598,6 +598,7 @@ export const App = () => {
             position={'top-center'}
             containerStyle={{ top: 'env(safe-area-inset-top, 0px)' }}
             toastOptions={{
+              duration: 2500,
               style: {
                 background: '#1E2E3F',
                 color: '#FDDCFF',
