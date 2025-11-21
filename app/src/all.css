@@ -1608,6 +1608,10 @@ video {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity, 1));
 }
 
+.bg-black\/80 {
+  background-color: rgb(0 0 0 / 0.8);
+}
+
 .bg-gray-50 {
   --tw-bg-opacity: 1;
   background-color: rgb(249 250 251 / var(--tw-bg-opacity, 1));
@@ -2672,8 +2676,8 @@ video {
   padding-bottom: calc(env(safe-area-inset-bottom) + 2rem);
 }
 
-.pt-safe-offset-3 {
-  padding-top: calc(env(safe-area-inset-top) + 0.75rem);
+.pt-safe-offset-6 {
+  padding-top: calc(env(safe-area-inset-top) + 1.5rem);
 }
 
 .top-safe-offset-0 {

@@ -8,6 +8,7 @@ import { IconChevronLeft } from '../../assets/icons';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
 import { Card } from '../Card.group';
+import { CTAButton } from '../buttons/CTAButton';
 import { exportUserData, clearLocalStorage, deleteAllUserData } from '../../utils/dataManagement';
 import toast from 'react-hot-toast';
 import { AnalyticsEvent } from '../../utils/analytics';
@@ -102,29 +103,28 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     dialogs.push(
       <Dialog onClose={() => dialogs.pop()}>
         <Card>
-          <div className="flex flex-col gap-4 p-4">
-            <h2 className="text-lg font-semibold text-secondary">{t('dialogs.settings.confirmClearStorage')}</h2>
-            <p className="text-secondary/70">{t('dialogs.settings.confirmClearStorageMessage')}</p>
-            <div className="flex gap-3 pt-2">
-              <button
-                onClick={() => dialogs.pop()}
-                className="flex-1 rounded-xl bg-accent/20 py-3 font-medium text-secondary">
-                {t('general.cancel')}
-              </button>
-              <button
-                onClick={async () => {
-                  dialogs.pop();
-                  try {
-                    await clearLocalStorage();
-                    logAnalyticsEvent(AnalyticsEvent.STORAGE_CLEARED);
-                  } catch (error) {
-                    console.error('Clear storage failed:', error);
-                  }
-                }}
-                className="flex-1 rounded-xl bg-red-500 py-3 font-medium text-white">
-                {t('general.yes')}
-              </button>
+          <div className="mb-2 flex w-full flex-col gap-2.5 px-3 text-center text-secondary">
+            <div className="text-[22px] font-semibold opacity-90">{t('dialogs.settings.confirmClearStorage')}</div>
+            <div className="mb-1 px-4 text-[14px] font-medium opacity-70">
+              {t('dialogs.settings.confirmClearStorageMessage')}
             </div>
+          </div>
+          <div className="h-[1px] w-full bg-accent"></div>
+          <div className="flex w-full gap-2 px-1.5 py-1.5">
+            <CTAButton text={t('general.cancel')} onClick={() => dialogs.pop()} />
+            <CTAButton
+              text={t('general.yes')}
+              highlight
+              onClick={async () => {
+                dialogs.pop();
+                try {
+                  await clearLocalStorage();
+                  logAnalyticsEvent(AnalyticsEvent.STORAGE_CLEARED);
+                } catch (error) {
+                  console.error('Clear storage failed:', error);
+                }
+              }}
+            />
           </div>
         </Card>
       </Dialog>
@@ -135,32 +135,31 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     dialogs.push(
       <Dialog onClose={() => dialogs.pop()}>
         <Card>
-          <div className="flex flex-col gap-4 p-4">
-            <h2 className="text-lg font-semibold text-secondary">{t('dialogs.settings.confirmDeleteAccount')}</h2>
-            <p className="text-secondary/70">{t('dialogs.settings.confirmDeleteAccountMessage')}</p>
-            <div className="flex gap-3 pt-2">
-              <button
-                onClick={() => dialogs.pop()}
-                className="flex-1 rounded-xl bg-accent/20 py-3 font-medium text-secondary">
-                {t('general.cancel')}
-              </button>
-              <button
-                onClick={async () => {
-                  dialogs.pop();
-                  try {
-                    await deleteAllUserData();
-                    logAnalyticsEvent(AnalyticsEvent.ACCOUNT_DELETED);
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 1000);
-                  } catch (error) {
-                    console.error('Delete account failed:', error);
-                  }
-                }}
-                className="flex-1 rounded-xl bg-red-500 py-3 font-medium text-white">
-                {t('general.yes')}
-              </button>
+          <div className="mb-2 flex w-full flex-col gap-2.5 px-3 text-center text-secondary">
+            <div className="text-[22px] font-semibold opacity-90">{t('dialogs.settings.confirmDeleteAccount')}</div>
+            <div className="mb-1 px-4 text-[14px] font-medium opacity-70">
+              {t('dialogs.settings.confirmDeleteAccountMessage')}
             </div>
+          </div>
+          <div className="h-[1px] w-full bg-accent"></div>
+          <div className="flex w-full gap-2 px-1.5 py-1.5">
+            <CTAButton text={t('general.cancel')} onClick={() => dialogs.pop()} />
+            <CTAButton
+              text={t('general.yes')}
+              highlight
+              onClick={async () => {
+                dialogs.pop();
+                try {
+                  await deleteAllUserData();
+                  logAnalyticsEvent(AnalyticsEvent.ACCOUNT_DELETED);
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 1000);
+                } catch (error) {
+                  console.error('Delete account failed:', error);
+                }
+              }}
+            />
           </div>
         </Card>
       </Dialog>
@@ -235,7 +234,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   return (
     <div className="absolute inset-0 z-50 flex flex-col bg-primary">
       {/* Header */}
-      <div className="flex h-16 items-center justify-between border-b border-accent/30 px-4 pt-safe-offset-3">
+      <div className="flex h-16 items-center justify-between border-b border-accent/30 px-4 pb-8 pt-safe-offset-6">
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-secondary transition-colors active:text-highlight">
