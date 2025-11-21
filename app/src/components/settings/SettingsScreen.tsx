@@ -41,6 +41,8 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       setting: 'vibration',
       value: enabled,
     });
+
+    toast.success(enabled ? t('toasts.settings.vibrationEnabled') : t('toasts.settings.vibrationDisabled'));
   };
 
   const handleAnalyticsToggle = (enabled: boolean) => {

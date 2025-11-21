@@ -45,6 +45,8 @@
       "settings": {
         "analyticsEnabled": "Analytics enabled",
         "analyticsDisabled": "Analytics disabled",
+        "vibrationEnabled": "Vibration enabled",
+        "vibrationDisabled": "Vibration disabled",
         "languageChanged": "Language changed",
         "themeSoon": "Theme support coming soon!",
         "inviteLinkCopied": "Invite link copied to clipboard!"
