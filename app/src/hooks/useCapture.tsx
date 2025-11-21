@@ -454,9 +454,9 @@ export const useCapture = () => {
   };
 
   const saveEvent = async (event: CaptureEvent, imgUrl: string) => {
-    db.eventItems.add(event, event.id);
+    await db.eventItems.add(event, event.id);
     const img = { id: event.id, dataUrl: imgUrl };
-    db.images.add(img, event.id);
+    await db.images.add(img, event.id);
   };
 
   const onImport = (ref: RefObject<HTMLInputElement>) => {

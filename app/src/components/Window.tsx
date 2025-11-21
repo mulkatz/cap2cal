@@ -16,7 +16,7 @@ const BackArrowIcon = () => (
 
 export const Window = ({ children, onClose }: { children: ReactNode; onClose: () => void }) => {
   return (
-    <div className="animate-fadeIn fixed z-40 flex h-full w-full flex-col bg-[#080D11] text-white inset-safe">
+    <div className="animate-fadeIn fixed z-[60] flex h-full w-full flex-col bg-[#080D11] text-white inset-safe">
       {/* Top Navigation Bar */}
       <header className="mb-2 mt-5 flex-shrink-0">
         <div className={'flex w-full justify-end'}>
