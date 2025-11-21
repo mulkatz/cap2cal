@@ -50,6 +50,32 @@ export const App = () => {
   const [previousAppState, setPreviousAppState] = useState(appState);
   const [isHandlingCaptureRequest, setIsHandlingCaptureRequest] = useState(false);
 
+  // Register back handlers for camera view and sheet
+  // Order matters: registered last = tried first (sheet should close before camera exits)
+  useEffect(() => {
+    dialogs.registerBackHandler('camera', () => {
+      if (appState === 'camera') {
+        cameraRef.current?.stopPreview();
+        setAppState('home');
+        return true;
+      }
+      return false;
+    });
+
+    dialogs.registerBackHandler('sheet', () => {
+      if (listViewOpen) {
+        setListViewOpen(false);
+        return true;
+      }
+      return false;
+    });
+
+    return () => {
+      dialogs.unregisterBackHandler('camera');
+      dialogs.unregisterBackHandler('sheet');
+    };
+  }, [listViewOpen, appState, setAppState, dialogs]);
+
   useEffect(() => {
     setTimeout(() => {
       setInitialised(true);
