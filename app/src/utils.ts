@@ -398,7 +398,7 @@ export const disableBounceOverscroll = () => {
   }
 };
 export const formattedDate = (dateString: string, isShort: boolean) => {
-  const userLanguage = i18next.language ? i18next.language : 'en-EN';
+  const userLanguage = i18next.language || 'en-US';
   // const userLanguage = 'de-DE';
   return new Date(dateString).toLocaleDateString(userLanguage, {
     day: 'numeric',
@@ -427,9 +427,12 @@ function convertLocalTimeToTimeZone(timeString: string, timeZone: string): strin
   const utcDate = new Date(localDate.getTime());
 
   // Convert from UTC to the desired time zone
-  return utcDate.toLocaleTimeString(i18next.language, {
+  const userLanguage = i18next.language || 'en-US';
+  const useHour12 = userLanguage.startsWith('en');
+  return utcDate.toLocaleTimeString(userLanguage, {
     hour: '2-digit',
     minute: '2-digit',
+    hour12: useHour12,
     timeZone, // Desired time zone
   });
 }
@@ -530,12 +533,18 @@ export function transformUrl(url: string): string {
 }
 
 /**
- * Formats a "HH:mm:ss" time string to a short "HH:mm" format.
+ * Formats a "HH:mm:ss" time string to a localized short time format.
  */
 export function formatTimeToShort(timeString: string): string | null {
   try {
     const parsedTime = parse(timeString, 'HH:mm:ss', new Date());
-    return format(parsedTime, 'HH:mm');
+    const userLanguage = i18next.language || 'en-US';
+    const useHour12 = userLanguage.startsWith('en');
+    return parsedTime.toLocaleTimeString(userLanguage, {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: useHour12,
+    });
   } catch (error) {
     console.error('Invalid time string:', error);
     return null;

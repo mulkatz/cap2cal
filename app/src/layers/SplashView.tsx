@@ -149,7 +149,7 @@ export const SplashView = ({
       <button
         onClick={onSettings}
         className={
-          'absolute right-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 transition-all duration-[300ms] ease-out top-safe-offset-0 hover:bg-primaryElevated/50'
+          'absolute right-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 ease-out top-safe-offset-0'
         }
         data-testid="settings-button">
         <IconGear width={34} height={34} />

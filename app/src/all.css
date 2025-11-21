@@ -2767,10 +2767,6 @@ body {
   background-color: rgb(44 65 86 / var(--tw-bg-opacity, 1));
 }
 
-.hover\:bg-primaryElevated\/50:hover {
-  background-color: rgb(44 65 86 / 0.5);
-}
-
 .hover\:bg-slate-700\/80:hover {
   background-color: rgb(51 65 85 / 0.8);
 }
