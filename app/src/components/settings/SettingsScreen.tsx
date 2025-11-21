@@ -98,45 +98,73 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     }
   };
 
-  const handleClearStorage = async () => {
-    // Show confirmation dialog
-    if (
-      !window.confirm(
-        `${t('dialogs.settings.confirmClearStorage')}\n\n${t('dialogs.settings.confirmClearStorageMessage')}`
-      )
-    ) {
-      return;
-    }
-
-    try {
-      await clearLocalStorage();
-      logAnalyticsEvent(AnalyticsEvent.STORAGE_CLEARED);
-    } catch (error) {
-      console.error('Clear storage failed:', error);
-    }
+  const handleClearStorage = () => {
+    dialogs.push(
+      <Dialog onClose={() => dialogs.pop()}>
+        <Card>
+          <div className="flex flex-col gap-4 p-4">
+            <h2 className="text-lg font-semibold text-secondary">{t('dialogs.settings.confirmClearStorage')}</h2>
+            <p className="text-secondary/70">{t('dialogs.settings.confirmClearStorageMessage')}</p>
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => dialogs.pop()}
+                className="flex-1 rounded-xl bg-accent/20 py-3 font-medium text-secondary">
+                {t('general.cancel')}
+              </button>
+              <button
+                onClick={async () => {
+                  dialogs.pop();
+                  try {
+                    await clearLocalStorage();
+                    logAnalyticsEvent(AnalyticsEvent.STORAGE_CLEARED);
+                  } catch (error) {
+                    console.error('Clear storage failed:', error);
+                  }
+                }}
+                className="flex-1 rounded-xl bg-red-500 py-3 font-medium text-white">
+                {t('general.yes')}
+              </button>
+            </div>
+          </div>
+        </Card>
+      </Dialog>
+    );
   };
 
-  const handleDeleteAccount = async () => {
-    // Show confirmation dialog
-    if (
-      !window.confirm(
-        `${t('dialogs.settings.confirmDeleteAccount')}\n\n${t('dialogs.settings.confirmDeleteAccountMessage')}`
-      )
-    ) {
-      return;
-    }
-
-    try {
-      await deleteAllUserData();
-      logAnalyticsEvent(AnalyticsEvent.ACCOUNT_DELETED);
-
-      // Close settings and reload app
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      console.error('Delete account failed:', error);
-    }
+  const handleDeleteAccount = () => {
+    dialogs.push(
+      <Dialog onClose={() => dialogs.pop()}>
+        <Card>
+          <div className="flex flex-col gap-4 p-4">
+            <h2 className="text-lg font-semibold text-secondary">{t('dialogs.settings.confirmDeleteAccount')}</h2>
+            <p className="text-secondary/70">{t('dialogs.settings.confirmDeleteAccountMessage')}</p>
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => dialogs.pop()}
+                className="flex-1 rounded-xl bg-accent/20 py-3 font-medium text-secondary">
+                {t('general.cancel')}
+              </button>
+              <button
+                onClick={async () => {
+                  dialogs.pop();
+                  try {
+                    await deleteAllUserData();
+                    logAnalyticsEvent(AnalyticsEvent.ACCOUNT_DELETED);
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 1000);
+                  } catch (error) {
+                    console.error('Delete account failed:', error);
+                  }
+                }}
+                className="flex-1 rounded-xl bg-red-500 py-3 font-medium text-white">
+                {t('general.yes')}
+              </button>
+            </div>
+          </div>
+        </Card>
+      </Dialog>
+    );
   };
 
   const handleFeedback = () => {
@@ -205,7 +233,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-primary">
+    <div className="absolute inset-0 z-50 flex flex-col bg-primary">
       {/* Header */}
       <div className="flex h-16 items-center justify-between border-b border-accent/30 px-4 pt-safe-offset-3">
         <button

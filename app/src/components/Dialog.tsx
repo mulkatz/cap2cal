@@ -20,7 +20,7 @@ export const Dialog = ({
         full && "magicpattern"
       )}
       onClick={closeOnClickOutside ? onClose : undefined}>
-      <div className={'absolute inset-0 bg-gradient-to-t from-black/50 to-black/20'}/>
+      <div className={'absolute inset-0 bg-black/80'}/>
       <div className={'animate-fadeInTranslateY-dont flex max-h-[90%] w-full flex-col'}>
         {onClose && (
           <div
