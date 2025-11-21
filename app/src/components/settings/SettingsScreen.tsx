@@ -42,6 +42,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       value: enabled,
     });
 
+    toast.dismiss();
     toast.success(enabled ? t('toasts.settings.vibrationEnabled') : t('toasts.settings.vibrationDisabled'));
   };
 
@@ -55,6 +56,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       value: enabled,
     });
 
+    toast.dismiss();
     toast.success(enabled ? t('toasts.settings.analyticsEnabled') : t('toasts.settings.analyticsDisabled'));
   };
 
@@ -71,6 +73,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       value: newLang,
     });
 
+    toast.dismiss();
     toast.success(t('toasts.settings.languageChanged'));
   };
 
@@ -221,6 +224,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     } else {
       // Fallback: Copy to clipboard
       navigator.clipboard.writeText(shareLink);
+      toast.dismiss();
       toast.success(t('toasts.settings.inviteLinkCopied'));
     }
   };

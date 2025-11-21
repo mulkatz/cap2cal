@@ -41,6 +41,10 @@
         "success": "Erfolgreich erfasst!",
         "error": "Das hat leider nicht funktioniert."
       },
+      "capture": {
+        "singleEvent": "Event erfasst!",
+        "multipleEvents": "{{count}} Events erfasst!"
+      },
       "subscription": {
         "success": "Willkommen bei Pro!",
         "restored": "Käufe wiederhergestellt!",

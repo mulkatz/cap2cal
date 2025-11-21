@@ -41,6 +41,10 @@
         "success": "Captured!",
         "error": "Couldn't capture that."
       },
+      "capture": {
+        "singleEvent": "Event captured!",
+        "multipleEvents": "{{count}} events captured!"
+      },
       "subscription": {
         "success": "Welcome to Pro!",
         "restored": "Purchases restored!",

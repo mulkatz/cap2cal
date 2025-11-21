@@ -155,7 +155,17 @@ export const useCapture = () => {
           event_count: events.length,
         });
 
+        // Show success toast
+        toast.dismiss(); // Dismiss any existing toasts
         if (events.length > 1) {
+          toast.success(t('toasts.capture.multipleEvents', { count: events.length }), {
+            style: {
+              borderColor: '#2C4156',
+              backgroundColor: '#1E2E3F',
+              color: '#FDDCFF',
+            },
+            duration: 2500,
+          });
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
           dialogs.push(
             <MultiResultDialog onClose={popAndBackHome} full>
@@ -165,6 +175,14 @@ export const useCapture = () => {
             </MultiResultDialog>
           );
         } else {
+          toast.success(t('toasts.capture.singleEvent'), {
+            style: {
+              borderColor: '#2C4156',
+              backgroundColor: '#1E2E3F',
+              color: '#FDDCFF',
+            },
+            duration: 2500,
+          });
           await saveEvent(events[0], imgUrl);
           dialogs.push(
             <SingleResultDialog onClose={popAndBackHome} full>
