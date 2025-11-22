@@ -4,7 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../models/db';
 import { CardController } from '../Card.controller';
 import { Card } from '../Card.group';
-import { IconChevronLeft, IconTriangleRight } from '../../assets/icons';
+import { IconChevronLeft, IconTriangleRight, IconStar } from '../../assets/icons';
 import { cn } from '../../utils';
 import type { CaptureEvent } from '../../models/CaptureEvent';
 
@@ -127,6 +127,15 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
               label={t('general.onlyFavourites')}
               active={favouritesFilter === 'yes'}
               onClick={handleFavouritesChange}
+              icon={
+                <IconStar
+                  width={16}
+                  height={16}
+                  className={cn(
+                    favouritesFilter === 'yes' ? 'fill-primaryDark text-primaryDark' : 'fill-secondary text-secondary'
+                  )}
+                />
+              }
             />
             <FilterChip
               label={`${t('general.sortBy')}: ${t(`general.${sortByFilter}`)}`}
@@ -189,18 +198,31 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
 });
 
 // Filter Chip Component
-const FilterChip = React.memo(({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => {
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        'flex-shrink-0 rounded-full px-4 py-2 text-[14px] font-semibold transition-all',
-        active ? 'bg-clickHighLight text-primaryDark' : 'bg-primaryElevated text-secondary'
-      )}>
-      {label}
-    </button>
-  );
-});
+const FilterChip = React.memo(
+  ({
+    label,
+    active,
+    onClick,
+    icon,
+  }: {
+    label: string;
+    active: boolean;
+    onClick: () => void;
+    icon?: React.ReactNode;
+  }) => {
+    return (
+      <button
+        onClick={onClick}
+        className={cn(
+          'flex flex-shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-[14px] font-semibold transition-all',
+          active ? 'bg-clickHighLight text-primaryDark' : 'bg-primaryElevated text-secondary'
+        )}>
+        {icon && <span className="flex items-center">{icon}</span>}
+        {label}
+      </button>
+    );
+  }
+);
 
 // Options
 const favouriteOptions = {

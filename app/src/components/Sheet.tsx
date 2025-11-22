@@ -6,7 +6,7 @@ import { db } from '../models/db.ts';
 import { CardController } from './Card.controller.tsx';
 import { Card } from './Card.group.tsx';
 import { useTranslation } from 'react-i18next';
-import { IconClose } from '../assets/icons';
+import { IconClose, IconStar } from '../assets/icons';
 
 type Props = {
   isOpen: boolean;
@@ -95,6 +95,15 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
                     label={t('general.onlyFavourites')}
                     active={favouritesFilter === 'yes'}
                     onClick={handleFavouritesChange}
+                    icon={
+                      <IconStar
+                        width={16}
+                        height={16}
+                        className={cn(
+                          favouritesFilter === 'yes' ? 'fill-primaryDark text-primaryDark' : 'fill-secondary text-secondary'
+                        )}
+                      />
+                    }
                   />
                   <FilterChip
                     label={`${t('general.sortBy')}: ${t(`general.${sortByFilter}`)}`}
@@ -162,14 +171,25 @@ const FilterOption = React.memo(
 ) as <T extends Record<string, string>>(props: FilterOptionProps<T>) => JSX.Element;
 
 // New Filter Chip Component for horizontal layout
-const FilterChip = ({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => {
+const FilterChip = ({
+  label,
+  active,
+  onClick,
+  icon,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+  icon?: React.ReactNode;
+}) => {
   return (
     <button
       onClick={onClick}
       className={cn(
-        'flex-shrink-0 rounded-full px-4 py-2 text-[14px] font-semibold transition-all',
+        'flex flex-shrink-0 items-center gap-1.5 rounded-full px-4 py-2 text-[14px] font-semibold transition-all',
         active ? 'bg-clickHighLight text-primaryDark' : 'bg-primaryElevated text-secondary'
       )}>
+      {icon && <span className="flex items-center">{icon}</span>}
       {label}
     </button>
   );
