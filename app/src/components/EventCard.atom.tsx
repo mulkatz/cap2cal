@@ -150,7 +150,7 @@ const EventCardAtom = React.memo(
                 <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
 
                 {kind && (
-                  <div className="mt-1">
+                  <div className="mt-2">
                     <span className="inline-block rounded-full bg-highlight/10 px-2.5 py-1 text-xs font-medium text-highlight">
                       {kind}
                     </span>
@@ -170,7 +170,7 @@ const EventCardAtom = React.memo(
                   height={24}
                   className={cn(
                     'transition-colors',
-                    isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-white/30'
+                    isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-gray-500'
                   )}
                 />
               </button>
@@ -178,7 +178,7 @@ const EventCardAtom = React.memo(
 
             {/* Row 3 (Time): Dedicated Time row between Category and Location */}
             {formattedTime && (
-              <div className="mt-3 flex items-center gap-1.5">
+              <div className="mt-2 flex items-center gap-1.5">
                 {/* Clock Icon */}
                 <svg
                   className="h-4 w-4 text-gray-400"
@@ -195,7 +195,7 @@ const EventCardAtom = React.memo(
 
             {/* Row 4 (Location): Pin Icon + City */}
             {location && (
-              <div className="mb-2 mt-3 flex cursor-pointer items-center gap-2" onClick={onAddress}>
+              <div className="mt-2 flex cursor-pointer items-center gap-2" onClick={onAddress}>
                 <svg
                   className="flex-shrink-0 text-highlight"
                   width="14"
@@ -217,7 +217,7 @@ const EventCardAtom = React.memo(
 
             {/* Row 5 (Body): Description with Smart Read More */}
             {description?.short && (
-              <div className="mb-4">
+              <div className="mb-5 mt-4">
                 <p
                   className={cn(
                     'text-[13px] font-normal tracking-[0.5px] text-gray-300 opacity-80',

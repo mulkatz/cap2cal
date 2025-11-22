@@ -21,6 +21,15 @@
       "newEvent": "New Event",
       "more": "more"
     },
+    "eventCard": {
+      "actionSheet": {
+        "title": "Event Options",
+        "share": "Share Event",
+        "comingSoon": "Coming Soon",
+        "delete": "Delete Event",
+        "cancel": "Cancel"
+      }
+    },
     "share": {
       "title": "Cap2Cal - AI Event Capture",
       "text": "Check out Cap2Cal! Turn any event poster into a calendar entry with AI.",

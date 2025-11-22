@@ -21,6 +21,15 @@
       "newEvent": "Neues Event",
       "more": "mehr"
     },
+    "eventCard": {
+      "actionSheet": {
+        "title": "Event-Optionen",
+        "share": "Event teilen",
+        "comingSoon": "Demnächst",
+        "delete": "Event löschen",
+        "cancel": "Abbrechen"
+      }
+    },
     "share": {
       "title": "Cap2Cal - KI Event-Erfassung",
       "text": "Schau dir Cap2Cal an! Verwandle jedes Event-Poster in einen Kalendereintrag mit KI.",
