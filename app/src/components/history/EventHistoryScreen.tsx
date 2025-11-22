@@ -112,7 +112,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-secondary transition-colors active:text-highlight">
-          <IconChevronLeft width={24} height={24} />
+          <IconChevronLeft size={24} />
         </button>
         <h1 className="text-[20px] font-semibold text-secondary">{t('sheet.header')}</h1>
         <div className="w-8" />

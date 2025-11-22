@@ -30,7 +30,7 @@ export const MultiResultDialog = ({
           <div
             className={'text-clickHighlight rounded-full border-2 border-accentElevated bg-primaryDark p-4'}
             onClick={onClose}>
-            <IconCheck width={32} height={32} color={'#00FF00'} />
+            <IconCheck size={32} className="text-[#00FF00]" />
           </div>
         </div>
       </div>

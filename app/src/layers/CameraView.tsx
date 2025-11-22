@@ -550,7 +550,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         )}
 
         <MiniButton
-          icon={<IconChevronLeft width={26} height={26} />}
+          icon={<IconChevronLeft size={26} />}
           onClick={onClose}
           className={'absolute left-4 top-safe-offset-5'}
         />

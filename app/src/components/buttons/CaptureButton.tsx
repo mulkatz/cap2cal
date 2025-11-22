@@ -36,7 +36,7 @@ export const CaptureButton = ({ onClick, state }: { onClick: () => void; state: 
                 <ClipLoader color={'#FFFFFF'} size={24} loading={false} />
               </div>
             )}
-            {state === 'home' && <IconCamera3 width={24} height={24} className={'mb-0.5'} />}
+            {state === 'home' && <IconCamera3 size={24} className={'mb-0.5'} />}
 
             <span className="text-[26px] font-semibold">{t('general.ctaStart')}</span>
           </div>

@@ -154,7 +154,7 @@ html,
   -o-tab-size: 4;
      tab-size: 4;
   /* 3 */
-  font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: Plus Jakarta Sans, Manrope, sans-serif;
   /* 4 */
   font-feature-settings: normal;
   /* 5 */
@@ -1670,8 +1670,7 @@ body {
   padding-right: env(safe-area-inset-right, 0);
   /* For iOS Safe Area (right inset) */
   margin: 0;
-  font-family: 'Nunito', sans-serif;
-  /* Behalte deine Schriftart bei */
+  font-family: 'Plus Jakarta Sans', sans-serif;
   height: 100%;
   text-align: left;
   background: #1B2632;

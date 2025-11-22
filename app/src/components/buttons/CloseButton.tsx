@@ -10,7 +10,7 @@ export const CloseButton = ({ onClick }: { onClick: () => void }) => {
           'flex h-[38px] w-[38px] items-center justify-center rounded-full border-[1px] border-accentElevated bg-primaryElevated',
           'transform transition-all duration-[800ms] group-active:bg-clickHighLight'
         )}>
-        <IconClose width={14} height={14} onClick={onClick} />
+        <IconClose size={14} onClick={onClick} />
       </span>
     </button>
   );

@@ -4,6 +4,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import { useDialogContext } from '../../contexts/DialogContext';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import { IconChevronLeft } from '../../assets/icons';
+import { Globe, Zap, BarChart3, Trash2, BookOpen, ExternalLink, UserPlus, MessageCircle, Shield, FileText, ChevronRight } from 'lucide-react';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
 import { exportUserData, clearLocalStorage, deleteAllUserData } from '../../utils/dataManagement';
@@ -13,72 +14,20 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
 import { cn } from '../../utils';
 
-// Icon Components - Solid/Filled Style
-const GlobeIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 17.93A8.001 8.001 0 0 1 4.07 13H7a8 8 0 0 0 4 6.93zM13 19.93A8 8 0 0 0 17 13h2.93A8.001 8.001 0 0 1 13 19.93zM4.07 11A8.001 8.001 0 0 1 11 4.07V11H4.07zm8.93 0V4.07A8.001 8.001 0 0 1 19.93 11H13z" />
-  </svg>
-);
-
-const ZapIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
-  </svg>
-);
-
-const ChartIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M18 20V10h2v10h-2zm-6 0V4h2v16h-2zm-6 0v-6h2v6H6z" />
-  </svg>
-);
-
+// Icon Wrapper Components
+const GlobeIcon = () => <Globe size={20} className="text-highlight" />;
+const ZapIcon = () => <Zap size={20} className="text-highlight" fill="currentColor" />;
+const ChartIcon = () => <BarChart3 size={20} className="text-highlight" />;
 const TrashIcon = ({ destructive }: { destructive?: boolean }) => (
-  <svg className={cn("h-5 w-5", destructive ? "text-red-400" : "text-highlight")} viewBox="0 0 24 24" fill="currentColor">
-    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-  </svg>
+  <Trash2 size={20} className={destructive ? "text-red-400" : "text-highlight"} />
 );
-
-const BookOpenIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M21 5c-1.11-.35-2.33-.5-3.5-.5-1.95 0-4.05.4-5.5 1.5-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5V6c-.6-.45-1.25-.75-2-1zm0 13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V8c1.35-.85 3.8-1.5 5.5-1.5 1.2 0 2.4.15 3.5.5v11.5z" />
-  </svg>
-);
-
-const ExternalLinkIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
-  </svg>
-);
-
-const UserPlusIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-  </svg>
-);
-
-const MessageCircleIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
-  </svg>
-);
-
-const ShieldIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z" />
-  </svg>
-);
-
-const FileTextIcon = () => (
-  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z" />
-  </svg>
-);
-
-const ChevronRightIcon = () => (
-  <svg className="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <polyline points="9 18 15 12 9 6" />
-  </svg>
-);
+const BookOpenIcon = () => <BookOpen size={20} className="text-highlight" />;
+const ExternalLinkIcon = () => <ExternalLink size={20} className="text-highlight" />;
+const UserPlusIcon = () => <UserPlus size={20} className="text-highlight" />;
+const MessageCircleIcon = () => <MessageCircle size={20} className="text-highlight" />;
+const ShieldIcon = () => <Shield size={20} className="text-highlight" fill="currentColor" />;
+const FileTextIcon = () => <FileText size={20} className="text-highlight" />;
+const ChevronRightIcon = () => <ChevronRight size={20} className="text-gray-500" />;
 
 // Setting Row Component
 const SettingRow = ({
@@ -430,7 +379,7 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-secondary transition-colors active:text-highlight">
-          <IconChevronLeft width={24} height={24} />
+          <IconChevronLeft size={24} />
         </button>
         <h1 className="text-[20px] font-semibold text-secondary">{t('dialogs.settings.title')}</h1>
         <div className="w-8" /> {/* Spacer for centering */}

@@ -69,7 +69,7 @@ export const SplashView = ({
           <div className="mb-[20vh] flex h-full w-3/5 max-w-[320px] flex-col items-center justify-center">
             <IconHeroIcon />
             {/*<img className={'h-auto w-full object-contain'} src={imgHero} alt="Hero" />*/}
-            <IconHeroText width={'100%'} />
+            <IconHeroText className="w-full" />
           </div>
         </div>
       </div>
@@ -121,20 +121,20 @@ export const SplashView = ({
             />
             // </div>
           )}
-          {!isLoading && <IconCamera3 width={28} height={28} className={'mb-0.5'} />}
+          {!isLoading && <IconCamera3 size={28} className={'mb-0.5'} />}
           <span>{t('general.capture')}</span>
         </button>
       </div>
 
       <MiniButton
-        icon={<IconImage width={26} height={26} />}
+        icon={<IconImage size={26} />}
         onClick={onImport}
         className={'absolute left-4 bottom-safe-offset-5'}
         data-testid="import-button"
       />
 
       <MiniButton
-        icon={<IconCalendar width={26} height={26} />}
+        icon={<IconCalendar size={26} />}
         onClick={onHistory}
         className={'absolute right-4 bottom-safe-offset-5'}
         visible={hasSavedEvents}
@@ -147,7 +147,7 @@ export const SplashView = ({
           'absolute right-[10px] flex transform items-center justify-center rounded-[16px] border-[2px] border-transparent bg-primaryElevated/0 p-3 text-[16px] text-secondary/40 opacity-100 ease-out top-safe-offset-0'
         }
         data-testid="settings-button">
-        <IconGear width={34} height={34} />
+        <IconGear size={34} />
       </button>
     </>
   );

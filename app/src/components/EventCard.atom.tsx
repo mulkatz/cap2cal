@@ -1,4 +1,5 @@
 import { IconCalendarPlus, IconCamera, IconExport, IconStar } from '../assets/icons';
+import { Clock, MapPin, MoreVertical } from 'lucide-react';
 // Import all utilities from a single source
 import { cn } from '../utils.ts';
 import { IconButton } from './buttons/IconButton.tsx';
@@ -166,12 +167,12 @@ const EventCardAtom = React.memo(
                   isFavourite ? 'rounded-full bg-highlight p-1.5' : ''
                 )}>
                 <IconStar
-                  width={24}
-                  height={24}
+                  size={24}
                   className={cn(
                     'transition-colors',
-                    isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-gray-400'
+                    isFavourite ? 'text-primaryDark' : 'text-gray-400'
                   )}
+                  fill={isFavourite ? 'currentColor' : 'none'}
                 />
               </button>
             </div>
@@ -180,14 +181,7 @@ const EventCardAtom = React.memo(
             {formattedTime && (
               <div className="mt-2 flex items-center gap-1.5">
                 {/* Clock Icon */}
-                <svg
-                  className="h-4 w-4 text-gray-400"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z" />
-                  <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z" />
-                </svg>
+                <Clock size={16} className="text-gray-400" />
                 {/* Time Text */}
                 <span className="font-['Plus_Jakarta_Sans'] text-sm font-medium text-gray-200">{formattedTime}</span>
               </div>
@@ -196,19 +190,7 @@ const EventCardAtom = React.memo(
             {/* Row 4 (Location): Pin Icon + City */}
             {location && (
               <div className="mt-1.5 flex cursor-pointer items-center gap-2" onClick={onAddress}>
-                <svg
-                  className="flex-shrink-0 text-highlight"
-                  width="14"
-                  height="14"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                  <circle cx="12" cy="10" r="3"></circle>
-                </svg>
+                <MapPin size={14} className="flex-shrink-0 text-highlight" fill="currentColor" />
                 <span className="text-sm font-normal text-gray-100 underline decoration-gray-500/30 decoration-1 underline-offset-4">
                   {formatLocation(location?.city, location?.address)}
                 </span>
@@ -241,24 +223,13 @@ const EventCardAtom = React.memo(
               {/* Three-Dot Menu Button */}
               <IconButton
                 onClick={() => setShowActionSheet(true)}
-                icon={
-                  <svg
-                    width={23}
-                    height={23}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="5" r="2.5" />
-                    <circle cx="12" cy="12" r="2.5" />
-                    <circle cx="12" cy="19" r="2.5" />
-                  </svg>
-                }
+                icon={<MoreVertical size={23} />}
                 className="h-10 w-10"
               />
               {/* Camera Icon (22px - slightly larger for optical balance) */}
-              <IconButton onClick={onImage} icon={<IconCamera width={22} height={22} />} className="h-10 w-10" />
+              <IconButton onClick={onImage} icon={<IconCamera size={22} />} className="h-10 w-10" />
               {/* Calendar Icon (20px) */}
-              <IconButton onClick={onExport} icon={<IconCalendarPlus width={20} height={20} />} className="h-10 w-10" />
+              <IconButton onClick={onExport} icon={<IconCalendarPlus size={20} />} className="h-10 w-10" />
 
               {/* Ticket Button - Full Pill, Yellow Background, Solid Icon, Bold Text */}
               {showTicketButton && (

@@ -1,30 +1,36 @@
-export { default as IconAppleCalendar } from './apple_calendar.svg?react';
-export { default as IconBurger } from './burger.svg?react';
-export { default as IconCamera } from './camera.svg?react';
-export { default as IconCamera2 } from './camera2.svg?react';
-export { default as IconCamera3 } from './camera3.svg?react';
-export { default as IconGoogleCalendar } from './google_calendar.svg?react';
-export { default as IconOutlookCalendar } from './outlook_calendar.svg?react';
-export { default as IconExport } from './export.svg?react';
-export { default as IconImport } from './import.svg?react';
-export { default as IconLink } from './link.svg?react';
-export { default as IconShare } from './share.svg?react';
-export { default as IconStar } from './star.svg?react';
-export { default as IconDecorator } from './decorator.svg?react';
-export { default as IconClose } from './close.svg?react';
-export { default as IconTicket } from './ticket.svg?react';
-export { default as IconBulb } from './bulb.svg?react';
-export { default as IconDownload } from './download.svg?react';
-export { default as IconHeroText } from './home-hero-text-2.svg?react';
-export { default as IconTriangleRight } from './triangle_right.svg?react';
-export { default as IconChevronLeft } from './chevron-left.svg?react';
-export { default as IconCheck } from './check.svg?react';
+// All icons replaced with lucide-react components
+// These are re-exported with the same names to maintain compatibility
+
+export {
+  Calendar as IconAppleCalendar,
+  Menu as IconBurger,
+  Camera as IconCamera,
+  Camera as IconCamera2,
+  Camera as IconCamera3,
+  Calendar as IconGoogleCalendar,
+  Calendar as IconOutlookCalendar,
+  Download as IconExport,
+  Upload as IconImport,
+  Link as IconLink,
+  Share2 as IconShare,
+  Star as IconStar,
+  Sparkles as IconDecorator,
+  X as IconClose,
+  Ticket as IconTicket,
+  Lightbulb as IconBulb,
+  Download as IconDownload,
+  ChevronRight as IconTriangleRight,
+  ChevronLeft as IconChevronLeft,
+  Check as IconCheck,
+  Images as IconImages,
+  Image as IconImage,
+  Calendar as IconCalendar,
+  CalendarPlus as IconCalendarPlus,
+  SquarePlus as IconPlusSquare,
+  Plus as IconPlus,
+  Settings as IconSettings,
+  Settings as IconGear,
+} from 'lucide-react';
+
 export { default as IconHeroIcon } from './hero2.svg?react';
-export { default as IconImages } from './images.svg?react';
-export { default as IconImage } from './image.svg?react';
-export { default as IconCalendar } from './calendar.svg?react';
-export { default as IconCalendarPlus } from './calendar-plus.svg?react';
-export { default as IconPlusSquare } from './plus-square.svg?react';
-export { default as IconPlus } from './plus.svg?react';
-export { default as IconSettings } from './settings.svg?react';
-export { default as IconGear } from './gear.svg?react';
+export { default as IconHeroText } from './home-hero-text-2.svg?react';

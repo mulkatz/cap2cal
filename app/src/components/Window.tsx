@@ -30,7 +30,7 @@ export const Window = ({ children, onClose }: { children: ReactNode; onClose: ()
                   'border-[1px] border-secondary',
                   'transform transition-all duration-[800ms] group-active:bg-clickHighLight'
                 )}>
-                <IconClose width={18} height={18} />
+                <IconClose size={18} />
               </span>
             </button>
           </span>
