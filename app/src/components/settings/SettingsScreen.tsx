@@ -7,8 +7,6 @@ import { SettingSection, SettingItem, SettingToggle, SettingDivider } from './Se
 import { IconChevronLeft } from '../../assets/icons';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
-import { Card } from '../Card.group';
-import { CTAButton } from '../buttons/CTAButton';
 import { exportUserData, clearLocalStorage, deleteAllUserData } from '../../utils/dataManagement';
 import toast from 'react-hot-toast';
 import { AnalyticsEvent } from '../../utils/analytics';
@@ -109,19 +107,20 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
   const handleClearStorage = () => {
     dialogs.push(
       <Dialog onClose={() => dialogs.pop()}>
-        <Card>
-          <div className="mb-2 flex w-full flex-col gap-2.5 px-3 text-center text-secondary">
-            <div className="text-[22px] font-semibold opacity-90">{t('dialogs.settings.confirmClearStorage')}</div>
-            <div className="mb-1 px-4 text-[14px] font-medium opacity-70">
+        <div className="flex flex-col">
+          {/* Title & Message */}
+          <div className="flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center">
+            <h2 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
+              {t('dialogs.settings.confirmClearStorage')}
+            </h2>
+            <p className="px-2 font-['Plus_Jakarta_Sans'] text-sm text-gray-300">
               {t('dialogs.settings.confirmClearStorageMessage')}
-            </div>
+            </p>
           </div>
-          <div className="h-[1px] w-full bg-accent"></div>
-          <div className="flex w-full gap-2 px-1.5 py-1.5">
-            <CTAButton text={t('general.cancel')} onClick={() => dialogs.pop()} />
-            <CTAButton
-              text={t('general.yes')}
-              highlight
+
+          {/* Buttons */}
+          <div className="flex w-full flex-col gap-3 px-6 pb-6">
+            <button
               onClick={async () => {
                 dialogs.pop();
                 try {
@@ -131,9 +130,25 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
                   console.error('Clear storage failed:', error);
                 }
               }}
-            />
+              className={cn(
+                'w-full rounded-2xl bg-warn px-6 py-4',
+                'font-["Plus_Jakarta_Sans"] text-base font-bold text-white',
+                'transition-all active:scale-95'
+              )}>
+              {t('general.yes')}
+            </button>
+
+            <button
+              onClick={() => dialogs.pop()}
+              className={cn(
+                'w-full py-3 text-center',
+                'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
+                'transition-opacity hover:text-gray-300'
+              )}>
+              {t('general.cancel')}
+            </button>
           </div>
-        </Card>
+        </div>
       </Dialog>
     );
   };
@@ -146,19 +161,20 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
   const handleDeleteAccount = () => {
     dialogs.push(
       <Dialog onClose={() => dialogs.pop()}>
-        <Card>
-          <div className="mb-2 flex w-full flex-col gap-2.5 px-3 text-center text-secondary">
-            <div className="text-[22px] font-semibold opacity-90">{t('dialogs.settings.confirmDeleteAccount')}</div>
-            <div className="mb-1 px-4 text-[14px] font-medium opacity-70">
+        <div className="flex flex-col">
+          {/* Title & Message */}
+          <div className="flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center">
+            <h2 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
+              {t('dialogs.settings.confirmDeleteAccount')}
+            </h2>
+            <p className="px-2 font-['Plus_Jakarta_Sans'] text-sm text-gray-300">
               {t('dialogs.settings.confirmDeleteAccountMessage')}
-            </div>
+            </p>
           </div>
-          <div className="h-[1px] w-full bg-accent"></div>
-          <div className="flex w-full gap-2 px-1.5 py-1.5">
-            <CTAButton text={t('general.cancel')} onClick={() => dialogs.pop()} />
-            <CTAButton
-              text={t('general.yes')}
-              highlight
+
+          {/* Buttons */}
+          <div className="flex w-full flex-col gap-3 px-6 pb-6">
+            <button
               onClick={async () => {
                 dialogs.pop();
                 try {
@@ -171,9 +187,25 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
                   console.error('Delete account failed:', error);
                 }
               }}
-            />
+              className={cn(
+                'w-full rounded-2xl bg-warn px-6 py-4',
+                'font-["Plus_Jakarta_Sans"] text-base font-bold text-white',
+                'transition-all active:scale-95'
+              )}>
+              {t('general.yes')}
+            </button>
+
+            <button
+              onClick={() => dialogs.pop()}
+              className={cn(
+                'w-full py-3 text-center',
+                'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
+                'transition-opacity hover:text-gray-300'
+              )}>
+              {t('general.cancel')}
+            </button>
           </div>
-        </Card>
+        </div>
       </Dialog>
     );
   };
@@ -186,9 +218,7 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
         onClose={() => {
           dialogs.pop();
         }}>
-        <Card>
-          <Feedback />
-        </Card>
+        <Feedback />
       </Dialog>
     );
   };

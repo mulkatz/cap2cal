@@ -1,6 +1,6 @@
-import { CTAButton } from '../buttons/CTAButton.tsx';
 import { useTranslation } from 'react-i18next';
 import { AndroidSettings, IOSSettings, NativeSettings } from 'capacitor-native-settings';
+import { cn } from '../../utils.ts';
 
 export const PermissionDeniedAtom = ({
   type,
@@ -19,17 +19,41 @@ export const PermissionDeniedAtom = ({
   };
 
   return (
-    <div>
-      <div className={'mb-6 flex flex-col gap-5 px-3 text-center'}>
-        <div className={'text-[22px] font-semibold opacity-90'}>{t('dialogs.permissionDenied.title')}</div>
-        <div className={'px-4 text-[14px] font-medium opacity-70'}>
+    <div className="flex flex-col">
+      {/* Title & Message */}
+      <div className="flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center">
+        <h2 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
+          {t('dialogs.permissionDenied.title')}
+        </h2>
+        <p className="px-2 font-['Plus_Jakarta_Sans'] text-sm text-gray-300">
           {type === 'camera' && t('dialogs.permissionDenied.cameraAdvice')}
           {type === 'calendar' && t('dialogs.permissionDenied.calendarAdvice')}
           {type === 'photos' && t('dialogs.permissionDenied.photosAdvice')}
-        </div>
+        </p>
       </div>
-      <CTAButton text={t('dialogs.permissionDenied.toSettings')} onClick={openAppSettings} />
-      <CTAButton text={t('general.cancel')} onClick={onClose} />
+
+      {/* Buttons */}
+      <div className="flex w-full flex-col gap-3 px-6 pb-6">
+        <button
+          onClick={openAppSettings}
+          className={cn(
+            'w-full rounded-2xl bg-highlight px-6 py-4',
+            'font-["Plus_Jakarta_Sans"] text-base font-bold text-primaryDark',
+            'transition-all active:scale-95'
+          )}>
+          {t('dialogs.permissionDenied.toSettings')}
+        </button>
+
+        <button
+          onClick={onClose}
+          className={cn(
+            'w-full py-3 text-center',
+            'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
+            'transition-opacity hover:text-gray-300'
+          )}>
+          {t('general.cancel')}
+        </button>
+      </div>
     </div>
   );
 };

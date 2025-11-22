@@ -2,7 +2,6 @@ import { CaptureEvent } from '../models/CaptureEvent.ts';
 import EventCardAtom from './EventCard.atom.tsx';
 import { db } from '../models/db.ts';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Card } from './Card.group.tsx';
 import {
   createAppleCalendarLink,
   createGoogleCalendarLink,
@@ -237,9 +236,7 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
 
         dialogs.replace(
           <Dialog onClose={dialogs.pop}>
-            <Card>
-              <PermissionDeniedAtom type={'calendar'} onClose={dialogs.pop} />
-            </Card>
+            <PermissionDeniedAtom type={'calendar'} onClose={dialogs.pop} />
           </Dialog>
         );
         // Optionally, show a message to the user here.
@@ -284,14 +281,12 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
 
     dialogs.push(
       <Dialog onClose={dialogs.pop}>
-        <Card className={'pt-0'}>
-          <ExportChooser
-            onApple={isApplePlatform() ? onApple : undefined} // Enable only if on iOS or macOS
-            onGoogle={onGoogle}
-            onOutlook={onOutlook}
-            onClose={dialogs.pop}
-          />
-        </Card>
+        <ExportChooser
+          onApple={isApplePlatform() ? onApple : undefined} // Enable only if on iOS or macOS
+          onGoogle={onGoogle}
+          onOutlook={onOutlook}
+          onClose={dialogs.pop}
+        />
       </Dialog>
     );
   }, [dialogs, item]);

@@ -41,6 +41,7 @@ const config = {
       animation: {
         'accordion-left': 'accordion-down 0.3s ease-out',
         fadeInTranslateY: 'fadeInTranslateY 0.22s ease-out',
+        premiumModal: 'premiumModal 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
         myAnim: 'myAnim 0.3s ease-in-out forwards',
         ripple: 'ripple 0.6s ease-out',
       },
@@ -63,6 +64,10 @@ const config = {
           '0%': { opacity: '0', transform: 'translateY(120px)' },
           '70%': { opacity: '0.4', transform: 'translateY(-30px)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        premiumModal: {
+          '0%': { opacity: '0', transform: 'scale(0.95) translateY(10px)' },
+          '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
         },
         myAnim: {
           '0%': {

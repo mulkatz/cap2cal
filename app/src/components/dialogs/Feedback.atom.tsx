@@ -1,4 +1,3 @@
-import { CTAButton } from '../buttons/CTAButton.tsx';
 import { ToggleItem } from './ToggleItem.atom.tsx';
 import { useRef, useState } from 'react';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
@@ -54,35 +53,61 @@ export const Feedback = ({}: {}) => {
     }
   };
   return (
-    <>
-      <div className={'mb-2 flex w-full flex-col gap-2.5 px-3 text-center text-secondary'}>
-        <div className={'text-[22px] font-semibold opacity-90'}>{t('dialogs.feedback.title')}</div>
-        <div className={'mb-1 px-4 text-[14px] font-medium opacity-70'}>{t('dialogs.feedback.description')}</div>
+    <div className="flex flex-col">
+      {/* Title & Description */}
+      <div className={'flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center'}>
+        <h2 className={'font-["Plus_Jakarta_Sans"] text-xl font-bold text-white'}>
+          {t('dialogs.feedback.title')}
+        </h2>
+        <p className={'px-2 font-["Plus_Jakarta_Sans"] text-sm text-gray-300'}>
+          {t('dialogs.feedback.description')}
+        </p>
+      </div>
+
+      {/* Form Content */}
+      <div className={'flex w-full flex-col gap-4 px-6'}>
+        {/* Toggle Buttons */}
         <div className={'flex w-full gap-2'}>
           <ToggleItem
             text={t('dialogs.feedback.idea')}
             isHighlight={kind === 'idea'}
-            highlightColor={'#FF0000'}
+            highlightColor={'#e6de4d'}
             onClick={() => onToggle('idea')}
           />
           <ToggleItem
             text={t('dialogs.feedback.bug')}
             isHighlight={kind === 'bug'}
-            highlightColor={'#FFFF00'}
+            highlightColor={'#FF2929'}
             onClick={() => onToggle('bug')}
           />
         </div>
+
+        {/* Textarea */}
         <textarea
           ref={textRef}
-          className={
-            'w-full rounded-md border border-gray-300 bg-primaryElevated px-3 py-2 text-[16px] focus:outline-none focus:ring-2 focus:ring-indigo-500'
-          }
+          className={cn(
+            'w-full rounded-xl border border-white/10 bg-primaryDark px-4 py-3',
+            'font-["Plus_Jakarta_Sans"] text-base text-white placeholder-gray-500',
+            'outline-none transition-all',
+            'focus:border-highlight/50 focus:ring-2 focus:ring-highlight/20'
+          )}
           rows={5}
           placeholder={t('dialogs.feedback.inputPlaceholder')}
         />
       </div>
-      <div className={cn('h-[1px] w-full bg-accent')}></div>
-      <CTAButton text={t('dialogs.feedback.send')} onClick={handleSubmit} />
-    </>
+
+      {/* Submit Button */}
+      <div className="flex flex-col gap-3 px-6 pb-6 pt-4">
+        <button
+          onClick={handleSubmit}
+          className={cn(
+            'w-full rounded-2xl bg-highlight px-6 py-4',
+            'font-["Plus_Jakarta_Sans"] text-base font-bold text-primaryDark',
+            'transition-all active:scale-95'
+          )}>
+          {t('dialogs.feedback.send')}
+        </button>
+      </div>
+    </div>
   );
 };

@@ -35,17 +35,18 @@ export const LoadingController = () => {
   }, []);
 
   return (
-    <div className={'mb-3 flex w-full flex-col items-center text-center'} data-testid="loading-dialog">
+    <div className="flex w-full flex-col items-center py-8 text-center" data-testid="loading-dialog">
       <PuffLoader
-        color={'#19D8E0'}
+        color={'#e6de4d'}
         loading={true}
         size={120}
         aria-label="LoadingController ResultView"
         data-testid="loader"
-        className={'mt-5'}
+        className={'mb-6'}
       />
-      <div className={'mx-4 flex h-[100px] w-full flex-col items-center justify-center px-8'}>
-        <span className={`w-full align-middle text-[16px] ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+      <div className="mx-4 flex h-[100px] w-full flex-col items-center justify-center px-8">
+        <span
+          className={`w-full font-['Plus_Jakarta_Sans'] text-base text-white transition-opacity duration-250 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${currentVariation}`)}
         </span>
       </div>

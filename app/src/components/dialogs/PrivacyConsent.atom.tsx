@@ -1,5 +1,5 @@
-import { CTAButton } from '../buttons/CTAButton.tsx';
 import { useDialogContext } from '../../contexts/DialogContext.tsx';
+import { cn } from '../../utils.ts';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent } from '../../utils/analytics.ts';
 import { useTranslation } from 'react-i18next';
@@ -29,39 +29,53 @@ export const PrivacyConsent = ({ onAccept }: { onAccept: () => void }) => {
   };
 
   return (
-    <>
-      <div className={'mb-4 flex w-full flex-col gap-4 px-4 pt-4 text-center text-secondary'}>
-        <div className={'text-[24px] font-bold opacity-90'}>{t('dialogs.privacyConsent.title')}</div>
+    <div className="flex flex-col">
+      {/* Title & Content */}
+      <div className={'flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center'}>
+        <h2 className={'font-["Plus_Jakarta_Sans"] text-xl font-bold text-white'}>
+          {t('dialogs.privacyConsent.title')}
+        </h2>
 
-        <div className={'px-2 text-[15px] leading-relaxed opacity-80'}>
+        <div className={'px-2 font-["Plus_Jakarta_Sans"] text-sm leading-relaxed text-gray-300'}>
           <p className="mb-3">{t('dialogs.privacyConsent.intro')}</p>
 
-          <div className="space-y-2 text-left text-[14px]">
+          <div className="space-y-2 text-left text-[13px]">
             <p>
-              <strong>{t('dialogs.privacyConsent.imageProcessingTitle')}</strong>{' '}
+              <strong className="text-white">{t('dialogs.privacyConsent.imageProcessingTitle')}</strong>{' '}
               {t('dialogs.privacyConsent.imageProcessingDescription')}
             </p>
 
             <p>
-              <strong>{t('dialogs.privacyConsent.analyticsTitle')}</strong>{' '}
+              <strong className="text-white">{t('dialogs.privacyConsent.analyticsTitle')}</strong>{' '}
               {t('dialogs.privacyConsent.analyticsDescription')}
             </p>
 
             <p>
-              <strong>{t('dialogs.privacyConsent.yourRightsTitle')}</strong>{' '}
+              <strong className="text-white">{t('dialogs.privacyConsent.yourRightsTitle')}</strong>{' '}
               {t('dialogs.privacyConsent.yourRightsDescription')}
             </p>
           </div>
         </div>
 
-        <button onClick={handlePrivacyPolicy} className="text-[13px] text-highlight underline">
+        <button
+          onClick={handlePrivacyPolicy}
+          className="font-['Plus_Jakarta_Sans'] text-[13px] text-highlight underline">
           {t('dialogs.privacyConsent.privacyPolicyLink')}
         </button>
       </div>
 
-      <div className={'flex w-full flex-col gap-2'}>
-        <CTAButton text={t('dialogs.privacyConsent.acceptButton')} onClick={handleAccept} highlight={true} />
+      {/* Accept Button */}
+      <div className={'flex w-full flex-col gap-3 px-6 pb-6'}>
+        <button
+          onClick={handleAccept}
+          className={cn(
+            'w-full rounded-2xl bg-highlight px-6 py-4',
+            'font-["Plus_Jakarta_Sans"] text-base font-bold text-primaryDark',
+            'transition-all active:scale-95'
+          )}>
+          {t('dialogs.privacyConsent.acceptButton')}
+        </button>
       </div>
-    </>
+    </div>
   );
 };

@@ -20,8 +20,13 @@ export const Dialog = ({
         full && "magicpattern"
       )}
       onClick={closeOnClickOutside ? onClose : undefined}>
-      <div className={'absolute inset-0 bg-black/80'}/>
-      <div className={'animate-fadeInTranslateY-dont flex max-h-[90%] w-full flex-col'}>
+      {/* Premium dark blurred backdrop */}
+      <div className={'absolute inset-0 bg-black/80 backdrop-blur-sm'}/>
+
+      {/* Premium modal container with smooth fade + scale animation */}
+      <div
+        className={'animate-premiumModal flex max-h-[90%] w-full max-w-md flex-col'}
+        onClick={(e) => e.stopPropagation()}>
         {onClose && (
           <div
             className={'flex w-full items-end justify-end pb-1 pr-0'}
@@ -32,7 +37,15 @@ export const Dialog = ({
             <CloseButton onClick={onClose} />
           </div>
         )}
-        {children}
+
+        {/* Premium card with glassy effect */}
+        <div className={cn(
+          'relative overflow-hidden rounded-3xl bg-primaryElevated shadow-2xl',
+          'border border-white/5',
+          'backdrop-blur-xl'
+        )}>
+          {children}
+        </div>
       </div>
     </div>
   );

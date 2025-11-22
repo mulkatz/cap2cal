@@ -2,7 +2,6 @@ import { CaptureEvent } from '../models/CaptureEvent.ts';
 import { CalendarPermissionScope, CapacitorCalendar } from '@ebarooni/capacitor-calendar';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
 import { Dialog } from '../components/Dialog.tsx';
-import { Card } from '../components/Card.group.tsx';
 import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.atom.tsx';
 import { useTranslation } from 'react-i18next';
 
@@ -51,9 +50,7 @@ export const useCalendarExport = () => {
       if (permissionStatus !== 'granted') {
         dialogs.replace(
           <Dialog onClose={dialogs.pop}>
-            <Card>
-              <PermissionDeniedAtom type={'calendar'} onClose={dialogs.pop} />
-            </Card>
+            <PermissionDeniedAtom type={'calendar'} onClose={dialogs.pop} />
           </Dialog>
         );
         return;

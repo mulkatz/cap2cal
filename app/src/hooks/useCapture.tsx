@@ -2,7 +2,6 @@ import React, { ChangeEvent, RefObject, useEffect, useState } from 'react';
 import { NotCaptured } from '../components/dialogs/NotCaptured.atom.tsx';
 import { UpgradeDialog } from '../components/dialogs/UpgradeDialog.tsx';
 import { PaywallSheet } from '../components/dialogs/PaywallSheet.tsx';
-import { Card } from '../components/Card.group.tsx';
 import { Dialog } from '../components/Dialog.tsx';
 import { CardController } from '../components/Card.controller.tsx';
 import { CaptureEvent } from '../models/CaptureEvent.ts';
@@ -50,9 +49,7 @@ export const useCapture = () => {
 
     dialogs.push(
       <Dialog full>
-        <Card>
-          <LoadingController />
-        </Card>
+        <LoadingController />
       </Dialog>
     );
 
@@ -242,9 +239,7 @@ export const useCapture = () => {
         logger.info('Paywall', 'Limit reached but RevenueCat is disabled');
         dialogs.replace(
           <Dialog onClose={popAndBackHome} full>
-            <Card>
-              <NotCaptured reason="UNKNOWN" onClose={popAndBackHome} />
-            </Card>
+            <NotCaptured reason="UNKNOWN" onClose={popAndBackHome} />
           </Dialog>
         );
         return;
@@ -254,9 +249,7 @@ export const useCapture = () => {
     // Show regular error dialog for other errors
     dialogs.replace(
       <Dialog onClose={popAndBackHome} full>
-        <Card>
-          <NotCaptured reason={reason} onClose={popAndBackHome} />
-        </Card>
+        <NotCaptured reason={reason} onClose={popAndBackHome} />
       </Dialog>
     );
   };
