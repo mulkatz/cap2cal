@@ -329,9 +329,6 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
         onFavourite={onFavourite}
         onExport={exportToCalendar}
         onImage={onImage}
-        onShare={onShare}
-        onTicket={onTicket}
-        onWebLink={onWeblink}
         onAddress={onAddress}
       />
     </>
