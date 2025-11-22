@@ -29,10 +29,11 @@ const toTitleCase = (text: string): string => {
     .join(' ');
 };
 
-// Helper: Format time display from event data
+// Helper: Format time display from event data with locale support
 const formatTimeDisplay = (
   dateTimeFrom?: { date?: string; time?: string },
-  dateTimeTo?: { date?: string; time?: string }
+  dateTimeTo?: { date?: string; time?: string },
+  locale?: string
 ): string | null => {
   const startTime = dateTimeFrom?.time;
   const endTime = dateTimeTo?.time;
@@ -40,11 +41,25 @@ const formatTimeDisplay = (
   // Case C: No time data
   if (!startTime) return null;
 
-  // Case A: Start only
-  if (!endTime) return startTime;
+  // Helper to format a single time string
+  const formatSingleTime = (timeString: string): string => {
+    // Assuming time format is "HH:mm" or "HH:mm:ss"
+    // Create a dummy date with the time to use toLocaleTimeString
+    const dummyDate = new Date(`2000-01-01T${timeString}`);
+    return dummyDate.toLocaleTimeString(locale || 'en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  };
 
-  // Case B: Start and end
-  return `${startTime} - ${endTime}`;
+  const formattedStart = formatSingleTime(startTime);
+
+  // Case A: Start only
+  if (!endTime) return formattedStart;
+
+  // Case B: Start and end (use en-dash with spaces)
+  const formattedEnd = formatSingleTime(endTime);
+  return `${formattedStart} – ${formattedEnd}`;
 };
 
 // ## Sub-component: DateBadge
@@ -73,95 +88,97 @@ const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: st
 };
 
 // ## Main Component: EventCardAtom
-const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onExport, onDelete, onAddress, locale }: Props) => {
-  const { t, i18n } = useTranslation();
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
-  const [showActionSheet, setShowActionSheet] = useState(false);
+const EventCardAtom = React.memo(
+  ({ data, onFavourite, isFavourite, onImage, onExport, onDelete, onAddress, locale }: Props) => {
+    const { t, i18n } = useTranslation();
+    const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+    const [showActionSheet, setShowActionSheet] = useState(false);
 
-  const {
-    title,
-    kind,
-    location,
-    dateTimeFrom,
-    dateTimeTo,
-    description,
-    ticketDirectLink,
-    id,
-    ticketAvailableProbability,
-    alreadyFetchedTicketLink,
-  } = data;
+    const {
+      title,
+      kind,
+      location,
+      dateTimeFrom,
+      dateTimeTo,
+      description,
+      ticketDirectLink,
+      id,
+      ticketAvailableProbability,
+      alreadyFetchedTicketLink,
+    } = data;
 
-  // Use provided locale or fall back to i18n language
-  const effectiveLocale = locale || i18n.language;
+    // Use provided locale or fall back to i18n language
+    const effectiveLocale = locale || i18n.language;
 
-  // Format time display
-  const formattedTime = formatTimeDisplay(dateTimeFrom, dateTimeTo);
+    // Format time display with locale
+    const formattedTime = formatTimeDisplay(dateTimeFrom, dateTimeTo, effectiveLocale);
 
-  // Character limit for description truncation
-  const TRUNCATE_LENGTH = 120;
-  const shouldTruncate = description?.short && description.short.length > TRUNCATE_LENGTH;
+    // Character limit for description truncation
+    const TRUNCATE_LENGTH = 120;
+    const shouldTruncate = description?.short && description.short.length > TRUNCATE_LENGTH;
 
-  // Extracted complex boolean logic into a readable variable
-  const showTicketButton =
-    !!ticketDirectLink ||
-    !!alreadyFetchedTicketLink ||
-    (!!ticketAvailableProbability && ticketAvailableProbability > 0.7);
+    // Extracted complex boolean logic into a readable variable
+    const showTicketButton =
+      !!ticketDirectLink ||
+      !!alreadyFetchedTicketLink ||
+      (!!ticketAvailableProbability && ticketAvailableProbability > 0.7);
 
-  // Format location with Title Case (fix ALL CAPS issue)
-  const formatLocation = (city?: string, address?: string): string => {
-    const parts = [city, address].filter(Boolean).map((part) => toTitleCase(part as string));
-    return parts.join(', ');
-  };
+    // Format location with Title Case (fix ALL CAPS issue)
+    const formatLocation = (city?: string, address?: string): string => {
+      const parts = [city, address].filter(Boolean).map((part) => toTitleCase(part as string));
+      return parts.join(', ');
+    };
 
-  // --- Render ---
-  return (
-    <>
-      <Card
-        highlight={isFavourite}
-        inline
-        usePattern
-        className={
-          'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
-        }>
-      <div className="flex flex-col p-5">
-        {/* Header Row: Date Badge + Title + Star */}
-        <div className="mb-3 flex items-start gap-3">
-          {/* Date Badge */}
-          <DateBadge dateTime={dateTimeFrom} locale={effectiveLocale} />
+    // --- Render ---
+    return (
+      <>
+        <Card
+          highlight={isFavourite}
+          inline
+          usePattern
+          className={
+            'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
+          }>
+          <div className="flex flex-col p-5">
+            {/* Row 1 (Header): Date Badge + Title + Star */}
+            <div className="mb-3 flex items-start gap-3">
+              {/* Date Badge */}
+              <DateBadge dateTime={dateTimeFrom} locale={effectiveLocale} />
 
-          {/* Title */}
-          <div className="flex-1 self-start">
-            <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
-          </div>
+              {/* Title */}
+              <div className="flex-1 self-start">
+                <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
 
-          {/* Favorite Star - Yellow Circle when Active */}
-          <button
-            onClick={onFavourite}
-            className={cn(
-              'flex-shrink-0 transition-all active:scale-90',
-              isFavourite ? 'rounded-full bg-highlight p-1.5' : ''
-            )}>
-            <IconStar
-              width={24}
-              height={24}
-              className={cn('transition-colors', isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-white/30')}
-            />
-          </button>
-        </div>
+                {kind && (
+                  <div className="mt-1">
+                    <span className="inline-block rounded-full bg-highlight/10 px-2.5 py-1 text-xs font-medium text-highlight">
+                      {kind}
+                    </span>
+                  </div>
+                )}
+              </div>
 
-        {/* Meta Row: Category Chip + Time Display */}
-        {(kind || formattedTime) && (
-          <div className="mt-2 flex items-center gap-3">
-            {/* Category Chip */}
-            {kind && (
-              <span className="inline-block rounded-full bg-yellow-400/10 px-2.5 py-1 text-xs font-medium text-highlight">
-                {kind}
-              </span>
-            )}
+              {/* Favorite Star - Yellow Circle when Active */}
+              <button
+                onClick={onFavourite}
+                className={cn(
+                  'flex-shrink-0 transition-all active:scale-90',
+                  isFavourite ? 'rounded-full bg-highlight p-1.5' : ''
+                )}>
+                <IconStar
+                  width={24}
+                  height={24}
+                  className={cn(
+                    'transition-colors',
+                    isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-white/30'
+                  )}
+                />
+              </button>
+            </div>
 
-            {/* Time Display */}
+            {/* Row 3 (Time): Dedicated Time row between Category and Location */}
             {formattedTime && (
-              <div className="flex items-center gap-1.5">
+              <div className="mt-3 flex items-center gap-1.5">
                 {/* Clock Icon */}
                 <svg
                   className="h-4 w-4 text-gray-400"
@@ -175,139 +192,138 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
                 <span className="font-['Plus_Jakarta_Sans'] text-sm font-medium text-gray-200">{formattedTime}</span>
               </div>
             )}
-          </div>
-        )}
 
-        {/* Location (Title Case) - Interactive Link Styling */}
-        {location && (
-          <div className="mb-2 flex cursor-pointer items-center gap-2" onClick={onAddress}>
-            <svg
-              className="flex-shrink-0 text-highlight"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            <span className="text-sm font-normal text-gray-100 underline decoration-gray-500/30 decoration-1 underline-offset-4">
-              {formatLocation(location?.city, location?.address)}
-            </span>
-          </div>
-        )}
-
-        {/* Description with Smart Read More */}
-        {description?.short && (
-          <div className="mb-4">
-            <p
-              className={cn(
-                'text-[13px] font-normal tracking-[0.5px] text-gray-300 opacity-80',
-                shouldTruncate && !isDescriptionExpanded && 'line-clamp-3'
-              )}>
-              {description.short}
-            </p>
-            {/* Only show "Read More" button if text is long enough */}
-            {shouldTruncate && !isDescriptionExpanded && (
-              <button
-                onClick={() => setIsDescriptionExpanded(true)}
-                className="mt-0.5 text-[13px] font-normal tracking-[0.5px] text-highlight">
-                {t('general.more', 'mehr')}
-              </button>
+            {/* Row 4 (Location): Pin Icon + City */}
+            {location && (
+              <div className="mb-2 mt-3 flex cursor-pointer items-center gap-2" onClick={onAddress}>
+                <svg
+                  className="flex-shrink-0 text-highlight"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                  <circle cx="12" cy="10" r="3"></circle>
+                </svg>
+                <span className="text-sm font-normal text-gray-100 underline decoration-gray-500/30 decoration-1 underline-offset-4">
+                  {formatLocation(location?.city, location?.address)}
+                </span>
+              </div>
             )}
+
+            {/* Row 5 (Body): Description with Smart Read More */}
+            {description?.short && (
+              <div className="mb-4">
+                <p
+                  className={cn(
+                    'text-[13px] font-normal tracking-[0.5px] text-gray-300 opacity-80',
+                    shouldTruncate && !isDescriptionExpanded && 'line-clamp-3'
+                  )}>
+                  {description.short}
+                </p>
+                {/* Only show "Read More" button if text is long enough */}
+                {shouldTruncate && !isDescriptionExpanded && (
+                  <button
+                    onClick={() => setIsDescriptionExpanded(true)}
+                    className="mt-0.5 text-[13px] font-normal tracking-[0.5px] text-highlight">
+                    {t('general.more', 'mehr')}
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Row 6 (Footer): Action Buttons + Tickets */}
+            <div className="flex items-center gap-2 pt-2">
+              {/* Three-Dot Menu Button */}
+              <IconButton
+                onClick={() => setShowActionSheet(true)}
+                icon={
+                  <svg
+                    width={20}
+                    height={20}
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="5" r="2" />
+                    <circle cx="12" cy="12" r="2" />
+                    <circle cx="12" cy="19" r="2" />
+                  </svg>
+                }
+                className="h-10 w-10"
+              />
+              {/* Camera Icon (22px - slightly larger for optical balance) */}
+              <IconButton onClick={onImage} icon={<IconCamera width={22} height={22} />} className="h-10 w-10" />
+              {/* Calendar Icon (20px) */}
+              <IconButton onClick={onExport} icon={<IconCalendarPlus width={20} height={20} />} className="h-10 w-10" />
+
+              {/* Ticket Button - Full Pill, Yellow Background, Solid Icon, Bold Text */}
+              {showTicketButton && (
+                <div className="flex-1">
+                  <TicketButton isFavourite={isFavourite} id={id} />
+                </div>
+              )}
+            </div>
           </div>
+        </Card>
+
+        {/* Action Sheet */}
+        {showActionSheet && (
+          <Dialog onClose={() => setShowActionSheet(false)} closeOnClickOutside>
+            <div className="p-6">
+              {/* Title */}
+              <h2 className="mb-6 text-center text-xl font-semibold text-white">
+                {t('eventCard.actionSheet.title', 'Event Options')}
+              </h2>
+
+              {/* Options */}
+              <div className="space-y-3">
+                {/* Share Option - Disabled/Placeholder */}
+                <button
+                  disabled
+                  className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-left text-gray-400 opacity-50 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                      <polyline points="16 6 12 2 8 6" />
+                      <line x1="12" y1="2" x2="12" y2="15" />
+                    </svg>
+                    <span className="font-medium">{t('eventCard.actionSheet.share', 'Share Event')}</span>
+                    <span className="ml-auto text-xs">({t('eventCard.actionSheet.comingSoon', 'Coming Soon')})</span>
+                  </div>
+                </button>
+
+                {/* Delete Option - Destructive */}
+                <button
+                  onClick={() => {
+                    setShowActionSheet(false);
+                    onDelete();
+                  }}
+                  className="w-full rounded-xl bg-red-500/10 px-4 py-3.5 text-left text-red-400 transition-colors active:bg-red-500/20">
+                  <div className="flex items-center gap-3">
+                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z" />
+                    </svg>
+                    <span className="font-semibold">{t('eventCard.actionSheet.delete', 'Delete Event')}</span>
+                  </div>
+                </button>
+
+                {/* Cancel Option */}
+                <button
+                  onClick={() => setShowActionSheet(false)}
+                  className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-center font-medium text-white transition-colors active:bg-white/10">
+                  {t('eventCard.actionSheet.cancel', 'Cancel')}
+                </button>
+              </div>
+            </div>
+          </Dialog>
         )}
-
-        {/* Action Row: Circle Icons + Tickets Button */}
-        <div className="flex items-center gap-2 pt-2">
-          {/* Three-Dot Menu Button */}
-          <IconButton
-            onClick={() => setShowActionSheet(true)}
-            icon={
-              <svg
-                width={20}
-                height={20}
-                viewBox="0 0 24 24"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="5" r="2" />
-                <circle cx="12" cy="12" r="2" />
-                <circle cx="12" cy="19" r="2" />
-              </svg>
-            }
-            className="h-10 w-10"
-          />
-          {/* Camera Icon (22px - slightly larger for optical balance) */}
-          <IconButton onClick={onImage} icon={<IconCamera width={22} height={22} />} className="h-10 w-10" />
-          {/* Calendar Icon (20px) */}
-          <IconButton onClick={onExport} icon={<IconCalendarPlus width={20} height={20} />} className="h-10 w-10" />
-
-          {/* Ticket Button - Full Pill, Yellow Background, Solid Icon, Bold Text */}
-          {showTicketButton && (
-            <div className="flex-1">
-              <TicketButton isFavourite={isFavourite} id={id} />
-            </div>
-          )}
-          </div>
-        </div>
-      </Card>
-
-      {/* Action Sheet */}
-      {showActionSheet && (
-        <Dialog onClose={() => setShowActionSheet(false)} closeOnClickOutside>
-          <div className="p-6">
-            {/* Title */}
-            <h2 className="mb-6 text-center text-xl font-semibold text-white">
-              {t('eventCard.actionSheet.title', 'Event Options')}
-            </h2>
-
-            {/* Options */}
-            <div className="space-y-3">
-              {/* Share Option - Disabled/Placeholder */}
-              <button
-                disabled
-                className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-left text-gray-400 opacity-50 transition-colors">
-                <div className="flex items-center gap-3">
-                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                    <polyline points="16 6 12 2 8 6" />
-                    <line x1="12" y1="2" x2="12" y2="15" />
-                  </svg>
-                  <span className="font-medium">{t('eventCard.actionSheet.share', 'Share Event')}</span>
-                  <span className="ml-auto text-xs">({t('eventCard.actionSheet.comingSoon', 'Coming Soon')})</span>
-                </div>
-              </button>
-
-              {/* Delete Option - Destructive */}
-              <button
-                onClick={() => {
-                  setShowActionSheet(false);
-                  onDelete();
-                }}
-                className="w-full rounded-xl bg-red-500/10 px-4 py-3.5 text-left text-red-400 transition-colors active:bg-red-500/20">
-                <div className="flex items-center gap-3">
-                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z" />
-                  </svg>
-                  <span className="font-semibold">{t('eventCard.actionSheet.delete', 'Delete Event')}</span>
-                </div>
-              </button>
-
-              {/* Cancel Option */}
-              <button
-                onClick={() => setShowActionSheet(false)}
-                className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-center font-medium text-white transition-colors active:bg-white/10">
-                {t('eventCard.actionSheet.cancel', 'Cancel')}
-              </button>
-            </div>
-          </div>
-        </Dialog>
-      )}
-    </>
-  );
-});
+      </>
+    );
+  }
+);
 
 export default EventCardAtom;
