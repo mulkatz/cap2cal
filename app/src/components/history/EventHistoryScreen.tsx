@@ -4,14 +4,16 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../models/db';
 import { CardController } from '../Card.controller';
 import { Card } from '../Card.group';
-import { IconChevronLeft } from '../../assets/icons';
+import { IconChevronLeft, IconTriangleRight } from '../../assets/icons';
 import { cn } from '../../utils';
+import type { CaptureEvent } from '../../models/CaptureEvent';
 
 export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose: () => void; isVisible: boolean }) => {
   const { t } = useTranslation();
   const [favouritesFilter, setFavouritesFilter] = useState<keyof typeof favouriteOptions>('no');
   const [sortByFilter, setSortByFilter] = useState<keyof typeof sortByOptions>('time');
   const [isScrolled, setIsScrolled] = useState(false);
+  const [showPastEvents, setShowPastEvents] = useState(false);
 
   // Always keep query running to maintain cached results for instant display
   const filteredAndSortedItems = useLiveQuery(
@@ -30,6 +32,56 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
         }),
     [favouritesFilter, sortByFilter]
   );
+
+  // Separate upcoming and past events
+  const { upcomingEvents, pastEvents } = useMemo(() => {
+    if (!filteredAndSortedItems) {
+      return { upcomingEvents: [], pastEvents: [] };
+    }
+
+    const now = new Date();
+    now.setHours(0, 0, 0, 0); // Start of today
+    const todayMillis = now.getTime();
+
+    const upcoming: CaptureEvent[] = [];
+    const past: CaptureEvent[] = [];
+
+    filteredAndSortedItems.forEach((item) => {
+      // Extract just the date (ignore time) for comparison
+      const eventDateStr = item.dateTimeFrom?.date;
+      if (!eventDateStr) {
+        // If no date, put in upcoming by default
+        upcoming.push(item);
+        return;
+      }
+
+      const eventDate = new Date(eventDateStr);
+      eventDate.setHours(0, 0, 0, 0);
+      const eventDateMillis = eventDate.getTime();
+
+      if (eventDateMillis < todayMillis) {
+        past.push(item);
+      } else {
+        upcoming.push(item);
+      }
+    });
+
+    // Sort upcoming events: nearest date first
+    upcoming.sort((a, b) => {
+      const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
+      const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
+      return startA - startB;
+    });
+
+    // Sort past events: most recent first
+    past.sort((a, b) => {
+      const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
+      const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
+      return startB - startA;
+    });
+
+    return { upcomingEvents: upcoming, pastEvents: past };
+  }, [filteredAndSortedItems]);
 
   const handleSortByChange = useCallback(() => {
     changeFilter(sortByFilter, setSortByFilter as any, Object.keys(sortByOptions) as Array<keyof typeof sortByOptions>);
@@ -86,11 +138,42 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
           {/* Event Cards */}
           {filteredAndSortedItems && filteredAndSortedItems?.length > 0 ? (
             <>
-              {filteredAndSortedItems?.map((value) => (
+              {/* Upcoming Events */}
+              {upcomingEvents.map((value) => (
                 <div key={value.id}>
                   <CardController data={value} />
                 </div>
               ))}
+
+              {/* Past Events Accordion */}
+              {pastEvents.length > 0 && (
+                <div className="mt-4">
+                  <button
+                    onClick={() => setShowPastEvents(!showPastEvents)}
+                    className="flex w-full items-center justify-center gap-2 py-4 text-[14px] text-gray-500 transition-colors active:text-gray-400">
+                    <span>Vergangene Events anzeigen</span>
+                    <IconTriangleRight
+                      width={12}
+                      height={12}
+                      className={cn(
+                        'transition-transform duration-200',
+                        showPastEvents ? 'rotate-90' : 'rotate-0'
+                      )}
+                    />
+                  </button>
+
+                  {/* Past Events List */}
+                  {showPastEvents && (
+                    <div className="flex flex-col gap-4">
+                      {pastEvents.map((value) => (
+                        <div key={value.id} className="opacity-60">
+                          <CardController data={value} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </>
           ) : (
             <Card>
