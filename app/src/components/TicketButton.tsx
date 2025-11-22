@@ -9,7 +9,7 @@ import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { IconTicket } from '../assets/icons';
 
-export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boolean }) => {
+export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boolean }) => {
   const [fetching, setFetching] = useState(false);
   const { t } = useTranslation();
   const i18n = i18next.language;
@@ -38,11 +38,25 @@ export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boo
   }
 
   if (item.ticketDirectLink) {
-    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket size={20} fill="currentColor" />} onClick={() => onTicket(item.ticketDirectLink!)} />;
+    return (
+      <CTAButton
+        highlight={isFavourite}
+        text={t('general.buyTickets')}
+        icon={<IconTicket size={20} strokeWidth={3} />}
+        onClick={() => onTicket(item.ticketDirectLink!)}
+      />
+    );
   }
 
   if (item.alreadyFetchedTicketLink) {
-    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket size={20} fill="currentColor" />} onClick={() => onTicket(item.alreadyFetchedTicketLink!)} />;
+    return (
+      <CTAButton
+        highlight={isFavourite}
+        text={t('general.buyTickets')}
+        icon={<IconTicket size={20} strokeWidth={3} />}
+        onClick={() => onTicket(item.alreadyFetchedTicketLink!)}
+      />
+    );
   }
 
   if (item.alreadyFetchedTicketLink === null) {
@@ -54,7 +68,7 @@ export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boo
       <CTAButton
         highlight={isFavourite}
         text={t('general.searchTickets')}
-        icon={<IconTicket size={20} fill="currentColor" />}
+        icon={<IconTicket size={20} strokeWidth={3} />}
         loading={fetching}
         onClick={() => fetchTickets(item, item.ticketSearchQuery!)}
       />

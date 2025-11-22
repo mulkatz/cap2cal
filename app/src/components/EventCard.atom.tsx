@@ -167,13 +167,18 @@ const EventCardAtom = React.memo(
                   isFavourite ? 'rounded-full bg-highlight p-1.5' : ''
                 )}>
                 <IconStar
-                  size={24}
-                  className={cn(
-                    'transition-colors',
-                    isFavourite ? 'text-primaryDark' : 'text-gray-400'
-                  )}
-                  fill={isFavourite ? 'currentColor' : 'none'}
+                  width={20}
+                  height={20}
+                  className={cn(isFavourite ? 'fill-primaryDark text-primaryDark' : 'fill-gray-400 text-gray-400')}
                 />
+                {/*<IconStar*/}
+                {/*  size={24}*/}
+                {/*  className={cn(*/}
+                {/*    'transition-colors',*/}
+                {/*    isFavourite ? 'text-primaryDark' : 'text-gray-400'*/}
+                {/*  )}*/}
+                {/*  fill={isFavourite ? 'currentColor' : 'none'}*/}
+                {/*/>*/}
               </button>
             </div>
 
@@ -190,7 +195,7 @@ const EventCardAtom = React.memo(
             {/* Row 4 (Location): Pin Icon + City */}
             {location && (
               <div className="mt-1.5 flex cursor-pointer items-center gap-2" onClick={onAddress}>
-                <MapPin size={14} className="flex-shrink-0 text-highlight" fill="currentColor" />
+                <MapPin size={14} strokeWidth={2.5} className="flex-shrink-0 text-highlight" />
                 <span className="text-sm font-normal text-gray-100 underline decoration-gray-500/30 decoration-1 underline-offset-4">
                   {formatLocation(location?.city, location?.address)}
                 </span>
