@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { isSmallScreen } from '../../utils.ts';
+import { cn } from '../../utils';
 
 export const OnboardingGetStarted: React.FC = () => {
   const { t } = useTranslation();
@@ -35,7 +36,7 @@ export const OnboardingGetStarted: React.FC = () => {
           </p>
 
           {/* Benefits */}
-          <div className="mb-6 flex w-full flex-col gap-3 sm:mb-8 sm:gap-4">
+          <div className={cn('flex w-full flex-col gap-3 sm:mb-8 sm:gap-4', !isSmallScreen && 'mb-6')}>
             <div className="flex items-center gap-2 rounded-lg border-2 border-accentElevated bg-primary/50 p-2.5 text-left sm:gap-3 sm:p-3">
               <div className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-green-500 to-green-600 shadow-md sm:h-6 sm:w-6">
                 <svg className="h-3 w-3 text-white sm:h-4 sm:w-4" fill="currentColor" viewBox="0 0 20 20">
