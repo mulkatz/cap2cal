@@ -70,6 +70,36 @@ export const App = () => {
     };
   }, [appState, setAppState, dialogs]);
 
+  // Register back handler for history screen
+  useEffect(() => {
+    dialogs.registerBackHandler('history', () => {
+      if (showHistory) {
+        setShowHistory(false);
+        return true;
+      }
+      return false;
+    });
+
+    return () => {
+      dialogs.unregisterBackHandler('history');
+    };
+  }, [showHistory, dialogs]);
+
+  // Register back handler for settings screen
+  useEffect(() => {
+    dialogs.registerBackHandler('settings', () => {
+      if (showSettings) {
+        setShowSettings(false);
+        return true;
+      }
+      return false;
+    });
+
+    return () => {
+      dialogs.unregisterBackHandler('settings');
+    };
+  }, [showSettings, dialogs]);
+
   useEffect(() => {
     setTimeout(() => {
       setInitialised(true);

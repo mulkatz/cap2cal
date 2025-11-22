@@ -54,11 +54,16 @@ export const DialogProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     for (const handler of handlers) {
       if (handler()) return; // Handler returned true, back was handled
     }
+
+    // Finally, use browser history
+    window.history.back();
   }, [stack.length, pop]);
 
   // Handle native back button (Android)
   useEffect(() => {
-    const listener = App.addListener('backButton', handleBack);
+    const listener = App.addListener('backButton', () => {
+      handleBack();
+    });
 
     return () => {
       listener.then((l) => l.remove());
