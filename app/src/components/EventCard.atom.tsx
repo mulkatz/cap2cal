@@ -107,7 +107,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
           <div className="flex-1 self-start">
             <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
             {kind && (
-              <span className="mt-2 inline-block rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-highlight">
+              <span className="mt-2 inline-block rounded-full bg-yellow-400/10 px-2.5 py-1 text-xs font-medium text-highlight">
                 {kind}
               </span>
             )}
@@ -144,7 +144,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span className="text-sm font-normal text-gray-100 underline decoration-gray-600 decoration-1 underline-offset-4">
+            <span className="text-sm font-normal text-gray-100 underline decoration-1 underline-offset-4 decoration-gray-500/30">
               {formatLocation(location?.city, location?.address)}
             </span>
           </div>
