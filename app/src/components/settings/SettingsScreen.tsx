@@ -27,6 +27,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   const [theme, setTheme] = useState<'light' | 'dark' | 'system'>(
     () => (localStorage.getItem('theme') as 'light' | 'dark' | 'system') || 'system'
   );
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleVibrationToggle = async (enabled: boolean) => {
     setVibrationEnabled(enabled);
@@ -242,10 +243,15 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     return t(`dialogs.settings.theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`);
   };
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const scrollTop = e.currentTarget.scrollTop;
+    setIsScrolled(scrollTop > 0);
+  };
+
   return (
     <div className="absolute inset-0 z-50 flex flex-col bg-primary">
       {/* Header */}
-      <div className="flex h-16 items-center justify-between border-b border-accent/30 px-4 pb-8 pt-safe-offset-6">
+      <div className={`sticky top-0 z-10 flex h-16 items-center justify-between border-b border-accent/30 bg-primary px-4 pb-8 pt-safe-offset-6 transition-shadow duration-200 ${isScrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.15)]' : ''}`}>
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-secondary transition-colors active:text-highlight">
@@ -256,7 +262,7 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto px-4 pt-3 pb-safe-offset-0">
+      <div className="flex-1 overflow-y-auto px-4 pt-3 pb-safe-offset-0" onScroll={handleScroll}>
         <div className="mx-auto flex max-w-2xl flex-col gap-4">
           {/* Preferences Section */}
           <SettingSection>

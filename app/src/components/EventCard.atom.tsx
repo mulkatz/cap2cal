@@ -144,7 +144,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span className="text-sm font-normal text-gray-100 underline decoration-1 underline-offset-4 decoration-gray-500/30">
+            <span className="text-sm font-normal text-gray-100 underline decoration-gray-500/30 decoration-1 underline-offset-4">
               {formatLocation(location?.city, location?.address)}
             </span>
           </div>
@@ -155,7 +155,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
           <div className="mb-4">
             <p
               className={cn(
-                'text-[13px] font-light tracking-[0.5px] text-gray-300 opacity-80',
+                'text-[13px] font-normal tracking-[0.5px] text-gray-300 opacity-80',
                 shouldTruncate && !isDescriptionExpanded && 'line-clamp-3'
               )}>
               {description.short}
@@ -164,7 +164,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
             {shouldTruncate && !isDescriptionExpanded && (
               <button
                 onClick={() => setIsDescriptionExpanded(true)}
-                className="mt-0.5 text-[13px] font-light tracking-[0.5px] text-highlight">
+                className="mt-0.5 text-[13px] font-normal tracking-[0.5px] text-highlight">
                 {t('general.more', 'mehr')}
               </button>
             )}
