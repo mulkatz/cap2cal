@@ -12,7 +12,7 @@ body {
     padding-left: env(safe-area-inset-left, 0); /* For iOS Safe Area (left inset) */
     padding-right: env(safe-area-inset-right, 0); /* For iOS Safe Area (right inset) */
     margin: 0;
-    font-family: 'Nunito', sans-serif; /* Behalte deine Schriftart bei */
+    font-family: 'Plus Jakarta Sans', sans-serif;
     height: 100%;
     text-align: left;
 background: #1B2632;

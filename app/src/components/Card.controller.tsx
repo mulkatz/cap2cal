@@ -22,7 +22,6 @@ import { logger } from '../utils/logger';
 import { CalendarPermissionScope, CapacitorCalendar } from '@ebarooni/capacitor-calendar';
 import { PermissionDeniedAtom } from './dialogs/PermissionDenied.atom.tsx';
 import React, { useCallback, useMemo } from 'react';
-import { EventCardAtom2 } from './EventCard2.atom.tsx';
 import { useTranslation } from 'react-i18next';
 
 export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {

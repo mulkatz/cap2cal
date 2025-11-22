@@ -7,6 +7,8 @@ const config = {
   theme: {
     fontFamily: {
       sans: [
+        'Plus Jakarta Sans',
+        'Manrope',
         'Inter',
         'ui-sans-serif',
         'system-ui',

@@ -15,26 +15,36 @@ type Props = {
   onImage: () => void;
   onExport: () => void;
   onAddress?: () => void;
+  locale?: string; // Dynamic locale prop (e.g., 'en-US', 'de-DE')
+};
+
+// Helper: Convert ALL CAPS text to Title Case
+const toTitleCase = (text: string): string => {
+  return text
+    .toLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 };
 
 // ## Sub-component: DateBadge
-// Compact calendar-leaf style badge for inline display
-const DateBadge = ({ dateTime }: { dateTime?: { date?: string; time?: string } }) => {
+// Compact calendar-leaf style badge for inline display with dynamic locale support
+const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: string }, locale?: string }) => {
   if (!dateTime?.date) return null;
 
   // Parse the date to extract day and month
   const date = new Date(dateTime.date);
   const day = date.getDate().toString();
-  // Use device's current locale automatically by passing undefined
-  const month = new Intl.DateTimeFormat(undefined, { month: 'short' }).format(date).toUpperCase();
+  // Use the provided locale or device's current locale
+  const month = new Intl.DateTimeFormat(locale, { month: 'short' }).format(date).toUpperCase();
 
   return (
     <div className="flex w-14 flex-none flex-col overflow-hidden rounded-lg shadow-sm">
-      {/* Top Bar - Month */}
-      <div className="bg-highlight px-2 py-1 text-center">
+      {/* Top Bar - Month (Electric Yellow) - Increased vertical padding for better spacing */}
+      <div className="bg-highlight px-2 py-1.5 pt-2 text-center">
         <div className="text-[10px] font-bold tracking-wide text-primaryDark">{month}</div>
       </div>
-      {/* Bottom Body - Day */}
+      {/* Bottom Body - Day (Dark Navy) */}
       <div className="bg-primaryDark px-2 py-2 text-center">
         <div className="text-xl font-bold leading-none text-white">{day}</div>
       </div>
@@ -43,8 +53,8 @@ const DateBadge = ({ dateTime }: { dateTime?: { date?: string; time?: string } }
 };
 
 // ## Main Component: EventCardAtom
-const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onExport, onAddress }: Props) => {
-  const { t } = useTranslation();
+const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onExport, onAddress, locale }: Props) => {
+  const { t, i18n } = useTranslation();
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
 
   const {
@@ -59,6 +69,9 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
     alreadyFetchedTicketLink,
   } = data;
 
+  // Use provided locale or fall back to i18n language
+  const effectiveLocale = locale || i18n.language;
+
   // Character limit for description truncation
   const TRUNCATE_LENGTH = 120;
   const shouldTruncate = description?.short && description.short.length > TRUNCATE_LENGTH;
@@ -68,6 +81,12 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
     !!ticketDirectLink ||
     !!alreadyFetchedTicketLink ||
     (!!ticketAvailableProbability && ticketAvailableProbability > 0.7);
+
+  // Format location with Title Case (fix ALL CAPS issue)
+  const formatLocation = (city?: string, address?: string): string => {
+    const parts = [city, address].filter(Boolean).map(part => toTitleCase(part as string));
+    return parts.join(', ');
+  };
 
   // --- Render ---
   return (
@@ -79,16 +98,16 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
         'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
       }>
       <div className="flex flex-col p-5">
-        {/* Header Row: Date Badge + Title + Star */}
+        {/* Header Row: Date Badge + Title + Category Chip + Star */}
         <div className="mb-3 flex items-start gap-3">
           {/* Date Badge */}
-          <DateBadge dateTime={dateTimeFrom} />
+          <DateBadge dateTime={dateTimeFrom} locale={effectiveLocale} />
 
-          {/* Title and Subtitle Stack */}
+          {/* Title and Category Chip Stack */}
           <div className="flex-1 self-start">
             <h3 className="line-clamp-2 text-lg font-bold leading-tight text-white">{title}</h3>
             {kind && (
-              <span className="mt-1.5 inline-block rounded-full bg-white/10 px-2 py-0.5 text-xs font-medium text-highlight">
+              <span className="mt-1.5 inline-block rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-highlight">
                 {kind}
               </span>
             )}
@@ -104,7 +123,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
           </button>
         </div>
 
-        {/* Location */}
+        {/* Location (Title Case) */}
         {location && (
           <div className="mb-2 flex cursor-pointer items-center gap-2" onClick={onAddress}>
             <svg
@@ -120,32 +139,35 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span className="text-sm capitalize text-secondary/70">
-              {[location?.city, location?.address].filter(Boolean).join(', ')}
+            <span className="text-sm font-medium text-secondary/70">
+              {formatLocation(location?.city, location?.address)}
             </span>
           </div>
         )}
 
-        {/* Description */}
+        {/* Description with Smart Read More */}
         {description?.short && (
           <div className="mb-4">
-            <p className={cn('text-sm text-secondary/60', shouldTruncate && !isDescriptionExpanded && 'line-clamp-3')}>
+            <p className={cn('text-sm font-medium text-secondary/60', shouldTruncate && !isDescriptionExpanded && 'line-clamp-3')}>
               {description.short}
-              {shouldTruncate && !isDescriptionExpanded && (
-                <button onClick={() => setIsDescriptionExpanded(true)} className="ml-1 font-bold text-highlight">
-                  ...{t('general.more', 'mehr')}
-                </button>
-              )}
             </p>
+            {/* Only show "Read More" button if text is long enough */}
+            {shouldTruncate && !isDescriptionExpanded && (
+              <button onClick={() => setIsDescriptionExpanded(true)} className="mt-0.5 text-sm font-semibold text-highlight">
+                ...{t('general.more', 'mehr')}
+              </button>
+            )}
           </div>
         )}
 
-        {/* Action Row */}
+        {/* Action Row: Circle Icons + Tickets Button */}
         <div className="flex items-center gap-2 pt-2">
-          <IconButton onClick={onImage} icon={<IconCamera />} className="h-10 w-10" />
-          <IconButton onClick={onExport} icon={<IconCalendarPlus />} className="h-10 w-10" />
+          {/* Camera Icon (22px - slightly larger for optical balance) */}
+          <IconButton onClick={onImage} icon={<IconCamera width={22} height={22} />} className="h-10 w-10" />
+          {/* Calendar Icon (20px) */}
+          <IconButton onClick={onExport} icon={<IconCalendarPlus width={20} height={20} />} className="h-10 w-10" />
 
-          {/* Ticket Button - Fills remaining width */}
+          {/* Ticket Button - Full Pill, Yellow Background, Solid Icon, Bold Text */}
           {showTicketButton && (
             <div className="flex-1">
               <TicketButton isFavourite={isFavourite} id={id} />

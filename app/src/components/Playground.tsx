@@ -41,7 +41,7 @@ export default EventCard;
 
 export const Content = ({ withBorder, z }: { withBorder: boolean; z: number }) => {
   return (
-    <div className={`absolute w-full bg-gray-50 text-left font-['Nunito'] z-[${z}]`}>
+    <div className={`absolute w-full bg-gray-50 text-left font-['Plus_Jakarta_Sans'] z-[${z}]`}>
       <div
         className={clsx(
           'z-10 flex w-full flex-col rounded-b-[10px] rounded-tr-[10px] border border-gray-400 bg-neutral-100',

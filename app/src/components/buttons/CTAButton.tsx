@@ -31,7 +31,7 @@ export const CTAButton = ({
       data-testid={dataTestId}
       className={cn(
         'flex h-[42px] w-full items-center justify-center gap-1.5 rounded-full px-4 py-2 shadow-md',
-        { 'text-[14px] font-bold': true },
+        { 'text-[14px] font-extrabold': true },
 
         // Conditional Styling based on disabled state
         disabled

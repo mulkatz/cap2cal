@@ -13,7 +13,7 @@ const config = {
       '2xl': '1536px',
     },
     fontFamily: {
-      nunito: ['Nunito', 'sans-serif'],
+      sans: ['Plus Jakarta Sans', 'Manrope', 'sans-serif'],
     },
 
     extend: {
