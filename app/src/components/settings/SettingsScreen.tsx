@@ -136,6 +136,11 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
     );
   };
 
+  const handleResetOnboarding = () => {
+    localStorage.setItem('hasSeenOnboarding', 'false');
+    window.location.reload();
+  };
+
   const handleDeleteAccount = () => {
     dialogs.push(
       <Dialog onClose={() => dialogs.pop()}>
@@ -301,6 +306,12 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
               label={t('dialogs.settings.clearStorage')}
               description={t('dialogs.settings.clearStorageDescription')}
               onClick={handleClearStorage}
+            />
+
+            <SettingItem
+              label={t('dialogs.settings.resetOnboarding')}
+              description={t('dialogs.settings.resetOnboardingDescription')}
+              onClick={handleResetOnboarding}
             />
 
             {/* <SettingItem

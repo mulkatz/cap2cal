@@ -216,6 +216,8 @@
         "exportDataDescription": "Exportiere alle deine Events als JSON",
         "clearStorage": "Speicher leeren",
         "clearStorageDescription": "Lösche alle gespeicherten Events von deinem Gerät",
+        "resetOnboarding": "Tutorial",
+        "resetOnboardingDescription": "Willkommens-Tutorial erneut ansehen",
         "deleteAccount": "Konto löschen",
         "deleteAccountDescription": "Lösche dauerhaft alle Daten und dein Konto",
         "other": "Weiteres",

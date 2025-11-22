@@ -216,6 +216,8 @@
         "exportDataDescription": "Export all your events as JSON",
         "clearStorage": "Clear Storage",
         "clearStorageDescription": "Delete all saved events from your device",
+        "resetOnboarding": "Tutorial",
+        "resetOnboardingDescription": "View the welcome tutorial again",
         "deleteAccount": "Delete My Account",
         "deleteAccountDescription": "Permanently delete all data and your account",
         "other": "Other",

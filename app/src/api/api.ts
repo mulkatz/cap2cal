@@ -193,13 +193,3 @@ export const fetchFeatureFlags = async (): Promise<FeatureFlags | null> => {
     return null;
   }
 };
-
-//
-// const getFullLanguageName = (languageCode: string): string => {
-//   try {
-//     const languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
-//     return languageNames.of(languageCode) || 'English'; // Default to 'English' if no valid name found
-//   } catch (error) {
-//     return 'English'; // Fallback to 'English' in case of an error
-//   }
-// };
