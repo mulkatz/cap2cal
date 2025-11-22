@@ -4,12 +4,11 @@ import { cn, getSafeAreaTopHeight } from '../utils.ts';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
-import { IconCamera3, IconChevronLeft } from '../assets/icons';
+import { IconCamera3, IconChevronLeft, IconZap, IconImage, X } from '../assets/icons';
 import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
 import { AppState } from '../contexts/AppContext.tsx';
 import { CameraInstructionDialog } from '../components/dialogs/CameraInstructionDialog.tsx';
 import { logger } from '../utils/logger';
-import imgButton from '../assets/images/icon.png';
 
 interface CameraViewProps {
   onStreamCallback?: (running: boolean) => void;
@@ -32,6 +31,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
     const [hasSeenCameraInstruction, setHasSeenCameraInstruction] = useState(() => {
       return localStorage.getItem('hasSeenCameraInstruction') === 'true';
     });
+    const [flashEnabled, setFlashEnabled] = useState(false);
 
     // start when coming back from external link
     useEffect(() => {
@@ -520,40 +520,106 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
      *
      *  The camera preview runs natively behind this element.
      *  You won't see an <video> or <canvas> from the plugin.
-     *  Instead, it’s rendered "behind" the webview.
+     *  Instead, it's rendered "behind" the webview.
      * ───────────────────────────────────────────────────────────
      */
     return (
       <>
-        {/* This container is where the plugin attaches the preview behind your web UI.
-            You can position it or style it with Tailwind or CSS classes as you wish. */}
+        {/* Safe area top spacer */}
         <span className={'pt-safe'} />
+
+        {/* Native camera preview container */}
         <div id="cameraPreview" className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover" />
         {!isPreviewRunning && <div className="absolute inset-0 z-0 bg-black" />}
 
         {isPreviewRunning && (
-          <div className={'absolute left-0 right-0 flex justify-center !overflow-visible bottom-safe-offset-36'}>
-            {/*<CaptureButton onClick={handleCapture} state={appState} />*/}
+          <>
+            {/* TOP OVERLAY - Gradient with controls */}
+            <div className="absolute left-0 right-0 top-0 z-10 h-[100px] bg-gradient-to-b from-black/70 to-transparent pt-safe">
+              <div className="flex items-center justify-between px-4 py-4">
+                {/* Left: Close Button */}
+                <button
+                  onClick={onClose}
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 backdrop-blur-sm transition-all active:scale-95">
+                  <X size={24} className="text-white" />
+                </button>
 
-            <button
-              onClick={handleCapture}
-              className={cn(
-                'flex h-[80px] w-[80px] origin-center items-center justify-center',
-                // 'rounded-lg border-none bg-gradient-to-t from-[#1E96C8] to-[#37AEE2] text-base text-white',
-                // "cursor-pointer select-none hover:from-[#17759C] hover:to-[#1D95C9]",
-                'rounded-full border-none text-white shadow-[0_4px_14px_rgba(0,0,0,0.7)]',
-                'cursor-pointer'
-              )}>
-              <img src={imgButton} alt="process" className="w-full" />
-            </button>
-          </div>
+                {/* Center: Title */}
+                <div className="font-bold tracking-widest text-white text-xs">SCAN EVENT</div>
+
+                {/* Right: Flash Toggle */}
+                <button
+                  onClick={() => setFlashEnabled(!flashEnabled)}
+                  className={cn(
+                    'flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm transition-all active:scale-95',
+                    flashEnabled ? 'bg-highlight/30' : 'bg-black/30'
+                  )}>
+                  <IconZap size={24} className={flashEnabled ? 'fill-highlight text-highlight' : 'text-white'} />
+                </button>
+              </div>
+            </div>
+
+            {/* SCAN FRAME - Corner brackets in center with pulse animation */}
+            <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
+              <div className="relative h-[60%] w-[85%]">
+                {/* Top-left corner */}
+                <div className="absolute left-0 top-0 h-10 w-10 animate-pulse">
+                  <div className="absolute left-0 top-0 h-[3px] w-10 bg-highlight rounded-full" />
+                  <div className="absolute left-0 top-0 h-10 w-[3px] bg-highlight rounded-full" />
+                </div>
+
+                {/* Top-right corner */}
+                <div className="absolute right-0 top-0 h-10 w-10 animate-pulse">
+                  <div className="absolute right-0 top-0 h-[3px] w-10 bg-highlight rounded-full" />
+                  <div className="absolute right-0 top-0 h-10 w-[3px] bg-highlight rounded-full" />
+                </div>
+
+                {/* Bottom-left corner */}
+                <div className="absolute bottom-0 left-0 h-10 w-10 animate-pulse">
+                  <div className="absolute bottom-0 left-0 h-[3px] w-10 bg-highlight rounded-full" />
+                  <div className="absolute bottom-0 left-0 h-10 w-[3px] bg-highlight rounded-full" />
+                </div>
+
+                {/* Bottom-right corner */}
+                <div className="absolute bottom-0 right-0 h-10 w-10 animate-pulse">
+                  <div className="absolute bottom-0 right-0 h-[3px] w-10 bg-highlight rounded-full" />
+                  <div className="absolute bottom-0 right-0 h-10 w-[3px] bg-highlight rounded-full" />
+                </div>
+              </div>
+            </div>
+
+            {/* HELPER TEXT - Positioned above shutter button */}
+            <div className="absolute bottom-safe-offset-32 left-0 right-0 z-20 flex justify-center pointer-events-none">
+              <div className="rounded-full bg-black/60 px-4 py-1.5 text-xs text-white backdrop-blur-md">
+                Align poster within frame
+              </div>
+            </div>
+
+            {/* BOTTOM OVERLAY - Gradient with controls */}
+            <div className="absolute bottom-0 left-0 right-0 z-10 h-[150px] bg-gradient-to-t from-black/80 to-transparent pb-safe">
+              <div className="flex h-full items-end justify-between px-6 pb-6">
+                {/* Left: Gallery Button */}
+                <button className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all active:scale-95">
+                  <IconImage size={24} className="text-white" />
+                </button>
+
+                {/* Center: Shutter Button with proper gap */}
+                <button
+                  onClick={handleCapture}
+                  className="flex items-center justify-center transition-transform active:scale-95">
+                  {/* Outer Ring with padding to create gap */}
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-white p-1 shadow-[0_4px_14px_rgba(0,0,0,0.7)]">
+                    {/* Inner Circle - Now smaller and separated by padding */}
+                    <div className="h-full w-full rounded-full bg-highlight" />
+                  </div>
+                </button>
+
+                {/* Right: Spacer for balance */}
+                <div className="h-12 w-12" />
+              </div>
+            </div>
+          </>
         )}
-
-        <MiniButton
-          icon={<IconChevronLeft size={26} />}
-          onClick={onClose}
-          className={'absolute left-4 top-safe-offset-5'}
-        />
 
         {/* Camera Instruction Dialog */}
         {showCameraInstruction && <CameraInstructionDialog onClose={handleInstructionClose} />}

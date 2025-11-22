@@ -25,6 +25,8 @@ export {
   Plus as IconPlus,
   Settings as IconSettings,
   Settings as IconGear,
+  Zap as IconZap,
+  X,
 } from 'lucide-react';
 
 export { default as IconHeroIcon } from './hero2.svg?react';
