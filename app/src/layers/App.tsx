@@ -44,6 +44,7 @@ export const App = () => {
   const cameraRef = useRef<CameraRefProps>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [initialised, setInitialised] = useState(false);
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(() => {
     return localStorage.getItem('hasSeenOnboarding') === 'true';
@@ -298,16 +299,11 @@ export const App = () => {
   };
 
   const onSettings = () => {
-    // Track settings opened
-    logAnalyticsEvent(AnalyticsEvent.SETTINGS_OPENED);
-
-    dialogs.push(
-      <SettingsScreen
-        onClose={() => {
-          dialogs.pop();
-        }}
-      />
-    );
+    // Track settings opened (only when opening, not closing)
+    if (!showSettings) {
+      logAnalyticsEvent(AnalyticsEvent.SETTINGS_OPENED);
+    }
+    setShowSettings(!showSettings);
   };
 
   /**
@@ -639,6 +635,18 @@ export const App = () => {
 
         {/* Event History Screen - kept mounted for performance, visibility controlled via CSS */}
         <EventHistoryScreen onClose={() => setShowHistory(false)} isVisible={showHistory} />
+
+        {/* Darkening backdrop for settings */}
+        <div
+          className={cn(
+            "absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out",
+            showSettings ? "opacity-70 pointer-events-auto" : "opacity-0 pointer-events-none"
+          )}
+          onClick={() => setShowSettings(false)}
+        />
+
+        {/* Settings Screen - kept mounted for performance, visibility controlled via CSS */}
+        <SettingsScreen onClose={() => setShowSettings(false)} isVisible={showSettings} />
 
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}

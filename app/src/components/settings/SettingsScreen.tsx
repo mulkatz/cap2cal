@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../contexts/AppContext';
 import { useDialogContext } from '../../contexts/DialogContext';
@@ -14,8 +14,9 @@ import toast from 'react-hot-toast';
 import { AnalyticsEvent } from '../../utils/analytics';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
+import { cn } from '../../utils';
 
-export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
+export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () => void; isVisible: boolean }) => {
   const { t, i18n } = useTranslation();
   const { version } = useAppContext();
   const dialogs = useDialogContext();
@@ -249,7 +250,12 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
   };
 
   return (
-    <div className="absolute inset-0 z-50 flex flex-col bg-primary">
+    <div className={cn(
+      "absolute inset-0 z-50 flex flex-col bg-primary transition-transform duration-300 ease-out",
+      isVisible
+        ? "translate-x-0 pointer-events-auto"
+        : "translate-x-full pointer-events-none"
+    )}>
       {/* Header */}
       <div className={`sticky top-0 z-10 flex h-16 items-center justify-between border-b border-accent/30 bg-primary px-4 pb-8 pt-safe-offset-6 transition-shadow duration-200 ${isScrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.15)]' : ''}`}>
         <button
@@ -358,4 +364,4 @@ export const SettingsScreen = ({ onClose }: { onClose: () => void }) => {
       </div>
     </div>
   );
-};
+});
