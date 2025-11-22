@@ -27,6 +27,7 @@ import { AppLikePrompt } from '../components/dialogs/AppLikePrompt.atom.tsx';
 import { InAppReview } from '@capacitor-community/in-app-review';
 import { useTranslation } from 'react-i18next';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
+import { cn } from '../utils';
 
 const isFeedbackVisible = false;
 
@@ -626,6 +627,15 @@ export const App = () => {
         </div>
         <DialogStack />
         {paywallSheet}
+
+        {/* Darkening backdrop for event history */}
+        <div
+          className={cn(
+            "absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out",
+            showHistory ? "opacity-70 pointer-events-auto" : "opacity-0 pointer-events-none"
+          )}
+          onClick={() => setShowHistory(false)}
+        />
 
         {/* Event History Screen - kept mounted for performance, visibility controlled via CSS */}
         <EventHistoryScreen onClose={() => setShowHistory(false)} isVisible={showHistory} />

@@ -50,10 +50,10 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
 
   return (
     <div className={cn(
-      "absolute inset-0 z-50 flex flex-col bg-primary transition-all duration-300 ease-out",
+      "absolute inset-0 z-50 flex flex-col bg-primary transition-transform duration-300 ease-out",
       isVisible
-        ? "opacity-100 translate-x-0 pointer-events-auto"
-        : "opacity-0 translate-x-full pointer-events-none"
+        ? "translate-x-0 pointer-events-auto"
+        : "translate-x-full pointer-events-none"
     )}>
       {/* Header */}
       <div className={`sticky top-0 z-10 flex h-16 items-center justify-between border-b border-accent/30 bg-primary px-4 pb-8 pt-safe-offset-6 transition-shadow duration-200 ${isScrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.15)]' : ''}`}>
