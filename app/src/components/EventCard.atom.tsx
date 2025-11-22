@@ -170,7 +170,7 @@ const EventCardAtom = React.memo(
                   height={24}
                   className={cn(
                     'transition-colors',
-                    isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-gray-500'
+                    isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-gray-400'
                   )}
                 />
               </button>
@@ -195,7 +195,7 @@ const EventCardAtom = React.memo(
 
             {/* Row 4 (Location): Pin Icon + City */}
             {location && (
-              <div className="mt-2 flex cursor-pointer items-center gap-2" onClick={onAddress}>
+              <div className="mt-1.5 flex cursor-pointer items-center gap-2" onClick={onAddress}>
                 <svg
                   className="flex-shrink-0 text-highlight"
                   width="14"
@@ -217,7 +217,7 @@ const EventCardAtom = React.memo(
 
             {/* Row 5 (Body): Description with Smart Read More */}
             {description?.short && (
-              <div className="mb-5 mt-4">
+              <div className="mb-5 mt-5">
                 <p
                   className={cn(
                     'text-[13px] font-normal tracking-[0.5px] text-gray-300 opacity-80',
@@ -243,14 +243,14 @@ const EventCardAtom = React.memo(
                 onClick={() => setShowActionSheet(true)}
                 icon={
                   <svg
-                    width={20}
-                    height={20}
+                    width={23}
+                    height={23}
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="12" cy="5" r="2" />
-                    <circle cx="12" cy="12" r="2" />
-                    <circle cx="12" cy="19" r="2" />
+                    <circle cx="12" cy="5" r="2.5" />
+                    <circle cx="12" cy="12" r="2.5" />
+                    <circle cx="12" cy="19" r="2.5" />
                   </svg>
                 }
                 className="h-10 w-10"
