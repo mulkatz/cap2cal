@@ -14,8 +14,7 @@ export const Card = ({ children, highlight, className, inline = false, usePatter
   return (
     <div
       className={cn(
-        'relative flex flex-col items-start rounded-lg border-[2px] border-[#415970] bg-primaryDark text-start text-[21px] text-white drop-shadow-lg',
-        { 'border-highlight': highlight },
+        'relative flex flex-col items-start rounded-[20px] bg-primaryDark text-start text-[21px] text-white drop-shadow-lg',
         'transition-all duration-[300ms]',
         'pt-[13px] text-secondary',
         { 'max-h-full shrink grow overflow-y-auto': inline },

@@ -16,8 +16,8 @@ export const IconButton = ({
     <button
       onClick={onClick}
       className={cn(
-        'box-border flex h-[48px] items-center justify-center rounded-[5px] border-[1px] border-[#2e3f50] bg-[#415970] p-3.5 shadow-md',
-        { 'bg-highlight text-accentElevated': active },
+        'box-border flex h-[48px] w-[48px] items-center justify-center rounded-full bg-primaryDark p-3 shadow-md',
+        { 'bg-highlight text-primaryDark': active },
         'transform transition-all active:bg-clickHighLight',
         className
       )}>

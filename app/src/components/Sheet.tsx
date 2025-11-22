@@ -89,23 +89,19 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
             <span className="absolute left-0 top-[-1px] z-10 h-[12px] w-full bg-gradient-to-b from-primaryDark from-10% via-primaryDark/90 to-transparent"></span>
             <div className={'mt-3 flex grow'}>
               <div className={'w-full px-3'}>
-                <FilterOption
-                  className="mb-1"
-                  label={t('general.sortBy')}
-                  options={['relevance', 'time']}
-                  value={t(`general.${sortByFilter}`)}
-                  onChange={handleSortByChange}
-                />
-
-                <FilterOption
-                  className="mt-2.5"
-                  label={t('general.onlyFavourites')}
-                  options={['yes', 'no']}
-                  value={t(`general.${favouritesFilter}`)}
-                  onChange={handleFavouritesChange}
-                />
-
-                <div className={'mx-auto my-2.5 h-[1.5px] w-[40%] self-center rounded-full bg-accentElevated'}></div>
+                {/* Horizontal Chip Filter Row */}
+                <div className={'mb-4 flex gap-2 overflow-x-auto'}>
+                  <FilterChip
+                    label={t('general.onlyFavourites')}
+                    active={favouritesFilter === 'yes'}
+                    onClick={handleFavouritesChange}
+                  />
+                  <FilterChip
+                    label={`${t('general.sortBy')}: ${t(`general.${sortByFilter}`)}`}
+                    active={false}
+                    onClick={handleSortByChange}
+                  />
+                </div>
 
                 {filteredAndSortedItems && filteredAndSortedItems?.length > 0 ? (
                   <>
@@ -149,14 +145,14 @@ const FilterOption = React.memo(
     return (
       <div
         className={cn(
-          'flex items-center justify-between rounded-lg border-[2px] border-accentElevated bg-primary px-2.5 py-2.5 pl-3 text-secondary',
+          'flex items-center justify-between rounded-full bg-primaryElevated px-4 py-3 text-secondary',
           className
         )}>
         <div className="text-[16px] font-semibold">{label}</div>
         <button
-          className="flex w-[105px] justify-center rounded-[4px] border-[2px] border-accentElevated bg-primaryElevated p-2 text-[16px]"
+          className="flex w-[105px] justify-center rounded-full bg-primaryDark p-2.5 text-[16px] shadow-sm"
           onClick={() => onChange(value)}>
-          <div className="cursor-pointer appearance-none bg-primaryElevated text-[16px] font-semibold outline-none">
+          <div className="cursor-pointer appearance-none bg-primaryDark text-[16px] font-semibold outline-none">
             {value as string}
           </div>
         </button>
@@ -164,6 +160,20 @@ const FilterOption = React.memo(
     );
   }
 ) as <T extends Record<string, string>>(props: FilterOptionProps<T>) => JSX.Element;
+
+// New Filter Chip Component for horizontal layout
+const FilterChip = ({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        'flex-shrink-0 rounded-full px-4 py-2 text-[14px] font-semibold transition-all',
+        active ? 'bg-clickHighLight text-primaryDark' : 'bg-primaryElevated text-secondary'
+      )}>
+      {label}
+    </button>
+  );
+};
 
 // Example options object for 'only favourites'
 const favouriteOptions = {

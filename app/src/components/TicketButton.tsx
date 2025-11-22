@@ -7,6 +7,7 @@ import { CaptureEvent } from '../models/CaptureEvent.ts';
 import { CameraPreview } from '@michaelwolz/camera-preview-lite';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
+import { IconTicket } from '../assets/icons';
 
 export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boolean }) => {
   const [fetching, setFetching] = useState(false);
@@ -37,11 +38,11 @@ export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boo
   }
 
   if (item.ticketDirectLink) {
-    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} onClick={() => onTicket(item.ticketDirectLink!)} />;
+    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket width={18} height={18} />} onClick={() => onTicket(item.ticketDirectLink!)} />;
   }
 
   if (item.alreadyFetchedTicketLink) {
-    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} onClick={() => onTicket(item.alreadyFetchedTicketLink!)} />;
+    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket width={18} height={18} />} onClick={() => onTicket(item.alreadyFetchedTicketLink!)} />;
   }
 
   if (item.alreadyFetchedTicketLink === null) {
@@ -53,6 +54,7 @@ export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boo
       <CTAButton
         highlight={isFavourite}
         text={t('general.searchTickets')}
+        icon={<IconTicket width={18} height={18} />}
         loading={fetching}
         onClick={() => fetchTickets(item, item.ticketSearchQuery!)}
       />
