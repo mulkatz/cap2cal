@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../contexts/AppContext';
 import { useDialogContext } from '../../contexts/DialogContext';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
-import { SettingSection, SettingItem, SettingToggle, SettingDivider } from './SettingItem';
 import { IconChevronLeft } from '../../assets/icons';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
@@ -13,6 +12,159 @@ import { AnalyticsEvent } from '../../utils/analytics';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
 import { cn } from '../../utils';
+
+// Icon Components
+const GlobeIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+
+const ZapIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+
+const ChartIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <line x1="18" y1="20" x2="18" y2="10" />
+    <line x1="12" y1="20" x2="12" y2="4" />
+    <line x1="6" y1="20" x2="6" y2="14" />
+  </svg>
+);
+
+const TrashIcon = ({ destructive }: { destructive?: boolean }) => (
+  <svg className={cn("h-5 w-5", destructive ? "text-red-400" : "text-highlight")} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="3 6 5 6 21 6" />
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+  </svg>
+);
+
+const BookOpenIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+  </svg>
+);
+
+const ExternalLinkIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+    <polyline points="15 3 21 3 21 9" />
+    <line x1="10" y1="14" x2="21" y2="3" />
+  </svg>
+);
+
+const UserPlusIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+    <circle cx="8.5" cy="7" r="4" />
+    <line x1="20" y1="8" x2="20" y2="14" />
+    <line x1="23" y1="11" x2="17" y2="11" />
+  </svg>
+);
+
+const MessageCircleIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+  </svg>
+);
+
+const ShieldIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+  </svg>
+);
+
+const FileTextIcon = () => (
+  <svg className="h-5 w-5 text-highlight" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
+    <line x1="16" y1="13" x2="8" y2="13" />
+    <line x1="16" y1="17" x2="8" y2="17" />
+    <polyline points="10 9 9 9 8 9" />
+  </svg>
+);
+
+const ChevronRightIcon = () => (
+  <svg className="h-5 w-5 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <polyline points="9 18 15 12 9 6" />
+  </svg>
+);
+
+// Setting Row Component
+const SettingRow = ({
+  icon,
+  label,
+  description,
+  value,
+  onClick,
+  toggle,
+  checked,
+  onChange,
+  destructive,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  description?: string;
+  value?: string;
+  onClick?: () => void;
+  toggle?: boolean;
+  checked?: boolean;
+  onChange?: (checked: boolean) => void;
+  destructive?: boolean;
+}) => {
+  return (
+    <button
+      onClick={onClick}
+      disabled={toggle}
+      className={cn(
+        'flex w-full items-center justify-between p-4 text-left transition-colors',
+        !toggle && 'active:bg-white/5'
+      )}>
+      <div className="flex items-center gap-3">
+        {React.cloneElement(icon as React.ReactElement, { destructive })}
+        <div className="flex flex-col">
+          <span className={cn(
+            "font-['Plus_Jakarta_Sans'] font-semibold",
+            destructive ? "text-red-400" : "text-white"
+          )}>
+            {label}
+          </span>
+          {description && (
+            <span className="mt-0.5 font-['Plus_Jakarta_Sans'] text-xs text-gray-400">
+              {description}
+            </span>
+          )}
+        </div>
+      </div>
+      <div className="flex items-center">
+        {toggle && onChange && (
+          <label className="relative inline-block h-6 w-11">
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={(e) => onChange(e.target.checked)}
+              className="peer sr-only"
+            />
+            <span className="absolute inset-0 cursor-pointer rounded-full bg-gray-700 transition-colors peer-checked:bg-highlight"></span>
+            <span className="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-5"></span>
+          </label>
+        )}
+        {value && (
+          <span className="font-['Plus_Jakarta_Sans'] text-sm text-gray-400">{value}</span>
+        )}
+        {!toggle && !value && <ChevronRightIcon />}
+      </div>
+    </button>
+  );
+};
+
+// Divider Component
+const SettingDivider = () => <div className="border-t border-white/5" />;
 
 export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () => void; isVisible: boolean }) => {
   const { t, i18n } = useTranslation();
@@ -299,97 +451,93 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-4 pt-3 pb-safe-offset-0" onScroll={handleScroll}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
-          {/* Preferences Section */}
-          <SettingSection>
-            <SettingItem
+        <div className="mx-auto flex max-w-2xl flex-col">
+          {/* Group 1: App Preferences */}
+          <div className="mb-6 overflow-hidden rounded-3xl bg-primaryElevated">
+            <SettingRow
+              icon={<GlobeIcon />}
               label={t('dialogs.settings.language')}
               value={getLanguageDisplay()}
               onClick={handleLanguageChange}
             />
-
-            {/* <SettingItem
-              label={t('dialogs.settings.theme')}
-              value={getThemeDisplay()}
-              onClick={handleThemeChange}
-            /> */}
-
-            <SettingToggle
+            <SettingDivider />
+            <SettingRow
+              icon={<ZapIcon />}
               label={t('dialogs.settings.vibration')}
               description={t('dialogs.settings.vibrationDescription')}
+              toggle
               checked={vibrationEnabled}
               onChange={handleVibrationToggle}
             />
-          </SettingSection>
-
-          <SettingDivider />
-
-          {/* Privacy Section */}
-          <SettingSection>
-            <SettingToggle
+            <SettingDivider />
+            <SettingRow
+              icon={<ChartIcon />}
               label={t('dialogs.settings.analytics')}
               description={t('dialogs.settings.analyticsDescription')}
+              toggle
               checked={analyticsEnabled}
               onChange={handleAnalyticsToggle}
             />
-          </SettingSection>
+          </div>
 
-          <SettingDivider />
-
-          {/* Data Management Section */}
-          <SettingSection>
-            {/* <SettingItem
-              label={t('dialogs.settings.exportData')}
-              description={t('dialogs.settings.exportDataDescription')}
-              onClick={handleExportData}
-            /> */}
-
-            <SettingItem
+          {/* Group 2: Actions */}
+          <div className="mb-6 overflow-hidden rounded-3xl bg-primaryElevated">
+            <SettingRow
+              icon={<TrashIcon />}
               label={t('dialogs.settings.clearStorage')}
               description={t('dialogs.settings.clearStorageDescription')}
               onClick={handleClearStorage}
+              destructive
             />
-
-            <SettingItem
+            <SettingDivider />
+            <SettingRow
+              icon={<BookOpenIcon />}
               label={t('dialogs.settings.resetOnboarding')}
               description={t('dialogs.settings.resetOnboardingDescription')}
               onClick={handleResetOnboarding}
             />
-
-            {/* <SettingItem
-              label={t('dialogs.settings.deleteAccount')}
-              description={t('dialogs.settings.deleteAccountDescription')}
-              onClick={handleDeleteAccount}
-            /> */}
-          </SettingSection>
-
-          <SettingDivider />
-
-          {/* About Section */}
-          <SettingSection>
-            <SettingItem label={t('dialogs.settings.website')} onClick={handleWebsite} />
-
-            <SettingItem label={t('dialogs.settings.inviteFriends')} onClick={handleInviteFriends} />
-
-            <SettingItem label={t('dialogs.settings.giveFeedback')} onClick={handleFeedback} />
-          </SettingSection>
-
-          <SettingDivider />
-
-          {/* Legal Section */}
-          <SettingSection>
-            <SettingItem label={t('dialogs.settings.privacyPolicy')} onClick={handlePrivacyPolicy} />
-
-            <SettingItem label={t('dialogs.settings.terms')} onClick={handleTerms} />
-          </SettingSection>
-
-          {/* Version - centered at bottom */}
-          <div className="flex justify-center py-4">
-            <span className="text-[14px] text-secondary/70">v{version}</span>
           </div>
 
-          {/* Bottom spacing for safe area */}
-          {/*<div className="h-safe-area-inset-bottom" />*/}
+          {/* Group 3: Community */}
+          <div className="mb-6 overflow-hidden rounded-3xl bg-primaryElevated">
+            <SettingRow
+              icon={<ExternalLinkIcon />}
+              label={t('dialogs.settings.website')}
+              onClick={handleWebsite}
+            />
+            <SettingDivider />
+            <SettingRow
+              icon={<UserPlusIcon />}
+              label={t('dialogs.settings.inviteFriends')}
+              onClick={handleInviteFriends}
+            />
+            <SettingDivider />
+            <SettingRow
+              icon={<MessageCircleIcon />}
+              label={t('dialogs.settings.giveFeedback')}
+              onClick={handleFeedback}
+            />
+          </div>
+
+          {/* Group 4: Legal */}
+          <div className="mb-6 overflow-hidden rounded-3xl bg-primaryElevated">
+            <SettingRow
+              icon={<ShieldIcon />}
+              label={t('dialogs.settings.privacyPolicy')}
+              onClick={handlePrivacyPolicy}
+            />
+            <SettingDivider />
+            <SettingRow
+              icon={<FileTextIcon />}
+              label={t('dialogs.settings.terms')}
+              onClick={handleTerms}
+            />
+          </div>
+
+          {/* Version - centered at bottom */}
+          <div className="mt-4 flex justify-center pb-8">
+            <span className="font-['Plus_Jakarta_Sans'] text-xs text-gray-600">v{version}</span>
+          </div>
         </div>
       </div>
     </div>
