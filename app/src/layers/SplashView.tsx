@@ -17,7 +17,6 @@ import {
 import React from 'react';
 import { cn } from '../utils.ts';
 import { MiniButton } from '../components/buttons/MiniButton.tsx';
-import { CaptureSheet } from '../components/Sheet.tsx';
 import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
 import { useRipple } from '../hooks/useRipple.tsx';
@@ -27,8 +26,6 @@ export const SplashView = ({
   onImport,
   onHistory,
   hasSavedEvents,
-  isListViewOpen,
-  onCloseListViewOpen,
   onFeedback,
   isFeedbackVisible,
   onShowPaywall,
@@ -40,8 +37,6 @@ export const SplashView = ({
   onImport: () => void;
   onHistory: () => void;
   hasSavedEvents: boolean;
-  isListViewOpen: boolean;
-  onCloseListViewOpen: () => void;
   onFeedback: () => void;
   isFeedbackVisible: boolean;
   onShowPaywall?: (trigger: string) => void;
@@ -154,8 +149,6 @@ export const SplashView = ({
         data-testid="settings-button">
         <IconGear width={34} height={34} />
       </button>
-
-      <CaptureSheet isOpen={isListViewOpen} onClose={onCloseListViewOpen} />
     </>
   );
 };

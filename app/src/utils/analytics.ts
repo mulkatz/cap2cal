@@ -61,9 +61,10 @@ export const AnalyticsEvent = {
   FEEDBACK_SUBMITTED: 'feedback_submitted',
   HELP_VIEWED: 'help_viewed',
 
-  // Settings
+  // Settings & History
   SETTINGS_OPENED: 'settings_opened',
   SETTINGS_CHANGED: 'settings_changed',
+  HISTORY_OPENED: 'history_opened',
   DATA_EXPORTED: 'data_exported',
   STORAGE_CLEARED: 'storage_cleared',
   ACCOUNT_DELETED: 'account_deleted',

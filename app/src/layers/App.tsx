@@ -10,6 +10,7 @@ import { Dialog } from '../components/Dialog.tsx';
 import { Card } from '../components/Card.group.tsx';
 import { Feedback } from '../components/dialogs/Feedback.atom.tsx';
 import { SettingsScreen } from '../components/settings/SettingsScreen.tsx';
+import { EventHistoryScreen } from '../components/history/EventHistoryScreen.tsx';
 import { Effects, useEffectContext } from '../contexts/EffectsContext.tsx';
 import { Camera, CameraResultType, CameraSource, PermissionStatus } from '@capacitor/camera';
 import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.atom.tsx';
@@ -38,10 +39,10 @@ export const App = () => {
   const { onImportFile, onCaptured, paywallSheet, checkCaptureLimit, showPaywall } = useCapture();
   const { logAnalyticsEvent, setAnalyticsUserProperty, featureFlags, featureFlagsLoading } = useFirebaseContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [listViewOpen, setListViewOpen] = useState(false);
   const dialogs = useDialogContext();
   const cameraRef = useRef<CameraRefProps>(null);
   const [showFeedback, setShowFeedback] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const [initialised, setInitialised] = useState(false);
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(() => {
     return localStorage.getItem('hasSeenOnboarding') === 'true';
@@ -51,8 +52,7 @@ export const App = () => {
   const [previousAppState, setPreviousAppState] = useState(appState);
   const [isHandlingCaptureRequest, setIsHandlingCaptureRequest] = useState(false);
 
-  // Register back handlers for camera view and sheet
-  // Order matters: registered last = tried first (sheet should close before camera exits)
+  // Register back handler for camera view
   useEffect(() => {
     dialogs.registerBackHandler('camera', () => {
       if (appState === 'camera') {
@@ -63,19 +63,10 @@ export const App = () => {
       return false;
     });
 
-    dialogs.registerBackHandler('sheet', () => {
-      if (listViewOpen) {
-        setListViewOpen(false);
-        return true;
-      }
-      return false;
-    });
-
     return () => {
       dialogs.unregisterBackHandler('camera');
-      dialogs.unregisterBackHandler('sheet');
     };
-  }, [listViewOpen, appState, setAppState, dialogs]);
+  }, [appState, setAppState, dialogs]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -276,7 +267,13 @@ export const App = () => {
     }
   };
 
-  const onHistory = () => setListViewOpen(!listViewOpen);
+  const onHistory = () => {
+    // Track event history opened (only when opening, not closing)
+    if (!showHistory) {
+      logAnalyticsEvent(AnalyticsEvent.HISTORY_OPENED);
+    }
+    setShowHistory(!showHistory);
+  };
 
   const onFeedback = () => {
     if (!showFeedback) {
@@ -587,8 +584,6 @@ export const App = () => {
               isLoading={isHandlingCaptureRequest}
               onCapture={onHandleCapture}
               hasSavedEvents={hasSavedEvents}
-              isListViewOpen={listViewOpen}
-              onCloseListViewOpen={() => setListViewOpen(false)}
               onHistory={onHistory}
               onImport={onImport}
               isFeedbackVisible={isFeedbackVisible}
@@ -631,6 +626,9 @@ export const App = () => {
         </div>
         <DialogStack />
         {paywallSheet}
+
+        {/* Event History Screen - kept mounted for performance, visibility controlled via CSS */}
+        <EventHistoryScreen onClose={() => setShowHistory(false)} isVisible={showHistory} />
 
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
