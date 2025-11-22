@@ -23,13 +23,13 @@ const toTitleCase = (text: string): string => {
   return text
     .toLowerCase()
     .split(' ')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
 };
 
 // ## Sub-component: DateBadge
 // Compact calendar-leaf style badge for inline display with dynamic locale support
-const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: string }, locale?: string }) => {
+const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: string }; locale?: string }) => {
   if (!dateTime?.date) return null;
 
   // Parse the date to extract day and month
@@ -84,7 +84,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
 
   // Format location with Title Case (fix ALL CAPS issue)
   const formatLocation = (city?: string, address?: string): string => {
-    const parts = [city, address].filter(Boolean).map(part => toTitleCase(part as string));
+    const parts = [city, address].filter(Boolean).map((part) => toTitleCase(part as string));
     return parts.join(', ');
   };
 
@@ -105,29 +105,34 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
 
           {/* Title and Category Chip Stack */}
           <div className="flex-1 self-start">
-            <h3 className="line-clamp-2 text-lg font-bold leading-tight text-white">{title}</h3>
+            <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
             {kind && (
-              <span className="mt-1.5 inline-block rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-highlight">
+              <span className="mt-2 inline-block rounded-full bg-white/10 px-2.5 py-1 text-xs font-medium text-highlight">
                 {kind}
               </span>
             )}
           </div>
 
-          {/* Favorite Star */}
-          <button onClick={onFavourite} className="flex-shrink-0 transition-transform active:scale-90">
+          {/* Favorite Star - Yellow Circle when Active */}
+          <button
+            onClick={onFavourite}
+            className={cn(
+              'flex-shrink-0 transition-all active:scale-90',
+              isFavourite ? 'rounded-full bg-highlight p-1.5' : ''
+            )}>
             <IconStar
               width={24}
               height={24}
-              className={cn('transition-colors', isFavourite ? 'fill-highlight text-highlight' : 'text-white/60')}
+              className={cn('transition-colors', isFavourite ? 'fill-primaryDark text-primaryDark' : 'text-white/30')}
             />
           </button>
         </div>
 
-        {/* Location (Title Case) */}
+        {/* Location (Title Case) - Interactive Link Styling */}
         {location && (
           <div className="mb-2 flex cursor-pointer items-center gap-2" onClick={onAddress}>
             <svg
-              className="flex-shrink-0 text-secondary/40"
+              className="flex-shrink-0 text-highlight"
               width="14"
               height="14"
               viewBox="0 0 24 24"
@@ -139,7 +144,7 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
               <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
               <circle cx="12" cy="10" r="3"></circle>
             </svg>
-            <span className="text-sm font-medium text-secondary/70">
+            <span className="text-sm font-normal text-gray-100 underline decoration-gray-600 decoration-1 underline-offset-4">
               {formatLocation(location?.city, location?.address)}
             </span>
           </div>
@@ -148,13 +153,19 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
         {/* Description with Smart Read More */}
         {description?.short && (
           <div className="mb-4">
-            <p className={cn('text-sm font-medium text-secondary/60', shouldTruncate && !isDescriptionExpanded && 'line-clamp-3')}>
+            <p
+              className={cn(
+                'text-[13px] font-light tracking-[0.5px] text-gray-300 opacity-80',
+                shouldTruncate && !isDescriptionExpanded && 'line-clamp-3'
+              )}>
               {description.short}
             </p>
             {/* Only show "Read More" button if text is long enough */}
             {shouldTruncate && !isDescriptionExpanded && (
-              <button onClick={() => setIsDescriptionExpanded(true)} className="mt-0.5 text-sm font-semibold text-highlight">
-                ...{t('general.more', 'mehr')}
+              <button
+                onClick={() => setIsDescriptionExpanded(true)}
+                className="mt-0.5 text-[13px] font-light tracking-[0.5px] text-highlight">
+                {t('general.more', 'mehr')}
               </button>
             )}
           </div>

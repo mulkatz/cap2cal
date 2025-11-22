@@ -38,11 +38,11 @@ export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boo
   }
 
   if (item.ticketDirectLink) {
-    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket width={18} height={18} />} onClick={() => onTicket(item.ticketDirectLink!)} />;
+    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket width={20} height={20} />} onClick={() => onTicket(item.ticketDirectLink!)} />;
   }
 
   if (item.alreadyFetchedTicketLink) {
-    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket width={18} height={18} />} onClick={() => onTicket(item.alreadyFetchedTicketLink!)} />;
+    return <CTAButton highlight={isFavourite} text={t('general.buyTickets')} icon={<IconTicket width={20} height={20} />} onClick={() => onTicket(item.alreadyFetchedTicketLink!)} />;
   }
 
   if (item.alreadyFetchedTicketLink === null) {
@@ -54,7 +54,7 @@ export const TicketButton = ({ id, isFavourite }: { id: string, isFavourite: boo
       <CTAButton
         highlight={isFavourite}
         text={t('general.searchTickets')}
-        icon={<IconTicket width={18} height={18} />}
+        icon={<IconTicket width={20} height={20} />}
         loading={fetching}
         onClick={() => fetchTickets(item, item.ticketSearchQuery!)}
       />
