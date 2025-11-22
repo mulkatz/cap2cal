@@ -127,7 +127,7 @@ const EventCardAtom = React.memo(({
   // --- Render ---
   return (
     // <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-br from-[#1D2E3F] to-[#243445] max-h-[60vh]'}>
-    <Card highlight={isFavourite} inline usePattern className={'bg-gradient-to-b from-[#2b3f54] to-[#2b3f54]/50 max-h-[60vh]'}>
+    <Card highlight={isFavourite} inline usePattern className={'bg-[#2b3f54] max-h-[60vh]'}>
       <>
         <div className={'flex w-full flex-col overflow-y-auto overflow-x-hidden px-3 text-secondary'}>
           {/* Header */}

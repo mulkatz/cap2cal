@@ -160,7 +160,7 @@ export const EventCardAtom2 = ({ data, isFavourite, onFavourite, onImage, onExpo
   // --- Render ---
   return (
     // <div className="font-sans w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-800/80 p-4 shadow-2xl shadow-black/40 backdrop-blur-sm">
-    <div className="font-sans w-full max-w-sm rounded-2xl border border-slate-700 bg-gradient-to-br from-[#1E2939] to-[#243145] p-4 shadow-2xl shadow-black/40 backdrop-blur-sm">
+    <div className="font-sans w-full max-w-sm rounded-2xl border border-slate-700 bg-[#1E2939] p-4 shadow-2xl shadow-black/40 backdrop-blur-sm">
       {/* Header Section */}
       <div className="border-b border-slate-700/60 pb-5">
         <p className="text-sm font-medium text-indigo-400">{kind || 'Event'}</p>
