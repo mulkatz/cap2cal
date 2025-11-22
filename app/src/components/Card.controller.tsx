@@ -315,6 +315,15 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
     window.open(url, '_blank');
   }, [item.location]);
 
+  const onDelete = useCallback(async () => {
+    // Delete the event from the database
+    await db.eventItems.delete(item.id);
+    // Also delete the associated image if it exists
+    if (img?.id) {
+      await db.images.delete(img.id);
+    }
+  }, [item.id, img?.id]);
+
   return (
     <>
       <EventCardAtom
@@ -324,6 +333,7 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
         onExport={exportToCalendar}
         onImage={onImage}
         onAddress={onAddress}
+        onDelete={onDelete}
       />
     </>
   );

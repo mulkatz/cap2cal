@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { TicketButton } from './TicketButton.tsx';
 import { Card } from './Card.group.tsx';
 import { useTranslation } from 'react-i18next';
+import { Dialog } from './Dialog.tsx';
 
 type Props = {
   data: CaptureEvent;
@@ -14,6 +15,7 @@ type Props = {
   onFavourite: () => void;
   onImage: () => void;
   onExport: () => void;
+  onDelete: () => void;
   onAddress?: () => void;
   locale?: string; // Dynamic locale prop (e.g., 'en-US', 'de-DE')
 };
@@ -25,6 +27,24 @@ const toTitleCase = (text: string): string => {
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+};
+
+// Helper: Format time display from event data
+const formatTimeDisplay = (
+  dateTimeFrom?: { date?: string; time?: string },
+  dateTimeTo?: { date?: string; time?: string }
+): string | null => {
+  const startTime = dateTimeFrom?.time;
+  const endTime = dateTimeTo?.time;
+
+  // Case C: No time data
+  if (!startTime) return null;
+
+  // Case A: Start only
+  if (!endTime) return startTime;
+
+  // Case B: Start and end
+  return `${startTime} - ${endTime}`;
 };
 
 // ## Sub-component: DateBadge
@@ -53,15 +73,17 @@ const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: st
 };
 
 // ## Main Component: EventCardAtom
-const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onExport, onAddress, locale }: Props) => {
+const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onExport, onDelete, onAddress, locale }: Props) => {
   const { t, i18n } = useTranslation();
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const [showActionSheet, setShowActionSheet] = useState(false);
 
   const {
     title,
     kind,
     location,
     dateTimeFrom,
+    dateTimeTo,
     description,
     ticketDirectLink,
     id,
@@ -71,6 +93,9 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
 
   // Use provided locale or fall back to i18n language
   const effectiveLocale = locale || i18n.language;
+
+  // Format time display
+  const formattedTime = formatTimeDisplay(dateTimeFrom, dateTimeTo);
 
   // Character limit for description truncation
   const TRUNCATE_LENGTH = 120;
@@ -90,27 +115,23 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
 
   // --- Render ---
   return (
-    <Card
-      highlight={isFavourite}
-      inline
-      usePattern
-      className={
-        'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
-      }>
+    <>
+      <Card
+        highlight={isFavourite}
+        inline
+        usePattern
+        className={
+          'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
+        }>
       <div className="flex flex-col p-5">
-        {/* Header Row: Date Badge + Title + Category Chip + Star */}
+        {/* Header Row: Date Badge + Title + Star */}
         <div className="mb-3 flex items-start gap-3">
           {/* Date Badge */}
           <DateBadge dateTime={dateTimeFrom} locale={effectiveLocale} />
 
-          {/* Title and Category Chip Stack */}
+          {/* Title */}
           <div className="flex-1 self-start">
             <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
-            {kind && (
-              <span className="mt-2 inline-block rounded-full bg-yellow-400/10 px-2.5 py-1 text-xs font-medium text-highlight">
-                {kind}
-              </span>
-            )}
           </div>
 
           {/* Favorite Star - Yellow Circle when Active */}
@@ -127,6 +148,35 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
             />
           </button>
         </div>
+
+        {/* Meta Row: Category Chip + Time Display */}
+        {(kind || formattedTime) && (
+          <div className="mt-2 flex items-center gap-3">
+            {/* Category Chip */}
+            {kind && (
+              <span className="inline-block rounded-full bg-yellow-400/10 px-2.5 py-1 text-xs font-medium text-highlight">
+                {kind}
+              </span>
+            )}
+
+            {/* Time Display */}
+            {formattedTime && (
+              <div className="flex items-center gap-1.5">
+                {/* Clock Icon */}
+                <svg
+                  className="h-4 w-4 text-gray-400"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z" />
+                  <path d="M13 7h-2v5.414l3.293 3.293 1.414-1.414L13 11.586z" />
+                </svg>
+                {/* Time Text */}
+                <span className="font-['Plus_Jakarta_Sans'] text-sm font-medium text-gray-200">{formattedTime}</span>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Location (Title Case) - Interactive Link Styling */}
         {location && (
@@ -173,6 +223,23 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
 
         {/* Action Row: Circle Icons + Tickets Button */}
         <div className="flex items-center gap-2 pt-2">
+          {/* Three-Dot Menu Button */}
+          <IconButton
+            onClick={() => setShowActionSheet(true)}
+            icon={
+              <svg
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="5" r="2" />
+                <circle cx="12" cy="12" r="2" />
+                <circle cx="12" cy="19" r="2" />
+              </svg>
+            }
+            className="h-10 w-10"
+          />
           {/* Camera Icon (22px - slightly larger for optical balance) */}
           <IconButton onClick={onImage} icon={<IconCamera width={22} height={22} />} className="h-10 w-10" />
           {/* Calendar Icon (20px) */}
@@ -184,9 +251,62 @@ const EventCardAtom = React.memo(({ data, onFavourite, isFavourite, onImage, onE
               <TicketButton isFavourite={isFavourite} id={id} />
             </div>
           )}
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+
+      {/* Action Sheet */}
+      {showActionSheet && (
+        <Dialog onClose={() => setShowActionSheet(false)} closeOnClickOutside>
+          <div className="p-6">
+            {/* Title */}
+            <h2 className="mb-6 text-center text-xl font-semibold text-white">
+              {t('eventCard.actionSheet.title', 'Event Options')}
+            </h2>
+
+            {/* Options */}
+            <div className="space-y-3">
+              {/* Share Option - Disabled/Placeholder */}
+              <button
+                disabled
+                className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-left text-gray-400 opacity-50 transition-colors">
+                <div className="flex items-center gap-3">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                    <polyline points="16 6 12 2 8 6" />
+                    <line x1="12" y1="2" x2="12" y2="15" />
+                  </svg>
+                  <span className="font-medium">{t('eventCard.actionSheet.share', 'Share Event')}</span>
+                  <span className="ml-auto text-xs">({t('eventCard.actionSheet.comingSoon', 'Coming Soon')})</span>
+                </div>
+              </button>
+
+              {/* Delete Option - Destructive */}
+              <button
+                onClick={() => {
+                  setShowActionSheet(false);
+                  onDelete();
+                }}
+                className="w-full rounded-xl bg-red-500/10 px-4 py-3.5 text-left text-red-400 transition-colors active:bg-red-500/20">
+                <div className="flex items-center gap-3">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 7H5v13a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7H6zm10.618-3L15 2H9L7.382 4H3v2h18V4z" />
+                  </svg>
+                  <span className="font-semibold">{t('eventCard.actionSheet.delete', 'Delete Event')}</span>
+                </div>
+              </button>
+
+              {/* Cancel Option */}
+              <button
+                onClick={() => setShowActionSheet(false)}
+                className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-center font-medium text-white transition-colors active:bg-white/10">
+                {t('eventCard.actionSheet.cancel', 'Cancel')}
+              </button>
+            </div>
+          </div>
+        </Dialog>
+      )}
+    </>
   );
 });
 
