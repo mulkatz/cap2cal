@@ -545,7 +545,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                 </button>
 
                 {/* Center: Title */}
-                <div className="font-bold tracking-widest text-white text-xs">SCAN EVENT</div>
+                <div className="text-xs font-bold tracking-widest text-white">SCAN EVENT</div>
 
                 {/* Right: Flash Toggle */}
                 <button
@@ -559,38 +559,38 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
               </div>
             </div>
 
-            {/* SCAN FRAME - Maximized tall portrait rectangle with corner brackets */}
-            <div className="absolute inset-0 z-10 flex items-center justify-center p-6 pointer-events-none">
-              <div className="relative h-[85%] w-[70%]">
+            {/* SCAN FRAME - Tall portrait poster shape with thick visible corner brackets */}
+            <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center px-6 pb-safe-offset-24 pt-safe-offset-20">
+              <div className="relative h-[100%] w-[100%]">
                 {/* Top-left corner */}
-                <div className="absolute left-0 top-0 h-10 w-10 animate-pulse">
-                  <div className="absolute left-0 top-0 h-[3px] w-10 bg-highlight rounded-full" />
-                  <div className="absolute left-0 top-0 h-10 w-[3px] bg-highlight rounded-full" />
+                <div className="absolute left-0 top-0 h-12 w-12 animate-pulse">
+                  <div className="absolute left-0 top-0 h-[5px] w-12 rounded-full bg-highlight shadow-lg" />
+                  <div className="absolute left-0 top-0 h-12 w-[5px] rounded-full bg-highlight shadow-lg" />
                 </div>
 
                 {/* Top-right corner */}
-                <div className="absolute right-0 top-0 h-10 w-10 animate-pulse">
-                  <div className="absolute right-0 top-0 h-[3px] w-10 bg-highlight rounded-full" />
-                  <div className="absolute right-0 top-0 h-10 w-[3px] bg-highlight rounded-full" />
+                <div className="absolute right-0 top-0 h-12 w-12 animate-pulse">
+                  <div className="absolute right-0 top-0 h-[5px] w-12 rounded-full bg-highlight shadow-lg" />
+                  <div className="absolute right-0 top-0 h-12 w-[5px] rounded-full bg-highlight shadow-lg" />
                 </div>
 
                 {/* Bottom-left corner */}
-                <div className="absolute bottom-0 left-0 h-10 w-10 animate-pulse">
-                  <div className="absolute bottom-0 left-0 h-[3px] w-10 bg-highlight rounded-full" />
-                  <div className="absolute bottom-0 left-0 h-10 w-[3px] bg-highlight rounded-full" />
+                <div className="absolute bottom-0 left-0 h-12 w-12 animate-pulse">
+                  <div className="absolute bottom-0 left-0 h-[5px] w-12 rounded-full bg-highlight shadow-lg" />
+                  <div className="absolute bottom-0 left-0 h-12 w-[5px] rounded-full bg-highlight shadow-lg" />
                 </div>
 
                 {/* Bottom-right corner */}
-                <div className="absolute bottom-0 right-0 h-10 w-10 animate-pulse">
-                  <div className="absolute bottom-0 right-0 h-[3px] w-10 bg-highlight rounded-full" />
-                  <div className="absolute bottom-0 right-0 h-10 w-[3px] bg-highlight rounded-full" />
+                <div className="absolute bottom-0 right-0 h-12 w-12 animate-pulse">
+                  <div className="absolute bottom-0 right-0 h-[5px] w-12 rounded-full bg-highlight shadow-lg" />
+                  <div className="absolute bottom-0 right-0 h-12 w-[5px] rounded-full bg-highlight shadow-lg" />
                 </div>
               </div>
             </div>
 
             {/* HELPER TEXT - Glassmorphism pill positioned above shutter button */}
-            <div className="absolute bottom-safe-offset-40 left-0 right-0 z-20 flex justify-center pointer-events-none">
-              <div className="rounded-full bg-black/40 backdrop-blur-md border border-white/10 px-4 py-2 text-xs text-white font-medium">
+            <div className="pointer-events-none absolute left-0 right-0 z-20 flex justify-center bottom-safe-offset-32">
+              <div className="rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
                 Scan event details
               </div>
             </div>
@@ -607,8 +607,8 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                 <button
                   onClick={handleCapture}
                   className="flex items-center justify-center transition-transform active:scale-95">
-                  {/* Outer Ring - w-20 h-20 with padding for gap */}
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-white shadow-[0_4px_14px_rgba(0,0,0,0.7)]">
+                  {/* Outer Ring - w-20 h-20 with 5px border matching scanner corners */}
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-[5px] border-white shadow-[0_4px_14px_rgba(0,0,0,0.7)]">
                     {/* Inner Circle - w-14 h-14 for wider gap and precise look */}
                     <div className="h-14 w-14 rounded-full bg-highlight" />
                   </div>
