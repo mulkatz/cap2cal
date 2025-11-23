@@ -534,27 +534,27 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
 
         {isPreviewRunning && (
           <>
-            {/* TOP OVERLAY - Gradient with controls */}
+            {/* TOP OVERLAY - Minimal gradient with only icons */}
             <div className="absolute left-0 right-0 top-0 z-10 h-[100px] bg-gradient-to-b from-black/70 to-transparent pt-safe">
               <div className="flex items-center justify-between px-4 py-4">
                 {/* Left: Close Button */}
                 <button
                   onClick={onClose}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 backdrop-blur-sm transition-all active:scale-95">
-                  <X size={24} className="text-white" />
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 backdrop-blur-sm shadow-md transition-all active:scale-95">
+                  <X size={24} className="text-white drop-shadow-md" />
                 </button>
 
-                {/* Center: Title */}
-                <div className="text-xs font-bold tracking-widest text-white">SCAN EVENT</div>
+                {/* Center: Empty (removed "SCAN EVENT" text for cleaner look) */}
+                <div />
 
                 {/* Right: Flash Toggle */}
                 <button
                   onClick={() => setFlashEnabled(!flashEnabled)}
                   className={cn(
-                    'flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm transition-all active:scale-95',
+                    'flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm shadow-md transition-all active:scale-95',
                     flashEnabled ? 'bg-highlight/30' : 'bg-black/30'
                   )}>
-                  <IconZap size={24} className={flashEnabled ? 'fill-highlight text-highlight' : 'text-white'} />
+                  <IconZap size={24} className={cn('drop-shadow-md', flashEnabled ? 'fill-highlight text-highlight' : 'text-white')} />
                 </button>
               </div>
             </div>
@@ -588,9 +588,9 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
               </div>
             </div>
 
-            {/* HELPER TEXT - Glassmorphism pill positioned above shutter button */}
+            {/* HELPER TEXT - High-tech HUD glassmorphism pill */}
             <div className="pointer-events-none absolute left-0 right-0 z-20 flex justify-center bottom-safe-offset-32">
-              <div className="rounded-full border border-white/10 bg-black/40 px-4 py-2 text-xs font-medium text-white backdrop-blur-md">
+              <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-xs font-medium text-white/90 backdrop-blur-md shadow-lg">
                 Scan event details
               </div>
             </div>
@@ -598,9 +598,9 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
             {/* BOTTOM OVERLAY - Gradient with controls */}
             <div className="absolute bottom-0 left-0 right-0 z-10 h-[150px] bg-gradient-to-t from-black/80 to-transparent pb-safe">
               <div className="flex h-full items-end justify-between px-6 pb-6">
-                {/* Left: Gallery Button */}
-                <button className="flex h-12 w-12 items-center justify-center rounded-full bg-white/10 backdrop-blur-sm transition-all active:scale-95">
-                  <IconImage size={24} className="text-white" />
+                {/* Left: Gallery Button - Subtle glassy appearance */}
+                <button className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-sm shadow-md transition-all active:scale-95">
+                  <IconImage size={24} className="text-white drop-shadow-md" />
                 </button>
 
                 {/* Center: Shutter Button with refined proportions */}
