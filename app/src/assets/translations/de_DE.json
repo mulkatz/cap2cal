@@ -124,6 +124,9 @@
           "description2": "Das kann ein Ticket, Flyer oder jedes andere Dokument mit Event-Datum sein.",
           "button": "Alles klar!"
         },
+        "camera": {
+          "scanEventDetails": "Event-Details scannen"
+        },
         "navigation": {
           "next": "Weiter",
           "skip": "Überspringen",

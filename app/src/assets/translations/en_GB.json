@@ -124,6 +124,9 @@
           "description2": "This could be a ticket, flyer, or any document containing the event date.",
           "button": "Got it!"
         },
+        "camera": {
+          "scanEventDetails": "Scan event details"
+        },
         "navigation": {
           "next": "Next",
           "skip": "Skip",

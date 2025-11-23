@@ -9,6 +9,7 @@ import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
 import { AppState } from '../contexts/AppContext.tsx';
 import { CameraInstructionDialog } from '../components/dialogs/CameraInstructionDialog.tsx';
 import { logger } from '../utils/logger';
+import { useTranslation } from 'react-i18next';
 
 interface CameraViewProps {
   onStreamCallback?: (running: boolean) => void;
@@ -27,6 +28,7 @@ export interface CameraRefProps {
 
 const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
   ({ onStreamCallback, onClose, appState, handleCapture, onImport }, ref) => {
+    const { t } = useTranslation();
     const [isPreviewRunning, setIsPreviewRunning] = useState(false);
     const [showCameraInstruction, setShowCameraInstruction] = useState(false);
     const [hasSeenCameraInstruction, setHasSeenCameraInstruction] = useState(() => {
@@ -615,7 +617,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
             {/* HELPER TEXT - High-contrast HUD pill */}
             <div className="pointer-events-none absolute left-0 right-0 z-20 flex justify-center bottom-safe-offset-32">
               <div className="rounded-full border border-white/10 bg-black/50 px-4 py-2 text-xs font-medium text-white backdrop-blur-md shadow-lg">
-                Scan event details
+                {t('dialogs.onboarding.camera.scanEventDetails')}
               </div>
             </div>
 
