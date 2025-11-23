@@ -19,12 +19,16 @@ export const Dialog = ({
     <div
       className={cn('fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6', full && 'magicpattern')}
       onClick={closeOnClickOutside ? onClose : undefined}>
-      {/* Gradient backdrop - only for full-screen dialogs */}
-      {full && <div className={'absolute inset-0 z-0 bg-gradient-to-t from-black/50 to-black/20'} />}
+      {/* Premium dark blurred backdrop - enhanced for AI processing state */}
+      {!noCard && <div className={'absolute inset-0 bg-black/80 backdrop-blur-md'} />}
+      {/*<div*/}
+      {/*  className={cn('fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6', full && 'magicpattern')}*/}
+      {/*  onClick={closeOnClickOutside ? onClose : undefined}>*/}
+      {full && <div className={'absolute inset-0 bg-gradient-to-t from-black/50 to-black/20'} />}
 
       {/* Premium modal container with smooth fade + scale animation */}
       <div
-        className={'relative z-10 flex max-h-[90%] w-full max-w-md animate-premiumModal flex-col'}
+        className={'flex max-h-[90%] w-full max-w-md animate-premiumModal flex-col'}
         onClick={(e) => e.stopPropagation()}>
         {onClose && (
           <div

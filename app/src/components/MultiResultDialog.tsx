@@ -23,14 +23,14 @@ export const MultiResultDialog = ({
     <div
       className={cn('fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6', full && 'magicpattern')}
       onClick={closeOnClickOutside ? onClose : undefined}>
-      <div className={'absolute inset-0 bg-gradient-to-t from-black/50 to-black/20'}/>
+      <div className={'absolute inset-0 bg-gradient-to-t from-black/50 to-black/20'} />
       <div className={'absolute inset-0 flex h-full flex-col'}>
         <EmblaCarousel slides={children} options={OPTIONS} />
-        <div className="flex w-full items-center justify-center self-end px-4 pb-safe-offset-12 mb-10">
+        <div className="mb-10 flex w-full items-center justify-center self-end px-4 pb-safe-offset-12">
           <div
-            className="flex items-center justify-center w-20 h-20 rounded-full border-[4px] border-white/20 shadow-lg"
+            className="flex h-20 w-20 items-center justify-center rounded-full border-[4px] border-white/20 shadow-lg"
             onClick={onClose}>
-            <div className="flex items-center justify-center w-14 h-14 rounded-full bg-green-500">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-green-500">
               <IconCheck size={28} strokeWidth={3.5} className="text-white" />
             </div>
           </div>

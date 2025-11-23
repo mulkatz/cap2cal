@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LoaderAnimation } from '../LoaderAnimation';
 
@@ -35,7 +35,11 @@ export const LoadingController = () => {
   }, []);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center py-8 text-center" data-testid="loading-dialog">
+    <div
+      className="absolute inset-0 flex w-full flex-col items-center justify-center py-8 text-center"
+      data-testid="loading-dialog">
+      {/*<div className={'absolute inset-0 bg-gradient-to-t from-black/50 to-black/20'} />*/}
+      {/**/}
       {/* Custom animated loader */}
       <LoaderAnimation />
 
