@@ -559,9 +559,9 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
               </div>
             </div>
 
-            {/* SCAN FRAME - Corner brackets in center with pulse animation */}
-            <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none">
-              <div className="relative h-[60%] w-[85%]">
+            {/* SCAN FRAME - Maximized tall portrait rectangle with corner brackets */}
+            <div className="absolute inset-0 z-10 flex items-center justify-center p-6 pointer-events-none">
+              <div className="relative h-[85%] w-[70%]">
                 {/* Top-left corner */}
                 <div className="absolute left-0 top-0 h-10 w-10 animate-pulse">
                   <div className="absolute left-0 top-0 h-[3px] w-10 bg-highlight rounded-full" />
@@ -588,10 +588,10 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
               </div>
             </div>
 
-            {/* HELPER TEXT - Positioned above shutter button */}
-            <div className="absolute bottom-safe-offset-32 left-0 right-0 z-20 flex justify-center pointer-events-none">
-              <div className="rounded-full bg-black/60 px-4 py-1.5 text-xs text-white backdrop-blur-md">
-                Align poster within frame
+            {/* HELPER TEXT - Glassmorphism pill positioned above shutter button */}
+            <div className="absolute bottom-safe-offset-40 left-0 right-0 z-20 flex justify-center pointer-events-none">
+              <div className="rounded-full bg-black/40 backdrop-blur-md border border-white/10 px-4 py-2 text-xs text-white font-medium">
+                Scan event details
               </div>
             </div>
 
@@ -603,14 +603,14 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                   <IconImage size={24} className="text-white" />
                 </button>
 
-                {/* Center: Shutter Button with proper gap */}
+                {/* Center: Shutter Button with refined proportions */}
                 <button
                   onClick={handleCapture}
                   className="flex items-center justify-center transition-transform active:scale-95">
-                  {/* Outer Ring with padding to create gap */}
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-white p-1 shadow-[0_4px_14px_rgba(0,0,0,0.7)]">
-                    {/* Inner Circle - Now smaller and separated by padding */}
-                    <div className="h-full w-full rounded-full bg-highlight" />
+                  {/* Outer Ring - w-20 h-20 with padding for gap */}
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-4 border-white shadow-[0_4px_14px_rgba(0,0,0,0.7)]">
+                    {/* Inner Circle - w-14 h-14 for wider gap and precise look */}
+                    <div className="h-14 w-14 rounded-full bg-highlight" />
                   </div>
                 </button>
 
