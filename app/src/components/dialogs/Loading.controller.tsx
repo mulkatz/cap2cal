@@ -40,7 +40,7 @@ export const LoadingController = () => {
       <LoaderAnimation />
 
       {/* Status text feed */}
-      <div className="mx-auto mt-8 flex w-2/3 flex-col items-center justify-center">
+      <div className="mx-auto mt-24 flex w-2/3 flex-col items-center justify-center">
         <span
           className={`w-full text-center font-['Plus_Jakarta_Sans'] text-lg font-semibold text-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${currentVariation}`)}
