@@ -1287,6 +1287,20 @@ video {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-\[fadeIn_0\.3s_ease-out_0\.3s_both\] {
+  animation: fadeIn 0.3s ease-out 0.3s both;
+}
+
 @keyframes premiumModal {
   0% {
     opacity: 0;

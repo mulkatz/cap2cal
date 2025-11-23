@@ -46,6 +46,10 @@ const config = {
         ripple: 'ripple 0.6s ease-out',
       },
       keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
         ripple: {
           '0%': {
             transform: 'scale(0)',

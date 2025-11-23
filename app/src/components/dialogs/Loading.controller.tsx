@@ -41,10 +41,12 @@ export const LoadingController = () => {
       {/*<div className={'absolute inset-0 bg-gradient-to-t from-black/50 to-black/20'} />*/}
       {/**/}
       {/* Custom animated loader */}
-      <LoaderAnimation />
+      <div className="animate-[fadeIn_0.3s_ease-out_0.3s_both]">
+        <LoaderAnimation />
+      </div>
 
       {/* Status text feed */}
-      <div className="mx-auto mt-24 flex max-w-[250px] flex-col items-center justify-center">
+      <div className="mx-auto mt-24 flex max-w-[250px] animate-[fadeIn_0.3s_ease-out_0.3s_both] flex-col items-center justify-center">
         <span
           className={`w-full text-center font-['Plus_Jakarta_Sans'] text-lg font-medium text-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${currentVariation}`)}
