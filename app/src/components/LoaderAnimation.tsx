@@ -4,10 +4,12 @@ export const LoaderAnimation = () => {
       <style>{`
         .loader-animation {
           --fill-color: #e6de4d;
+          --shine-color: rgba(230, 222, 77, 0.2);
           transform: scale(0.5);
           width: 100px;
           height: auto;
           position: relative;
+          filter: drop-shadow(0 0 20px var(--shine-color));
         }
 
         .loader-animation #pegtopone {
@@ -113,6 +115,9 @@ export const LoaderAnimation = () => {
           viewBox="0 0 100 100"
         >
           <defs>
+            <filter id="shine">
+              <feGaussianBlur stdDeviation="3"></feGaussianBlur>
+            </filter>
             <mask id="mask">
               <path
                 d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
@@ -191,6 +196,7 @@ export const LoaderAnimation = () => {
               stroke="white"
               opacity="0.3"
               strokeWidth="3"
+              filter="url(#shine)"
               mask="url(#mask)"
             ></path>
             <path
@@ -218,6 +224,9 @@ export const LoaderAnimation = () => {
           viewBox="0 0 100 100"
         >
           <defs>
+            <filter id="shine2">
+              <feGaussianBlur stdDeviation="3"></feGaussianBlur>
+            </filter>
             <mask id="mask2">
               <path
                 d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
@@ -296,6 +305,7 @@ export const LoaderAnimation = () => {
               stroke="white"
               opacity="0.3"
               strokeWidth="3"
+              filter="url(#shine2)"
               mask="url(#mask2)"
             ></path>
             <path
@@ -323,6 +333,9 @@ export const LoaderAnimation = () => {
           viewBox="0 0 100 100"
         >
           <defs>
+            <filter id="shine3">
+              <feGaussianBlur stdDeviation="3"></feGaussianBlur>
+            </filter>
             <mask id="mask3">
               <path
                 d="M63,37c-6.7-4-4-27-13-27s-6.3,23-13,27-27,4-27,13,20.3,9,27,13,4,27,13,27,6.3-23,13-27,27-4,27-13-20.3-9-27-13Z"
@@ -401,6 +414,7 @@ export const LoaderAnimation = () => {
               stroke="white"
               opacity="0.3"
               strokeWidth="3"
+              filter="url(#shine3)"
               mask="url(#mask3)"
             ></path>
             <path
