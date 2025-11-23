@@ -661,8 +661,8 @@ export const App = () => {
         {/* Darkening backdrop for event history */}
         <div
           className={cn(
-            "absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out",
-            showHistory ? "opacity-70 pointer-events-auto" : "opacity-0 pointer-events-none"
+            'absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out',
+            showHistory ? 'pointer-events-auto opacity-70' : 'pointer-events-none opacity-0'
           )}
           onClick={() => setShowHistory(false)}
         />
@@ -673,8 +673,8 @@ export const App = () => {
         {/* Darkening backdrop for settings */}
         <div
           className={cn(
-            "absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out",
-            showSettings ? "opacity-70 pointer-events-auto" : "opacity-0 pointer-events-none"
+            'absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out',
+            showSettings ? 'pointer-events-auto opacity-70' : 'pointer-events-none opacity-0'
           )}
           onClick={() => setShowSettings(false)}
         />
