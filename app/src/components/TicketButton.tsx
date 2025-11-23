@@ -68,7 +68,7 @@ export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boo
       <CTAButton
         highlight={isFavourite}
         text={t('general.searchTickets')}
-        icon={<IconTicket size={20} strokeWidth={3} />}
+        icon={<IconTicket size={20} strokeWidth={2} />}
         loading={fetching}
         onClick={() => fetchTickets(item, item.ticketSearchQuery!)}
       />
