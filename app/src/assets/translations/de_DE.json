@@ -59,7 +59,11 @@
         "success": "Willkommen bei Pro!",
         "restored": "Käufe wiederhergestellt!",
         "noPurchases": "Keine aktiven Abonnements gefunden",
-        "restoreError": "Käufe konnten nicht wiederhergestellt werden"
+        "restoreError": "Käufe konnten nicht wiederhergestellt werden",
+        "networkError": "Netzwerkfehler. Bitte überprüfe deine Verbindung.",
+        "paymentFailed": "Zahlung fehlgeschlagen. Bitte versuche es erneut.",
+        "productUnavailable": "Dieser Plan ist derzeit nicht verfügbar.",
+        "unknownError": "Etwas ist schiefgelaufen. Bitte versuche es erneut."
       },
       "dataManagement": {
         "exportSuccess": "Daten erfolgreich exportiert",
@@ -107,6 +111,15 @@
           "feature3": "Sichere Zahlung - sichere dir deinen Platz in Sekunden",
           "exampleLabel": "Beispiel",
           "buyButton": "Tickets kaufen"
+        },
+        "freeTrial": {
+          "title": "Bereit, loszulegen?",
+          "bullet1": "Sofortige Event-Erfassung und Speicherung",
+          "bullet2": "Export in alle deine Kalender",
+          "bullet3": "Zugriff auf Tickets, Teilen und Navigation",
+          "permissionsTitle": "Dafür brauchen wir kurz:",
+          "permissionCamera": "Kamera — damit du Events fotografieren kannst",
+          "permissionCalendar": "Kalender — damit wir deine Events speichern können"
         },
         "getStarted": {
           "title": "Bereit, loszulegen?",
@@ -179,7 +192,8 @@
         "cameraAdvice": "Ohne Kamera-Zugriff können wir keine Events fotografieren. Gib uns kurz die Erlaubnis in den Einstellungen.",
         "calendarAdvice": "Ohne Kalender-Zugriff können wir deine Events nicht speichern. Gib uns kurz die Erlaubnis in den Einstellungen.",
         "photosAdvice": "Ohne Foto-Zugriff können wir keine Bilder importieren. Gib uns kurz die Erlaubnis in den Einstellungen.",
-        "toSettings": "Zu den Einstellungen"
+        "toSettings": "Zu den Einstellungen",
+        "cancel": "Abbrechen"
       },
       "upgrade": {
         "title": "Erfassungslimit erreicht",
@@ -211,7 +225,8 @@
         "cta": "Weiter mit {{plan}}",
         "notNow": "Vielleicht später",
         "restorePurchases": "Käufe wiederherstellen",
-        "legalText": "Das Abo verlängert sich automatisch, sofern nicht gekündigt. Jederzeit in den Einstellungen kündbar."
+        "legalText": "Das Abo verlängert sich automatisch, sofern nicht gekündigt. Jederzeit in den Einstellungen kündbar.",
+        "processing": "Wird verarbeitet..."
       },
       "settings": {
         "title": "Einstellungen",

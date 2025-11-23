@@ -59,7 +59,11 @@
         "success": "Welcome to Pro!",
         "restored": "Purchases restored!",
         "noPurchases": "No active subscriptions found",
-        "restoreError": "Failed to restore purchases"
+        "restoreError": "Failed to restore purchases",
+        "networkError": "Network error. Please check your connection.",
+        "paymentFailed": "Payment failed. Please try again.",
+        "productUnavailable": "This plan is currently unavailable.",
+        "unknownError": "Something went wrong. Please try again."
       },
       "dataManagement": {
         "exportSuccess": "Data exported successfully",
@@ -107,6 +111,15 @@
           "feature3": "Secure checkout — book your spot in seconds",
           "exampleLabel": "Example",
           "buyButton": "Get Tickets"
+        },
+        "freeTrial": {
+          "title": "Ready to Get Started?",
+          "bullet1": "Instant event capture and storage",
+          "bullet2": "Export to all your calendars",
+          "bullet3": "Access tickets, share events, and navigate",
+          "permissionsTitle": "Quick permissions we'll need:",
+          "permissionCamera": "Camera — so you can snap events",
+          "permissionCalendar": "Calendar — so we can save your events"
         },
         "getStarted": {
           "title": "Ready to Get Started?",
@@ -179,7 +192,8 @@
         "cameraAdvice": "We can't snap events without camera access. Grant permission in your settings to start capturing.",
         "calendarAdvice": "We can't save events without calendar access. Grant permission in your settings to use this feature.",
         "photosAdvice": "We can't import photos without library access. Grant permission in your settings to use this feature.",
-        "toSettings": "Go to Settings"
+        "toSettings": "Go to Settings",
+        "cancel": "Cancel"
       },
       "upgrade": {
         "title": "Capture Limit Reached",
@@ -211,7 +225,8 @@
         "cta": "Continue with {{plan}}",
         "notNow": "Maybe Later",
         "restorePurchases": "Restore Purchases",
-        "legalText": "Subscription auto-renews unless canceled. Cancel anytime in Settings."
+        "legalText": "Subscription auto-renews unless canceled. Cancel anytime in Settings.",
+        "processing": "Processing..."
       },
       "settings": {
         "title": "Settings",
