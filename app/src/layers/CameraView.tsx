@@ -15,6 +15,7 @@ interface CameraViewProps {
   onClose: () => void;
   appState: AppState;
   handleCapture: () => Promise<void>;
+  onImport: () => Promise<void>;
 }
 
 export interface CameraRefProps {
@@ -25,7 +26,7 @@ export interface CameraRefProps {
 }
 
 const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
-  ({ onStreamCallback, onClose, appState, handleCapture }, ref) => {
+  ({ onStreamCallback, onClose, appState, handleCapture, onImport }, ref) => {
     const [isPreviewRunning, setIsPreviewRunning] = useState(false);
     const [showCameraInstruction, setShowCameraInstruction] = useState(false);
     const [hasSeenCameraInstruction, setHasSeenCameraInstruction] = useState(() => {
@@ -49,6 +50,21 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         document.removeEventListener('visibilitychange', handleVisibilityChange);
       };
     }, [isPreviewRunning]); // <--- Add the dependency here
+
+    // Sync flash mode with camera preview when flashEnabled changes
+    useEffect(() => {
+      if (isPreviewRunning) {
+        const updateFlashMode = async () => {
+          try {
+            await CameraPreview.setFlashMode({ flashMode: flashEnabled ? 'on' : 'off' });
+            logger.debug('Camera', 'Flash mode updated', { flashEnabled });
+          } catch (error) {
+            logger.error('Camera', 'Failed to set flash mode', error instanceof Error ? error : undefined);
+          }
+        };
+        updateFlashMode();
+      }
+    }, [flashEnabled, isPreviewRunning]);
 
     /**
      * ───────────────────────────────────────────────────────────
@@ -599,7 +615,9 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
             <div className="absolute bottom-0 left-0 right-0 z-10 h-[150px] bg-gradient-to-t from-black/80 to-transparent pb-safe">
               <div className="flex h-full items-end justify-between px-6 pb-6">
                 {/* Left: Gallery Button - Subtle glassy appearance */}
-                <button className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-sm shadow-md transition-all active:scale-95">
+                <button
+                  onClick={onImport}
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-sm shadow-md transition-all active:scale-95">
                   <IconImage size={24} className="text-white drop-shadow-md" />
                 </button>
 

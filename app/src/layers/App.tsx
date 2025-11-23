@@ -604,6 +604,7 @@ export const App = () => {
             handleCapture={handleCapture}
             appState={appState}
             onClose={() => setAppState('home')}
+            onImport={onImport}
           />
 
           {(appState === 'loading' || appState === 'home') && (
