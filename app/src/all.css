@@ -1586,6 +1586,10 @@ video {
   border-top-width: 1px;
 }
 
+.border-t-2 {
+  border-top-width: 2px;
+}
+
 .border-none {
   border-style: none;
 }
@@ -1708,6 +1712,10 @@ video {
   background-color: rgb(0 0 0 / 0.3);
 }
 
+.bg-black\/50 {
+  background-color: rgb(0 0 0 / 0.5);
+}
+
 .bg-black\/80 {
   background-color: rgb(0 0 0 / 0.8);
 }
@@ -1753,10 +1761,6 @@ video {
 
 .bg-highlight\/10 {
   background-color: rgb(230 222 77 / 0.1);
-}
-
-.bg-highlight\/30 {
-  background-color: rgb(230 222 77 / 0.3);
 }
 
 .bg-highlight\/5 {
@@ -1914,6 +1918,12 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-\[\#F2EC9B\] {
+  --tw-gradient-from: #F2EC9B var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(242 236 155 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-black\/50 {
   --tw-gradient-from: rgb(0 0 0 / 0.5) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
@@ -2005,6 +2015,10 @@ video {
 
 .to-\[\#37AEE2\] {
   --tw-gradient-to: #37AEE2 var(--tw-gradient-to-position);
+}
+
+.to-\[\#E6DE4D\] {
+  --tw-gradient-to: #E6DE4D var(--tw-gradient-to-position);
 }
 
 .to-black\/20 {
@@ -2545,10 +2559,6 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.text-white\/90 {
-  color: rgb(255 255 255 / 0.9);
-}
-
 .underline {
   text-decoration-line: underline;
 }
@@ -2677,6 +2687,11 @@ video {
   --tw-shadow: var(--tw-shadow-colored);
 }
 
+.shadow-black\/50 {
+  --tw-shadow-color: rgb(0 0 0 / 0.5);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .shadow-highlight\/10 {
   --tw-shadow-color: rgb(230 222 77 / 0.1);
   --tw-shadow: var(--tw-shadow-colored);
@@ -2729,6 +2744,11 @@ video {
 
 .blur {
   --tw-blur: blur(8px);
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+.drop-shadow-\[0_0_8px_rgba\(230\2c 222\2c 77\2c 1\)\] {
+  --tw-drop-shadow: drop-shadow(0 0 8px rgba(230,222,77,1));
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 

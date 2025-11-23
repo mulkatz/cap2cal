@@ -563,14 +563,22 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                 {/* Center: Empty (removed "SCAN EVENT" text for cleaner look) */}
                 <div />
 
-                {/* Right: Flash Toggle */}
+                {/* Right: Flash Toggle - Pure neon glow when active */}
                 <button
                   onClick={() => setFlashEnabled(!flashEnabled)}
                   className={cn(
-                    'flex h-10 w-10 items-center justify-center rounded-full backdrop-blur-sm shadow-md transition-all active:scale-95',
-                    flashEnabled ? 'bg-highlight/30' : 'bg-black/30'
+                    'flex h-10 w-10 items-center justify-center rounded-full transition-all active:scale-95',
+                    flashEnabled ? 'bg-transparent' : 'bg-black/30 backdrop-blur-sm shadow-md'
                   )}>
-                  <IconZap size={24} className={cn('drop-shadow-md', flashEnabled ? 'fill-highlight text-highlight' : 'text-white')} />
+                  <IconZap
+                    size={24}
+                    className={cn(
+                      'transition-all',
+                      flashEnabled
+                        ? 'fill-highlight text-highlight drop-shadow-[0_0_8px_rgba(230,222,77,1)]'
+                        : 'text-white'
+                    )}
+                  />
                 </button>
               </div>
             </div>
@@ -604,9 +612,9 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
               </div>
             </div>
 
-            {/* HELPER TEXT - High-tech HUD glassmorphism pill */}
+            {/* HELPER TEXT - High-contrast HUD pill */}
             <div className="pointer-events-none absolute left-0 right-0 z-20 flex justify-center bottom-safe-offset-32">
-              <div className="rounded-full border border-white/10 bg-black/30 px-4 py-2 text-xs font-medium text-white/90 backdrop-blur-md shadow-lg">
+              <div className="rounded-full border border-white/10 bg-black/50 px-4 py-2 text-xs font-medium text-white backdrop-blur-md shadow-lg">
                 Scan event details
               </div>
             </div>
@@ -621,14 +629,14 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                   <IconImage size={24} className="text-white drop-shadow-md" />
                 </button>
 
-                {/* Center: Shutter Button with refined proportions */}
+                {/* Center: Shutter Button with 3D gradient dome */}
                 <button
                   onClick={handleCapture}
                   className="flex items-center justify-center transition-transform active:scale-95">
                   {/* Outer Ring - w-20 h-20 with 5px border matching scanner corners */}
-                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-[5px] border-white shadow-[0_4px_14px_rgba(0,0,0,0.7)]">
-                    {/* Inner Circle - w-14 h-14 for wider gap and precise look */}
-                    <div className="h-14 w-14 rounded-full bg-highlight" />
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full border-[5px] border-white shadow-lg shadow-black/50">
+                    {/* Inner Circle - 3D gradient dome effect */}
+                    <div className="h-14 w-14 rounded-full bg-gradient-to-b from-[#F2EC9B] to-[#E6DE4D] border-t-2 border-white/30 shadow-sm" />
                   </div>
                 </button>
 
