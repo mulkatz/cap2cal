@@ -35,14 +35,14 @@ export const LoadingController = () => {
   }, []);
 
   return (
-    <div className="flex w-full flex-col items-center justify-center text-center" data-testid="loading-dialog">
+    <div className="flex w-full flex-col items-center justify-center py-8 text-center" data-testid="loading-dialog">
       {/* Custom animated loader */}
       <LoaderAnimation />
 
       {/* Status text feed */}
-      <div className="mx-auto mt-24 flex w-2/3 flex-col items-center justify-center">
+      <div className="mx-auto mt-24 flex max-w-[250px] flex-col items-center justify-center">
         <span
-          className={`w-full text-center font-['Plus_Jakarta_Sans'] text-lg font-semibold text-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          className={`w-full text-center font-['Plus_Jakarta_Sans'] text-lg font-medium text-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${currentVariation}`)}
         </span>
       </div>
