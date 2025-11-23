@@ -557,6 +557,9 @@ export const App = () => {
       return;
     }
 
+    // Stop the camera stream before processing the image
+    await ref.stopPreview();
+
     // setCapturedImage('data:image/jpeg;base64,' + imgUrl);
     await onCaptured('data:image/jpeg;base64,' + imgUrl, 'camera');
   };
