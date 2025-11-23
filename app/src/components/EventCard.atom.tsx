@@ -140,7 +140,7 @@ const EventCardAtom = React.memo(
           className={
             'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
           }>
-          <div className="flex flex-col p-5">
+          <div className="flex w-full flex-col p-5">
             {/* Row 1 (Header): Date Badge + Title + Star */}
             <div className="mb-3 flex items-start gap-3">
               {/* Date Badge */}
