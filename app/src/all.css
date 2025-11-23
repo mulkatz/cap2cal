@@ -1569,6 +1569,10 @@ video {
   border-width: 2px;
 }
 
+.border-\[4px\] {
+  border-width: 4px;
+}
+
 .border-\[5px\] {
   border-width: 5px;
 }
@@ -1673,6 +1677,10 @@ video {
 
 .border-white\/10 {
   border-color: rgb(255 255 255 / 0.1);
+}
+
+.border-white\/20 {
+  border-color: rgb(255 255 255 / 0.2);
 }
 
 .border-white\/30 {
@@ -2133,6 +2141,11 @@ video {
   padding-right: 1rem;
 }
 
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+
 .px-6 {
   padding-left: 1.5rem;
   padding-right: 1.5rem;
@@ -2141,11 +2154,6 @@ video {
 .px-\[46px\] {
   padding-left: 46px;
   padding-right: 46px;
-}
-
-.py-0\.5 {
-  padding-top: 0.125rem;
-  padding-bottom: 0.125rem;
 }
 
 .py-1 {
@@ -2416,11 +2424,6 @@ video {
 
 .tracking-widest {
   letter-spacing: 0.1em;
-}
-
-.text-\[\#00FF00\] {
-  --tw-text-opacity: 1;
-  color: rgb(0 255 0 / var(--tw-text-opacity, 1));
 }
 
 .text-accentElevated {

@@ -26,11 +26,13 @@ export const MultiResultDialog = ({
       <div className={'absolute inset-0 bg-gradient-to-t from-black/50 to-black/20'}/>
       <div className={'absolute inset-0 flex h-full flex-col'}>
         <EmblaCarousel slides={children} options={OPTIONS} />
-        <div className="flex w-full items-center justify-center self-end px-4 pb-safe-offset-12">
+        <div className="flex w-full items-center justify-center self-end px-4 pb-safe-offset-12 mb-10">
           <div
-            className={'text-clickHighlight rounded-full border-2 border-accentElevated bg-primaryDark p-4'}
+            className="flex items-center justify-center w-20 h-20 rounded-full border-[4px] border-white/20 shadow-lg"
             onClick={onClose}>
-            <IconCheck size={32} className="text-[#00FF00]" />
+            <div className="flex items-center justify-center w-14 h-14 rounded-full bg-green-500">
+              <IconCheck size={28} strokeWidth={3.5} className="text-white" />
+            </div>
           </div>
         </div>
       </div>
