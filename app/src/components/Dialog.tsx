@@ -6,12 +6,14 @@ export const Dialog = ({
   children,
   onClose,
   closeOnClickOutside = false,
-  full
+  full,
+  noCard = false
 }: {
   children: ReactNode;
   onClose?: () => void;
   closeOnClickOutside?: boolean;
   full?: boolean;
+  noCard?: boolean;
 }) => {
   return (
     <div
@@ -20,8 +22,8 @@ export const Dialog = ({
         full && "magicpattern"
       )}
       onClick={closeOnClickOutside ? onClose : undefined}>
-      {/* Premium dark blurred backdrop */}
-      <div className={'absolute inset-0 bg-black/80 backdrop-blur-sm'}/>
+      {/* Premium dark blurred backdrop - enhanced for AI processing state */}
+      <div className={'absolute inset-0 bg-black/80 backdrop-blur-md'}/>
 
       {/* Premium modal container with smooth fade + scale animation */}
       <div
@@ -38,14 +40,19 @@ export const Dialog = ({
           </div>
         )}
 
-        {/* Premium card with glassy effect */}
-        <div className={cn(
-          'relative overflow-hidden rounded-3xl bg-primaryElevated shadow-2xl',
-          'border border-white/5',
-          'backdrop-blur-xl'
-        )}>
-          {children}
-        </div>
+        {/* Conditionally render card wrapper or content directly */}
+        {noCard ? (
+          children
+        ) : (
+          <div className={cn(
+            'relative overflow-hidden rounded-3xl bg-primaryElevated shadow-2xl',
+            'border border-white/5',
+            'backdrop-blur-xl',
+            'shadow-[0_0_15px_rgba(230,222,77,0.15)]'
+          )}>
+            {children}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
-import { PuffLoader } from 'react-spinners';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LoaderAnimation } from '../LoaderAnimation';
 
 const numPhrases = 5;
 const numPhrasesCollections = 5;
@@ -35,18 +35,14 @@ export const LoadingController = () => {
   }, []);
 
   return (
-    <div className="flex w-full flex-col items-center py-8 text-center" data-testid="loading-dialog">
-      <PuffLoader
-        color={'#e6de4d'}
-        loading={true}
-        size={120}
-        aria-label="LoadingController ResultView"
-        data-testid="loader"
-        className={'mb-6'}
-      />
-      <div className="mx-4 flex h-[100px] w-full flex-col items-center justify-center px-8">
+    <div className="flex w-full flex-col items-center justify-center text-center" data-testid="loading-dialog">
+      {/* Custom animated loader */}
+      <LoaderAnimation />
+
+      {/* Status text feed */}
+      <div className="mx-auto mt-8 flex w-2/3 flex-col items-center justify-center">
         <span
-          className={`w-full font-['Plus_Jakarta_Sans'] text-base text-white transition-opacity duration-250 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          className={`w-full text-center font-['Plus_Jakarta_Sans'] text-lg font-semibold text-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${currentVariation}`)}
         </span>
       </div>

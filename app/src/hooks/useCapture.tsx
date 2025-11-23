@@ -48,7 +48,7 @@ export const useCapture = () => {
     });
 
     dialogs.push(
-      <Dialog full>
+      <Dialog full noCard>
         <LoadingController />
       </Dialog>
     );
