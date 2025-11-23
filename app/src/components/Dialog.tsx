@@ -17,10 +17,10 @@ export const Dialog = ({
 }) => {
   return (
     <div
-      className={cn('fixed inset-0 z-[60] flex max-h-screen items-center justify-center p-6', full && 'magicpattern')}
+      className={cn('fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6', full && 'magicpattern')}
       onClick={closeOnClickOutside ? onClose : undefined}>
-      {/* Gradient backdrop - matches Result Screen */}
-      <div className={'absolute inset-0 z-0 bg-gradient-to-t from-black/50 to-black/20'} />
+      {/* Gradient backdrop - only for full-screen dialogs */}
+      {full && <div className={'absolute inset-0 z-0 bg-gradient-to-t from-black/50 to-black/20'} />}
 
       {/* Premium modal container with smooth fade + scale animation */}
       <div
