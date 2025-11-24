@@ -2,7 +2,12 @@
 
 import puppeteer from "puppeteer";
 import { events } from "../data/events.js";
-import { exampleImage1, exampleImage2, exampleImage3, exampleImage } from "../data/example-image.js";
+import {
+  exampleImage1,
+  exampleImage2,
+  exampleImage3,
+  exampleImage,
+} from "../data/example-image.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { mkdir } from "fs/promises";
@@ -213,8 +218,15 @@ async function captureHomeScreen(page, language, outputDir) {
   console.log("  ✓ Captured: Home Screen");
 }
 
-async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) {
-  console.log(`\n📸 Capturing photo capture flow (Example ${exampleNumber})...`);
+async function captureCaptureFlow(
+  page,
+  language,
+  outputDir,
+  exampleNumber = 1,
+) {
+  console.log(
+    `\n📸 Capturing photo capture flow (Example ${exampleNumber})...`,
+  );
 
   // Select the correct example image based on exampleNumber
   const exampleImages = {
@@ -309,7 +321,9 @@ async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) 
     // Step 2: Inject the example image as camera background overlay
     await page.evaluate((imageDataUrl) => {
       // Remove any existing overlay first
-      const existingOverlay = document.querySelector('[data-screenshot-camera-bg="true"]');
+      const existingOverlay = document.querySelector(
+        '[data-screenshot-camera-bg="true"]',
+      );
       if (existingOverlay) {
         existingOverlay.remove();
       }
@@ -345,14 +359,20 @@ async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) 
 
     await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
 
-    // Screenshot the camera view (only for first example)
-    if (exampleNumber === 1) {
-      await page.screenshot({
-        path: join(outputDir, "03_camera_view.png"),
-        fullPage: false,
-      });
-      console.log("  ✓ Captured: Camera View with Example Image");
-    }
+    // Screenshot the camera view for each example
+    const cameraScreenshotMap = {
+      1: "03_camera_view_1.png",
+      2: "03a_camera_view_2.png",
+      3: "03b_camera_view_3.png",
+    };
+
+    await page.screenshot({
+      path: join(outputDir, cameraScreenshotMap[exampleNumber]),
+      fullPage: false,
+    });
+    console.log(
+      `  ✓ Captured: Camera View with Example Image ${exampleNumber}`,
+    );
 
     // Step 3: Click capture to trigger the flow
     await page
@@ -371,11 +391,15 @@ async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) 
 
     if (captureShutterButton) {
       await captureShutterButton.click();
-      console.log("  ⏳ Triggered capture - screenshot mode will use example image");
+      console.log(
+        "  ⏳ Triggered capture - screenshot mode will use example image",
+      );
 
       // Remove the camera background overlay immediately after capture
       await page.evaluate(() => {
-        const overlay = document.querySelector('[data-screenshot-camera-bg="true"]');
+        const overlay = document.querySelector(
+          '[data-screenshot-camera-bg="true"]',
+        );
         if (overlay) {
           overlay.remove();
           console.log("📸 Removed camera background overlay");
@@ -436,9 +460,13 @@ async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) 
 
         // Close the result dialog to continue
         console.log("  🔘 Closing result dialog...");
-        await page.click('[data-testid="result-close-button"], button[aria-label="Close"]').catch(() => {
-          console.log("  ⚠️  Close button not found");
-        });
+        await page
+          .click(
+            '[data-testid="result-close-button"], button[aria-label="Close"]',
+          )
+          .catch(() => {
+            console.log("  ⚠️  Close button not found");
+          });
         await new Promise((resolve) => setTimeout(resolve, 1000));
       } catch (e) {
         console.log("  ⚠️  Result dialog not visible within timeout");
@@ -719,7 +747,9 @@ async function generateScreenshots() {
         localStorage.setItem("hasSeenCameraInstruction", "true");
         localStorage.setItem("__SCREENSHOT_MODE__", "true");
         localStorage.setItem("__SCREENSHOT_EXAMPLE_NUMBER__", num);
-        console.log(`📸 Screenshot mode enabled - will use example image ${num}`);
+        console.log(
+          `📸 Screenshot mode enabled - will use example image ${num}`,
+        );
       }, exampleNumber.toString());
     };
 
@@ -751,9 +781,13 @@ async function generateScreenshots() {
     console.log("───────────────────────────────");
 
     // Go back home
-    await page.click('[data-testid="close-history-button"], .back-button, button[aria-label="Close"]').catch(() => {
-      console.log("  ⚠️  Back button not found, navigating directly");
-    });
+    await page
+      .click(
+        '[data-testid="close-history-button"], .back-button, button[aria-label="Close"]',
+      )
+      .catch(() => {
+        console.log("  ⚠️  Back button not found, navigating directly");
+      });
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await setupScreenshotMode(2);
@@ -777,9 +811,13 @@ async function generateScreenshots() {
     console.log("───────────────────────────────");
 
     // Go back home
-    await page.click('[data-testid="close-history-button"], .back-button, button[aria-label="Close"]').catch(() => {
-      console.log("  ⚠️  Back button not found, navigating directly");
-    });
+    await page
+      .click(
+        '[data-testid="close-history-button"], .back-button, button[aria-label="Close"]',
+      )
+      .catch(() => {
+        console.log("  ⚠️  Back button not found, navigating directly");
+      });
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await setupScreenshotMode(3);

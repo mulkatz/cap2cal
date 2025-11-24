@@ -3,7 +3,7 @@ import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { SplashView } from './SplashView.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
-import exampleImageUrl1 from '../assets/images/event-capture-example-1.png';
+import exampleImageUrl1 from '../assets/images/event-capture-example-1-alt.png';
 import exampleImageUrl2 from '../assets/images/event-capture-example-2.png';
 import exampleImageUrl3 from '../assets/images/event-capture-example-3.png';
 import { DialogStack, useDialogContext } from '../contexts/DialogContext.tsx';
@@ -552,9 +552,12 @@ export const App = () => {
       console.log(`📸 Screenshot mode detected - loading example image ${exampleImageNumber} from assets`);
 
       // Select the correct example image
-      const exampleImageUrl = exampleImageNumber === '1' ? exampleImageUrl1
-                            : exampleImageNumber === '2' ? exampleImageUrl2
-                            : exampleImageUrl3;
+      const exampleImageUrl =
+        exampleImageNumber === '1'
+          ? exampleImageUrl1
+          : exampleImageNumber === '2'
+            ? exampleImageUrl2
+            : exampleImageUrl3;
 
       try {
         // Fetch the example image and convert to base64
