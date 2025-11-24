@@ -39,9 +39,7 @@ export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void 
         </button>
 
         {/* Navigation Title */}
-        <h1 className="text-lg font-semibold text-white tracking-tight">
-          {t('dialogs.imagePreview.title')}
-        </h1>
+        <h1 className="text-lg font-semibold tracking-tight text-white">{t('dialogs.imagePreview.title')}</h1>
 
         {/* Empty spacer for layout balance */}
         <div className="w-8" />
@@ -65,7 +63,7 @@ export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void 
             <img
               src={img?.dataUrl}
               alt="captured image"
-              className="h-auto max-h-[80vh] w-auto max-w-[90vw] rounded-xl object-contain shadow-[0_0_50px_-10px_rgba(0,0,0,0.5)]"
+              className="h-auto max-h-[76vh] w-auto max-w-[90vw] rounded-xl object-contain shadow-[0_0_50px_-10px_rgba(0,0,0,0.5)]"
             />
           </TransformComponent>
         </TransformWrapper>
@@ -73,7 +71,7 @@ export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void 
 
       {/* Bottom Metadata Badge - only show if timestamp exists */}
       {img?.capturedAt && (
-        <div className="absolute bottom-safe-offset-5 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md">
+        <div className="absolute left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md bottom-safe-offset-3">
           <span className="text-xs font-medium text-white/90">{formatCaptureDate(img.capturedAt)}</span>
         </div>
       )}
