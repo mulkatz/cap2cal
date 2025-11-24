@@ -118,11 +118,22 @@ const EventCardAtom = React.memo(
     const TRUNCATE_LENGTH = 120;
     const shouldTruncate = description?.short && description.short.length > TRUNCATE_LENGTH;
 
+    // Check if event has passed (more than 1 day ago)
+    const isEventPassed = () => {
+      if (!dateTimeFrom?.date) return false;
+      const eventDate = new Date(dateTimeFrom.date);
+      const oneDayAgo = new Date();
+      oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+      return eventDate < oneDayAgo;
+    };
+
     // Extracted complex boolean logic into a readable variable
+    // Never show ticket button for events that have passed (1+ day in the past)
     const showTicketButton =
-      !!ticketDirectLink ||
-      !!alreadyFetchedTicketLink ||
-      (!!ticketAvailableProbability && ticketAvailableProbability > 0.7);
+      !isEventPassed() &&
+      (!!ticketDirectLink ||
+        !!alreadyFetchedTicketLink ||
+        (!!ticketAvailableProbability && ticketAvailableProbability > 0.7));
 
     // Format location with Title Case (fix ALL CAPS issue)
     const formatLocation = (city?: string, address?: string): string => {
