@@ -396,13 +396,7 @@ export const App = () => {
     // 2. If permissions were not granted, stop the function
     if (!permissionsGranted) {
       logger.warn('Gallery', 'Cannot access photos - permission denied');
-      dialogs.replace(
-        <Dialog onClose={dialogs.pop}>
-          <Card>
-            <PermissionDeniedAtom type={'photos'} onClose={dialogs.pop} />
-          </Card>
-        </Dialog>
-      );
+      dialogs.replace(<PermissionDeniedAtom type={'photos'} onClose={dialogs.pop} />);
       return;
     }
 
@@ -509,13 +503,7 @@ export const App = () => {
     }
 
     if (cameraPermission === 'denied' || cameraPermission === 'limited') {
-      dialogs.replace(
-        <Dialog onClose={dialogs.pop}>
-          <Card>
-            <PermissionDeniedAtom type={'camera'} onClose={dialogs.pop} />
-          </Card>
-        </Dialog>
-      );
+      dialogs.replace(<PermissionDeniedAtom type={'camera'} onClose={dialogs.pop} />);
       return;
     }
 
