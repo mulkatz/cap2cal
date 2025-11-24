@@ -133,7 +133,7 @@ const EventCardAtom = React.memo(
       !isEventPassed() &&
       (!!ticketDirectLink ||
         !!alreadyFetchedTicketLink ||
-        (!!ticketAvailableProbability && ticketAvailableProbability > 0.7));
+        (!!ticketAvailableProbability && ticketAvailableProbability >= 0.7));
 
     // Format location with Title Case (fix ALL CAPS issue)
     const formatLocation = (city?: string, address?: string): string => {
@@ -243,7 +243,12 @@ const EventCardAtom = React.memo(
                 className="h-10 w-10"
               />
               {/* Camera Icon (22px - slightly larger for optical balance) */}
-              <IconButton onClick={onImage} icon={<IconCamera size={22} />} className="h-10 w-10" data-testid="event-image-icon" />
+              <IconButton
+                onClick={onImage}
+                icon={<IconCamera size={22} />}
+                className="h-10 w-10"
+                data-testid="event-image-icon"
+              />
               {/* Calendar Icon (20px) */}
               <IconButton onClick={onExport} icon={<IconCalendarPlus size={20} />} className="h-10 w-10" />
 
