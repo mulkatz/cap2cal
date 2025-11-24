@@ -6,15 +6,18 @@ export const IconButton = ({
   icon,
   className,
   active,
+  'data-testid': dataTestId,
 }: {
   onClick?: () => void;
   icon: ReactElement;
   className?: string;
   active?: boolean;
+  'data-testid'?: string;
 }) => {
   return (
     <button
       onClick={onClick}
+      data-testid={dataTestId}
       className={cn(
         'box-border flex h-[48px] w-[48px] items-center justify-center rounded-full bg-primaryDark p-3 shadow-md',
         { 'bg-highlight text-primaryDark': active },

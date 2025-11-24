@@ -104,6 +104,7 @@ const EventCardAtom = React.memo(
       description,
       ticketDirectLink,
       id,
+      timestamp,
       ticketAvailableProbability,
       alreadyFetchedTicketLink,
     } = data;
@@ -247,7 +248,7 @@ const EventCardAtom = React.memo(
                 onClick={onImage}
                 icon={<IconCamera size={22} />}
                 className="h-10 w-10"
-                data-testid="event-image-icon"
+                data-testid={`event-image-icon-${id || timestamp}`}
               />
               {/* Calendar Icon (20px) */}
               <IconButton onClick={onExport} icon={<IconCalendarPlus size={20} />} className="h-10 w-10" />

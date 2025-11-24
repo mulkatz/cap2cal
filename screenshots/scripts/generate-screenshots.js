@@ -597,10 +597,12 @@ async function captureImagePreview(page, language, outputDir) {
         setTimeout(resolve, CONFIG.navigationDelay),
       );
 
-      // Look for image/camera icon and click it
-      const imageIcon = await page.$('[data-testid="event-image-icon"]');
-      if (imageIcon) {
-        await imageIcon.click();
+      // Look for image/camera icon and click it (matches any event-image-icon-*)
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const imageIcons = await page.$$('[data-testid^="event-image-icon-"]');
+      if (imageIcons.length > 0) {
+        console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+        await imageIcons[0].click();
         await new Promise((resolve) =>
           setTimeout(resolve, CONFIG.navigationDelay),
         );
@@ -776,6 +778,43 @@ async function generateScreenshots() {
     });
     console.log("  ✓ Captured: Event History (After Capture 1)");
 
+    // Open image preview for first capture
+    console.log("  🖼️  Opening image preview for capture 1...");
+    try {
+      // Wait a bit more for event cards to fully render
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Debug: Check what testids are present on the page
+      const allTestIds = await page.evaluate(() => {
+        const elements = Array.from(document.querySelectorAll('[data-testid]'));
+        return elements.map(el => el.getAttribute('data-testid'));
+      });
+      const eventTestIds = allTestIds.filter(id => id && id.includes('event'));
+      console.log(`  🐛 Debug: All testids found (${allTestIds.length} total):`, allTestIds.slice(0, 20));
+      console.log(`  🐛 Debug: Event-related testids:`, eventTestIds);
+
+      // Find all event image icon buttons and click the first one (most recent event)
+      const imageIcons = await page.$$('[data-testid^="event-image-icon-"]');
+      if (imageIcons.length === 0) {
+        throw new Error("No event image icons found");
+      }
+      console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+      await imageIcons[0].click();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await page.screenshot({
+        path: join(outputDir, "05a_image_preview_1.png"),
+        fullPage: false,
+      });
+      console.log("  ✓ Captured: Image Preview 1");
+
+      // Close image preview using back button
+      await page.click('button[aria-label="Go back"]');
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    } catch (e) {
+      console.log("  ⚠️  Could not capture image preview 1:", e.message);
+    }
+
     // ===== CAPTURE FLOW 2 =====
     console.log("\n📱 Flow 4: Capture (Example 2)");
     console.log("───────────────────────────────");
@@ -806,6 +845,43 @@ async function generateScreenshots() {
     });
     console.log("  ✓ Captured: Event History (After Capture 2)");
 
+    // Open image preview for second capture
+    console.log("  🖼️  Opening image preview for capture 2...");
+    try {
+      // Wait a bit more for event cards to fully render
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Debug: Check what testids are present on the page
+      const allTestIds = await page.evaluate(() => {
+        const elements = Array.from(document.querySelectorAll('[data-testid]'));
+        return elements.map(el => el.getAttribute('data-testid'));
+      });
+      const eventTestIds = allTestIds.filter(id => id && id.includes('event'));
+      console.log(`  🐛 Debug: All testids found (${allTestIds.length} total):`, allTestIds.slice(0, 20));
+      console.log(`  🐛 Debug: Event-related testids:`, eventTestIds);
+
+      // Find all event image icon buttons and click the first one (most recent event)
+      const imageIcons = await page.$$('[data-testid^="event-image-icon-"]');
+      if (imageIcons.length === 0) {
+        throw new Error("No event image icons found");
+      }
+      console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+      await imageIcons[0].click();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await page.screenshot({
+        path: join(outputDir, "06a_image_preview_2.png"),
+        fullPage: false,
+      });
+      console.log("  ✓ Captured: Image Preview 2");
+
+      // Close image preview using back button
+      await page.click('button[aria-label="Go back"]');
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    } catch (e) {
+      console.log("  ⚠️  Could not capture image preview 2:", e.message);
+    }
+
     // ===== CAPTURE FLOW 3 =====
     console.log("\n📱 Flow 5: Capture (Example 3)");
     console.log("───────────────────────────────");
@@ -835,6 +911,34 @@ async function generateScreenshots() {
       fullPage: false,
     });
     console.log("  ✓ Captured: Event History (Final - All 3 Events)");
+
+    // Open image preview for third capture
+    console.log("  🖼️  Opening image preview for capture 3...");
+    try {
+      // Wait a bit more for event cards to fully render
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Find all event image icon buttons and click the first one (most recent event)
+      const imageIcons = await page.$$('[data-testid^="event-image-icon-"]');
+      if (imageIcons.length === 0) {
+        throw new Error("No event image icons found");
+      }
+      console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+      await imageIcons[0].click();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await page.screenshot({
+        path: join(outputDir, "07a_image_preview_3.png"),
+        fullPage: false,
+      });
+      console.log("  ✓ Captured: Image Preview 3");
+
+      // Close image preview using back button
+      await page.click('button[aria-label="Go back"]');
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    } catch (e) {
+      console.log("  ⚠️  Could not capture image preview 3:", e.message);
+    }
 
     // ===== SETTINGS SCREEN =====
     console.log("\n📱 Flow 6: Settings");
