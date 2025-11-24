@@ -5,11 +5,26 @@ import { IconChevronLeft } from '../assets/icons';
 import { useTranslation } from 'react-i18next';
 
 export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const img =
     useLiveQuery(async () => {
       return db.images.where('id').equals(id).first();
     }) || null;
+
+  const formatCaptureDate = (timestamp: number) => {
+    const date = new Date(timestamp);
+    const locale = i18n.language === 'de-DE' ? 'de-DE' : 'en-GB';
+
+    // Format: "Nov 27" or "27. Nov"
+    const dateStr = date.toLocaleDateString(locale, { month: 'short', day: 'numeric' });
+
+    // Format: "20:00"
+    const timeStr = date.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit', hour12: false });
+
+    // "Scanned on Nov 27 • 20:00" or "Gescannt am 27. Nov • 20:00"
+    const prefix = locale === 'de-DE' ? 'Gescannt am' : 'Scanned on';
+    return `${prefix} ${dateStr} • ${timeStr}`;
+  };
 
   return (
     <div className="fixed inset-0 z-[60] flex h-screen w-full flex-col overflow-hidden bg-[#0B1219]">
@@ -23,12 +38,10 @@ export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void 
           <IconChevronLeft size={24} />
         </button>
 
-        {/* Title with pill background */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-[#0B1219] px-4 py-2 backdrop-blur-md">
-          <h1 className="text-xs font-semibold text-white/70">
-            {t('dialogs.imagePreview.title')}
-          </h1>
-        </div>
+        {/* Navigation Title */}
+        <h1 className="text-lg font-semibold text-white tracking-tight">
+          {t('dialogs.imagePreview.title')}
+        </h1>
 
         {/* Empty spacer for layout balance */}
         <div className="w-8" />
@@ -58,10 +71,12 @@ export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void 
         </TransformWrapper>
       </main>
 
-      {/* Bottom Metadata Pill */}
-      <div className="absolute bottom-safe-offset-5 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-[#1E2E3F] px-6 py-3">
-        <span className="text-sm font-semibold text-white">{t('dialogs.imagePreview.originalCapture')}</span>
-      </div>
+      {/* Bottom Metadata Badge - only show if timestamp exists */}
+      {img?.capturedAt && (
+        <div className="absolute bottom-safe-offset-5 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-md">
+          <span className="text-xs font-medium text-white/90">{formatCaptureDate(img.capturedAt)}</span>
+        </div>
+      )}
     </div>
   );
 };

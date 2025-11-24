@@ -114,6 +114,7 @@ export const useCapture = () => {
               img: {
                 dataUrl: imgUrl,
                 id: event.id,
+                capturedAt: createdAt,
               },
             } satisfies CaptureEvent;
             createdAt += 1; // Increment the timestamp for the next event
@@ -466,7 +467,7 @@ export const useCapture = () => {
 
   const saveEvent = async (event: CaptureEvent, imgUrl: string) => {
     await db.eventItems.add(event, event.id);
-    const img = { id: event.id, dataUrl: imgUrl };
+    const img = { id: event.id, dataUrl: imgUrl, capturedAt: Date.now() };
     await db.images.add(img, event.id);
   };
 

@@ -13,4 +13,5 @@ export type CaptureEvent = ApiEvent & {
 export type Img = {
   id: string;
   dataUrl: string;
+  capturedAt: number; // timestamp in milliseconds
 };
