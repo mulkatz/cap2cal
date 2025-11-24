@@ -2,7 +2,7 @@
 
 import puppeteer from "puppeteer";
 import { events } from "../data/events.js";
-import { exampleImage } from "../data/example-image.js";
+import { exampleImage1, exampleImage2, exampleImage3, exampleImage } from "../data/example-image.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { mkdir } from "fs/promises";
@@ -216,6 +216,14 @@ async function captureHomeScreen(page, language, outputDir) {
 async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) {
   console.log(`\n📸 Capturing photo capture flow (Example ${exampleNumber})...`);
 
+  // Select the correct example image based on exampleNumber
+  const exampleImages = {
+    1: exampleImage1,
+    2: exampleImage2,
+    3: exampleImage3,
+  };
+  const currentExampleImage = exampleImages[exampleNumber];
+
   // Screenshot mode is already set up in main flow with example image in localStorage
   // Step 1: Navigate and wait for camera view to initialize
   try {
@@ -333,7 +341,7 @@ async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) 
       } else {
         cameraContainer.appendChild(overlay);
       }
-    }, exampleImage.dataUrl);
+    }, currentExampleImage.dataUrl);
 
     await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
 
