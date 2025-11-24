@@ -218,11 +218,7 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
       if (permissionStatus !== 'granted') {
         console.warn('Permission to write to calendar was denied.');
 
-        dialogs.replace(
-          <Dialog onClose={dialogs.pop}>
-            <PermissionDeniedAtom type={'calendar'} onClose={dialogs.pop} />
-          </Dialog>
-        );
+        dialogs.replace(<PermissionDeniedAtom type={'calendar'} onClose={dialogs.pop} />);
         // Optionally, show a message to the user here.
         return;
       }

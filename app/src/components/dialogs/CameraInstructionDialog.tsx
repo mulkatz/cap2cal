@@ -1,6 +1,5 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dialog } from '../Dialog.tsx';
 import { IconCamera3 } from '../../assets/icons';
 import { PremiumAlert } from '../modals/PremiumModal';
 
@@ -12,26 +11,24 @@ export const CameraInstructionDialog = ({ onClose }: CameraInstructionDialogProp
   const { t } = useTranslation();
 
   return (
-    <Dialog onClose={onClose} closeOnClickOutside={false}>
-      <PremiumAlert
-        title={t('dialogs.onboarding.cameraInstruction.title')}
-        message={
-          <div className="flex flex-col items-center gap-4">
-            {/* Icon */}
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primaryDark">
-              <IconCamera3 size={40} className="text-highlight" />
-            </div>
-            {/* Body Text */}
-            <div className="flex flex-col gap-2 text-sm leading-relaxed text-gray-300">
-              <p>{t('dialogs.onboarding.cameraInstruction.description1')}</p>
-              <p>{t('dialogs.onboarding.cameraInstruction.description2')}</p>
-            </div>
+    <PremiumAlert
+      title={t('dialogs.onboarding.cameraInstruction.title')}
+      message={
+        <div className="flex flex-col items-center gap-4">
+          {/* Icon */}
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primaryDark">
+            <IconCamera3 size={40} className="text-highlight" />
           </div>
-        }
-        confirmText={t('dialogs.onboarding.cameraInstruction.button')}
-        onConfirm={() => {}}
-        onClose={onClose}
-      />
-    </Dialog>
+          {/* Body Text */}
+          <div className="flex flex-col gap-2 text-sm leading-relaxed text-gray-300">
+            <p>{t('dialogs.onboarding.cameraInstruction.description1')}</p>
+            <p>{t('dialogs.onboarding.cameraInstruction.description2')}</p>
+          </div>
+        </div>
+      }
+      confirmText={t('dialogs.onboarding.cameraInstruction.button')}
+      onConfirm={() => {}}
+      onClose={onClose}
+    />
   );
 };

@@ -238,21 +238,13 @@ export const useCapture = () => {
       } else {
         // RevenueCat disabled - show generic error instead
         logger.info('Paywall', 'Limit reached but RevenueCat is disabled');
-        dialogs.replace(
-          <Dialog onClose={popAndBackHome} full>
-            <NotCaptured reason="UNKNOWN" onClose={popAndBackHome} />
-          </Dialog>
-        );
+        dialogs.replace(<NotCaptured reason="UNKNOWN" onClose={popAndBackHome} />);
         return;
       }
     }
 
     // Show regular error dialog for other errors
-    dialogs.replace(
-      <Dialog onClose={popAndBackHome} full>
-        <NotCaptured reason={reason} onClose={popAndBackHome} />
-      </Dialog>
-    );
+    dialogs.replace(<NotCaptured reason={reason} onClose={popAndBackHome} />);
   };
 
   const handlePaywallClose = () => {
