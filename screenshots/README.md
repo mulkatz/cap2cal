@@ -71,7 +71,10 @@ node scripts/generate-screenshots.js --lang=de-DE
    - `03_onboarding_permissions.png` - Permissions screen
    - `04_home_screen.png` - Main home screen
    - `05_event_list.png` - Event list view
-   - `06_event_detail.png` - Event detail view (if available)
+   - `06_event_detail.png` - Event detail view
+   - `07_capture_loading.png` - Photo capture loading state
+   - `08_capture_result.png` - Event extraction result
+   - `09_settings.png` - Settings screen
 
 ## Configuration
 
@@ -141,6 +144,10 @@ Each event includes:
 - Ticket search queries
 - Favorite status
 
+### Real Example Image
+
+The screenshot system now uses a real event poster image (`event-capture-example.png`) instead of dummy data for testing image processing flows. This image is automatically seeded into the test database and linked to the first event, providing authentic visual representation in screenshots.
+
 ## Troubleshooting
 
 ### "Connection refused" error
@@ -183,12 +190,17 @@ output/
 ├── en-GB/
 │   ├── 01_onboarding_value_prop.png
 │   ├── 02_onboarding_how_it_works.png
-│   ├── ...
-│   └── 07_event_detail.png
+│   ├── 03_onboarding_permissions.png
+│   ├── 04_home_screen.png
+│   ├── 05_event_list.png
+│   ├── 06_event_detail.png
+│   ├── 07_capture_loading.png
+│   ├── 08_capture_result.png
+│   └── 09_settings.png
 └── de-DE/
     ├── 01_onboarding_value_prop.png
     ├── ...
-    └── 07_event_detail.png
+    └── 09_settings.png
 ```
 
 ## Maintenance

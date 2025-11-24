@@ -12,7 +12,7 @@ export const UpgradeDialog: React.FC<UpgradeDialogProps> = ({ onUpgrade, onClose
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col items-center px-6 pb-6 pt-8">
+    <div className="flex flex-col items-center px-6 pb-6 pt-8" data-testid="upgrade-dialog">
       {/* Icon */}
       <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primaryDark">
         <svg

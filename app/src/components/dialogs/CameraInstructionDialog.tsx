@@ -11,10 +11,11 @@ export const CameraInstructionDialog = ({ onClose }: CameraInstructionDialogProp
   const { t } = useTranslation();
 
   return (
-    <PremiumAlert
-      title={t('dialogs.onboarding.cameraInstruction.title')}
-      message={
-        <div className="flex flex-col items-center gap-4">
+    <div data-testid="camera-instruction-dialog">
+      <PremiumAlert
+        title={t('dialogs.onboarding.cameraInstruction.title')}
+        message={
+        <div className="flex flex-col items-center gap-4" data-testid="camera-instruction-content">
           {/* Icon */}
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primaryDark">
             <IconCamera3 size={40} className="text-highlight" />
@@ -26,9 +27,10 @@ export const CameraInstructionDialog = ({ onClose }: CameraInstructionDialogProp
           </div>
         </div>
       }
-      confirmText={t('dialogs.onboarding.cameraInstruction.button')}
-      onConfirm={() => {}}
-      onClose={onClose}
-    />
+        confirmText={t('dialogs.onboarding.cameraInstruction.button')}
+        onConfirm={() => {}}
+        onClose={onClose}
+      />
+    </div>
   );
 };

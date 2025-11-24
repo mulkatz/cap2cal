@@ -2,11 +2,11 @@
 
 import puppeteer from "puppeteer";
 import { events } from "../data/events.js";
-import { dummyPoster } from "../data/dummy-poster.js";
 import { exampleImage } from "../data/example-image.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { mkdir } from "fs/promises";
+import { readFileSync } from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -46,69 +46,74 @@ async function seedDatabase(page, language) {
   // Add image reference to first event
   const eventsWithImages = eventData.map((event, index) => {
     if (index === 0) {
-      return { ...event, img: 'example-001' };
+      return { ...event, img: "example-001" };
     }
     return event;
   });
 
-  await page.evaluate(({ eventsData, imageData }) => {
-    return new Promise((resolve, reject) => {
-      // Open database without specifying version - use whatever version exists
-      const request = indexedDB.open("EventDB");
+  await page.evaluate(
+    ({ eventsData, imageData }) => {
+      return new Promise((resolve, reject) => {
+        // Open database without specifying version - use whatever version exists
+        const request = indexedDB.open("EventDB");
 
-      request.onerror = () => reject(request.error);
+        request.onerror = () => reject(request.error);
 
-      request.onsuccess = (e) => {
-        const db = e.target.result;
+        request.onsuccess = (e) => {
+          const db = e.target.result;
 
-        // Check if the eventItems store exists
-        if (!db.objectStoreNames.contains("eventItems")) {
-          db.close();
-          reject(new Error("eventItems store does not exist"));
-          return;
-        }
+          // Check if the eventItems store exists
+          if (!db.objectStoreNames.contains("eventItems")) {
+            db.close();
+            reject(new Error("eventItems store does not exist"));
+            return;
+          }
 
-        const tx = db.transaction(["eventItems", "images"], "readwrite");
-        const eventStore = tx.objectStore("eventItems");
-        const imageStore = tx.objectStore("images");
+          const tx = db.transaction(["eventItems", "images"], "readwrite");
+          const eventStore = tx.objectStore("eventItems");
+          const imageStore = tx.objectStore("images");
 
-        // Clear existing data
-        eventStore.clear();
-        imageStore.clear();
+          // Clear existing data
+          eventStore.clear();
+          imageStore.clear();
 
-        // Add seed data
-        eventsData.forEach((event) => eventStore.put(event));
+          // Add seed data
+          eventsData.forEach((event) => eventStore.put(event));
 
-        // Add example image
-        imageStore.put(imageData);
+          // Add example image
+          imageStore.put(imageData);
 
-        tx.oncomplete = () => {
-          console.log(`Seeded ${eventsData.length} events and 1 image`);
-          db.close();
-          resolve();
+          tx.oncomplete = () => {
+            console.log(`Seeded ${eventsData.length} events and 1 image`);
+            db.close();
+            resolve();
+          };
+
+          tx.onerror = () => {
+            db.close();
+            reject(tx.error);
+          };
         };
 
-        tx.onerror = () => {
-          db.close();
-          reject(tx.error);
+        request.onupgradeneeded = (e) => {
+          // This shouldn't happen since the app already created the DB
+          // But handle it just in case
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains("eventItems")) {
+            db.createObjectStore("eventItems", { keyPath: "id" });
+          }
+          if (!db.objectStoreNames.contains("images")) {
+            db.createObjectStore("images", { keyPath: "id" });
+          }
         };
-      };
+      });
+    },
+    { eventsData: eventsWithImages, imageData: exampleImage },
+  );
 
-      request.onupgradeneeded = (e) => {
-        // This shouldn't happen since the app already created the DB
-        // But handle it just in case
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains("eventItems")) {
-          db.createObjectStore("eventItems", { keyPath: "id" });
-        }
-        if (!db.objectStoreNames.contains("images")) {
-          db.createObjectStore("images", { keyPath: "id" });
-        }
-      };
-    });
-  }, { eventsData: eventsWithImages, imageData: exampleImage });
-
-  console.log(`  ✅ Database seeded with ${eventData.length} events and 1 image`);
+  console.log(
+    `  ✅ Database seeded with ${eventData.length} events and 1 image`,
+  );
 }
 
 // Skip onboarding by setting localStorage
@@ -211,118 +216,202 @@ async function captureHomeScreen(page, language, outputDir) {
 async function captureCaptureFlow(page, language, outputDir) {
   console.log("\n📸 Capturing photo capture flow...");
 
-  const mockEvent = (events[language] || events["en-GB"])[0]; // Use first event from seed data
+  // Screenshot mode is already set up in main flow with example image in localStorage
+  // Step 1: Navigate and wait for camera view to initialize
+  try {
+    // Click capture button to open camera
+    const captureButton = await page.waitForSelector(
+      '[data-testid="capture-button"]',
+      {
+        visible: true,
+        timeout: 5000,
+      },
+    );
 
-  // Step 1: Create and screenshot loading state
-  await page.evaluate(() => {
-    const loadingHtml = `
-      <div class="fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6 magicpattern">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-black/20"></div>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div class="flex flex-col items-center text-center bg-primaryDark rounded-lg p-8 max-w-md">
-            <div class="mb-3 flex w-full flex-col items-center text-center" data-testid="loading-dialog">
-              <svg class="mt-5" width="120" height="120" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#19D8E0">
-                <g fill="none" fill-rule="evenodd" stroke-width="2">
-                  <circle cx="22" cy="22" r="1">
-                    <animate attributeName="r" begin="0s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite" />
-                    <animate attributeName="stroke-opacity" begin="0s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx="22" cy="22" r="1">
-                    <animate attributeName="r" begin="-0.9s" dur="1.8s" values="1; 20" calcMode="spline" keyTimes="0; 1" keySplines="0.165, 0.84, 0.44, 1" repeatCount="indefinite" />
-                    <animate attributeName="stroke-opacity" begin="-0.9s" dur="1.8s" values="1; 0" calcMode="spline" keyTimes="0; 1" keySplines="0.3, 0.61, 0.355, 1" repeatCount="indefinite" />
-                  </circle>
-                </g>
-              </svg>
-              <div class="mx-4 flex h-[100px] w-full flex-col items-center justify-center px-8">
-                <span class="w-full text-[16px] text-white">Just a moment, gathering all the details...</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML("beforeend", loadingHtml);
-  });
+    if (!captureButton) {
+      console.log("  ⚠️  Could not find capture button");
+      return;
+    }
 
-  await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
-  await page.screenshot({
-    path: join(outputDir, "07_capture_loading.png"),
-    fullPage: false,
-  });
-  console.log("  ✓ Captured: Loading State");
+    await captureButton.click();
+    await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
 
-  // Step 2: Replace with result state
-  await page.evaluate((eventData) => {
-    // Remove loading
-    const loadingEl = document
-      .querySelector('[data-testid="loading-dialog"]')
-      ?.closest(".fixed");
-    if (loadingEl) loadingEl.remove();
+    // Check for camera instruction dialog (appears on first launch)
+    console.log("  ⏳ Checking for camera instruction dialog...");
+    try {
+      // Wait longer for the dialog to appear
+      const instructionDialog = await page.waitForSelector(
+        '[data-testid="camera-instruction-dialog"]',
+        {
+          visible: true,
+          timeout: 5000,
+        },
+      );
 
-    // Create result dialog
-    const resultHtml = `
-      <div data-testid="result-dialog" class="fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6 magicpattern">
-        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-black/20"></div>
-        <div class="absolute inset-0 flex h-full flex-col">
-          <div class="my-auto px-6">
-            <div class="bg-primaryDark rounded-xl p-6 shadow-2xl max-w-md mx-auto border border-white/10">
-              <div class="mb-2 flex items-start justify-between">
-                <span class="inline-block px-3 py-1 bg-highlight/20 text-highlight text-xs font-semibold rounded-full">${eventData.kind || "Event"}</span>
-              </div>
-              <h2 class="text-2xl font-bold text-white mb-4 leading-tight">${eventData.title}</h2>
-              <div class="text-secondary space-y-3">
-                <div class="flex items-start gap-3">
-                  <span class="text-xl">📅</span>
-                  <div>
-                    <div class="font-semibold text-white">${eventData.dateTimeFrom.date}</div>
-                    <div class="text-sm opacity-80">${eventData.dateTimeFrom.time || ""}</div>
-                  </div>
-                </div>
-                ${
-                  eventData.location?.city
-                    ? `
-                <div class="flex items-start gap-3">
-                  <span class="text-xl">📍</span>
-                  <div>
-                    <div class="font-semibold text-white">${eventData.location.city}</div>
-                    ${eventData.location.address ? `<div class="text-sm opacity-80">${eventData.location.address}</div>` : ""}
-                  </div>
-                </div>
-                `
-                    : ""
-                }
-                ${
-                  eventData.description?.short
-                    ? `
-                <div class="flex items-start gap-3">
-                  <span class="text-xl">ℹ️</span>
-                  <p class="text-sm opacity-90 leading-relaxed">${eventData.description.short}</p>
-                </div>
-                `
-                    : ""
-                }
-              </div>
-            </div>
-          </div>
-          <div class="flex w-full items-center justify-center self-end px-4 pb-16">
-            <div data-testid="result-close-button" class="rounded-full border-2 border-accentElevated bg-primaryDark p-4 shadow-lg">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00FF00" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="20 6 9 17 4 12"></polyline>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML("beforeend", resultHtml);
-  }, mockEvent);
+      if (instructionDialog) {
+        console.log(
+          "  ℹ️  Camera instruction dialog detected, looking for 'Got it' button...",
+        );
 
-  await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
-  await page.screenshot({
-    path: join(outputDir, "08_capture_result.png"),
-    fullPage: false,
-  });
-  console.log("  ✓ Captured: Result State");
+        // Wait a moment for the button to be ready
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        // Find the button within the dialog (it's a highlight-colored button)
+        const confirmButton = await page.evaluateHandle(() => {
+          const dialog = document.querySelector(
+            '[data-testid="camera-instruction-dialog"]',
+          );
+          if (dialog) {
+            // Find the button with highlight background color
+            return dialog.querySelector("button.bg-highlight");
+          }
+          return null;
+        });
+
+        if (confirmButton) {
+          console.log("  👆 Clicking 'Got it' button...");
+          await confirmButton.click();
+          await new Promise((resolve) =>
+            setTimeout(resolve, CONFIG.navigationDelay * 2),
+          );
+          console.log("  ✓ Closed camera instruction dialog");
+        } else {
+          console.log("  ⚠️  Button not found within dialog");
+        }
+      }
+    } catch (e) {
+      console.log(
+        "  ℹ️  No camera instruction dialog found (error: " + e.message + ")",
+      );
+    }
+
+    // Wait for camera view to appear
+    await page
+      .waitForSelector('[data-camera-view="true"]', {
+        timeout: 5000,
+      })
+      .catch(() => {
+        console.log("  ⚠️  Camera view not found, continuing anyway...");
+      });
+
+    // Wait for camera to initialize and preview to start
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    console.log("  ⏳ Waiting for camera preview to start...");
+
+    // Step 2: Inject the example image as camera background
+    await page.evaluate((imageDataUrl) => {
+      // Find camera container or create overlay
+      const cameraContainer =
+        document.querySelector('[data-camera-view="true"]') ||
+        document.querySelector(".camera-view") ||
+        document.body;
+
+      // Create image overlay
+      const overlay = document.createElement("div");
+      overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        background-image: url('${imageDataUrl}');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      `;
+      overlay.setAttribute("data-screenshot-camera-bg", "true");
+
+      if (cameraContainer === document.body) {
+        document.body.insertBefore(overlay, document.body.firstChild);
+      } else {
+        cameraContainer.appendChild(overlay);
+      }
+    }, exampleImage.dataUrl);
+
+    await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
+
+    // Screenshot the camera view with example image
+    await page.screenshot({
+      path: join(outputDir, "06_camera_view.png"),
+      fullPage: false,
+    });
+    console.log("  ✓ Captured: Camera View with Example Image");
+
+    // Step 3: Click capture to trigger the flow with mocked camera image
+    await page
+      .waitForSelector('[data-testid="camera-capture-button"]', {
+        visible: true,
+        timeout: 10000,
+      })
+      .catch(() => {
+        console.log("  ⚠️  Camera capture button not visible");
+      });
+
+    // Trigger capture (this will use our mocked camera that returns the example image)
+    const captureShutterButton = await page.$(
+      '[data-testid="camera-capture-button"]',
+    );
+
+    if (captureShutterButton) {
+      await captureShutterButton.click();
+      console.log("  ⏳ Triggered capture - screenshot mode will use example image");
+
+      // Step 4: Wait for loading dialog to appear and capture it
+      console.log("  ⏳ Waiting for loading dialog to appear...");
+      try {
+        await page.waitForSelector('[data-testid="loading-dialog"]', {
+          visible: true,
+          timeout: 5000,
+        });
+        console.log("  ✓ Loading dialog appeared");
+
+        // Wait a bit to ensure dialog is fully rendered
+        await new Promise((resolve) => setTimeout(resolve, 500));
+
+        await page.screenshot({
+          path: join(outputDir, "07_capture_loading.png"),
+          fullPage: false,
+        });
+        console.log("  ✓ Captured: Loading Dialog");
+      } catch (e) {
+        console.log("  ⚠️  Loading dialog not visible, capturing current state anyway");
+        await page.screenshot({
+          path: join(outputDir, "07_capture_loading.png"),
+          fullPage: false,
+        });
+      }
+
+      // Step 5: Wait for result dialog to appear and capture it
+      console.log("  ⏳ Waiting for result dialog to appear...");
+      try {
+        await page.waitForSelector('[data-testid="result-dialog"]', {
+          visible: true,
+          timeout: 30000,
+        });
+        console.log("  ✓ Result dialog appeared");
+
+        // Wait a bit to ensure dialog is fully rendered
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        await page.screenshot({
+          path: join(outputDir, "08_capture_result.png"),
+          fullPage: false,
+        });
+        console.log("  ✓ Captured: Result Dialog");
+      } catch (e) {
+        console.log("  ⚠️  Result dialog not visible within timeout, capturing current state");
+        await page.screenshot({
+          path: join(outputDir, "08_capture_result.png"),
+          fullPage: false,
+        });
+      }
+    } else {
+      console.log("  ⚠️  Could not find camera capture button");
+    }
+  } catch (error) {
+    console.log(`  ⚠️  Error in capture flow: ${error.message}`);
+  }
 }
 
 async function captureEventList(page, language, outputDir) {
@@ -439,14 +528,20 @@ async function captureImagePreview(page, language, outputDir) {
     );
     if (eventCards.length > 0) {
       await eventCards[0].click();
-      await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
+      await new Promise((resolve) =>
+        setTimeout(resolve, CONFIG.navigationDelay),
+      );
 
       // Look for image/camera icon and click it
       const imageIcon = await page.$('[data-testid="event-image-icon"]');
       if (imageIcon) {
         await imageIcon.click();
-        await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
-        await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
+        await new Promise((resolve) =>
+          setTimeout(resolve, CONFIG.navigationDelay),
+        );
+        await new Promise((resolve) =>
+          setTimeout(resolve, CONFIG.screenshotDelay),
+        );
 
         await page.screenshot({
           path: join(outputDir, "10_image_preview.png"),
@@ -476,15 +571,19 @@ async function captureUpgradeDialog(page, language, outputDir) {
   try {
     // Set the event count to trigger paywall
     await page.evaluate(() => {
-      localStorage.setItem('eventCount', '10'); // Assuming 10 is the free tier limit
+      localStorage.setItem("eventCount", "10"); // Assuming 10 is the free tier limit
     });
 
     // Try to trigger capture flow which should show paywall
     const captureButton = await page.$('[data-testid="capture-button"]');
     if (captureButton) {
       await captureButton.click();
-      await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
-      await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
+      await new Promise((resolve) =>
+        setTimeout(resolve, CONFIG.navigationDelay),
+      );
+      await new Promise((resolve) =>
+        setTimeout(resolve, CONFIG.screenshotDelay),
+      );
 
       // Check if upgrade dialog is visible
       const upgradeDialog = await page.$('[data-testid="upgrade-dialog"]');
@@ -537,6 +636,11 @@ async function generateScreenshots() {
 
     // Configure page
     await page.setViewport(CONFIG.viewport);
+
+    // Grant camera and microphone permissions
+    const context = browser.defaultBrowserContext();
+    await context.overridePermissions(appUrl, ["camera", "microphone"]);
+    console.log("  ✓ Granted camera permissions");
 
     // Set user agent to avoid any bot detection
     await page.setUserAgent(
@@ -603,14 +707,32 @@ async function generateScreenshots() {
     console.log("\n📱 Flow 4: Photo Capture");
     console.log("─────────────────────");
 
-    // Go back to home for capture flow
-    await page.goto("about:blank");
-    await skipOnboarding(page);
+    // Set flags BEFORE page loads to prevent dialogs and enable screenshot mode
+    await page.evaluateOnNewDocument(() => {
+      localStorage.setItem("hasSeenOnboarding", "true");
+      localStorage.setItem("hasSeenCameraInstruction", "true");
+
+      // Enable screenshot mode (App.tsx will load example image from assets)
+      localStorage.setItem("__SCREENSHOT_MODE__", "true");
+
+      console.log("📸 Screenshot mode enabled - app will load example image from assets");
+    });
+    console.log("  ✓ Set up flags to skip onboarding and camera instruction");
+    console.log("  ✓ Enabled screenshot mode - example image will be loaded from app assets");
+
+    // Navigate to home for capture flow
+    // Real camera will work, but App.tsx will use example image for capture
     await page.goto(`${appUrl}?lng=${language}`, {
       waitUntil: "domcontentloaded",
       timeout: 30000,
     });
     await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Verify flag was set
+    const flagValue = await page.evaluate(() =>
+      localStorage.getItem("hasSeenCameraInstruction"),
+    );
+    console.log(`  🔍 Camera instruction flag: ${flagValue}`);
 
     await captureCaptureFlow(page, language, outputDir);
 

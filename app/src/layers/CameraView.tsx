@@ -547,7 +547,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         <span className={'pt-safe'} />
 
         {/* Native camera preview container */}
-        <div id="cameraPreview" className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover" />
+        <div id="cameraPreview" className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover" data-camera-view="true" />
         {!isPreviewRunning && <div className="absolute inset-0 z-0 bg-black" />}
 
         {isPreviewRunning && (
@@ -634,7 +634,8 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                 {/* Center: Shutter Button with 3D gradient dome */}
                 <button
                   onClick={handleCapture}
-                  className="flex items-center justify-center transition-transform active:scale-95">
+                  className="flex items-center justify-center transition-transform active:scale-95"
+                  data-testid="camera-capture-button">
                   {/* Outer Ring - w-20 h-20 with 5px border matching scanner corners */}
                   <div className="flex h-20 w-20 items-center justify-center rounded-full border-[5px] border-white shadow-lg shadow-black/50">
                     {/* Inner Circle - 3D gradient dome effect */}

@@ -94,7 +94,8 @@ export const SplashView = ({
           className={
             'relative z-50 flex min-w-60 items-center justify-center gap-2 overflow-hidden rounded-full bg-highlight px-6 py-4 text-2xl font-bold text-primary' +
             ' shadow-md shadow-highlight/30' // <-- Add these classes
-          }>
+          }
+          data-testid="capture-button">
           {/* Ripple effects */}
           {ripples.map((ripple) => (
             <span

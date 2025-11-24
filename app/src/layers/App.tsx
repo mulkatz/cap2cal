@@ -3,6 +3,7 @@ import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { SplashView } from './SplashView.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
+import exampleImageUrl from '../assets/images/event-capture-example.png';
 import { DialogStack, useDialogContext } from '../contexts/DialogContext.tsx';
 import { useCapture } from '../hooks/useCapture.tsx';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -539,7 +540,38 @@ export const App = () => {
     // Track image captured from camera
     logAnalyticsEvent(AnalyticsEvent.IMAGE_CAPTURED);
 
-    const imgUrl = await ref.capturePhoto();
+    // Check if we're in screenshot mode (for automated screenshot generation)
+    const isScreenshotMode = localStorage.getItem('__SCREENSHOT_MODE__') === 'true';
+    let imgUrl: string | null = null;
+
+    if (isScreenshotMode) {
+      // Use the example image for screenshot generation
+      console.log('📸 Screenshot mode detected - loading example image from assets');
+      try {
+        // Fetch the example image and convert to base64
+        const response = await fetch(exampleImageUrl);
+        const blob = await response.blob();
+        const base64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            const dataUrl = reader.result as string;
+            // Remove the data URL prefix to get just the base64 string
+            const base64String = dataUrl.replace(/^data:image\/[a-z]+;base64,/, '');
+            resolve(base64String);
+          };
+          reader.readAsDataURL(blob);
+        });
+        imgUrl = base64;
+        console.log('📸 Example image loaded successfully, length:', base64.length);
+      } catch (error) {
+        console.error('📸 Failed to load example image:', error);
+        return;
+      }
+    } else {
+      // Normal flow - capture from camera
+      imgUrl = await ref.capturePhoto();
+    }
+
     if (!imgUrl) {
       // toast.error('Error taking photo');
       return;

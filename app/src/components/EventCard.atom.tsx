@@ -243,7 +243,7 @@ const EventCardAtom = React.memo(
                 className="h-10 w-10"
               />
               {/* Camera Icon (22px - slightly larger for optical balance) */}
-              <IconButton onClick={onImage} icon={<IconCamera size={22} />} className="h-10 w-10" />
+              <IconButton onClick={onImage} icon={<IconCamera size={22} />} className="h-10 w-10" data-testid="event-image-icon" />
               {/* Calendar Icon (20px) */}
               <IconButton onClick={onExport} icon={<IconCalendarPlus size={20} />} className="h-10 w-10" />
 
