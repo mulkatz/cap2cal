@@ -3,6 +3,7 @@
 import puppeteer from "puppeteer";
 import { events } from "../data/events.js";
 import { dummyPoster } from "../data/dummy-poster.js";
+import { exampleImage } from "../data/example-image.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { mkdir } from "fs/promises";
@@ -36,13 +37,21 @@ function parseArgs() {
   };
 }
 
-// Seed database with test events
+// Seed database with test events and images
 async function seedDatabase(page, language) {
   console.log(`  📦 Seeding database with ${language} events...`);
 
   const eventData = events[language] || events["en-GB"];
 
-  await page.evaluate((eventsData) => {
+  // Add image reference to first event
+  const eventsWithImages = eventData.map((event, index) => {
+    if (index === 0) {
+      return { ...event, img: 'example-001' };
+    }
+    return event;
+  });
+
+  await page.evaluate(({ eventsData, imageData }) => {
     return new Promise((resolve, reject) => {
       // Open database without specifying version - use whatever version exists
       const request = indexedDB.open("EventDB");
@@ -59,17 +68,22 @@ async function seedDatabase(page, language) {
           return;
         }
 
-        const tx = db.transaction(["eventItems"], "readwrite");
-        const store = tx.objectStore("eventItems");
+        const tx = db.transaction(["eventItems", "images"], "readwrite");
+        const eventStore = tx.objectStore("eventItems");
+        const imageStore = tx.objectStore("images");
 
         // Clear existing data
-        store.clear();
+        eventStore.clear();
+        imageStore.clear();
 
         // Add seed data
-        eventsData.forEach((event) => store.put(event));
+        eventsData.forEach((event) => eventStore.put(event));
+
+        // Add example image
+        imageStore.put(imageData);
 
         tx.oncomplete = () => {
-          console.log(`Seeded ${eventsData.length} events`);
+          console.log(`Seeded ${eventsData.length} events and 1 image`);
           db.close();
           resolve();
         };
@@ -92,9 +106,9 @@ async function seedDatabase(page, language) {
         }
       };
     });
-  }, eventData);
+  }, { eventsData: eventsWithImages, imageData: exampleImage });
 
-  console.log(`  ✅ Database seeded with ${eventData.length} events`);
+  console.log(`  ✅ Database seeded with ${eventData.length} events and 1 image`);
 }
 
 // Skip onboarding by setting localStorage
@@ -363,6 +377,130 @@ async function captureEventList(page, language, outputDir) {
   }
 }
 
+async function captureSettingsScreen(page, language, outputDir) {
+  console.log("\n📸 Capturing settings screen...");
+
+  // Go back to home first if we're in event history
+  await page.goto("about:blank");
+  await skipOnboarding(page);
+  await page.goto(`${CONFIG.appUrl}?lng=${language}`, {
+    waitUntil: "domcontentloaded",
+    timeout: 30000,
+  });
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Click settings button
+  try {
+    await page.waitForSelector('[data-testid="settings-button"]', {
+      visible: true,
+      timeout: 5000,
+    });
+    await page.click('[data-testid="settings-button"]');
+    await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
+    await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
+
+    await page.screenshot({
+      path: join(outputDir, "09_settings.png"),
+      fullPage: false,
+    });
+    console.log("  ✓ Captured: Settings Screen");
+  } catch (e) {
+    console.log("  ⚠️  Could not capture settings screen:", e.message);
+  }
+}
+
+async function captureImagePreview(page, language, outputDir) {
+  console.log("\n📸 Capturing image preview...");
+
+  // Navigate to event list with seeded data
+  await page.goto("about:blank");
+  await skipOnboarding(page);
+  await page.goto(`${CONFIG.appUrl}?lng=${language}`, {
+    waitUntil: "domcontentloaded",
+    timeout: 30000,
+  });
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await seedDatabase(page, language);
+  await page.reload({ waitUntil: "domcontentloaded" });
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Open event history
+  try {
+    await page.waitForSelector('[data-testid="history-button"]', {
+      visible: true,
+      timeout: 5000,
+    });
+    await page.click('[data-testid="history-button"]');
+    await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
+
+    // Click on first event to open detail
+    const eventCards = await page.$$(
+      '[data-event-id], .event-card, [class*="event"]',
+    );
+    if (eventCards.length > 0) {
+      await eventCards[0].click();
+      await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
+
+      // Look for image/camera icon and click it
+      const imageIcon = await page.$('[data-testid="event-image-icon"]');
+      if (imageIcon) {
+        await imageIcon.click();
+        await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
+        await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
+
+        await page.screenshot({
+          path: join(outputDir, "10_image_preview.png"),
+          fullPage: false,
+        });
+        console.log("  ✓ Captured: Image Preview");
+      }
+    }
+  } catch (e) {
+    console.log("  ⚠️  Could not capture image preview:", e.message);
+  }
+}
+
+async function captureUpgradeDialog(page, language, outputDir) {
+  console.log("\n📸 Capturing upgrade dialog...");
+
+  // Go back to home
+  await page.goto("about:blank");
+  await skipOnboarding(page);
+  await page.goto(`${CONFIG.appUrl}?lng=${language}`, {
+    waitUntil: "domcontentloaded",
+    timeout: 30000,
+  });
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  // Trigger upgrade dialog by simulating reaching the free tier limit
+  try {
+    // Set the event count to trigger paywall
+    await page.evaluate(() => {
+      localStorage.setItem('eventCount', '10'); // Assuming 10 is the free tier limit
+    });
+
+    // Try to trigger capture flow which should show paywall
+    const captureButton = await page.$('[data-testid="capture-button"]');
+    if (captureButton) {
+      await captureButton.click();
+      await new Promise((resolve) => setTimeout(resolve, CONFIG.navigationDelay));
+      await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
+
+      // Check if upgrade dialog is visible
+      const upgradeDialog = await page.$('[data-testid="upgrade-dialog"]');
+      if (upgradeDialog) {
+        await page.screenshot({
+          path: join(outputDir, "11_upgrade_dialog.png"),
+          fullPage: false,
+        });
+        console.log("  ✓ Captured: Upgrade Dialog");
+      }
+    }
+  } catch (e) {
+    console.log("  ⚠️  Could not capture upgrade dialog:", e.message);
+  }
+}
+
 // Main function
 async function generateScreenshots() {
   const { language, appUrl } = parseArgs();
@@ -475,6 +613,21 @@ async function generateScreenshots() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     await captureCaptureFlow(page, language, outputDir);
+
+    // ===== SETTINGS SCREEN =====
+    console.log("\n📱 Flow 5: Settings");
+    console.log("─────────────────────");
+    await captureSettingsScreen(page, language, outputDir);
+
+    // ===== IMAGE PREVIEW =====
+    console.log("\n📱 Flow 6: Image Preview");
+    console.log("─────────────────────");
+    await captureImagePreview(page, language, outputDir);
+
+    // ===== UPGRADE DIALOG =====
+    console.log("\n📱 Flow 7: Upgrade Dialog");
+    console.log("─────────────────────");
+    await captureUpgradeDialog(page, language, outputDir);
 
     console.log("\n✅ Screenshot generation complete!");
     console.log(`📁 Screenshots saved to: ${outputDir}\n`);
