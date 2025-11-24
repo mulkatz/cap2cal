@@ -213,8 +213,8 @@ async function captureHomeScreen(page, language, outputDir) {
   console.log("  ✓ Captured: Home Screen");
 }
 
-async function captureCaptureFlow(page, language, outputDir) {
-  console.log("\n📸 Capturing photo capture flow...");
+async function captureCaptureFlow(page, language, outputDir, exampleNumber = 1) {
+  console.log(`\n📸 Capturing photo capture flow (Example ${exampleNumber})...`);
 
   // Screenshot mode is already set up in main flow with example image in localStorage
   // Step 1: Navigate and wait for camera view to initialize
@@ -298,9 +298,15 @@ async function captureCaptureFlow(page, language, outputDir) {
     await new Promise((resolve) => setTimeout(resolve, 2000));
     console.log("  ⏳ Waiting for camera preview to start...");
 
-    // Step 2: Inject the example image as camera background
+    // Step 2: Inject the example image as camera background overlay
     await page.evaluate((imageDataUrl) => {
-      // Find camera container or create overlay
+      // Remove any existing overlay first
+      const existingOverlay = document.querySelector('[data-screenshot-camera-bg="true"]');
+      if (existingOverlay) {
+        existingOverlay.remove();
+      }
+
+      // Find camera container
       const cameraContainer =
         document.querySelector('[data-camera-view="true"]') ||
         document.querySelector(".camera-view") ||
@@ -331,14 +337,16 @@ async function captureCaptureFlow(page, language, outputDir) {
 
     await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
 
-    // Screenshot the camera view with example image
-    await page.screenshot({
-      path: join(outputDir, "06_camera_view.png"),
-      fullPage: false,
-    });
-    console.log("  ✓ Captured: Camera View with Example Image");
+    // Screenshot the camera view (only for first example)
+    if (exampleNumber === 1) {
+      await page.screenshot({
+        path: join(outputDir, "03_camera_view.png"),
+        fullPage: false,
+      });
+      console.log("  ✓ Captured: Camera View with Example Image");
+    }
 
-    // Step 3: Click capture to trigger the flow with mocked camera image
+    // Step 3: Click capture to trigger the flow
     await page
       .waitForSelector('[data-testid="camera-capture-button"]', {
         visible: true,
@@ -357,29 +365,40 @@ async function captureCaptureFlow(page, language, outputDir) {
       await captureShutterButton.click();
       console.log("  ⏳ Triggered capture - screenshot mode will use example image");
 
-      // Step 4: Wait for loading dialog to appear and capture it
-      console.log("  ⏳ Waiting for loading dialog to appear...");
-      try {
-        await page.waitForSelector('[data-testid="loading-dialog"]', {
-          visible: true,
-          timeout: 5000,
-        });
-        console.log("  ✓ Loading dialog appeared");
+      // Remove the camera background overlay immediately after capture
+      await page.evaluate(() => {
+        const overlay = document.querySelector('[data-screenshot-camera-bg="true"]');
+        if (overlay) {
+          overlay.remove();
+          console.log("📸 Removed camera background overlay");
+        }
+      });
 
-        // Wait a bit to ensure dialog is fully rendered
-        await new Promise((resolve) => setTimeout(resolve, 500));
+      // Step 4: Wait for loading dialog to appear and capture it (only for first example)
+      if (exampleNumber === 1) {
+        console.log("  ⏳ Waiting for loading dialog to appear...");
+        try {
+          await page.waitForSelector('[data-testid="loading-dialog"]', {
+            visible: true,
+            timeout: 5000,
+          });
+          console.log("  ✓ Loading dialog appeared");
 
-        await page.screenshot({
-          path: join(outputDir, "07_capture_loading.png"),
-          fullPage: false,
-        });
-        console.log("  ✓ Captured: Loading Dialog");
-      } catch (e) {
-        console.log("  ⚠️  Loading dialog not visible, capturing current state anyway");
-        await page.screenshot({
-          path: join(outputDir, "07_capture_loading.png"),
-          fullPage: false,
-        });
+          // Wait a bit to ensure dialog is fully rendered
+          await new Promise((resolve) => setTimeout(resolve, 500));
+
+          await page.screenshot({
+            path: join(outputDir, "04_capture_loading.png"),
+            fullPage: false,
+          });
+          console.log("  ✓ Captured: Loading Dialog");
+        } catch (e) {
+          console.log("  ⚠️  Loading dialog not visible, skipping screenshot");
+        }
+      } else {
+        // For subsequent captures, just wait for the loading to start
+        console.log("  ⏳ Waiting for loading to complete...");
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
 
       // Step 5: Wait for result dialog to appear and capture it
@@ -394,17 +413,27 @@ async function captureCaptureFlow(page, language, outputDir) {
         // Wait a bit to ensure dialog is fully rendered
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
+        // Screenshot result dialog for each example
+        const screenshotMap = {
+          1: "04a_capture_result_1.png",
+          2: "04b_capture_result_2.png",
+          3: "04c_capture_result_3.png",
+        };
+
         await page.screenshot({
-          path: join(outputDir, "08_capture_result.png"),
+          path: join(outputDir, screenshotMap[exampleNumber]),
           fullPage: false,
         });
-        console.log("  ✓ Captured: Result Dialog");
+        console.log(`  ✓ Captured: Result Dialog (Example ${exampleNumber})`);
+
+        // Close the result dialog to continue
+        console.log("  🔘 Closing result dialog...");
+        await page.click('[data-testid="result-close-button"], button[aria-label="Close"]').catch(() => {
+          console.log("  ⚠️  Close button not found");
+        });
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       } catch (e) {
-        console.log("  ⚠️  Result dialog not visible within timeout, capturing current state");
-        await page.screenshot({
-          path: join(outputDir, "08_capture_result.png"),
-          fullPage: false,
-        });
+        console.log("  ⚠️  Result dialog not visible within timeout");
       }
     } else {
       console.log("  ⚠️  Could not find camera capture button");
@@ -489,7 +518,7 @@ async function captureSettingsScreen(page, language, outputDir) {
     await new Promise((resolve) => setTimeout(resolve, CONFIG.screenshotDelay));
 
     await page.screenshot({
-      path: join(outputDir, "09_settings.png"),
+      path: join(outputDir, "08_settings.png"),
       fullPage: false,
     });
     console.log("  ✓ Captured: Settings Screen");
@@ -675,81 +704,96 @@ async function generateScreenshots() {
 
     await captureHomeScreen(page, language, outputDir);
 
-    // ===== EVENT LIST =====
-    console.log("\n📱 Flow 3: Event List");
-    console.log("─────────────────────");
+    // Helper function to set up screenshot mode
+    const setupScreenshotMode = async (exampleNumber) => {
+      await page.evaluateOnNewDocument((num) => {
+        localStorage.setItem("hasSeenOnboarding", "true");
+        localStorage.setItem("hasSeenCameraInstruction", "true");
+        localStorage.setItem("__SCREENSHOT_MODE__", "true");
+        localStorage.setItem("__SCREENSHOT_EXAMPLE_NUMBER__", num);
+        console.log(`📸 Screenshot mode enabled - will use example image ${num}`);
+      }, exampleNumber.toString());
+    };
 
-    // Go to about:blank first to reset context
-    await page.goto("about:blank");
-    await skipOnboarding(page);
+    // ===== CAPTURE FLOW 1 =====
+    console.log("\n📱 Flow 3: Camera & Capture (Example 1)");
+    console.log("─────────────────────────────────────");
 
-    // Now navigate to the app
+    await setupScreenshotMode(1);
     await page.goto(`${appUrl}?lng=${language}`, {
       waitUntil: "domcontentloaded",
       timeout: 30000,
     });
-
-    // Wait for app to initialize
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Seed database after page is loaded
-    await seedDatabase(page, language);
+    await captureCaptureFlow(page, language, outputDir, 1);
 
-    // Reload to show seeded data - use domcontentloaded instead of networkidle2
+    // Navigate to event history after capture
+    console.log("  📋 Navigating to event history...");
+    await page.click('[data-testid="history-button"]');
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await page.screenshot({
+      path: join(outputDir, "05_event_history_after_capture_1.png"),
+      fullPage: false,
+    });
+    console.log("  ✓ Captured: Event History (After Capture 1)");
+
+    // ===== CAPTURE FLOW 2 =====
+    console.log("\n📱 Flow 4: Capture (Example 2)");
+    console.log("───────────────────────────────");
+
+    // Go back home
+    await page.click('[data-testid="close-history-button"], .back-button, button[aria-label="Close"]').catch(() => {
+      console.log("  ⚠️  Back button not found, navigating directly");
+    });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    await setupScreenshotMode(2);
     await page.reload({ waitUntil: "domcontentloaded" });
-
-    // Give the app time to render with seeded data
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    await captureEventList(page, language, outputDir);
+    await captureCaptureFlow(page, language, outputDir, 2);
 
-    // ===== CAPTURE FLOW =====
-    console.log("\n📱 Flow 4: Photo Capture");
-    console.log("─────────────────────");
-
-    // Set flags BEFORE page loads to prevent dialogs and enable screenshot mode
-    await page.evaluateOnNewDocument(() => {
-      localStorage.setItem("hasSeenOnboarding", "true");
-      localStorage.setItem("hasSeenCameraInstruction", "true");
-
-      // Enable screenshot mode (App.tsx will load example image from assets)
-      localStorage.setItem("__SCREENSHOT_MODE__", "true");
-
-      console.log("📸 Screenshot mode enabled - app will load example image from assets");
+    // Navigate to event history
+    console.log("  📋 Navigating to event history...");
+    await page.click('[data-testid="history-button"]');
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await page.screenshot({
+      path: join(outputDir, "06_event_history_after_capture_2.png"),
+      fullPage: false,
     });
-    console.log("  ✓ Set up flags to skip onboarding and camera instruction");
-    console.log("  ✓ Enabled screenshot mode - example image will be loaded from app assets");
+    console.log("  ✓ Captured: Event History (After Capture 2)");
 
-    // Navigate to home for capture flow
-    // Real camera will work, but App.tsx will use example image for capture
-    await page.goto(`${appUrl}?lng=${language}`, {
-      waitUntil: "domcontentloaded",
-      timeout: 30000,
+    // ===== CAPTURE FLOW 3 =====
+    console.log("\n📱 Flow 5: Capture (Example 3)");
+    console.log("───────────────────────────────");
+
+    // Go back home
+    await page.click('[data-testid="close-history-button"], .back-button, button[aria-label="Close"]').catch(() => {
+      console.log("  ⚠️  Back button not found, navigating directly");
     });
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    await setupScreenshotMode(3);
+    await page.reload({ waitUntil: "domcontentloaded" });
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    // Verify flag was set
-    const flagValue = await page.evaluate(() =>
-      localStorage.getItem("hasSeenCameraInstruction"),
-    );
-    console.log(`  🔍 Camera instruction flag: ${flagValue}`);
+    await captureCaptureFlow(page, language, outputDir, 3);
 
-    await captureCaptureFlow(page, language, outputDir);
+    // Navigate to event history
+    console.log("  📋 Navigating to event history...");
+    await page.click('[data-testid="history-button"]');
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await page.screenshot({
+      path: join(outputDir, "07_event_history_final.png"),
+      fullPage: false,
+    });
+    console.log("  ✓ Captured: Event History (Final - All 3 Events)");
 
     // ===== SETTINGS SCREEN =====
-    console.log("\n📱 Flow 5: Settings");
-    console.log("─────────────────────");
+    console.log("\n📱 Flow 6: Settings");
+    console.log("───────────────────");
     await captureSettingsScreen(page, language, outputDir);
-
-    // ===== IMAGE PREVIEW =====
-    console.log("\n📱 Flow 6: Image Preview");
-    console.log("─────────────────────");
-    await captureImagePreview(page, language, outputDir);
-
-    // ===== UPGRADE DIALOG =====
-    console.log("\n📱 Flow 7: Upgrade Dialog");
-    console.log("─────────────────────");
-    await captureUpgradeDialog(page, language, outputDir);
 
     console.log("\n✅ Screenshot generation complete!");
     console.log(`📁 Screenshots saved to: ${outputDir}\n`);

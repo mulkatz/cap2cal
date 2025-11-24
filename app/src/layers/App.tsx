@@ -3,7 +3,9 @@ import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { SplashView } from './SplashView.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
-import exampleImageUrl from '../assets/images/event-capture-example.png';
+import exampleImageUrl1 from '../assets/images/event-capture-example-1.png';
+import exampleImageUrl2 from '../assets/images/event-capture-example-2.png';
+import exampleImageUrl3 from '../assets/images/event-capture-example-3.png';
 import { DialogStack, useDialogContext } from '../contexts/DialogContext.tsx';
 import { useCapture } from '../hooks/useCapture.tsx';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -546,7 +548,14 @@ export const App = () => {
 
     if (isScreenshotMode) {
       // Use the example image for screenshot generation
-      console.log('📸 Screenshot mode detected - loading example image from assets');
+      const exampleImageNumber = localStorage.getItem('__SCREENSHOT_EXAMPLE_NUMBER__') || '1';
+      console.log(`📸 Screenshot mode detected - loading example image ${exampleImageNumber} from assets`);
+
+      // Select the correct example image
+      const exampleImageUrl = exampleImageNumber === '1' ? exampleImageUrl1
+                            : exampleImageNumber === '2' ? exampleImageUrl2
+                            : exampleImageUrl3;
+
       try {
         // Fetch the example image and convert to base64
         const response = await fetch(exampleImageUrl);
@@ -562,7 +571,7 @@ export const App = () => {
           reader.readAsDataURL(blob);
         });
         imgUrl = base64;
-        console.log('📸 Example image loaded successfully, length:', base64.length);
+        console.log(`📸 Example image ${exampleImageNumber} loaded successfully, length:`, base64.length);
       } catch (error) {
         console.error('📸 Failed to load example image:', error);
         return;

@@ -8,8 +8,8 @@ import { dirname, join } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Read the image and convert to base64
-const imagePath = join(__dirname, 'event-capture-example.png');
+// Read the image and convert to base64 (using example-1)
+const imagePath = join(__dirname, 'event-capture-example-1.png');
 const imageBuffer = readFileSync(imagePath);
 const base64Image = `data:image/png;base64,${imageBuffer.toString('base64')}`;
 
