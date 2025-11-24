@@ -2,50 +2,65 @@ import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../models/db.ts';
 import { IconChevronLeft } from '../assets/icons';
+import { useTranslation } from 'react-i18next';
 
 export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void }) => {
+  const { t } = useTranslation();
   const img =
     useLiveQuery(async () => {
       return db.images.where('id').equals(id).first();
     }) || null;
 
   return (
-    <div className="fixed inset-0 z-[60] h-screen w-full flex flex-col relative overflow-hidden bg-[#0B1219] inset-safe">
+    <div className="fixed inset-0 z-[60] flex h-screen w-full flex-col overflow-hidden bg-[#0B1219]">
       {/* Floating Header */}
-      <header className="absolute top-0 left-0 right-0 z-10 flex items-center justify-between px-6 py-6">
+      <header className="absolute left-0 right-0 top-0 z-10 flex items-center justify-between px-4 pb-8 pt-safe-offset-6">
         {/* Back Button */}
         <button
           onClick={onClose}
-          className="p-3 rounded-full bg-[#1E2E3F] border border-white/10 text-white hover:bg-white/10 transition-all duration-200"
+          className="rounded-full border border-white/10 bg-[#1E2E3F] p-3 text-white transition-all duration-200 hover:bg-white/10"
           aria-label="Go back">
-          <IconChevronLeft size={20} />
+          <IconChevronLeft size={24} />
         </button>
 
-        {/* Title */}
-        <h1 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-xs font-bold text-white/70 uppercase tracking-[0.2em]">
-          Source Scan
-        </h1>
+        {/* Title with pill background */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-[#1E2E3F] px-4 py-2 backdrop-blur-md">
+          <h1 className="text-xs font-semibold text-white/70">
+            {t('dialogs.imagePreview.title')}
+          </h1>
+        </div>
 
         {/* Empty spacer for layout balance */}
         <div className="w-[48px]" />
       </header>
 
       {/* Main Image Container */}
-      <main className="flex-1 flex items-center justify-center p-4">
-        <TransformWrapper>
-          <TransformComponent>
+      <main className="flex flex-1 items-center justify-center">
+        <TransformWrapper initialScale={1} minScale={0.5} maxScale={4} centerOnInit={true}>
+          <TransformComponent
+            wrapperStyle={{
+              width: '100%',
+              height: '100%',
+            }}
+            contentStyle={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
             <img
               src={img?.dataUrl}
               alt="captured image"
-              className="object-contain w-auto h-auto max-h-[80vh] rounded-xl shadow-[0_0_50px_-10px_rgba(0,0,0,0.5)]"
+              className="h-auto max-h-[80vh] w-auto max-w-[90vw] rounded-xl object-contain shadow-[0_0_50px_-10px_rgba(0,0,0,0.5)]"
             />
           </TransformComponent>
         </TransformWrapper>
       </main>
 
       {/* Bottom Metadata Pill */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 bg-[#1E2E3F] border border-white/10 px-6 py-3 rounded-full">
-        <span className="text-white font-semibold text-sm">Original Capture</span>
+      <div className="absolute bottom-safe-offset-5 left-1/2 -translate-x-1/2 rounded-full border border-white/10 bg-[#1E2E3F] px-6 py-3">
+        <span className="text-sm font-semibold text-white">{t('dialogs.imagePreview.originalCapture')}</span>
       </div>
     </div>
   );

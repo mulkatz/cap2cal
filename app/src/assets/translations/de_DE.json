@@ -304,6 +304,10 @@
             "5": "Fast fertig, danke für deine Geduld!"
           }
         }
+      },
+      "imagePreview": {
+        "title": "Quell-Scan",
+        "originalCapture": "Originalaufnahme"
       }
     },
     "types": {

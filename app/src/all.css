@@ -644,6 +644,10 @@ video {
   bottom: 0px;
 }
 
+.bottom-6 {
+  bottom: 1.5rem;
+}
+
 .bottom-\[20vh\] {
   bottom: 20vh;
 }
@@ -1049,6 +1053,10 @@ video {
   max-height: 70vh;
 }
 
+.max-h-\[80vh\] {
+  max-height: 80vh;
+}
+
 .max-h-\[90\%\] {
   max-height: 90%;
 }
@@ -1067,10 +1075,6 @@ video {
 
 .min-h-screen {
   min-height: 100vh;
-}
-
-.\!w-auto {
-  width: auto !important;
 }
 
 .w-10 {
@@ -1193,16 +1197,16 @@ video {
   max-width: 320px;
 }
 
+.max-w-\[90vw\] {
+  max-width: 90vw;
+}
+
 .max-w-md {
   max-width: 28rem;
 }
 
 .max-w-sm {
   max-width: 24rem;
-}
-
-.\!flex-none {
-  flex: none !important;
 }
 
 .flex-1 {
@@ -1711,6 +1715,11 @@ video {
 .bg-\[\#080D11\] {
   --tw-bg-opacity: 1;
   background-color: rgb(8 13 17 / var(--tw-bg-opacity, 1));
+}
+
+.bg-\[\#0B1219\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(11 18 25 / var(--tw-bg-opacity, 1));
 }
 
 .bg-\[\#0F1720\]\/85 {
@@ -2278,10 +2287,6 @@ video {
   padding-right: 0px;
 }
 
-.pt-0 {
-  padding-top: 0px;
-}
-
 .pt-1 {
   padding-top: 0.25rem;
 }
@@ -2446,6 +2451,10 @@ video {
   line-height: 1.25;
 }
 
+.tracking-\[0\.2em\] {
+  letter-spacing: 0.2em;
+}
+
 .tracking-\[0\.5px\] {
   letter-spacing: 0.5px;
 }
@@ -2593,6 +2602,10 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
+.text-white\/70 {
+  color: rgb(255 255 255 / 0.7);
+}
+
 .underline {
   text-decoration-line: underline;
 }
@@ -2669,6 +2682,12 @@ video {
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-\[0_0_50px_-10px_rgba\(0\2c 0\2c 0\2c 0\.5\)\] {
+  --tw-shadow: 0 0 50px -10px rgba(0,0,0,0.5);
+  --tw-shadow-colored: 0 0 50px -10px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
 .shadow-\[0_2px_4px_0_rgba\(0\2c 0\2c 0\2c 0\.2\)\] {
   --tw-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
   --tw-shadow-colored: 0 2px 4px 0 var(--tw-shadow-color);
@@ -2727,11 +2746,6 @@ video {
   --tw-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-accentElevated {
-  --tw-shadow-color: #41526a;
-  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .shadow-black\/40 {

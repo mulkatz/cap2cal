@@ -277,33 +277,37 @@
           },
           "phrase2": {
             "1": "Hold on, fetching all the goodies...",
-            "2": "I’m on it, getting things ready...",
+            "2": "I'm on it, getting things ready...",
             "3": "Almost got everything you need...",
             "4": "Let me wrap this up for you...",
             "5": "Hold tight, final touches coming up!"
           },
           "phrase3": {
             "1": "Collecting every bit of info I can...",
-            "2": "Just making sure it’s perfect for you...",
+            "2": "Just making sure it's perfect for you...",
             "3": "Pulling all the pieces together...",
             "4": "Nearly done, stay with me...",
             "5": "Just a bit more patience!"
           },
           "phrase4": {
             "1": "Give me a second, scanning all options...",
-            "2": "I’m nearly finished with this...",
+            "2": "I'm nearly finished with this...",
             "3": "Looking through every detail for you...",
             "4": "Hang in there, almost complete!",
             "5": "Just about to finish!"
           },
           "phrase5": {
-            "1": "Finalizing everything, we’re almost set...",
+            "1": "Finalizing everything, we're almost set...",
             "2": "Double-checking all the info...",
             "3": "Just making those last few tweaks...",
             "4": "Ensuring everything is perfect...",
             "5": "Almost there, thanks for your patience!"
           }
         }
+      },
+      "imagePreview": {
+        "title": "Source Scan",
+        "originalCapture": "Original Capture"
       }
     },
     "types": {
