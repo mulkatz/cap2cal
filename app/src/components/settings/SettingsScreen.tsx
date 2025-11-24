@@ -4,7 +4,19 @@ import { useAppContext } from '../../contexts/AppContext';
 import { useDialogContext } from '../../contexts/DialogContext';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import { IconChevronLeft } from '../../assets/icons';
-import { Globe, Zap, BarChart3, Trash2, BookOpen, ExternalLink, UserPlus, MessageCircle, Shield, FileText, ChevronRight } from 'lucide-react';
+import {
+  Globe,
+  Zap,
+  BarChart3,
+  Trash2,
+  BookOpen,
+  ExternalLink,
+  UserPlus,
+  MessageCircle,
+  Shield,
+  FileText,
+  ChevronRight,
+} from 'lucide-react';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
 import { PremiumConfirm } from '../modals/PremiumModal';
@@ -20,7 +32,7 @@ const GlobeIcon = () => <Globe size={20} className="text-highlight" />;
 const ZapIcon = () => <Zap size={20} className="text-highlight" fill="currentColor" />;
 const ChartIcon = () => <BarChart3 size={20} className="text-highlight" />;
 const TrashIcon = ({ destructive }: { destructive?: boolean }) => (
-  <Trash2 size={20} className={destructive ? "text-red-400" : "text-highlight"} />
+  <Trash2 size={20} className={destructive ? 'text-red-400' : 'text-highlight'} />
 );
 const BookOpenIcon = () => <BookOpen size={20} className="text-highlight" />;
 const ExternalLinkIcon = () => <ExternalLink size={20} className="text-highlight" />;
@@ -65,17 +77,8 @@ const SettingRow = ({
       <div className="flex items-center gap-3">
         {React.cloneElement(icon as React.ReactElement, { destructive })}
         <div className="flex flex-col">
-          <span className={cn(
-            "font-semibold",
-            destructive ? "text-red-400" : "text-white"
-          )}>
-            {label}
-          </span>
-          {description && (
-            <span className="mt-0.5 text-xs text-gray-400">
-              {description}
-            </span>
-          )}
+          <span className={cn('font-semibold', destructive ? 'text-red-400' : 'text-white')}>{label}</span>
+          {description && <span className="mt-0.5 text-xs text-gray-400">{description}</span>}
         </div>
       </div>
       <div className="flex items-center">
@@ -91,9 +94,7 @@ const SettingRow = ({
             <span className="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-5"></span>
           </label>
         )}
-        {value && (
-          <span className="text-sm text-gray-400">{value}</span>
-        )}
+        {value && <span className="text-sm text-gray-400">{value}</span>}
         {!toggle && !value && !hideChevron && <ChevronRightIcon />}
       </div>
     </button>
@@ -300,7 +301,9 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
   };
 
   const getLanguageDisplay = () => {
-    return i18n.language.startsWith('en') ? t('dialogs.settings.languageEnglish') : t('dialogs.settings.languageGerman');
+    return i18n.language.startsWith('en')
+      ? t('dialogs.settings.languageEnglish')
+      : t('dialogs.settings.languageGerman');
   };
 
   const getThemeDisplay = () => {
@@ -313,14 +316,14 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
   };
 
   return (
-    <div className={cn(
-      "absolute inset-0 z-50 flex flex-col bg-primary transition-transform duration-300 ease-out",
-      isVisible
-        ? "translate-x-0 pointer-events-auto"
-        : "translate-x-full pointer-events-none"
-    )}>
+    <div
+      className={cn(
+        'absolute inset-0 z-50 flex flex-col bg-primary transition-transform duration-300 ease-out',
+        isVisible ? 'pointer-events-auto translate-x-0' : 'pointer-events-none translate-x-full'
+      )}>
       {/* Header */}
-      <div className={`sticky top-0 z-10 flex h-16 items-center justify-between border-b border-accent/30 bg-primary px-4 pb-8 pt-safe-offset-6 transition-shadow duration-200 ${isScrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.15)]' : ''}`}>
+      <div
+        className={`sticky top-0 z-10 flex h-16 items-center justify-between border-b border-accent/30 bg-primary px-4 pb-8 transition-shadow duration-200 pt-safe-offset-6 ${isScrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.15)]' : ''}`}>
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-secondary transition-colors active:text-highlight">
@@ -382,11 +385,7 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
 
           {/* Group 3: Community */}
           <div className="mb-6 overflow-hidden rounded-3xl bg-primaryElevated">
-            <SettingRow
-              icon={<ExternalLinkIcon />}
-              label={t('dialogs.settings.website')}
-              onClick={handleWebsite}
-            />
+            <SettingRow icon={<ExternalLinkIcon />} label={t('dialogs.settings.website')} onClick={handleWebsite} />
             <SettingDivider />
             <SettingRow
               icon={<UserPlusIcon />}
@@ -409,15 +408,11 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
               onClick={handlePrivacyPolicy}
             />
             <SettingDivider />
-            <SettingRow
-              icon={<FileTextIcon />}
-              label={t('dialogs.settings.terms')}
-              onClick={handleTerms}
-            />
+            <SettingRow icon={<FileTextIcon />} label={t('dialogs.settings.terms')} onClick={handleTerms} />
           </div>
 
           {/* Version - centered at bottom */}
-          <div className="mt-4 mb-10 flex justify-center pb-8">
+          <div className="mb-2 mt-2 flex justify-center pb-2">
             <span className="text-xs text-gray-600">v{version}</span>
           </div>
         </div>

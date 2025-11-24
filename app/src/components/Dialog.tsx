@@ -21,7 +21,7 @@ export const Dialog = ({
       {/* Backdrop layer - separate from content */}
       {!noCard && (
         <div
-          className={'absolute inset-0 bg-black/80 backdrop-blur-md'}
+          className={'absolute inset-0 bg-[#0F1720]/85 backdrop-blur-sm'}
           onClick={closeOnClickOutside ? onClose : undefined}
         />
       )}
