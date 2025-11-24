@@ -6,7 +6,8 @@ import { db } from '../models/db.ts';
 import { CardController } from './Card.controller.tsx';
 import { Card } from './Card.group.tsx';
 import { useTranslation } from 'react-i18next';
-import { IconClose, IconStar } from '../assets/icons';
+import { IconStar } from '../assets/icons';
+import { CloseButton } from './buttons/CloseButton';
 
 type Props = {
   isOpen: boolean;
@@ -67,20 +68,7 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
 
             <p className={'mb-3 mt-7 text-center text-[22px] font-bold text-secondary'}>{t('sheet.header')}</p>
             <span className={'absolute -top-6 right-2'}>
-              <button
-                onClick={onClose}
-                className={cn(
-                  'group mr-2 box-border flex h-[48px] w-[48px] items-center justify-center text-secondary'
-                )}>
-                <span
-                  className={cn(
-                    'flex h-[38px] w-[38px] items-center justify-center rounded-full border-[1px] border-accentElevated bg-primaryElevated',
-                    'border-[1px] border-secondary',
-                    'transform transition-all duration-[800ms] group-active:bg-clickHighLight'
-                  )}>
-                  <IconClose size={18} />
-                </span>
-              </button>
+              <CloseButton onClick={onClose} className="mr-2" />
             </span>
           </div>
         </Sheet.Header>

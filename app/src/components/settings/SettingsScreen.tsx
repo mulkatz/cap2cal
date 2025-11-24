@@ -7,6 +7,7 @@ import { IconChevronLeft } from '../../assets/icons';
 import { Globe, Zap, BarChart3, Trash2, BookOpen, ExternalLink, UserPlus, MessageCircle, Shield, FileText, ChevronRight } from 'lucide-react';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
+import { PremiumConfirm } from '../modals/PremiumModal';
 import { exportUserData, clearLocalStorage, deleteAllUserData } from '../../utils/dataManagement';
 import toast from 'react-hot-toast';
 import { AnalyticsEvent } from '../../utils/analytics';
@@ -65,13 +66,13 @@ const SettingRow = ({
         {React.cloneElement(icon as React.ReactElement, { destructive })}
         <div className="flex flex-col">
           <span className={cn(
-            "font-['Plus_Jakarta_Sans'] font-semibold",
+            "font-semibold",
             destructive ? "text-red-400" : "text-white"
           )}>
             {label}
           </span>
           {description && (
-            <span className="mt-0.5 font-['Plus_Jakarta_Sans'] text-xs text-gray-400">
+            <span className="mt-0.5 text-xs text-gray-400">
               {description}
             </span>
           )}
@@ -91,7 +92,7 @@ const SettingRow = ({
           </label>
         )}
         {value && (
-          <span className="font-['Plus_Jakarta_Sans'] text-sm text-gray-400">{value}</span>
+          <span className="text-sm text-gray-400">{value}</span>
         )}
         {!toggle && !value && !hideChevron && <ChevronRightIcon />}
       </div>
@@ -194,50 +195,22 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
 
   const handleClearStorage = () => {
     dialogs.push(
-      <Dialog onClose={() => dialogs.pop()}>
-        <div className="flex flex-col">
-          {/* Title & Message */}
-          <div className="flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center">
-            <h2 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
-              {t('dialogs.settings.confirmClearStorage')}
-            </h2>
-            <p className="px-2 font-['Plus_Jakarta_Sans'] text-sm text-gray-300">
-              {t('dialogs.settings.confirmClearStorageMessage')}
-            </p>
-          </div>
-
-          {/* Buttons */}
-          <div className="flex w-full flex-col gap-3 px-6 pb-6">
-            <button
-              onClick={async () => {
-                dialogs.pop();
-                try {
-                  await clearLocalStorage();
-                  logAnalyticsEvent(AnalyticsEvent.STORAGE_CLEARED);
-                } catch (error) {
-                  console.error('Clear storage failed:', error);
-                }
-              }}
-              className={cn(
-                'w-full rounded-2xl bg-warn px-6 py-4',
-                'font-["Plus_Jakarta_Sans"] text-base font-bold text-white',
-                'transition-all active:scale-95'
-              )}>
-              {t('general.yes')}
-            </button>
-
-            <button
-              onClick={() => dialogs.pop()}
-              className={cn(
-                'w-full py-3 text-center',
-                'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
-                'transition-opacity hover:text-gray-300'
-              )}>
-              {t('general.cancel')}
-            </button>
-          </div>
-        </div>
-      </Dialog>
+      <PremiumConfirm
+        title={t('dialogs.settings.confirmClearStorage')}
+        message={t('dialogs.settings.confirmClearStorageMessage')}
+        confirmText={t('general.yes')}
+        cancelText={t('general.cancel')}
+        destructive
+        onConfirm={async () => {
+          try {
+            await clearLocalStorage();
+            logAnalyticsEvent(AnalyticsEvent.STORAGE_CLEARED);
+          } catch (error) {
+            console.error('Clear storage failed:', error);
+          }
+        }}
+        onClose={() => dialogs.pop()}
+      />
     );
   };
 
@@ -248,53 +221,25 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
 
   const handleDeleteAccount = () => {
     dialogs.push(
-      <Dialog onClose={() => dialogs.pop()}>
-        <div className="flex flex-col">
-          {/* Title & Message */}
-          <div className="flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center">
-            <h2 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
-              {t('dialogs.settings.confirmDeleteAccount')}
-            </h2>
-            <p className="px-2 font-['Plus_Jakarta_Sans'] text-sm text-gray-300">
-              {t('dialogs.settings.confirmDeleteAccountMessage')}
-            </p>
-          </div>
-
-          {/* Buttons */}
-          <div className="flex w-full flex-col gap-3 px-6 pb-6">
-            <button
-              onClick={async () => {
-                dialogs.pop();
-                try {
-                  await deleteAllUserData();
-                  logAnalyticsEvent(AnalyticsEvent.ACCOUNT_DELETED);
-                  setTimeout(() => {
-                    window.location.reload();
-                  }, 1000);
-                } catch (error) {
-                  console.error('Delete account failed:', error);
-                }
-              }}
-              className={cn(
-                'w-full rounded-2xl bg-warn px-6 py-4',
-                'font-["Plus_Jakarta_Sans"] text-base font-bold text-white',
-                'transition-all active:scale-95'
-              )}>
-              {t('general.yes')}
-            </button>
-
-            <button
-              onClick={() => dialogs.pop()}
-              className={cn(
-                'w-full py-3 text-center',
-                'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
-                'transition-opacity hover:text-gray-300'
-              )}>
-              {t('general.cancel')}
-            </button>
-          </div>
-        </div>
-      </Dialog>
+      <PremiumConfirm
+        title={t('dialogs.settings.confirmDeleteAccount')}
+        message={t('dialogs.settings.confirmDeleteAccountMessage')}
+        confirmText={t('general.yes')}
+        cancelText={t('general.cancel')}
+        destructive
+        onConfirm={async () => {
+          try {
+            await deleteAllUserData();
+            logAnalyticsEvent(AnalyticsEvent.ACCOUNT_DELETED);
+            setTimeout(() => {
+              window.location.reload();
+            }, 1000);
+          } catch (error) {
+            console.error('Delete account failed:', error);
+          }
+        }}
+        onClose={() => dialogs.pop()}
+      />
     );
   };
 
@@ -473,7 +418,7 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
 
           {/* Version - centered at bottom */}
           <div className="mt-4 mb-10 flex justify-center pb-8">
-            <span className="font-['Plus_Jakarta_Sans'] text-xs text-gray-600">v{version}</span>
+            <span className="text-xs text-gray-600">v{version}</span>
           </div>
         </div>
       </div>

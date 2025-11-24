@@ -217,7 +217,7 @@ const FilterChip = React.memo(
       <button
         onClick={onClick}
         className={cn(
-          'flex flex-shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 font-["Plus_Jakarta_Sans"] text-sm font-medium transition-all',
+          'flex flex-shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all',
           active
             ? 'border-highlight bg-highlight/5 text-highlight'
             : 'border-gray-600 bg-transparent text-gray-400 hover:border-gray-500'

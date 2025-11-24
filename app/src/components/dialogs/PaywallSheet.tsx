@@ -3,7 +3,7 @@ import { Sheet, SheetRef } from 'react-modal-sheet';
 import { useTranslation } from 'react-i18next';
 import { CTAButton } from '../buttons/CTAButton.tsx';
 import { cn } from '../../utils.ts';
-import { IconClose } from '../../assets/icons';
+import { CloseButton } from '../buttons/CloseButton';
 
 interface PaywallSheetProps {
   isOpen: boolean;
@@ -44,20 +44,7 @@ export const PaywallSheet: React.FC<PaywallSheetProps> = ({
             <div className="mx-auto mb-4 mt-2 h-1 w-12 rounded-full bg-accentElevated opacity-50" />
             {/*<p className={'mb-3 mt-7 text-center text-[22px] font-bold text-secondary'}>{t('sheet.header')}</p>*/}
             <span className={'absolute -top-6 right-2'}>
-              <button
-                onClick={onClose}
-                className={cn(
-                  'group mr-2 box-border flex h-[48px] w-[48px] items-center justify-center text-secondary'
-                )}>
-                <span
-                  className={cn(
-                    'flex h-[38px] w-[38px] items-center justify-center rounded-full border-[1px] border-accentElevated bg-primaryElevated',
-                    'border-[1px] border-secondary',
-                    'transform transition-all duration-[800ms] group-active:bg-clickHighLight'
-                  )}>
-                  <IconClose size={18} />
-                </span>
-              </button>
+              <CloseButton onClick={onClose} className="mr-2" />
             </span>
           </div>
         </Sheet.Header>

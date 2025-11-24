@@ -188,7 +188,7 @@ const EventCardAtom = React.memo(
                 {/* Clock Icon */}
                 <Clock size={16} className="text-gray-400" />
                 {/* Time Text */}
-                <span className="font-['Plus_Jakarta_Sans'] text-sm font-medium text-gray-200">{formattedTime}</span>
+                <span className="text-sm font-medium text-gray-200">{formattedTime}</span>
               </div>
             )}
 

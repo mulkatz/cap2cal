@@ -19,7 +19,7 @@ export const ExportChooser = ({
     <div className="flex flex-col">
       {/* Title */}
       <div className="flex w-full flex-col gap-5 px-6 pb-4 pt-8 text-center">
-        <h2 className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
+        <h2 className="text-xl font-bold text-white">
           {t('dialogs.export.title')}
         </h2>
 
@@ -37,7 +37,7 @@ export const ExportChooser = ({
           onClick={onClose}
           className={cn(
             'w-full py-3 text-center',
-            'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
+            'text-sm text-gray-400',
             'transition-opacity hover:text-gray-300'
           )}>
           {t('general.cancel')}
@@ -51,7 +51,7 @@ const Entry = ({ icon, text, onClick }: { icon: ReactNode; text: string; onClick
   <button
     className={cn(
       'flex items-center gap-3 rounded-xl border border-white/10 bg-primaryDark px-4 py-3.5',
-      'font-["Plus_Jakarta_Sans"] text-base text-white',
+      'text-base text-white',
       'transition-all active:scale-95 active:border-highlight/50'
     )}
     onClick={onClick}>

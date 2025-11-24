@@ -56,10 +56,10 @@ export const Feedback = ({}: {}) => {
     <div className="flex flex-col">
       {/* Title & Description */}
       <div className={'flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center'}>
-        <h2 className={'font-["Plus_Jakarta_Sans"] text-xl font-bold text-white'}>
+        <h2 className={'text-xl font-bold text-white'}>
           {t('dialogs.feedback.title')}
         </h2>
-        <p className={'px-2 font-["Plus_Jakarta_Sans"] text-sm text-gray-300'}>
+        <p className={'px-2 text-sm text-gray-300'}>
           {t('dialogs.feedback.description')}
         </p>
       </div>
@@ -87,7 +87,7 @@ export const Feedback = ({}: {}) => {
           ref={textRef}
           className={cn(
             'w-full rounded-xl border border-white/10 bg-primaryDark px-4 py-3',
-            'font-["Plus_Jakarta_Sans"] text-base text-white placeholder-gray-500',
+            'text-base text-white placeholder-gray-500',
             'outline-none transition-all',
             'focus:border-highlight/50 focus:ring-2 focus:ring-highlight/20'
           )}
@@ -102,7 +102,7 @@ export const Feedback = ({}: {}) => {
           onClick={handleSubmit}
           className={cn(
             'w-full rounded-2xl bg-highlight px-6 py-4',
-            'font-["Plus_Jakarta_Sans"] text-base font-bold text-primaryDark',
+            'text-base font-bold text-primaryDark',
             'transition-all active:scale-95'
           )}>
           {t('dialogs.feedback.send')}

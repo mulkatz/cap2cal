@@ -32,11 +32,11 @@ export const PrivacyConsent = ({ onAccept }: { onAccept: () => void }) => {
     <div className="flex flex-col">
       {/* Title & Content */}
       <div className={'flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center'}>
-        <h2 className={'font-["Plus_Jakarta_Sans"] text-xl font-bold text-white'}>
+        <h2 className={'text-xl font-bold text-white'}>
           {t('dialogs.privacyConsent.title')}
         </h2>
 
-        <div className={'px-2 font-["Plus_Jakarta_Sans"] text-sm leading-relaxed text-gray-300'}>
+        <div className={'px-2 text-sm leading-relaxed text-gray-300'}>
           <p className="mb-3">{t('dialogs.privacyConsent.intro')}</p>
 
           <div className="space-y-2 text-left text-[13px]">
@@ -59,7 +59,7 @@ export const PrivacyConsent = ({ onAccept }: { onAccept: () => void }) => {
 
         <button
           onClick={handlePrivacyPolicy}
-          className="font-['Plus_Jakarta_Sans'] text-[13px] text-highlight underline">
+          className="text-[13px] text-highlight underline">
           {t('dialogs.privacyConsent.privacyPolicyLink')}
         </button>
       </div>
@@ -70,7 +70,7 @@ export const PrivacyConsent = ({ onAccept }: { onAccept: () => void }) => {
           onClick={handleAccept}
           className={cn(
             'w-full rounded-2xl bg-highlight px-6 py-4',
-            'font-["Plus_Jakarta_Sans"] text-base font-bold text-primaryDark',
+            'text-base font-bold text-primaryDark',
             'transition-all active:scale-95'
           )}>
           {t('dialogs.privacyConsent.acceptButton')}

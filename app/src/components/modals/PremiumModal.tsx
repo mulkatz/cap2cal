@@ -17,13 +17,13 @@ const PremiumModalContent = ({ title, message, children, actions }: PremiumModal
   return (
     <div className="flex flex-col">
       {/* Title */}
-      <h2 className="px-6 pt-6 text-center font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
+      <h2 className="px-6 pt-6 text-center text-xl font-bold text-white">
         {title}
       </h2>
 
       {/* Message/Content */}
       {message && (
-        <div className="px-6 py-4 text-center font-['Plus_Jakarta_Sans'] text-sm text-gray-300">
+        <div className="px-6 py-4 text-center text-sm text-gray-300">
           {typeof message === 'string' ? <p>{message}</p> : message}
         </div>
       )}
@@ -71,7 +71,7 @@ export const PremiumAlert = ({
             onClick={handleConfirm}
             className={cn(
               'w-full rounded-2xl bg-highlight px-6 py-4',
-              'font-["Plus_Jakarta_Sans"] text-base font-bold text-primaryDark',
+              'text-base font-bold text-primaryDark',
               'transition-all active:scale-95'
             )}>
             {confirmText}
@@ -129,7 +129,7 @@ export const PremiumConfirm = ({
               onClick={handleConfirm}
               className={cn(
                 'w-full rounded-2xl px-6 py-4',
-                'font-["Plus_Jakarta_Sans"] text-base font-bold',
+                'text-base font-bold',
                 'transition-all active:scale-95',
                 destructive ? 'bg-warn text-white' : 'bg-highlight text-primaryDark'
               )}>
@@ -141,7 +141,7 @@ export const PremiumConfirm = ({
               onClick={handleCancel}
               className={cn(
                 'w-full py-3 text-center',
-                'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
+                'text-sm text-gray-400',
                 'transition-opacity hover:text-gray-300'
               )}>
               {cancelText}
@@ -210,7 +210,7 @@ export const PremiumPrompt = ({
               autoFocus
               className={cn(
                 'w-full rounded-xl border border-white/10 bg-primaryDark px-4 py-3',
-                'font-["Plus_Jakarta_Sans"] text-base text-white placeholder-gray-500',
+                'text-base text-white placeholder-gray-500',
                 'outline-none transition-all',
                 'focus:border-highlight/50 focus:ring-2 focus:ring-highlight/20'
               )}
@@ -222,7 +222,7 @@ export const PremiumPrompt = ({
               disabled={!value.trim()}
               className={cn(
                 'w-full rounded-2xl bg-highlight px-6 py-4',
-                'font-["Plus_Jakarta_Sans"] text-base font-bold text-primaryDark',
+                'text-base font-bold text-primaryDark',
                 'transition-all active:scale-95',
                 'disabled:opacity-50 disabled:active:scale-100'
               )}>
@@ -234,7 +234,7 @@ export const PremiumPrompt = ({
               onClick={handleCancel}
               className={cn(
                 'w-full py-3 text-center',
-                'font-["Plus_Jakarta_Sans"] text-sm text-gray-400',
+                'text-sm text-gray-400',
                 'transition-opacity hover:text-gray-300'
               )}>
               {cancelText}
