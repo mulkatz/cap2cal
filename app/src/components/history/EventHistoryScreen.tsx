@@ -101,14 +101,14 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
   };
 
   return (
-    <div className={cn(
-      "absolute inset-0 z-50 flex flex-col bg-primary transition-transform duration-300 ease-out",
-      isVisible
-        ? "translate-x-0 pointer-events-auto"
-        : "translate-x-full pointer-events-none"
-    )}>
+    <div
+      className={cn(
+        'absolute inset-0 z-50 flex flex-col bg-primary transition-transform duration-300 ease-out',
+        isVisible ? 'pointer-events-auto translate-x-0' : 'pointer-events-none translate-x-full'
+      )}>
       {/* Header */}
-      <div className={`sticky top-0 z-10 flex h-16 items-center justify-between border-b border-accent/30 bg-primary px-4 pb-8 pt-safe-offset-6 transition-shadow duration-200 ${isScrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.15)]' : ''}`}>
+      <div
+        className={`sticky top-0 z-10 flex h-16 items-center justify-between border-b border-accent/30 bg-primary px-4 pb-8 transition-shadow duration-200 pt-safe-offset-6 ${isScrolled ? 'shadow-[0_4px_12px_rgba(0,0,0,0.15)]' : ''}`}>
         <button
           onClick={onClose}
           className="flex items-center gap-2 text-secondary transition-colors active:text-highlight">
@@ -120,7 +120,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto px-4 pt-3 pb-safe-offset-0" onScroll={handleScroll}>
-        <div className="mx-auto flex max-w-2xl flex-col gap-4">
+        <div className="mx-auto flex max-w-2xl flex-col gap-4 pb-4">
           {/* Horizontal Chip Filter Row */}
           <div className="flex gap-3 overflow-x-auto">
             <FilterChip
@@ -165,10 +165,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
                     <IconTriangleRight
                       width={12}
                       height={12}
-                      className={cn(
-                        'transition-transform duration-200',
-                        showPastEvents ? 'rotate-90' : 'rotate-0'
-                      )}
+                      className={cn('transition-transform duration-200', showPastEvents ? 'rotate-90' : 'rotate-0')}
                     />
                   </button>
 

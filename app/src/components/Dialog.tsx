@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { CloseButton } from './buttons/CloseButton.tsx';
 import { cn } from '../utils.ts';
 
@@ -15,9 +16,9 @@ export const Dialog = ({
   full?: boolean;
   noCard?: boolean;
 }) => {
-  return (
+  const dialogContent = (
     <div
-      className={cn('fixed inset-0 z-50 flex max-h-screen items-center justify-center p-6', full && 'magicpattern')}
+      className={cn('fixed inset-0 z-[100] flex max-h-screen items-center justify-center p-6', full && 'magicpattern')}
       onClick={closeOnClickOutside ? onClose : undefined}>
       {/* Premium dark blurred backdrop - enhanced for AI processing state */}
       {!noCard && <div className={'absolute inset-0 bg-black/80 backdrop-blur-md'} />}
@@ -58,4 +59,6 @@ export const Dialog = ({
       </div>
     </div>
   );
+
+  return createPortal(dialogContent, document.body);
 };
