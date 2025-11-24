@@ -15,7 +15,6 @@ import { Dialog } from './Dialog.tsx';
 import { ExportChooser } from './dialogs/ExportChooser.atom.tsx';
 import { Share } from '@capacitor/share';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { Window } from './Window.tsx';
 import { ImagePreview } from './ImagePreview.tsx';
 import { logger } from '../utils/logger';
 import { CalendarPermissionScope, CapacitorCalendar } from '@ebarooni/capacitor-calendar';
@@ -155,22 +154,7 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
   };
 
   const onImage = useCallback(() => {
-    dialogs.push(
-      <Window onClose={dialogs.pop}>
-        <ImagePreview id={item.id}></ImagePreview>
-      </Window>
-      // <Dialog onClose={dialogs.pop} closeOnClickOutside>
-      //   {/* This new div will be forced to full-width, which is fine. */}
-      //   {/* It will then center its own child (the Card). */}
-      //   <div className="flex w-full justify-center">
-      //     {/* The Card is no longer a direct child of the Dialog. */}
-      //     {/* It will now obey !w-auto because its parent is a flex container. */}
-      //     <Card className={'!w-auto !flex-none pt-0'}>
-      //       <Image id={item.id} />
-      //     </Card>
-      //   </div>
-      // </Dialog>
-    );
+    dialogs.push(<ImagePreview id={item.id} onClose={dialogs.pop} />);
   }, [dialogs, item.id]);
 
   /**

@@ -48,7 +48,7 @@ export const LoadingController = () => {
       {/* Status text feed */}
       <div className="mx-auto mt-24 flex max-w-[250px] animate-[fadeIn_0.3s_ease-out_0.3s_both] flex-col items-center justify-center">
         <span
-          className={`w-full text-center text-lg font-medium text-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          className={`w-full text-center text-lg font-normal text-white transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t(`dialogs.loading.phrases.phrase${currentPhraseIndex + 1}.${currentVariation}`)}
         </span>
       </div>
