@@ -1,4 +1,3 @@
-import { ToggleItem } from './ToggleItem.atom.tsx';
 import { useRef, useState } from 'react';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 import { cn, getPlatformAndBrowser } from '../../utils.ts';
@@ -15,7 +14,7 @@ export const Feedback = ({}: {}) => {
   const dialogs = useDialogContext();
   const { sendFeedback, logAnalyticsEvent } = useFirebaseContext();
   const { version } = useAppContext();
-  const [kind, setKind] = useState<Kind>('default');
+  const [kind, setKind] = useState<Kind>('idea');
   const textRef = useRef<HTMLTextAreaElement | null>(null);
 
   const onToggle = (kind: Kind) => setKind(kind);
@@ -54,42 +53,54 @@ export const Feedback = ({}: {}) => {
   };
   return (
     <div className="flex flex-col">
-      {/* Title & Description */}
-      <div className={'flex w-full flex-col gap-4 px-6 pb-4 pt-8 text-center'}>
-        <h2 className={'text-xl font-bold text-white'}>
+      {/* Title */}
+      <div className="px-6 pb-4 pt-8 text-center">
+        <h2 className="text-xl font-bold text-white">
           {t('dialogs.feedback.title')}
         </h2>
-        <p className={'px-2 text-sm text-gray-300'}>
+      </div>
+
+      {/* Description */}
+      <div className="px-6 pb-4 text-center">
+        <p className="text-sm text-gray-300">
           {t('dialogs.feedback.description')}
         </p>
       </div>
 
       {/* Form Content */}
-      <div className={'flex w-full flex-col gap-4 px-6'}>
-        {/* Toggle Buttons */}
-        <div className={'flex w-full gap-2'}>
-          <ToggleItem
-            text={t('dialogs.feedback.idea')}
-            isHighlight={kind === 'idea'}
-            highlightColor={'#e6de4d'}
+      <div className="flex w-full flex-col gap-4 px-6">
+        {/* Sliding Segmented Control - Fixed Contrast */}
+        <div className="flex gap-1 rounded-xl bg-[#1E2E3F] p-1">
+          <button
             onClick={() => onToggle('idea')}
-          />
-          <ToggleItem
-            text={t('dialogs.feedback.bug')}
-            isHighlight={kind === 'bug'}
-            highlightColor={'#FF2929'}
+            className={cn(
+              'flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all',
+              kind === 'idea'
+                ? 'bg-[#E6DE4D] text-[#1E2E3F] shadow-[0_2px_4px_0_rgba(0,0,0,0.2)]'
+                : 'text-slate-400 hover:text-slate-300'
+            )}>
+            {t('dialogs.feedback.idea')}
+          </button>
+          <button
             onClick={() => onToggle('bug')}
-          />
+            className={cn(
+              'flex-1 rounded-lg px-4 py-2.5 text-sm font-semibold transition-all',
+              kind === 'bug'
+                ? 'bg-[#E6DE4D] text-[#1E2E3F] shadow-[0_2px_4px_0_rgba(0,0,0,0.2)]'
+                : 'text-slate-400 hover:text-slate-300'
+            )}>
+            {t('dialogs.feedback.bug')}
+          </button>
         </div>
 
-        {/* Textarea */}
+        {/* Textarea - Tactile Depth with Inset Shadow */}
         <textarea
           ref={textRef}
           className={cn(
-            'w-full rounded-xl border border-white/10 bg-primaryDark px-4 py-3',
+            'w-full rounded-xl border border-white/5 bg-[#1E2E3F] px-4 py-3 shadow-inner',
             'text-base text-white placeholder-gray-500',
             'outline-none transition-all',
-            'focus:border-highlight/50 focus:ring-2 focus:ring-highlight/20'
+            'focus:border-highlight'
           )}
           rows={5}
           placeholder={t('dialogs.feedback.inputPlaceholder')}
