@@ -14,24 +14,24 @@ export const ImagePreview = ({ id, onClose }: { id: string; onClose: () => void 
   return (
     <div className="fixed inset-0 z-[60] flex h-screen w-full flex-col overflow-hidden bg-[#0B1219]">
       {/* Floating Header */}
-      <header className="absolute left-0 right-0 top-0 z-10 flex items-center justify-between px-4 pb-8 pt-safe-offset-6">
+      <header className="absolute left-0 right-0 top-0 z-10 flex h-16 items-center justify-between px-4 pb-8 pt-safe-offset-6">
         {/* Back Button */}
         <button
           onClick={onClose}
-          className="rounded-full border border-white/10 bg-[#1E2E3F] p-3 text-white transition-all duration-200 hover:bg-white/10"
+          className="flex items-center gap-2 text-secondary transition-colors active:text-highlight"
           aria-label="Go back">
           <IconChevronLeft size={24} />
         </button>
 
         {/* Title with pill background */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-[#1E2E3F] px-4 py-2 backdrop-blur-md">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/10 bg-[#0B1219] px-4 py-2 backdrop-blur-md">
           <h1 className="text-xs font-semibold text-white/70">
             {t('dialogs.imagePreview.title')}
           </h1>
         </div>
 
         {/* Empty spacer for layout balance */}
-        <div className="w-[48px]" />
+        <div className="w-8" />
       </header>
 
       {/* Main Image Container */}
