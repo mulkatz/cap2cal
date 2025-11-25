@@ -8,7 +8,6 @@ import { OnboardingNavigation } from './OnboardingNavigation.tsx';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam, ScreenName } from '../../utils/analytics.ts';
 import useEmblaCarousel from 'embla-carousel-react';
-import backgroundImage from '../../assets/images/onboarding/background.png';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -77,21 +76,6 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 z-50 bg-[#1E2E3F]" data-testid="onboarding-container">
-      {/* Parallax Background Image */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div
-          className="absolute inset-0 transition-transform duration-700 ease-out"
-          style={{
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundRepeat: 'no-repeat',
-            opacity: 0.15,
-            transform: `translateX(${selectedIndex * -10}%)`,
-          }}
-        />
-      </div>
-
       {/* Pulsing Radial Gradient Animation */}
       <div className="absolute inset-0 overflow-hidden">
         <div
@@ -101,14 +85,14 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       </div>
 
       {/* Content */}
-      <div className="relative flex h-full flex-col items-center justify-between py-6">
+      <div className="relative flex h-full flex-col items-center justify-between py-6 overflow-visible">
         {/* Embla Carousel */}
-        <div className="embla flex flex-1 items-center justify-center" style={{ width: '100%' }}>
-          <div className="embla__viewport" ref={emblaRef}>
+        <div className="embla flex flex-1 items-center justify-center overflow-visible" style={{ width: '100%' }}>
+          <div className="embla__viewport overflow-visible" ref={emblaRef}>
             <div className="embla__container">
               {screens.map((screen, index) => (
-                <div className="embla__slide" key={index} data-testid={`onboarding-slide-${index}`}>
-                  <div className="flex h-full w-full items-center justify-center">{screen}</div>
+                <div className="embla__slide overflow-visible" key={index} data-testid={`onboarding-slide-${index}`}>
+                  <div className="flex h-full w-full items-center justify-center overflow-visible">{screen}</div>
                 </div>
               ))}
             </div>
