@@ -1,31 +1,47 @@
 import React from 'react';
-import { Sparkles, Calendar } from 'lucide-react';
+import { Sparkles, Calendar, ArrowRight } from 'lucide-react';
+
+// GlowContainer - Reusable wrapper for High-Voltage glow effect
+const GlowContainer: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'lg' }> = ({
+  children,
+  size = 'md'
+}) => {
+  const sizeClasses = {
+    sm: 'h-20 w-20',
+    md: 'h-24 w-24',
+    lg: 'h-32 w-32'
+  };
+
+  return (
+    <div className="relative flex items-center justify-center">
+      <div
+        className={`relative flex ${sizeClasses[size]} items-center justify-center rounded-full bg-gradient-to-br from-[#E6DE4D]/30 to-[#E6DE4D]/10 shadow-[0_0_30px_-5px_rgba(230,222,77,0.6)] ring-1 ring-[#E6DE4D]/20`}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
 
 export const OnboardingHowItWorks: React.FC = () => {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
       <div className="flex w-full max-w-md flex-col items-center">
-        {/* Hero Visual - Magic to Event Animation */}
-        <div className="mb-12 flex items-center justify-center gap-6">
-          {/* Sparkles Icon */}
-          <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 shadow-xl shadow-highlight/20 ring-2 ring-highlight/30">
-            <Sparkles className="h-12 w-12 text-highlight" strokeWidth={2} fill="currentColor" />
-            {/* Glow effect */}
-            <div className="absolute inset-0 rounded-full bg-highlight/10 blur-lg" />
-          </div>
+        {/* Hero Visual - AI Magic Flow: Sparkles -> Arrow -> Calendar */}
+        <div className="mb-12 flex items-center justify-center gap-4">
+          {/* Sparkles Icon with Glow */}
+          <GlowContainer>
+            <Sparkles className="h-12 w-12 text-[#E6DE4D]" strokeWidth={2.5} fill="currentColor" />
+          </GlowContainer>
 
-          {/* Connecting Line */}
-          <div className="relative flex items-center">
-            <div className="h-1 w-12 bg-gradient-to-r from-highlight/60 to-highlight/30" />
-            {/* Arrow */}
-            <div className="absolute right-0 h-2 w-2 translate-x-1 rotate-45 border-r-2 border-t-2 border-highlight/60" />
-          </div>
+          {/* Animated Arrow */}
+          <ArrowRight className="h-8 w-8 animate-pulse text-[#E6DE4D]" strokeWidth={3} />
 
-          {/* Calendar Icon */}
-          <div className="relative flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-highlight/20 to-highlight/5 shadow-lg ring-2 ring-highlight/20">
-            <Calendar className="h-12 w-12 text-highlight" strokeWidth={2} />
-          </div>
+          {/* Calendar Icon with Glow */}
+          <GlowContainer>
+            <Calendar className="h-12 w-12 text-[#E6DE4D]" strokeWidth={2.5} />
+          </GlowContainer>
         </div>
 
         {/* Title */}
