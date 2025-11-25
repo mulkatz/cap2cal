@@ -337,6 +337,41 @@ export const App = () => {
     }
   };
 
+  // Dev function to manually trigger review prompt
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      (window as any).__showReviewPrompt = () => {
+        logger.debug('DevTools', 'Manually triggering review prompt');
+
+        // Show the dialog
+        dialogs.push(
+          <Dialog
+            onClose={() => {
+              logAnalyticsEvent(AnalyticsEvent.REVIEW_PROMPT_DISMISSED);
+              dialogs.pop();
+            }}>
+            <Card>
+              <AppLikePrompt onLike={handleAppLiked} onDislike={handleAppDisliked} />
+            </Card>
+          </Dialog>
+        );
+
+        // Track the prompt shown
+        logAnalyticsEvent(AnalyticsEvent.REVIEW_PROMPT_SHOWN, {
+          capture_count: getCaptureCount(),
+          trigger: 'dev_manual',
+        });
+      };
+
+      logger.info('DevTools', '🧪 Review prompt dev function available:');
+      logger.info('DevTools', '  - window.__showReviewPrompt() - Manually show the review prompt dialog');
+
+      return () => {
+        delete (window as any).__showReviewPrompt;
+      };
+    }
+  }, [dialogs, logAnalyticsEvent, handleAppLiked, handleAppDisliked]);
+
   const onSettings = () => {
     // Track settings opened (only when opening, not closing)
     if (!showSettings) {
