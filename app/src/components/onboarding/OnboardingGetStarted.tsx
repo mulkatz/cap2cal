@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import EventCardAtom from '../EventCard.atom.tsx';
 import { CaptureEvent } from '../../models/CaptureEvent.ts';
+import { ScanLine } from 'lucide-react';
+import { isSmallScreen } from '../../utils.ts';
 
 // Mock Event: Summer Music Festival
 // Note: Using a future date to ensure ticket button displays
@@ -51,18 +53,32 @@ export const OnboardingGetStarted: React.FC = () => {
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
       <div className="flex w-full max-w-md flex-col items-center">
-        {/* ACTUAL EventCard (Disabled via pointer-events-none) with Massive Shadow */}
-        <div className="pointer-events-none relative mb-12 w-full scale-90 select-none shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)]">
-          <EventCardAtom
-            data={mockEvent}
-            isFavourite={isFavourite}
-            onFavourite={noOp}
-            onImage={noOp}
-            onExport={noOp}
-            onDelete={noOp}
-            onAddress={noOp}
-          />
-        </div>
+        {/* Show EventCard on larger screens, Icon on small screens */}
+        {!isSmallScreen ? (
+          <div className="pointer-events-none relative mb-12 w-full scale-90 select-none shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)]">
+            <EventCardAtom
+              data={mockEvent}
+              isFavourite={isFavourite}
+              onFavourite={noOp}
+              onImage={noOp}
+              onExport={noOp}
+              onDelete={noOp}
+              onAddress={noOp}
+            />
+          </div>
+        ) : (
+          <div className="relative mb-12 flex items-center justify-center">
+            {/* Glow effect behind */}
+            <div className="absolute inset-0 -z-10 flex items-center justify-center">
+              <div className="h-48 w-48 rounded-full bg-[#E6DE4D] opacity-20 blur-[80px]" />
+            </div>
+
+            {/* Icon container */}
+            <div className="flex h-32 w-32 items-center justify-center rounded-full bg-[#2C4156]/40 shadow-[inset_0_0_20px_rgba(230,222,77,0.2),_0_0_25px_-5px_rgba(230,222,77,0.4)] ring-1 ring-[#E6DE4D]/50">
+              <ScanLine className="h-16 w-16 text-[#E6DE4D]" strokeWidth={1.5} />
+            </div>
+          </div>
+        )}
 
         {/* Eyebrow */}
         <p className="mb-2 text-center text-sm font-semibold uppercase tracking-wider text-[#E6DE4D]">

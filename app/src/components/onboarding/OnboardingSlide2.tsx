@@ -1,18 +1,22 @@
 import React from 'react';
-import slideImage from '../../assets/images/onboarding/slide-2.png';
+import { CalendarCheck } from 'lucide-react';
 
 export const OnboardingSlide2: React.FC = () => {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
       <div className="flex w-full max-w-md flex-col items-center">
-        {/* Image with massive shadow */}
-        <div className="pointer-events-none relative mb-12 w-full select-none">
-          <img
-            src={slideImage}
-            alt="Details Ready"
-            className="mx-auto w-[280px] rounded-[32px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)]"
-          />
+        {/* Icon with glow */}
+        <div className="relative mb-12 flex items-center justify-center">
+          {/* Glow effect behind */}
+          <div className="absolute inset-0 -z-10 flex items-center justify-center">
+            <div className="h-48 w-48 rounded-full bg-[#E6DE4D] opacity-20 blur-[80px]" />
+          </div>
+
+          {/* Icon container */}
+          <div className="flex h-32 w-32 items-center justify-center rounded-full bg-[#2C4156]/40 shadow-[inset_0_0_20px_rgba(230,222,77,0.2),_0_0_25px_-5px_rgba(230,222,77,0.4)] ring-1 ring-[#E6DE4D]/50">
+            <CalendarCheck className="h-16 w-16 text-[#E6DE4D]" strokeWidth={1.5} />
+          </div>
         </div>
 
         {/* Eyebrow */}
