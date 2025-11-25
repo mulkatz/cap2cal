@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { OnboardingValueProp } from './OnboardingValueProp.tsx';
 import { OnboardingHowItWorks } from './OnboardingHowItWorks.tsx';
-import { OnboardingTickets } from './OnboardingTickets.tsx';
 import { OnboardingGetStarted } from './OnboardingGetStarted.tsx';
 import { OnboardingNavigation } from './OnboardingNavigation.tsx';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
@@ -19,10 +18,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const screens = [
-    <OnboardingValueProp key="value-prop" />,
-    <OnboardingHowItWorks key="how-it-works" />,
-    // <OnboardingTickets key="tickets" />,
-    <OnboardingGetStarted key="get-started" />,
+    <OnboardingValueProp key="capture" />,
+    <OnboardingHowItWorks key="ai-magic" />,
+    <OnboardingGetStarted key="organize" />,
   ];
 
   useEffect(() => {
@@ -37,7 +35,6 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     const screenNames = [
       ScreenName.ONBOARDING_VALUE_PROP,
       ScreenName.ONBOARDING_HOW_IT_WORKS,
-      ScreenName.ONBOARDING_TICKETS,
       ScreenName.ONBOARDING_FREE_TRIAL,
     ];
 
@@ -72,23 +69,29 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="magicpattern fixed inset-0 z-50 flex flex-col items-center justify-between py-6" data-testid="onboarding-container">
-      {/* Embla Carousel */}
-      <div className="embla flex flex-1 items-center justify-center" style={{ width: '100%' }}>
-        <div className="embla__viewport" ref={emblaRef}>
-          <div className="embla__container">
-            {screens.map((screen, index) => (
-              <div className="embla__slide" key={index} data-testid={`onboarding-slide-${index}`}>
-                <div className="flex h-full w-full items-center justify-center">{screen}</div>
-              </div>
-            ))}
+    <div className="fixed inset-0 z-50 bg-primary" data-testid="onboarding-container">
+      {/* Background Pattern with low opacity */}
+      <div className="magicpattern absolute inset-0 opacity-10" />
+
+      {/* Content */}
+      <div className="relative flex h-full flex-col items-center justify-between py-6">
+        {/* Embla Carousel */}
+        <div className="embla flex flex-1 items-center justify-center" style={{ width: '100%' }}>
+          <div className="embla__viewport" ref={emblaRef}>
+            <div className="embla__container">
+              {screens.map((screen, index) => (
+                <div className="embla__slide" key={index} data-testid={`onboarding-slide-${index}`}>
+                  <div className="flex h-full w-full items-center justify-center">{screen}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Navigation */}
-      <div className="w-full pb-safe-offset-8">
-        <OnboardingNavigation step={selectedIndex} totalSteps={screens.length} onNext={handleNext} />
+        {/* Navigation */}
+        <div className="w-full pb-safe-offset-8">
+          <OnboardingNavigation step={selectedIndex} totalSteps={screens.length} onNext={handleNext} />
+        </div>
       </div>
     </div>
   );

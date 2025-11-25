@@ -23,9 +23,7 @@ export const OnboardingNavigation: React.FC<OnboardingNavigationProps> = ({ step
             className={`h-2 rounded-full transition-all duration-300 ${
               index === step
                 ? 'w-8 bg-highlight'
-                : index < step
-                  ? 'w-2 bg-highlight opacity-50'
-                  : 'w-2 bg-accentElevated opacity-40'
+                : 'w-2 bg-gray-400 opacity-60'
             }`}
           />
         ))}
@@ -38,6 +36,7 @@ export const OnboardingNavigation: React.FC<OnboardingNavigationProps> = ({ step
         }
         onClick={onNext}
         highlight
+        className="h-14 text-lg"
         data-testid="onboarding-next-button"
       />
     </div>
