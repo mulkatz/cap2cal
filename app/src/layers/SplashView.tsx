@@ -92,8 +92,7 @@ export const SplashView = ({
         <button
           onClick={handleCaptureClick}
           className={
-            'relative z-50 flex min-w-60 items-center justify-center gap-2 overflow-hidden rounded-full bg-highlight px-6 py-4 text-2xl font-bold text-primary' +
-            ' shadow-md shadow-highlight/30' // <-- Add these classes
+            'relative z-50 flex min-w-60 items-center justify-center gap-2 overflow-hidden rounded-full border-b-4 border-[#C4BD42] bg-highlight px-6 py-4 text-2xl font-bold text-primary shadow-[0_4px_14px_0_rgba(230,222,77,0.4)] transition-all active:translate-y-1 active:border-b-2 active:shadow-[0_2px_8px_0_rgba(230,222,77,0.3)]'
           }
           data-testid="capture-button">
           {/* Ripple effects */}
