@@ -52,7 +52,7 @@ export const OnboardingGetStarted: React.FC = () => {
       {/* Content Container */}
       <div className="flex w-full max-w-md flex-col items-center">
         {/* ACTUAL EventCard (Disabled via pointer-events-none) with Massive Shadow */}
-        <div className="pointer-events-none relative mb-8 w-full scale-90 select-none shadow-2xl shadow-black/50">
+        <div className="pointer-events-none relative mb-12 w-full scale-90 select-none shadow-[0_35px_60px_-15px_rgba(0,0,0,0.8)]">
           <EventCardAtom
             data={mockEvent}
             isFavourite={isFavourite}
@@ -64,14 +64,19 @@ export const OnboardingGetStarted: React.FC = () => {
           />
         </div>
 
+        {/* Eyebrow */}
+        <p className="mb-2 text-center text-sm font-semibold uppercase tracking-wider text-[#E6DE4D]">
+          Detect Any Event
+        </p>
+
         {/* Title */}
         <h1 className="mb-4 text-center text-3xl font-bold leading-tight tracking-tight text-white">
-          Your Event, Elevated
+          Scans notes, flyers & invites
         </h1>
 
         {/* Body */}
-        <p className="text-center text-lg font-medium leading-relaxed text-gray-300">
-          Get the complete picture. Buy tickets, navigate to the venue, and export to your main calendar with one tap.
+        <p className="text-center text-base font-medium leading-relaxed text-gray-300">
+          Get the complete picture. Buy tickets, navigate to the venue, and export to your calendar with one tap.
         </p>
       </div>
     </div>

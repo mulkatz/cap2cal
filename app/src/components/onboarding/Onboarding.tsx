@@ -1,13 +1,14 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { OnboardingValueProp } from './OnboardingValueProp.tsx';
-import { OnboardingBulkAI } from './OnboardingBulkAI.tsx';
-import { OnboardingShareExtension } from './OnboardingShareExtension.tsx';
+import { OnboardingSlide1 } from './OnboardingSlide1.tsx';
+import { OnboardingSlide2 } from './OnboardingSlide2.tsx';
+import { OnboardingSlide3 } from './OnboardingSlide3.tsx';
+import { OnboardingSlide4 } from './OnboardingSlide4.tsx';
 import { OnboardingGetStarted } from './OnboardingGetStarted.tsx';
-import { OnboardingLifestyle } from './OnboardingLifestyle.tsx';
 import { OnboardingNavigation } from './OnboardingNavigation.tsx';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam, ScreenName } from '../../utils/analytics.ts';
 import useEmblaCarousel from 'embla-carousel-react';
+import backgroundImage from '../../assets/images/onboarding/background.png';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -20,11 +21,11 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const screens = [
-    <OnboardingValueProp key="capture" />,
-    <OnboardingBulkAI key="bulk-ai" />,
-    <OnboardingShareExtension key="share-extension" />,
+    <OnboardingSlide1 key="slide-1" />,
+    <OnboardingSlide2 key="slide-2" />,
+    <OnboardingSlide3 key="slide-3" />,
+    <OnboardingSlide4 key="slide-4" />,
     <OnboardingGetStarted key="event-card" />,
-    <OnboardingLifestyle key="lifestyle" />,
   ];
 
   useEffect(() => {
@@ -37,11 +38,11 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     setSelectedIndex(index);
 
     const screenNames = [
-      ScreenName.ONBOARDING_VALUE_PROP,
-      ScreenName.ONBOARDING_HOW_IT_WORKS,
-      ScreenName.ONBOARDING_TICKETS,
-      ScreenName.ONBOARDING_FREE_TRIAL,
-      'onboarding_lifestyle', // Custom screen name
+      'onboarding_slide_1',
+      'onboarding_slide_2',
+      'onboarding_slide_3',
+      'onboarding_slide_4',
+      'onboarding_event_card',
     ];
 
     logAnalyticsEvent(AnalyticsEvent.ONBOARDING_SCREEN_VIEWED, {
@@ -76,8 +77,20 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   return (
     <div className="fixed inset-0 z-50 bg-[#1E2E3F]" data-testid="onboarding-container">
-      {/* Background Pattern with low opacity */}
-      <div className="magicpattern absolute inset-0 opacity-10" />
+      {/* Parallax Background Image */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="absolute inset-0 transition-transform duration-700 ease-out"
+          style={{
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            opacity: 0.15,
+            transform: `translateX(${selectedIndex * -10}%)`,
+          }}
+        />
+      </div>
 
       {/* Pulsing Radial Gradient Animation */}
       <div className="absolute inset-0 overflow-hidden">

@@ -23,7 +23,7 @@ const CONFIG = {
     // width: 1290,  // iPhone 15 Pro Max width (430px * 3)
     // height: 2796, // iPhone 15 Pro Max height (932px * 3)
     width: 414, // iPhone 15 Pro Max width (430px * 3)
-    height: 696, // iPhone 15 Pro Max height (932px * 3)
+    height: 520, // iPhone 15 Pro Max height (932px * 3)
     deviceScaleFactor: 3,
   },
   screenshotDelay: 1000, // Wait time before taking screenshot
