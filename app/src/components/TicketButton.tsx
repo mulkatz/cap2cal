@@ -42,7 +42,7 @@ export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boo
       <CTAButton
         highlight={isFavourite}
         text={t('general.buyTickets')}
-        icon={<IconTicket size={20} strokeWidth={3} />}
+        icon={<IconTicket size={20} strokeWidth={2} />}
         onClick={() => onTicket(item.ticketDirectLink!)}
       />
     );
@@ -53,7 +53,7 @@ export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boo
       <CTAButton
         highlight={isFavourite}
         text={t('general.buyTickets')}
-        icon={<IconTicket size={20} strokeWidth={3} />}
+        icon={<IconTicket size={20} strokeWidth={2} />}
         onClick={() => onTicket(item.alreadyFetchedTicketLink!)}
       />
     );
