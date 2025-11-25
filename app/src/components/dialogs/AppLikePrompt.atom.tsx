@@ -30,7 +30,7 @@ export const AppLikePrompt = ({ onLike, onDislike }: AppLikePromptProps) => {
   return (
     <div className="flex w-full flex-col items-center">
       {/* Three Stars in Arc */}
-      <div className="relative mt-8 flex h-20 w-32 items-center justify-center pb-4 pt-10">
+      <div className="relative mt-8 flex h-20 w-32 items-center justify-center">
         {/* Left star - rotated left */}
         <div
           className="absolute left-0 top-4"
@@ -61,7 +61,7 @@ export const AppLikePrompt = ({ onLike, onDislike }: AppLikePromptProps) => {
       </div>
 
       {/* Title */}
-      <div className="w-full px-6 pb-2 pt-2 text-center">
+      <div className="w-full px-6 pb-2 text-center">
         <h2 className="text-xl font-bold text-white">{t('dialogs.appLikePrompt.title')}</h2>
       </div>
 
