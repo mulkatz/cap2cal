@@ -183,16 +183,17 @@ export const App = () => {
     // Check if capture count increased (successful capture)
     const hadSuccessfulCapture = currentCaptureCount > previousCaptureCount;
 
-    // Update tracking states
+    // Always update previousAppState to track transitions
+    // (Won't cause re-run since it's not in dependency array)
     setPreviousAppState(appState);
-    if (hadSuccessfulCapture) {
-      setPreviousCaptureCount(currentCaptureCount);
-    }
 
     // Only proceed if we just returned home after a successful capture
     if (!justReturnedHome || !hadSuccessfulCapture) {
       return;
     }
+
+    // Update capture count tracking when showing prompt
+    setPreviousCaptureCount(currentCaptureCount);
 
     // Check if in-app rating is enabled via feature flag
     const isInAppRatingEnabled = featureFlags?.in_app_rating ?? true;
@@ -233,7 +234,10 @@ export const App = () => {
     }, 1000);
 
     return () => clearTimeout(timeoutId);
-  }, [appState, previousAppState, previousCaptureCount, featureFlags, logAnalyticsEvent, dialogs]);
+    // Note: previousAppState and previousCaptureCount are intentionally NOT in deps
+    // They are tracking variables and should not trigger re-runs
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appState, featureFlags]);
 
   useEffect(() => {
     ScreenOrientation.lock({ orientation: 'portrait' });
@@ -253,25 +257,27 @@ export const App = () => {
    * Handle when user clicks "Yes, I love it!" on the app like prompt
    */
   const handleAppLiked = async () => {
-    logger.info('ReviewPrompt', 'User liked the app, triggering native review');
+    logger.info('ReviewPrompt', 'User clicked "Yes, I love it!" - requesting native review');
 
     try {
       // Request native in-app review
       await InAppReview.requestReview();
 
-      // Log success
+      // Log success - Note: Google/Apple may not always show the dialog
       logAnalyticsEvent(AnalyticsEvent.NATIVE_REVIEW_TRIGGERED);
-      logger.info('ReviewPrompt', 'Native review dialog requested successfully');
+      logger.info('ReviewPrompt', 'Native review API called successfully');
 
-      // In development, show a toast since native dialog won't appear
+      // In development, log explanation since native dialog won't appear in web
       if (import.meta.env.DEV) {
         const platform = Capacitor.getPlatform();
-        logger.info('ReviewPrompt', `[DEV MODE] Native review dialog requested (${platform})`);
-        logger.info('ReviewPrompt', '[DEV MODE] In production, this would show the App Store/Play Store review dialog');
+        logger.info(
+          'ReviewPrompt',
+          `[${platform}] Native review requested. On production builds, the OS may show the review dialog (subject to OS quotas).`
+        );
       }
     } catch (error) {
       // Log error but don't show to user (native review is best-effort)
-      logger.error('ReviewPrompt', 'Failed to trigger native review', error instanceof Error ? error : undefined);
+      logger.error('ReviewPrompt', 'Native review API failed', error instanceof Error ? error : undefined);
       logAnalyticsEvent(AnalyticsEvent.NATIVE_REVIEW_ERROR, {
         error: error instanceof Error ? error.message : 'Unknown error',
       });
@@ -282,7 +288,7 @@ export const App = () => {
    * Handle when user clicks "Not really" on the app like prompt
    */
   const handleAppDisliked = () => {
-    logger.info('ReviewPrompt', 'User disliked the app, showing feedback dialog');
+    logger.info('ReviewPrompt', 'User clicked "Not really" - showing feedback dialog');
 
     // Show feedback dialog
     if (!showFeedback) {

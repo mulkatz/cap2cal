@@ -36,10 +36,14 @@ export const useCapture = () => {
   const { t } = useTranslation();
   const dialogs = useDialogContext();
   const { logAnalyticsEvent, trackPerformance, getAuthToken, featureFlags, refreshProStatus } = useFirebaseContext();
-  const { setAppState } = useAppContext();
+  const { appState, setAppState } = useAppContext();
 
   const onCaptured = async (imgUrl: string, imageSource: 'camera' | 'gallery' | 'share' = 'camera') => {
     setCapturedImage(imgUrl);
+
+    // Set appState to loading to ensure state transition for review prompt
+    // This creates: home/camera → loading → home transition
+    setAppState('loading');
 
     // Track extraction started
     const extractionStartTime = performance.now();
