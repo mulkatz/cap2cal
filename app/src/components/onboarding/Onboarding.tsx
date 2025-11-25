@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { OnboardingValueProp } from './OnboardingValueProp.tsx';
-import { OnboardingHowItWorks } from './OnboardingHowItWorks.tsx';
+import { OnboardingBulkAI } from './OnboardingBulkAI.tsx';
+import { OnboardingShareExtension } from './OnboardingShareExtension.tsx';
 import { OnboardingGetStarted } from './OnboardingGetStarted.tsx';
+import { OnboardingLifestyle } from './OnboardingLifestyle.tsx';
 import { OnboardingNavigation } from './OnboardingNavigation.tsx';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam, ScreenName } from '../../utils/analytics.ts';
@@ -19,8 +21,10 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   const screens = [
     <OnboardingValueProp key="capture" />,
-    <OnboardingHowItWorks key="ai-magic" />,
-    <OnboardingGetStarted key="organize" />,
+    <OnboardingBulkAI key="bulk-ai" />,
+    <OnboardingShareExtension key="share-extension" />,
+    <OnboardingGetStarted key="event-card" />,
+    <OnboardingLifestyle key="lifestyle" />,
   ];
 
   useEffect(() => {
@@ -35,7 +39,9 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     const screenNames = [
       ScreenName.ONBOARDING_VALUE_PROP,
       ScreenName.ONBOARDING_HOW_IT_WORKS,
+      ScreenName.ONBOARDING_TICKETS,
       ScreenName.ONBOARDING_FREE_TRIAL,
+      'onboarding_lifestyle', // Custom screen name
     ];
 
     logAnalyticsEvent(AnalyticsEvent.ONBOARDING_SCREEN_VIEWED, {
@@ -69,9 +75,17 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-primary" data-testid="onboarding-container">
+    <div className="fixed inset-0 z-50 bg-[#1E2E3F]" data-testid="onboarding-container">
       {/* Background Pattern with low opacity */}
       <div className="magicpattern absolute inset-0 opacity-10" />
+
+      {/* Pulsing Radial Gradient Animation */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-[#E6DE4D]/5 blur-3xl"
+          style={{ animationDuration: '4s' }}
+        />
+      </div>
 
       {/* Content */}
       <div className="relative flex h-full flex-col items-center justify-between py-6">

@@ -23,7 +23,7 @@ const CONFIG = {
     // width: 1290,  // iPhone 15 Pro Max width (430px * 3)
     // height: 2796, // iPhone 15 Pro Max height (932px * 3)
     width: 414, // iPhone 15 Pro Max width (430px * 3)
-    height: 896, // iPhone 15 Pro Max height (932px * 3)
+    height: 696, // iPhone 15 Pro Max height (932px * 3)
     deviceScaleFactor: 3,
   },
   screenshotDelay: 1000, // Wait time before taking screenshot
@@ -601,7 +601,9 @@ async function captureImagePreview(page, language, outputDir) {
       await new Promise((resolve) => setTimeout(resolve, 500));
       const imageIcons = await page.$$('[data-testid^="event-image-icon-"]');
       if (imageIcons.length > 0) {
-        console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+        console.log(
+          `  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`,
+        );
         await imageIcons[0].click();
         await new Promise((resolve) =>
           setTimeout(resolve, CONFIG.navigationDelay),
@@ -786,11 +788,16 @@ async function generateScreenshots() {
 
       // Debug: Check what testids are present on the page
       const allTestIds = await page.evaluate(() => {
-        const elements = Array.from(document.querySelectorAll('[data-testid]'));
-        return elements.map(el => el.getAttribute('data-testid'));
+        const elements = Array.from(document.querySelectorAll("[data-testid]"));
+        return elements.map((el) => el.getAttribute("data-testid"));
       });
-      const eventTestIds = allTestIds.filter(id => id && id.includes('event'));
-      console.log(`  🐛 Debug: All testids found (${allTestIds.length} total):`, allTestIds.slice(0, 20));
+      const eventTestIds = allTestIds.filter(
+        (id) => id && id.includes("event"),
+      );
+      console.log(
+        `  🐛 Debug: All testids found (${allTestIds.length} total):`,
+        allTestIds.slice(0, 20),
+      );
       console.log(`  🐛 Debug: Event-related testids:`, eventTestIds);
 
       // Find all event image icon buttons and click the first one (most recent event)
@@ -798,7 +805,9 @@ async function generateScreenshots() {
       if (imageIcons.length === 0) {
         throw new Error("No event image icons found");
       }
-      console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+      console.log(
+        `  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`,
+      );
       await imageIcons[0].click();
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -853,11 +862,16 @@ async function generateScreenshots() {
 
       // Debug: Check what testids are present on the page
       const allTestIds = await page.evaluate(() => {
-        const elements = Array.from(document.querySelectorAll('[data-testid]'));
-        return elements.map(el => el.getAttribute('data-testid'));
+        const elements = Array.from(document.querySelectorAll("[data-testid]"));
+        return elements.map((el) => el.getAttribute("data-testid"));
       });
-      const eventTestIds = allTestIds.filter(id => id && id.includes('event'));
-      console.log(`  🐛 Debug: All testids found (${allTestIds.length} total):`, allTestIds.slice(0, 20));
+      const eventTestIds = allTestIds.filter(
+        (id) => id && id.includes("event"),
+      );
+      console.log(
+        `  🐛 Debug: All testids found (${allTestIds.length} total):`,
+        allTestIds.slice(0, 20),
+      );
       console.log(`  🐛 Debug: Event-related testids:`, eventTestIds);
 
       // Find all event image icon buttons and click the first one (most recent event)
@@ -865,7 +879,9 @@ async function generateScreenshots() {
       if (imageIcons.length === 0) {
         throw new Error("No event image icons found");
       }
-      console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+      console.log(
+        `  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`,
+      );
       await imageIcons[0].click();
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -923,7 +939,9 @@ async function generateScreenshots() {
       if (imageIcons.length === 0) {
         throw new Error("No event image icons found");
       }
-      console.log(`  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`);
+      console.log(
+        `  ℹ️  Found ${imageIcons.length} event image icons, clicking the first one`,
+      );
       await imageIcons[0].click();
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
