@@ -314,10 +314,10 @@ This is a commercial product. The source code is not open source. For licensing 
 
 ## 🔗 Links
 
-- **Website:** [cap2cal.com](#) (coming soon)
-- **App Store:** Coming Q1 2025
-- **Google Play:** Coming Q1 2025
-- **Support:** [support@cap2cal.com](#)
+- **Website:** [cap2cal.app](#) 
+- **App Store:** Coming Q4 2025
+- **Google Play:** Coming Q4 2025
+- **Support:** [hi@cap2cal.com](#)
 - **Twitter:** [@cap2cal](#)
 
 ---
@@ -333,8 +333,8 @@ This is a commercial product. The source code is not open source. For licensing 
 
 <div align="center">
 
-**Made with ❤️ by [Your Name]**
+**Made with ❤️ by Franz & Claude
 
-[Report Bug](https://github.com/yourusername/cap2cal/issues) • [Request Feature](https://github.com/yourusername/cap2cal/discussions)
+[Report Bug](https://github.com/Franjoo/cap2cal/issues)
 
 </div>
