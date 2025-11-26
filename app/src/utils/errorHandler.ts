@@ -4,6 +4,7 @@
  */
 
 import { logger } from './logger';
+import { i18next } from '../helper/i18nHelper';
 
 export enum ErrorType {
   // Network errors
@@ -135,7 +136,7 @@ export function handleFetchError(error: unknown, context?: string): ApiError {
     // Network error
     return new ApiError(
       ErrorType.NETWORK_ERROR,
-      'Network request failed. Please check your connection.',
+      i18next.t('errors.networkRequestFailed'),
       undefined,
       error,
       { context },
@@ -145,7 +146,7 @@ export function handleFetchError(error: unknown, context?: string): ApiError {
   if (error instanceof Error) {
     // Check for timeout
     if (error.name === 'AbortError' || error.message.includes('timeout')) {
-      return new ApiError(ErrorType.TIMEOUT, 'Request timed out. Please try again.', undefined, error, { context });
+      return new ApiError(ErrorType.TIMEOUT, i18next.t('errors.requestTimedOut'), undefined, error, { context });
     }
 
     // Generic error
@@ -162,31 +163,31 @@ export function handleFetchError(error: unknown, context?: string): ApiError {
 export function getUserMessage(error: AppError | ApiError): string {
   switch (error.type) {
     case ErrorType.NETWORK_ERROR:
-      return 'Network connection failed. Please check your internet connection.';
+      return i18next.t('errors.networkConnectionFailed');
     case ErrorType.TIMEOUT:
-      return 'Request timed out. Please try again.';
+      return i18next.t('errors.requestTimedOut');
     case ErrorType.UNAUTHORIZED:
-      return 'Authentication failed. Please sign in again.';
+      return i18next.t('errors.authenticationFailed');
     case ErrorType.FORBIDDEN:
     case ErrorType.LIMIT_REACHED:
-      return 'Capture limit reached. Please upgrade to continue.';
+      return i18next.t('errors.captureLimitReached');
     case ErrorType.RATE_LIMIT:
-      return 'Too many requests. Please wait a moment and try again.';
+      return i18next.t('errors.tooManyRequests');
     case ErrorType.SERVER_ERROR:
-      return 'Server error. Please try again later.';
+      return i18next.t('errors.serverError');
     case ErrorType.NOT_AN_EVENT:
-      return "This doesn't look like an event. Please try a different image.";
+      return i18next.t('errors.notAnEvent');
     case ErrorType.INVALID_IMAGE:
-      return 'Invalid image. Please try again.';
+      return i18next.t('errors.invalidImage');
     case ErrorType.CAMERA_ERROR:
-      return 'Camera error. Please check your camera permissions.';
+      return i18next.t('errors.cameraError');
     case ErrorType.PERMISSION_DENIED:
-      return 'Permission denied. Please enable the required permissions.';
+      return i18next.t('errors.permissionDenied');
     case ErrorType.VALIDATION_ERROR:
-      return error.message || 'Validation error. Please check your input.';
+      return error.message || i18next.t('errors.validationError');
     case ErrorType.UNKNOWN:
     default:
-      return error.message || 'An unexpected error occurred. Please try again.';
+      return error.message || i18next.t('errors.unexpectedError');
   }
 }
 

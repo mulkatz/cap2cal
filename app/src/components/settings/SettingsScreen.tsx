@@ -293,7 +293,7 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
             });
 
             toast.dismiss();
-            toast('Test crash will trigger in 2 seconds...', { duration: 2000 });
+            toast(t('toasts.settings.testCrashScheduled'), { duration: 2000 });
 
             // Wait 2 seconds then crash
             setTimeout(async () => {
@@ -302,7 +302,7 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
           } catch (error) {
             console.error('Test crash failed:', error);
             toast.dismiss();
-            toast.error('Test crash failed. Only available on native platforms.');
+            toast.error(t('toasts.settings.testCrashFailed'));
           }
         }}
         onClose={() => dialogs.pop()}

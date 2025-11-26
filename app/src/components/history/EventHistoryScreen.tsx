@@ -161,7 +161,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
                   <button
                     onClick={() => setShowPastEvents(!showPastEvents)}
                     className="flex w-full items-center justify-center gap-2 py-4 text-[14px] text-gray-500 transition-colors active:text-gray-400">
-                    <span>Vergangene Events anzeigen</span>
+                    <span>{t('sheet.showPastEvents')}</span>
                     <IconTriangleRight
                       width={12}
                       height={12}

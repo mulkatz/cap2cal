@@ -40,7 +40,20 @@
       "appDescription": "Easily add events to your calendar from photos!"
     },
     "errors": {
-      "failedProcessSharedImage": "Failed to process shared image. Please try again."
+      "failedProcessSharedImage": "Failed to process shared image. Please try again.",
+      "networkRequestFailed": "Network request failed. Please check your connection.",
+      "requestTimedOut": "Request timed out. Please try again.",
+      "networkConnectionFailed": "Network connection failed. Please check your internet connection.",
+      "authenticationFailed": "Authentication failed. Please sign in again.",
+      "captureLimitReached": "Capture limit reached. Please upgrade to continue.",
+      "tooManyRequests": "Too many requests. Please wait a moment and try again.",
+      "serverError": "Server error. Please try again later.",
+      "notAnEvent": "This doesn't look like an event. Please try a different image.",
+      "invalidImage": "Invalid image. Please try again.",
+      "cameraError": "Camera error. Please check your camera permissions.",
+      "permissionDenied": "Permission denied. Please enable the required permissions.",
+      "validationError": "Validation error. Please check your input.",
+      "unexpectedError": "An unexpected error occurred. Please try again."
     },
     "toasts": {
       "feedback": {
@@ -81,12 +94,15 @@
         "vibrationDisabled": "Vibration disabled",
         "languageChanged": "Language changed",
         "themeSoon": "Theme support coming soon!",
-        "inviteLinkCopied": "Invite link copied to clipboard!"
+        "inviteLinkCopied": "Invite link copied to clipboard!",
+        "testCrashScheduled": "Test crash will trigger in 2 seconds...",
+        "testCrashFailed": "Test crash failed. Only available on native platforms."
       }
     },
     "sheet": {
       "header": "Your Events",
-      "noFavouritesYet": "No favourites yet"
+      "noFavouritesYet": "No favourites yet",
+      "showPastEvents": "Show past events"
     },
     "dialogs": {
       "onboarding": {
@@ -123,7 +139,28 @@
           "feature2": "Compare prices across multiple vendors instantly",
           "feature3": "Secure checkout — book your spot in seconds",
           "exampleLabel": "Example",
+          "exampleEventName": "Summer Festival 2025",
           "buyButton": "Get Tickets"
+        },
+        "slide1": {
+          "eyebrow": "AI Powered",
+          "title": "No manual typing needed",
+          "body": "One second, almost there. Our AI captures all event details automatically."
+        },
+        "slide2": {
+          "eyebrow": "Details Ready",
+          "title": "Dates, Tickets, Locations",
+          "body": "All the event details, extracted and organized. Ready to sync."
+        },
+        "slide3": {
+          "eyebrow": "Save the Memory",
+          "title": "Keep the original scan",
+          "body": "Your captured images are saved with every event for reference."
+        },
+        "slide4": {
+          "eyebrow": "Sync to Calendar",
+          "title": "Works with all major apps",
+          "body": "Export to Apple Calendar, Google Calendar, Outlook, and more with one tap."
         },
         "freeTrial": {
           "title": "Ready to Get Started?",
@@ -331,6 +368,38 @@
       "imagePreview": {
         "title": "Source Scan",
         "metadata": "Scanned on Nov 27 • 20:00"
+      },
+      "privacyPage": {
+        "title": "Privacy Policy",
+        "lastUpdated": "Last Updated: October 15, 2025",
+        "section1Title": "1. Introduction",
+        "section1Body": "Thank you for using Capture2Calendar (\"we\", \"us\", \"our\"). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains what information we collect, how we use it, and what rights you have in relation to it.",
+        "section2Title": "2. Data Controller",
+        "section2Body": "The data controller responsible for your personal information is:",
+        "controllerName": "Franz Benthin",
+        "controllerAddress": "Address: Hauptstraße 123, 12345 Berlin, Germany",
+        "controllerEmail": "Email: privacy@capture2calendar.app",
+        "controllerPhone": "Phone: +49 123 456789",
+        "section3Title": "3. Hosting and Server Log Files",
+        "section3Intro": "Our app and services are hosted on secure servers. When you use our app, the following technical information may be automatically collected in server log files:",
+        "section3Item1": "IP address",
+        "section3Item2": "Date and time of access",
+        "section3Item3": "Browser type and version",
+        "section3Item4": "Operating system",
+        "section3Item5": "Pages visited within our app",
+        "section3Item6": "Referrer URL (the page from which you accessed our app)",
+        "section3Body": "This data is collected for security purposes, to ensure the stability and reliability of our services, and to improve user experience. The legal basis for this processing is our legitimate interest in maintaining a secure and functional service (Art. 6(1)(f) GDPR).",
+        "section6Title": "6. Your Rights as a Data Subject",
+        "section6Intro": "Under the GDPR, you have the following rights regarding your personal data:",
+        "section6Right1": "Right of Access: You can request a copy of the personal data we hold about you.",
+        "section6Right2": "Right to Rectification: You can ask us to correct any inaccurate or incomplete data.",
+        "section6Right3": "Right to Erasure: You can request the deletion of your personal data.",
+        "section6Right4": "Right to Restriction: You can ask us to restrict the processing of your data in certain circumstances.",
+        "section6Right5": "Right to Data Portability: You can request your data in a structured, commonly used format.",
+        "section6Right6": "Right to Object: You can object to the processing of your data based on legitimate interests.",
+        "section6Right7": "Right to Withdraw Consent: If processing is based on consent, you can withdraw it at any time.",
+        "section7Title": "7. Changes to Our Privacy Policy",
+        "section7Body": "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Last Updated\" date. You are advised to review this Privacy Policy periodically for any changes."
       }
     },
     "types": {

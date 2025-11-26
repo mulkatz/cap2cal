@@ -96,7 +96,9 @@ export const OnboardingTickets: React.FC = () => {
                 <p className="text-xs font-semibold uppercase tracking-wide text-highlight">
                   {t('dialogs.onboarding.tickets.exampleLabel')}
                 </p>
-                <p className="mt-1 truncate text-lg font-bold text-white">Summer Festival 2025</p>
+                <p className="mt-1 truncate text-lg font-bold text-white">
+                  {t('dialogs.onboarding.tickets.exampleEventName')}
+                </p>
               </div>
               <div className="flex-shrink-0 rounded-lg bg-highlight px-4 py-2 text-sm font-bold text-primaryDark shadow-md">
                 {t('dialogs.onboarding.tickets.buyButton')}

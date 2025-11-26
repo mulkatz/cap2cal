@@ -40,7 +40,20 @@
       "appDescription": "Füge Events ganz einfach aus Fotos zu deinem Kalender hinzu!"
     },
     "errors": {
-      "failedProcessSharedImage": "Geteiltes Bild konnte nicht verarbeitet werden. Bitte versuche es erneut."
+      "failedProcessSharedImage": "Geteiltes Bild konnte nicht verarbeitet werden. Bitte versuche es erneut.",
+      "networkRequestFailed": "Netzwerkanfrage fehlgeschlagen. Bitte überprüfe deine Verbindung.",
+      "requestTimedOut": "Anfrage-Zeitüberschreitung. Bitte versuche es erneut.",
+      "networkConnectionFailed": "Netzwerkverbindung fehlgeschlagen. Bitte überprüfe deine Internetverbindung.",
+      "authenticationFailed": "Authentifizierung fehlgeschlagen. Bitte melde dich erneut an.",
+      "captureLimitReached": "Erfassungslimit erreicht. Bitte upgraden, um fortzufahren.",
+      "tooManyRequests": "Zu viele Anfragen. Bitte warte einen Moment und versuche es erneut.",
+      "serverError": "Serverfehler. Bitte versuche es später erneut.",
+      "notAnEvent": "Das sieht nicht nach einem Event aus. Bitte versuche ein anderes Bild.",
+      "invalidImage": "Ungültiges Bild. Bitte versuche es erneut.",
+      "cameraError": "Kamerafehler. Bitte überprüfe deine Kamera-Berechtigungen.",
+      "permissionDenied": "Berechtigung verweigert. Bitte aktiviere die erforderlichen Berechtigungen.",
+      "validationError": "Validierungsfehler. Bitte überprüfe deine Eingabe.",
+      "unexpectedError": "Ein unerwarteter Fehler ist aufgetreten. Bitte versuche es erneut."
     },
     "toasts": {
       "feedback": {
@@ -81,12 +94,15 @@
         "vibrationDisabled": "Vibration deaktiviert",
         "languageChanged": "Sprache geändert",
         "themeSoon": "Theme-Unterstützung kommt bald!",
-        "inviteLinkCopied": "Einladungslink in Zwischenablage kopiert!"
+        "inviteLinkCopied": "Einladungslink in Zwischenablage kopiert!",
+        "testCrashScheduled": "Test-Absturz wird in 2 Sekunden ausgelöst...",
+        "testCrashFailed": "Test-Absturz fehlgeschlagen. Nur auf nativen Plattformen verfügbar."
       }
     },
     "sheet": {
       "header": "Deine Events",
-      "noFavouritesYet": "Noch keine Favoriten"
+      "noFavouritesYet": "Noch keine Favoriten",
+      "showPastEvents": "Vergangene Events anzeigen"
     },
     "dialogs": {
       "onboarding": {
@@ -123,7 +139,28 @@
           "feature2": "Vergleiche Preise verschiedener Anbieter sofort",
           "feature3": "Sichere Zahlung - sichere dir deinen Platz in Sekunden",
           "exampleLabel": "Beispiel",
+          "exampleEventName": "Sommerfestival 2025",
           "buyButton": "Tickets kaufen"
+        },
+        "slide1": {
+          "eyebrow": "KI-gestützt",
+          "title": "Kein manuelles Tippen nötig",
+          "body": "Einen Moment noch, fast fertig. Unsere KI erfasst alle Event-Details automatisch."
+        },
+        "slide2": {
+          "eyebrow": "Details fertig",
+          "title": "Daten, Tickets, Locations",
+          "body": "Alle Event-Details, extrahiert und organisiert. Bereit zum Synchronisieren."
+        },
+        "slide3": {
+          "eyebrow": "Speichere die Erinnerung",
+          "title": "Behalte den Original-Scan",
+          "body": "Deine erfassten Bilder werden mit jedem Event zur Referenz gespeichert."
+        },
+        "slide4": {
+          "eyebrow": "Mit Kalender synchronisieren",
+          "title": "Funktioniert mit allen großen Apps",
+          "body": "Exportiere mit einem Klick zu Apple Kalender, Google Kalender, Outlook und mehr."
         },
         "freeTrial": {
           "title": "Bereit, loszulegen?",
@@ -331,6 +368,38 @@
       "imagePreview": {
         "title": "Quell-Scan",
         "metadata": "Gescannt am 27. Nov • 20:00"
+      },
+      "privacyPage": {
+        "title": "Datenschutzerklärung",
+        "lastUpdated": "Letzte Aktualisierung: 15. Oktober 2025",
+        "section1Title": "1. Einleitung",
+        "section1Body": "Vielen Dank, dass Sie Capture2Calendar (\"wir\", \"uns\", \"unser\") nutzen. Wir sind dem Schutz Ihrer persönlichen Daten und Ihrem Recht auf Privatsphäre verpflichtet. Diese Datenschutzerklärung erklärt, welche Informationen wir sammeln, wie wir sie verwenden und welche Rechte Sie in Bezug darauf haben.",
+        "section2Title": "2. Verantwortlicher",
+        "section2Body": "Der für Ihre persönlichen Daten verantwortliche Datenverantwortliche ist:",
+        "controllerName": "Franz Benthin",
+        "controllerAddress": "Adresse: Hauptstraße 123, 12345 Berlin, Deutschland",
+        "controllerEmail": "E-Mail: privacy@capture2calendar.app",
+        "controllerPhone": "Telefon: +49 123 456789",
+        "section3Title": "3. Hosting und Server-Logdateien",
+        "section3Intro": "Unsere App und Dienste werden auf sicheren Servern gehostet. Wenn Sie unsere App nutzen, können die folgenden technischen Informationen automatisch in Server-Logdateien erfasst werden:",
+        "section3Item1": "IP-Adresse",
+        "section3Item2": "Datum und Uhrzeit des Zugriffs",
+        "section3Item3": "Browsertyp und -version",
+        "section3Item4": "Betriebssystem",
+        "section3Item5": "Besuchte Seiten innerhalb unserer App",
+        "section3Item6": "Referrer-URL (die Seite, von der Sie auf unsere App zugegriffen haben)",
+        "section3Body": "Diese Daten werden zu Sicherheitszwecken erfasst, um die Stabilität und Zuverlässigkeit unserer Dienste zu gewährleisten und die Benutzererfahrung zu verbessern. Die Rechtsgrundlage für diese Verarbeitung ist unser berechtigtes Interesse an der Aufrechterhaltung eines sicheren und funktionalen Dienstes (Art. 6 Abs. 1 lit. f DSGVO).",
+        "section6Title": "6. Ihre Rechte als Betroffener",
+        "section6Intro": "Gemäß der DSGVO haben Sie folgende Rechte in Bezug auf Ihre personenbezogenen Daten:",
+        "section6Right1": "Auskunftsrecht: Sie können eine Kopie der von uns gespeicherten personenbezogenen Daten anfordern.",
+        "section6Right2": "Recht auf Berichtigung: Sie können uns bitten, unrichtige oder unvollständige Daten zu korrigieren.",
+        "section6Right3": "Recht auf Löschung: Sie können die Löschung Ihrer personenbezogenen Daten verlangen.",
+        "section6Right4": "Recht auf Einschränkung: Sie können uns bitten, die Verarbeitung Ihrer Daten unter bestimmten Umständen einzuschränken.",
+        "section6Right5": "Recht auf Datenübertragbarkeit: Sie können Ihre Daten in einem strukturierten, gängigen Format anfordern.",
+        "section6Right6": "Widerspruchsrecht: Sie können der Verarbeitung Ihrer Daten auf Grundlage berechtigter Interessen widersprechen.",
+        "section6Right7": "Recht auf Widerruf der Einwilligung: Wenn die Verarbeitung auf Einwilligung basiert, können Sie diese jederzeit widerrufen.",
+        "section7Title": "7. Änderungen unserer Datenschutzerklärung",
+        "section7Body": "Wir können diese Datenschutzerklärung von Zeit zu Zeit aktualisieren. Wir werden Sie über Änderungen informieren, indem wir die neue Datenschutzerklärung auf dieser Seite veröffentlichen und das Datum \"Letzte Aktualisierung\" aktualisieren. Es wird empfohlen, diese Datenschutzerklärung regelmäßig auf Änderungen zu überprüfen."
       }
     },
     "types": {
