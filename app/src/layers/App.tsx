@@ -2,6 +2,7 @@ import CameraView, { CameraRefProps } from './CameraView.tsx';
 import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { useCrashlytics } from '../hooks/useCrashlytics.tsx';
 import { SplashView } from './SplashView.tsx';
+import { ResultView } from './ResultView.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
 import exampleImageUrl1 from '../assets/images/event-capture-example-1-alt.jpg';
@@ -43,7 +44,7 @@ export const App = () => {
   // Initialize Crashlytics for crash reporting
   useCrashlytics();
 
-  const { appState, setAppState } = useAppContext();
+  const { appState, setAppState, setResultData } = useAppContext();
   const { onImportFile, onCaptured, paywallSheet, checkCaptureLimit, showPaywall } = useCapture();
   const { logAnalyticsEvent, setAnalyticsUserProperty, featureFlags, featureFlagsLoading } = useFirebaseContext();
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -106,6 +107,23 @@ export const App = () => {
       dialogs.unregisterBackHandler('settings');
     };
   }, [showSettings, dialogs]);
+
+  // Register back handler for result state
+  useEffect(() => {
+    dialogs.registerBackHandler('result', () => {
+      // Only handle back when in result state, NOT in loading state
+      if (appState === 'result') {
+        setResultData(null);
+        setAppState('home');
+        return true;
+      }
+      return false;
+    });
+
+    return () => {
+      dialogs.unregisterBackHandler('result');
+    };
+  }, [appState, setAppState, setResultData, dialogs]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -678,28 +696,46 @@ export const App = () => {
     <main>
       <>
         <div className={'relative flex h-[100dvh] w-full flex-col overflow-hidden'}>
-          <CameraView
-            ref={cameraRef}
-            onStreamCallback={onStreamCallback}
-            handleCapture={handleCapture}
-            appState={appState}
-            onClose={() => setAppState('home')}
-            onImport={onImport}
-          />
-
-          {(appState === 'loading' || appState === 'home') && (
-            <SplashView
-              isLoading={isHandlingCaptureRequest}
-              onCapture={onHandleCapture}
-              hasSavedEvents={hasSavedEvents}
-              onHistory={onHistory}
+          {/* CameraView - always mounted to maintain ref, but only visible in camera state */}
+          <div className={cn(appState === 'camera' ? 'animate-fadeIn' : 'hidden')}>
+            <CameraView
+              ref={cameraRef}
+              onStreamCallback={onStreamCallback}
+              handleCapture={handleCapture}
+              appState={appState}
+              onClose={() => setAppState('home')}
               onImport={onImport}
-              isFeedbackVisible={isFeedbackVisible}
-              onFeedback={onFeedback}
-              onShowPaywall={showPaywall}
-              hasReachedCaptureLimit={checkCaptureLimit()}
-              onSettings={onSettings}
             />
+          </div>
+
+          {/* Only render SplashView when in home state */}
+          {appState === 'home' && (
+            <div className="animate-fadeIn">
+              <SplashView
+                isLoading={isHandlingCaptureRequest}
+                onCapture={onHandleCapture}
+                hasSavedEvents={hasSavedEvents}
+                onHistory={onHistory}
+                onImport={onImport}
+                isFeedbackVisible={isFeedbackVisible}
+                onFeedback={onFeedback}
+                onShowPaywall={showPaywall}
+                hasReachedCaptureLimit={checkCaptureLimit()}
+                onSettings={onSettings}
+              />
+            </div>
+          )}
+
+          {/* Only render ResultView when in loading or result state */}
+          {(appState === 'loading' || appState === 'result') && (
+            <div className="animate-fadeIn">
+              <ResultView
+                onClose={() => {
+                  setResultData(null);
+                  setAppState('home');
+                }}
+              />
+            </div>
           )}
 
           <Toaster

@@ -1,21 +1,14 @@
 import React, { ChangeEvent, RefObject, useEffect, useState } from 'react';
-import { NotCaptured } from '../components/dialogs/NotCaptured.atom.tsx';
-import { UpgradeDialog } from '../components/dialogs/UpgradeDialog.tsx';
 import { PaywallSheet } from '../components/dialogs/PaywallSheet.tsx';
-import { Dialog } from '../components/Dialog.tsx';
-import { CardController } from '../components/Card.controller.tsx';
 import { CaptureEvent } from '../models/CaptureEvent.ts';
 import toast from 'react-hot-toast';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
-import { LoadingController } from '../components/dialogs/Loading.controller.tsx';
 import { ApiEvent, ExtractionError } from '../api/model.ts';
 import { db } from '../models/db.ts';
 import { fetchData } from '../api/api.ts';
 import { useTranslation } from 'react-i18next';
 import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
-import { MultiResultDialog } from '../components/MultiResultDialog.tsx';
 import i18next from 'i18next';
-import { SingleResultDialog } from '../components/SingleResultDialog.tsx';
 import { useAppContext } from '../contexts/AppContext.tsx';
 import { AnalyticsEvent, AnalyticsParam, getEventFieldsPresence } from '../utils/analytics.ts';
 import { incrementCaptureCount, getCaptureCount, hasReachedLimit, resetCaptureCount } from '../utils/captureLimit.ts';
@@ -36,7 +29,7 @@ export const useCapture = () => {
   const { t } = useTranslation();
   const dialogs = useDialogContext();
   const { logAnalyticsEvent, trackPerformance, getAuthToken, featureFlags, refreshProStatus } = useFirebaseContext();
-  const { appState, setAppState } = useAppContext();
+  const { appState, setAppState, setResultData } = useAppContext();
 
   const onCaptured = async (imgUrl: string, imageSource: 'camera' | 'gallery' | 'share' = 'camera') => {
     setCapturedImage(imgUrl);
@@ -51,11 +44,7 @@ export const useCapture = () => {
       [AnalyticsParam.IMAGE_SOURCE]: imageSource,
     });
 
-    dialogs.push(
-      <Dialog full noCard>
-        <LoadingController />
-      </Dialog>
-    );
+    // Loading state is now handled by ResultView, no need to push dialog
 
     const hasRequiredData = (item: ApiEvent) => {
       return item.title && item.dateTimeFrom && item.dateTimeFrom.date;
@@ -79,7 +68,7 @@ export const useCapture = () => {
       });
 
       // Note: Backend increments capture count, so we don't need to do it here
-      dialogs.pop();
+      // No need to pop dialog anymore
 
       if ('success' === result.status) {
         const items = result.data.items;
@@ -169,13 +158,13 @@ export const useCapture = () => {
             duration: 2500,
           });
           await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
-          dialogs.push(
-            <MultiResultDialog onClose={popAndBackHome} full>
-              {events.map((event) => (
-                <CardController key={event.title} data={event} />
-              ))}
-            </MultiResultDialog>
-          );
+
+          // Set result data and transition to result state
+          setResultData({
+            type: 'multi',
+            events: events,
+          });
+          setAppState('result');
         } else {
           toast.success(t('toasts.capture.singleEvent'), {
             style: {
@@ -186,11 +175,13 @@ export const useCapture = () => {
             duration: 2500,
           });
           await saveEvent(events[0], imgUrl);
-          dialogs.push(
-            <SingleResultDialog onClose={popAndBackHome} full>
-              <CardController data={events[0]} />
-            </SingleResultDialog>
-          );
+
+          // Set result data and transition to result state
+          setResultData({
+            type: 'single',
+            events: [events[0]],
+          });
+          setAppState('result');
         }
         return;
       }
@@ -228,11 +219,10 @@ export const useCapture = () => {
   const pushError = (reason: ExtractionError) => {
     // Show paywall sheet if limit is reached (only if RevenueCat is enabled)
     if (reason === 'LIMIT_REACHED') {
-      dialogs.pop(); // Remove loading dialog
-
       // Only show paywall if RevenueCat is enabled
       if (isRevenueCatEnabled()) {
         setIsPaywallOpen(true);
+        setAppState('home'); // Go back to home when showing paywall
 
         // Track paywall view
         logAnalyticsEvent('paywall_viewed', {
@@ -242,13 +232,21 @@ export const useCapture = () => {
       } else {
         // RevenueCat disabled - show generic error instead
         logger.info('Paywall', 'Limit reached but RevenueCat is disabled');
-        dialogs.replace(<NotCaptured reason="UNKNOWN" onClose={popAndBackHome} />);
+        setResultData({
+          type: 'error',
+          errorReason: 'UNKNOWN',
+        });
+        setAppState('result');
         return;
       }
     }
 
-    // Show regular error dialog for other errors
-    dialogs.replace(<NotCaptured reason={reason} onClose={popAndBackHome} />);
+    // Show error in result state
+    setResultData({
+      type: 'error',
+      errorReason: reason,
+    });
+    setAppState('result');
   };
 
   const handlePaywallClose = () => {
@@ -457,7 +455,8 @@ export const useCapture = () => {
   };
 
   const popAndBackHome = () => {
-    dialogs.pop();
+    // Clear result data and go back to home
+    setResultData(null);
     setAppState('home');
   };
 
