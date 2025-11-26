@@ -6,13 +6,13 @@ import { I18nextProvider } from 'react-i18next';
 import './index.css';
 import './all.css';
 
-import { App } from './layers/App';
+import { App } from './pages/App';
 import { DialogProvider } from './contexts/DialogContext.tsx';
 import { FirebaseProvider } from './contexts/FirebaseContext.tsx';
 import { AppProvider } from './contexts/AppContext.tsx';
 import { EffectProvider } from './contexts/EffectsContext.tsx';
-import { ErrorBoundary } from './components/ErrorBoundary.tsx';
-import { i18next, initI18n } from './helper/i18nHelper';
+import { ErrorBoundary } from './components/ui/ErrorBoundary.tsx';
+import { i18next, initI18n } from './utils/i18n';
 
 // Initialize i18n before rendering
 initI18n();

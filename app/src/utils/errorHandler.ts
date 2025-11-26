@@ -4,7 +4,7 @@
  */
 
 import { logger } from './logger';
-import { i18next } from '../helper/i18nHelper';
+import { i18next } from '../utils/i18n';
 
 export enum ErrorType {
   // Network errors

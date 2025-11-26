@@ -1,7 +1,7 @@
 import { CaptureEvent } from '../models/CaptureEvent.ts';
 import { CalendarPermissionScope, CapacitorCalendar } from '@ebarooni/capacitor-calendar';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
-import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.atom.tsx';
+import { PermissionDeniedAtom } from '../components/features/dialogs/PermissionDenied.tsx';
 import { useTranslation } from 'react-i18next';
 
 export const useCalendarExport = () => {

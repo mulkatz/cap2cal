@@ -3,7 +3,7 @@ import { version } from '../../package.json';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import { CaptureEvent } from '../models/CaptureEvent.ts';
-import { ExtractionError } from '../api/model.ts';
+import { ExtractionError } from '../models/api.types.ts';
 
 export type AppState = 'home' | 'loading' | 'camera' | 'result';
 export type ResultType = 'single' | 'multi' | 'error';

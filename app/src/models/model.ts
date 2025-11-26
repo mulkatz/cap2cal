@@ -1,4 +1,4 @@
-// import { ApiEvent, ApiExtractionError } from '../api/model.ts';
+// import { ApiEvent, ApiExtractionError } from '../models/api.types.ts';
 //
 // export type EventError = {
 //   status: 'error';

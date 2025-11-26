@@ -8,8 +8,8 @@ import 'firebase/compat/analytics';
 import { Capacitor } from '@capacitor/core';
 
 import { isDevelopmentEnvironment } from '../utils.ts';
-import { AnalyticsEvent, AnalyticsParam, type ScreenNameType } from '../utils/analytics.ts';
-import { type FeatureFlags, fetchFeatureFlags } from '../api/api.ts';
+import { AnalyticsEvent, AnalyticsParam, type ScreenNameType } from '../services/analytics.service.ts';
+import { type FeatureFlags, fetchFeatureFlags } from '../services/api.ts';
 import {
   addCustomerInfoUpdateListener,
   checkIsProUser,

@@ -1,4 +1,4 @@
-import { ExtractionError } from '../api/model';
+import { ExtractionError } from '../models/api.types';
 
 declare global {
   interface Window {

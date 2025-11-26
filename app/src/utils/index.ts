@@ -3,7 +3,6 @@
  * Re-exports all utilities for backward compatibility
  */
 
-export * from './calendar.ts';
 export * from './dateTime.ts';
 export * from './dom.ts';
 export * from './platform.ts';

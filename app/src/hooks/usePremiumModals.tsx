@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
-import { PremiumAlert, PremiumConfirm, PremiumPrompt } from '../components/modals/PremiumModal.tsx';
+import { PremiumAlert, PremiumConfirm, PremiumPrompt } from '../components/features/modals/PremiumModal.tsx';
 
 export interface AlertOptions {
   title: string;

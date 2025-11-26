@@ -1,4 +1,4 @@
-import { db } from '../models/db';
+import { db } from '../db/db';
 import { deleteUser as firebaseDeleteUser, getAuth } from 'firebase/auth';
 import toast from 'react-hot-toast';
 import i18next from 'i18next';

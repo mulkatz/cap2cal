@@ -1,4 +1,4 @@
-import { ApiEvent } from '../api/model.ts';
+import { ApiEvent } from '../models/api.types.ts';
 
 export type CaptureEvent = ApiEvent & {
   timestamp: number;
