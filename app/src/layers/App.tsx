@@ -576,11 +576,11 @@ export const App = () => {
     const ref = cameraRef?.current;
     if (!ref) return;
     if (appState === 'home') {
-      setAppState('loading');
+      // Don't set to 'loading' state here - that's for image processing only
+      // The capture button's loading spinner (isHandlingCaptureRequest) shows feedback
       const permission = await ref.requestCameraAccess();
       if ('denied' === permission || 'error' === permission) {
         // toast.error('permission denied');
-        setAppState('home');
         return;
       }
 
@@ -588,7 +588,6 @@ export const App = () => {
         const error = await ref.startStream();
         if (error) {
           // toast.error(error.message);
-          setAppState('home');
           return;
         }
       }
