@@ -4,8 +4,6 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 
 import './index.css';
-import './embla.css';
-
 import './all.css';
 
 import { App } from './layers/App';

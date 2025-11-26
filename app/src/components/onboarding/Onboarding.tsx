@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { OnboardingSlide1 } from './OnboardingSlide1.tsx';
 import { OnboardingSlide2 } from './OnboardingSlide2.tsx';
 import { OnboardingSlide3 } from './OnboardingSlide3.tsx';
@@ -7,7 +7,6 @@ import { OnboardingGetStarted } from './OnboardingGetStarted.tsx';
 import { OnboardingNavigation } from './OnboardingNavigation.tsx';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam } from '../../utils/analytics.ts';
-import useEmblaCarousel from 'embla-carousel-react';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -16,7 +15,7 @@ interface OnboardingProps {
 export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   const [startTime] = useState(Date.now());
   const { logAnalyticsEvent } = useFirebaseContext();
-  const [emblaRef, emblaApi] = useEmblaCarousel({ watchDrag: true });
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const screens = [
@@ -31,36 +30,63 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
     logAnalyticsEvent(AnalyticsEvent.ONBOARDING_STARTED);
   }, [logAnalyticsEvent]);
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    const index = emblaApi.selectedScrollSnap();
-    setSelectedIndex(index);
+  const logScreenView = useCallback(
+    (index: number) => {
+      const screenNames = [
+        'onboarding_slide_1',
+        'onboarding_slide_2',
+        'onboarding_slide_3',
+        'onboarding_slide_4',
+        'onboarding_event_card',
+      ];
 
-    const screenNames = [
-      'onboarding_slide_1',
-      'onboarding_slide_2',
-      'onboarding_slide_3',
-      'onboarding_slide_4',
-      'onboarding_event_card',
-    ];
+      logAnalyticsEvent(AnalyticsEvent.ONBOARDING_SCREEN_VIEWED, {
+        [AnalyticsParam.SCREEN_NAME]: screenNames[index],
+        [AnalyticsParam.ONBOARDING_STEP]: index + 1,
+      });
+    },
+    [logAnalyticsEvent]
+  );
 
-    logAnalyticsEvent(AnalyticsEvent.ONBOARDING_SCREEN_VIEWED, {
-      [AnalyticsParam.SCREEN_NAME]: screenNames[index],
-      [AnalyticsParam.ONBOARDING_STEP]: index + 1,
-    });
-  }, [emblaApi, logAnalyticsEvent]);
-
+  // Track scroll position and log analytics
   useEffect(() => {
-    if (!emblaApi) return;
-    onSelect();
-    emblaApi.on('select', onSelect);
-    emblaApi.on('reInit', onSelect);
-  }, [emblaApi, onSelect]);
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const scrollLeft = container.scrollLeft;
+      const slideWidth = container.clientWidth;
+      const newIndex = Math.round(scrollLeft / slideWidth);
+
+      if (newIndex !== selectedIndex) {
+        setSelectedIndex(newIndex);
+        logScreenView(newIndex);
+      }
+    };
+
+    container.addEventListener('scroll', handleScroll, { passive: true });
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, [selectedIndex, logScreenView]);
+
+  // Log initial screen view
+  useEffect(() => {
+    logScreenView(0);
+  }, [logScreenView]);
+
+  const scrollToSlide = (index: number) => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const slideWidth = container.clientWidth;
+    container.scrollTo({
+      left: index * slideWidth,
+      behavior: 'smooth',
+    });
+  };
 
   const handleNext = () => {
-    if (!emblaApi) return;
     if (selectedIndex < screens.length - 1) {
-      emblaApi.scrollNext();
+      scrollToSlide(selectedIndex + 1);
     } else {
       handleComplete();
     }
@@ -86,12 +112,22 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
       {/* Content */}
       <div className="relative flex h-full flex-col items-center justify-between overflow-visible py-6">
-        {/* Embla Carousel */}
-        <div className="embla flex flex-1 items-center justify-center overflow-visible" style={{ width: '100%' }}>
-          <div className="embla__viewport overflow-visible" ref={emblaRef}>
-            <div className="embla__container">
+        {/* Scroll Container */}
+        <div className="flex flex-1 items-center justify-center overflow-visible" style={{ width: '100%' }}>
+          <div className="h-full w-full overflow-visible">
+            <div
+              ref={scrollContainerRef}
+              className="flex h-full w-full snap-x snap-mandatory overflow-x-scroll overflow-y-visible"
+              style={{
+                scrollbarWidth: 'none',
+                msOverflowStyle: 'none',
+                WebkitOverflowScrolling: 'touch',
+              }}>
               {screens.map((screen, index) => (
-                <div className="embla__slide overflow-visible" key={index} data-testid={`onboarding-slide-${index}`}>
+                <div
+                  className="flex min-w-full snap-start items-center justify-center overflow-visible"
+                  key={index}
+                  data-testid={`onboarding-slide-${index}`}>
                   <div className="flex h-full w-full items-center justify-center overflow-visible">{screen}</div>
                 </div>
               ))}
@@ -104,6 +140,13 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
           <OnboardingNavigation step={selectedIndex} totalSteps={screens.length} onNext={handleNext} />
         </div>
       </div>
+
+      {/* Hide scrollbar */}
+      <style>{`
+        .snap-x::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };
