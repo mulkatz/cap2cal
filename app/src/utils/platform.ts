@@ -56,6 +56,15 @@ export function isDevelopmentEnvironment() {
   return devPattern.test(url);
 }
 
+/**
+ * Check if developer mode is enabled via environment variable
+ * Use this to show/hide developer-specific features like crash testing, debug tools, etc.
+ * Set VITE_DEVELOPER_MODE_ENABLED=true in .env to enable
+ */
+export function isDeveloperModeEnabled(): boolean {
+  return import.meta.env.VITE_DEVELOPER_MODE_ENABLED === 'true';
+}
+
 export const isApplePlatform = () => {
   const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
   return /iPhone|iPad|iPod|Macintosh/.test(userAgent);

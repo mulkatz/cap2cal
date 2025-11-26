@@ -274,11 +274,20 @@
         "confirmClearStorageMessage": "This will delete all saved events from your device. This action cannot be undone.",
         "confirmDeleteAccount": "Delete your account?",
         "confirmDeleteAccountMessage": "This will permanently delete all your data and your account. This action cannot be undone.",
+        "testCrashlytics": "Test Crash Reporting",
+        "testCrashlyticsDescription": "Trigger a test crash to verify crash reporting is working",
+        "confirmTestCrash": "Trigger a test crash?",
+        "confirmTestCrashMessage": "This will intentionally crash the app to test crash reporting. The app will restart automatically. Continue?",
         "themeLight": "Light",
         "themeDark": "Dark",
         "themeSystem": "System",
         "languageEnglish": "English",
         "languageGerman": "Deutsch"
+      },
+      "errorBoundary": {
+        "title": "Oops!",
+        "message": "Something unexpected happened. Don't worry - your data is safe. We've been notified and will look into this.",
+        "tryAgain": "Try Again"
       },
       "loading": {
         "phrases": {

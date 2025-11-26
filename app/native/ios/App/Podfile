@@ -12,6 +12,7 @@ def capacitor_pods
   pod 'Capacitor', :path => '../../../node_modules/@capacitor/ios'
   pod 'CapacitorCordova', :path => '../../../node_modules/@capacitor/ios'
   pod 'CapacitorCommunityInAppReview', :path => '../../../node_modules/@capacitor-community/in-app-review'
+  pod 'CapacitorFirebaseCrashlytics', :path => '../../../node_modules/@capacitor-firebase/crashlytics'
   pod 'CapacitorApp', :path => '../../../node_modules/@capacitor/app'
   pod 'CapacitorCamera', :path => '../../../node_modules/@capacitor/camera'
   pod 'CapacitorFilesystem', :path => '../../../node_modules/@capacitor/filesystem'
@@ -27,6 +28,10 @@ end
 target 'App' do
   capacitor_pods
   # Add your Pods here
+
+  # Firebase Crashlytics
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Analytics'
 end
 
 post_install do |installer|

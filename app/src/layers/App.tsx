@@ -1,5 +1,6 @@
 import CameraView, { CameraRefProps } from './CameraView.tsx';
 import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
+import { useCrashlytics } from '../hooks/useCrashlytics.tsx';
 import { SplashView } from './SplashView.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
@@ -38,6 +39,9 @@ export const App = () => {
   const { t } = useTranslation();
   const { splash } = useEffectContext();
   useDisableOverscroll();
+
+  // Initialize Crashlytics for crash reporting
+  useCrashlytics();
 
   const { appState, setAppState } = useAppContext();
   const { onImportFile, onCaptured, paywallSheet, checkCaptureLimit, showPaywall } = useCapture();

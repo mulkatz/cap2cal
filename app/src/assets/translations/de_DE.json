@@ -274,11 +274,20 @@
         "confirmClearStorageMessage": "Dies löscht alle gespeicherten Events von deinem Gerät. Diese Aktion kann nicht rückgängig gemacht werden.",
         "confirmDeleteAccount": "Dein Konto löschen?",
         "confirmDeleteAccountMessage": "Dies löscht dauerhaft alle deine Daten und dein Konto. Diese Aktion kann nicht rückgängig gemacht werden.",
+        "testCrashlytics": "Absturzbericht testen",
+        "testCrashlyticsDescription": "Teste die Absturzberichterstattung durch einen absichtlichen Absturz",
+        "confirmTestCrash": "Test-Absturz auslösen?",
+        "confirmTestCrashMessage": "Dies wird die App absichtlich zum Absturz bringen, um die Absturzberichterstattung zu testen. Die App startet automatisch neu. Fortfahren?",
         "themeLight": "Hell",
         "themeDark": "Dunkel",
         "themeSystem": "System",
         "languageEnglish": "English",
         "languageGerman": "Deutsch"
+      },
+      "errorBoundary": {
+        "title": "Hoppla!",
+        "message": "Etwas Unerwartetes ist passiert. Keine Sorge - deine Daten sind sicher. Wir wurden benachrichtigt und werden uns das ansehen.",
+        "tryAgain": "Erneut versuchen"
       },
       "loading": {
         "phrases": {

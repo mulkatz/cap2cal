@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useAppContext } from '../../contexts/AppContext';
 import { useDialogContext } from '../../contexts/DialogContext';
 import { useFirebaseContext } from '../../contexts/FirebaseContext';
+import { useCrashlytics } from '../../hooks/useCrashlytics';
 import { IconChevronLeft } from '../../assets/icons';
 import {
   Globe,
@@ -16,6 +17,7 @@ import {
   Shield,
   FileText,
   ChevronRight,
+  Bug,
 } from 'lucide-react';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
@@ -26,6 +28,7 @@ import { AnalyticsEvent } from '../../utils/analytics';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
 import { cn } from '../../utils';
+import { isDeveloperModeEnabled } from '../../utils/platform';
 
 // Icon Wrapper Components
 const GlobeIcon = () => <Globe size={20} className="text-highlight" />;
@@ -40,6 +43,9 @@ const UserPlusIcon = () => <UserPlus size={20} className="text-highlight" />;
 const MessageCircleIcon = () => <MessageCircle size={20} className="text-highlight" />;
 const ShieldIcon = () => <Shield size={20} className="text-highlight" fill="currentColor" />;
 const FileTextIcon = () => <FileText size={20} className="text-highlight" />;
+const BugIcon = ({ destructive }: { destructive?: boolean }) => (
+  <Bug size={20} className={destructive ? 'text-red-400' : 'text-highlight'} />
+);
 const ChevronRightIcon = () => <ChevronRight size={20} className="text-gray-500" />;
 
 // Setting Row Component
@@ -109,6 +115,7 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
   const { version } = useAppContext();
   const dialogs = useDialogContext();
   const { logAnalyticsEvent } = useFirebaseContext();
+  const { testCrash, isNative, logError } = useCrashlytics();
 
   // Get current settings from localStorage
   const [vibrationEnabled, setVibrationEnabled] = useState(() => localStorage.getItem('vibrationEnabled') !== 'false');
@@ -269,6 +276,40 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
     window.open('https://cap2cal.app', '_blank');
   };
 
+  const handleTestCrash = () => {
+    dialogs.push(
+      <PremiumConfirm
+        title={t('dialogs.settings.confirmTestCrash')}
+        message={t('dialogs.settings.confirmTestCrashMessage')}
+        confirmText={t('general.yes')}
+        cancelText={t('general.cancel')}
+        destructive
+        onConfirm={async () => {
+          try {
+            // Log a test error first
+            await logError(new Error('Test error - this is intentional'), {
+              test_type: 'manual_test',
+              screen: 'settings',
+            });
+
+            toast.dismiss();
+            toast('Test crash will trigger in 2 seconds...', { duration: 2000 });
+
+            // Wait 2 seconds then crash
+            setTimeout(async () => {
+              await testCrash();
+            }, 2000);
+          } catch (error) {
+            console.error('Test crash failed:', error);
+            toast.dismiss();
+            toast.error('Test crash failed. Only available on native platforms.');
+          }
+        }}
+        onClose={() => dialogs.pop()}
+      />
+    );
+  };
+
   const handleInviteFriends = () => {
     // Smart download link with platform detection
     // iOS users → Auto-redirect to App Store
@@ -410,6 +451,20 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
             <SettingDivider />
             <SettingRow icon={<FileTextIcon />} label={t('dialogs.settings.terms')} onClick={handleTerms} />
           </div>
+
+          {/* Group 5: Debug/Developer (only when developer mode is enabled AND on native platforms) */}
+          {isDeveloperModeEnabled() && isNative && (
+            <div className="mb-6 overflow-hidden rounded-3xl bg-primaryElevated">
+              <SettingRow
+                icon={<BugIcon />}
+                label={t('dialogs.settings.testCrashlytics')}
+                description={t('dialogs.settings.testCrashlyticsDescription')}
+                onClick={handleTestCrash}
+                destructive
+                hideChevron
+              />
+            </div>
+          )}
 
           {/* Version - centered at bottom */}
           <div className="mb-2 mt-2 flex justify-center pb-2">
