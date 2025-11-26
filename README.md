@@ -333,7 +333,7 @@ This is a commercial product. The source code is not open source. For licensing 
 
 <div align="center">
 
-**Made with ❤️ by Franz & Claude
+**Made with ❤️ by Franz & Claude**
 
 [Report Bug](https://github.com/Franjoo/cap2cal/issues)
 
