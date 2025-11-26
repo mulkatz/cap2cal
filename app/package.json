@@ -10,9 +10,9 @@
     "preview": "vite preview",
     "format": "npm run  prettier \".\" --write \"**/*.{ts,tsx,md}\"",
     "update-dependencies": "npm run ncu -u",
-    "screenshots": "cd ../screenshots && npm run screenshots:all",
-    "screenshots:en": "cd ../screenshots && npm run screenshots:en",
-    "screenshots:de": "cd ../screenshots && npm run screenshots:de"
+    "screenshots": "cd ../tools/screenshots && npm run screenshots:all",
+    "screenshots:en": "cd ../tools/screenshots && npm run screenshots:en",
+    "screenshots:de": "cd ../tools/screenshots && npm run screenshots:de"
   },
   "dependencies": {
     "@capacitor-community/in-app-review": "^7.1.0",
