@@ -19,8 +19,9 @@ import { EventHistoryScreen } from '../components/history/EventHistoryScreen.tsx
 import { Effects, useEffectContext } from '../contexts/EffectsContext.tsx';
 import { Camera, CameraResultType, CameraSource, PermissionStatus } from '@capacitor/camera';
 import { PermissionDeniedAtom } from '../components/dialogs/PermissionDenied.atom.tsx';
-import { Toaster } from 'react-hot-toast';
 import { Capacitor } from '@capacitor/core';
+import { Backdrop } from '../components/Backdrop.tsx';
+import { ToastProvider } from '../components/ToastProvider.tsx';
 import { useAppContext } from '../contexts/AppContext.tsx';
 import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam } from '../utils/analytics.ts';
@@ -737,62 +738,27 @@ export const App = () => {
             </div>
           )}
 
-          <Toaster
-            position={'top-center'}
-            containerStyle={{ top: 'env(safe-area-inset-top, 0px)' }}
-            toastOptions={{
-              duration: 2500,
-              style: {
-                background: '#1E2E3F',
-                color: '#FDDCFF',
-                border: '1px solid #415970',
-                borderRadius: '8px',
-                padding: '12px 16px',
-                fontSize: '14px',
-                fontWeight: '500',
-              },
-              success: {
-                iconTheme: {
-                  primary: '#FFE566',
-                  secondary: '#1E2E3F',
-                },
-              },
-              error: {
-                iconTheme: {
-                  primary: '#FF6B6B',
-                  secondary: '#1E2E3F',
-                },
-              },
-            }}
-          />
+          <ToastProvider />
           <Effects />
         </div>
         <DialogStack />
         {paywallSheet}
 
-        {/* Darkening backdrop for event history */}
-        <div
-          className={cn(
-            'absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out',
-            showHistory ? 'pointer-events-auto opacity-70' : 'pointer-events-none opacity-0'
-          )}
-          onClick={() => setShowHistory(false)}
-        />
+        {/* Event History Screen with backdrop - only rendered in home state */}
+        {appState === 'home' && (
+          <>
+            <Backdrop isVisible={showHistory} onClick={() => setShowHistory(false)} />
+            <EventHistoryScreen onClose={() => setShowHistory(false)} isVisible={showHistory} />
+          </>
+        )}
 
-        {/* Event History Screen - kept mounted for performance, visibility controlled via CSS */}
-        <EventHistoryScreen onClose={() => setShowHistory(false)} isVisible={showHistory} />
-
-        {/* Darkening backdrop for settings */}
-        <div
-          className={cn(
-            'absolute inset-0 z-40 bg-black transition-opacity duration-300 ease-out',
-            showSettings ? 'pointer-events-auto opacity-70' : 'pointer-events-none opacity-0'
-          )}
-          onClick={() => setShowSettings(false)}
-        />
-
-        {/* Settings Screen - kept mounted for performance, visibility controlled via CSS */}
-        <SettingsScreen onClose={() => setShowSettings(false)} isVisible={showSettings} />
+        {/* Settings Screen with backdrop - only rendered in home state */}
+        {appState === 'home' && (
+          <>
+            <Backdrop isVisible={showSettings} onClick={() => setShowSettings(false)} />
+            <SettingsScreen onClose={() => setShowSettings(false)} isVisible={showSettings} />
+          </>
+        )}
 
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
         {/*<span className={`absolute left-0 top-0 h-screen w-full -translate-y-[${safeAreaTop}px] bg-red-950`}></span>*/}
