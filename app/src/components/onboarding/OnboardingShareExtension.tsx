@@ -1,5 +1,6 @@
 import React from 'react';
 import { ImageIcon, Share2, Download } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // ReactorNode - Glass & Neon Component
 const ReactorNode: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'lg' }> = ({ children, size = 'lg' }) => {
@@ -21,6 +22,8 @@ const ReactorNode: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'l
 };
 
 export const OnboardingShareExtension: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
@@ -38,13 +41,12 @@ export const OnboardingShareExtension: React.FC = () => {
 
         {/* Title */}
         <h1 className="mb-4 text-center text-3xl font-bold leading-tight tracking-tight text-white">
-          Capture From Anywhere
+          {t('dialogs.onboarding.shareExtension.title')}
         </h1>
 
         {/* Body */}
         <p className="text-center text-lg font-medium leading-relaxed text-gray-300">
-          See an event on social media or in your gallery? Use the system share sheet to send it straight to
-          Capture2Calendar.
+          {t('dialogs.onboarding.shareExtension.subtitle')}
         </p>
       </div>
     </div>

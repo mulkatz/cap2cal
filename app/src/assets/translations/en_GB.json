@@ -91,17 +91,30 @@
     "dialogs": {
       "onboarding": {
         "valueProp": {
-          "title": "Turn Everything into Calendar Events",
-          "subtitle": "Posters, flyers, social posts, invites, handwritten notes — we handle the rest"
+          "title": "Capture Everything",
+          "subtitle": "Posters, flyers, handwritten notes—if it has a date, we can read it. Just snap a photo."
         },
         "howItWorks": {
-          "title": "How It Works",
+          "title": "AI-Powered Details",
+          "subtitle": "We automatically extract titles, dates, times, and locations. No more manual typing.",
           "step1Title": "Snap a Photo",
           "step1Description": "Take a photo or import anything with date information on it",
           "step2Title": "Read & Save",
           "step2Description": "AI reads all details and saves the event in your app library",
           "step3Title": "Always Available",
           "step3Description": "Export to calendar, share events, buy tickets, and navigate to locations"
+        },
+        "bulkAI": {
+          "title": "Instant Bulk Intelligence",
+          "subtitle": "Scan stacks of flyers at once. Our AI extracts every detail—dates, times, locations—in seconds."
+        },
+        "lifestyle": {
+          "title": "Never Miss a Beat",
+          "subtitle": "Share plans with friends, get timely reminders, and be the one who always knows what's happening."
+        },
+        "shareExtension": {
+          "title": "Capture From Anywhere",
+          "subtitle": "See an event on social media or in your gallery? Use the system share sheet to send it straight to Capture2Calendar."
         },
         "tickets": {
           "title": "Buy Tickets Instantly",
@@ -122,8 +135,9 @@
           "permissionCalendar": "Calendar — so we can save your events"
         },
         "getStarted": {
-          "title": "Ready to Get Started?",
-          "subtitle": "Everything you need to never miss another event",
+          "title": "Detect Any Event",
+          "mainTitle": "Scans notes, flyers & invites",
+          "subtitle": "Get the complete picture. Buy tickets, navigate to the venue, and export to your calendar with one tap.",
           "bullet1": "Instant event capture and storage",
           "bullet2": "Export to all your calendars",
           "bullet3": "Access tickets, share events, and navigate",

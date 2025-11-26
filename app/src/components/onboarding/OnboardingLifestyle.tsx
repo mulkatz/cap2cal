@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, BellRing, CalendarCheck } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // ReactorNode - Glass & Neon Component
 const ReactorNode: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'lg' }> = ({ children, size = 'lg' }) => {
@@ -21,18 +22,20 @@ const ReactorNode: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'l
 };
 
 export const OnboardingLifestyle: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
       <div className="flex w-full max-w-md flex-col items-center">
         {/* Title */}
         <h1 className="mb-4 text-center text-3xl font-bold leading-tight tracking-tight text-white">
-          Never Miss a Beat
+          {t('dialogs.onboarding.lifestyle.title')}
         </h1>
 
         {/* Body */}
         <p className="text-center text-lg font-medium leading-relaxed text-gray-300">
-          Share plans with friends, get timely reminders, and be the one who always knows what's happening.
+          {t('dialogs.onboarding.lifestyle.subtitle')}
         </p>
       </div>
     </div>

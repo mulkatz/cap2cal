@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles, Calendar, ArrowRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // GlowContainer - Reusable wrapper for High-Voltage glow effect
 const GlowContainer: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'lg' }> = ({
@@ -24,6 +25,8 @@ const GlowContainer: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 
 };
 
 export const OnboardingHowItWorks: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
@@ -46,12 +49,12 @@ export const OnboardingHowItWorks: React.FC = () => {
 
         {/* Title */}
         <h1 className="mb-4 text-center text-3xl font-bold leading-tight text-white">
-          AI-Powered Details
+          {t('dialogs.onboarding.howItWorks.title')}
         </h1>
 
         {/* Body */}
         <p className="text-center text-lg font-medium leading-relaxed text-gray-300">
-          We automatically extract titles, dates, times, and locations. No more manual typing.
+          {t('dialogs.onboarding.howItWorks.subtitle')}
         </p>
       </div>
     </div>

@@ -91,17 +91,30 @@
     "dialogs": {
       "onboarding": {
         "valueProp": {
-          "title": "Verwandle Alles in Kalendereinträge",
-          "subtitle": "Poster, Flyer, Social Posts, Einladungen, handgeschriebene Notizen — wir erledigen den Rest"
+          "title": "Alles erfassen",
+          "subtitle": "Poster, Flyer, handgeschriebene Notizen—wenn es ein Datum hat, können wir es lesen. Einfach fotografieren."
         },
         "howItWorks": {
-          "title": "So geht's",
+          "title": "KI-gestützte Details",
+          "subtitle": "Wir extrahieren automatisch Titel, Daten, Zeiten und Orte. Kein manuelles Tippen mehr.",
           "step1Title": "Fotografieren",
           "step1Description": "Mache ein Foto oder importiere eine Datei mit Datumsinformationen",
           "step2Title": "Auslesen & Speichern",
           "step2Description": "KI liest alle Details und speichert das Event in deiner App-Bibliothek",
           "step3Title": "Immer dabei",
           "step3Description": "In Kalender exportieren, Events teilen, Tickets kaufen und zur Location navigieren"
+        },
+        "bulkAI": {
+          "title": "Sofortige Massen-Intelligenz",
+          "subtitle": "Scanne mehrere Flyer auf einmal. Unsere KI extrahiert jedes Detail—Daten, Zeiten, Orte—in Sekunden."
+        },
+        "lifestyle": {
+          "title": "Verpasse nichts",
+          "subtitle": "Teile Pläne mit Freunden, erhalte rechtzeitige Erinnerungen und sei derjenige, der immer weiß, was los ist."
+        },
+        "shareExtension": {
+          "title": "Von überall erfassen",
+          "subtitle": "Siehst du ein Event in sozialen Medien oder in deiner Galerie? Nutze das System-Teilen-Menü, um es direkt an Capture2Calendar zu senden."
         },
         "tickets": {
           "title": "Tickets sofort kaufen",
@@ -122,9 +135,10 @@
           "permissionCalendar": "Kalender — damit wir deine Events speichern können"
         },
         "getStarted": {
-          "title": "Bereit, loszulegen?",
-          "subtitle": "Alles, was du brauchst, um kein Event mehr zu verpassen",
-          "bullet1": "Sofortige Event-Extraktion und Speicherung",
+          "title": "Jedes Event erkennen",
+          "mainTitle": "Scannt Notizen, Flyer & Einladungen",
+          "subtitle": "Das komplette Bild. Tickets kaufen, zur Location navigieren und mit einem Klick in deinen Kalender exportieren.",
+          "bullet1": "Sofortige Event-Erfassung und Speicherung",
           "bullet2": "Export in alle deine Kalender",
           "bullet3": "Zugriff auf Tickets, Teilen und Navigation",
           "permissionsTitle": "Dafür brauchen wir kurz:",

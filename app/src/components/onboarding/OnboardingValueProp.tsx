@@ -1,5 +1,6 @@
 import React from 'react';
 import { Camera } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // ReactorNode - Glass & Neon Component
 const ReactorNode: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'lg' }> = ({ children, size = 'lg' }) => {
@@ -26,18 +27,20 @@ const ReactorNode: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'l
 };
 
 export const OnboardingValueProp: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
       <div className="flex w-full max-w-md flex-col items-center">
         {/* Title */}
         <h1 className="mb-4 text-center text-3xl font-bold leading-tight tracking-tight text-white">
-          Capture Everything
+          {t('dialogs.onboarding.valueProp.title')}
         </h1>
 
         {/* Body */}
         <p className="text-center text-lg font-medium leading-relaxed text-gray-300">
-          Posters, flyers, handwritten notes—if it has a date, we can read it. Just snap a photo.
+          {t('dialogs.onboarding.valueProp.subtitle')}
         </p>
       </div>
     </div>

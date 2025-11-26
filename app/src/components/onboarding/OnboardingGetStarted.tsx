@@ -1,7 +1,10 @@
 import React from 'react';
 import { ScanLine } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const OnboardingGetStarted: React.FC = () => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
@@ -21,17 +24,17 @@ export const OnboardingGetStarted: React.FC = () => {
 
         {/* Eyebrow */}
         <p className="mb-2 text-center text-sm font-semibold uppercase tracking-wider text-[#E6DE4D]">
-          Detect Any Event
+          {t('dialogs.onboarding.getStarted.title')}
         </p>
 
         {/* Title */}
         <h1 className="mb-4 text-center text-3xl font-bold leading-tight tracking-tight text-white">
-          Scans notes, flyers & invites
+          {t('dialogs.onboarding.getStarted.mainTitle')}
         </h1>
 
         {/* Body */}
         <p className="text-center text-base font-medium leading-relaxed text-gray-300">
-          Get the complete picture. Buy tickets, navigate to the venue, and export to your calendar with one tap.
+          {t('dialogs.onboarding.getStarted.subtitle')}
         </p>
       </div>
     </div>
