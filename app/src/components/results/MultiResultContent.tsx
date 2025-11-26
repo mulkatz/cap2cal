@@ -92,32 +92,34 @@ export const MultiResultContent = ({ children, onClose }: { children: ReactNode[
 
   return (
     <div className={'absolute inset-0 flex h-full flex-col'}>
-      {/* Scroll container */}
-      <div className="relative flex-1 overflow-hidden">
-        <div
-          ref={scrollContainerRef}
-          className="flex h-full w-full snap-x snap-mandatory overflow-x-scroll overflow-y-hidden"
-          style={{
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-            WebkitOverflowScrolling: 'touch',
-          }}>
-          {children.map((child, index) => (
-            <div
-              key={index}
-              className="flex min-w-full snap-start items-center justify-center px-4"
-              style={{ scrollSnapStop: 'always' }}>
-              {child}
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* Scroll container and controls */}
+      <div className="flex flex-1 flex-col items-center justify-center">
+        <div className="w-full">
+          <div
+            ref={scrollContainerRef}
+            className="flex w-full snap-x snap-mandatory overflow-x-scroll overflow-y-hidden"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+            }}>
+            {children.map((child, index) => (
+              <div
+                key={index}
+                className="flex min-w-full snap-start items-center justify-center px-4"
+                style={{ scrollSnapStop: 'always' }}>
+                {child}
+              </div>
+            ))}
+          </div>
 
-      {/* Controls */}
-      <div className="mt-4 flex items-center justify-between px-2">
-        <PrevButton onClick={handlePrev} disabled={currentIndex === 0} />
-        <SelectedSnapDisplay selectedSnap={currentIndex} snapCount={slideCount} />
-        <NextButton onClick={handleNext} disabled={currentIndex === slideCount - 1} />
+          {/* Controls */}
+          <div className="mt-4 flex items-center justify-between px-2">
+            <PrevButton onClick={handlePrev} disabled={currentIndex === 0} />
+            <SelectedSnapDisplay selectedSnap={currentIndex} snapCount={slideCount} />
+            <NextButton onClick={handleNext} disabled={currentIndex === slideCount - 1} />
+          </div>
+        </div>
       </div>
 
       {/* Done button */}
