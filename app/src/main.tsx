@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { I18nextProvider } from 'react-i18next';
 
 import './index.css';
@@ -13,10 +13,9 @@ import { DialogProvider } from './contexts/DialogContext.tsx';
 import { FirebaseProvider } from './contexts/FirebaseContext.tsx';
 import { AppProvider } from './contexts/AppContext.tsx';
 import { EffectProvider } from './contexts/EffectsContext.tsx';
-import { Playground } from './components/Playground.tsx';
 import { PrivacyPage } from './components/PrivacyPage.tsx';
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
-import { initI18n, i18next } from './helper/i18nHelper';
+import { i18next, initI18n } from './helper/i18nHelper';
 
 // Initialize i18n before rendering
 initI18n();

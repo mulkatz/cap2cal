@@ -55,16 +55,12 @@ export const Feedback = ({}: {}) => {
     <div className="flex flex-col">
       {/* Title */}
       <div className="px-6 pb-4 pt-8 text-center">
-        <h2 className="text-xl font-bold text-white">
-          {t('dialogs.feedback.title')}
-        </h2>
+        <h2 className="text-xl font-bold text-white">{t('dialogs.feedback.title')}</h2>
       </div>
 
       {/* Description */}
       <div className="px-6 pb-4 text-center">
-        <p className="text-sm text-gray-300">
-          {t('dialogs.feedback.description')}
-        </p>
+        <p className="text-sm text-gray-300">{t('dialogs.feedback.description')}</p>
       </div>
 
       {/* Form Content */}

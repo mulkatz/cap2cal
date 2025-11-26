@@ -26,15 +26,7 @@ export const CaptureCounter: React.FC<CaptureCounterProps> = ({ capturesRemainin
       <div className="relative h-5 w-5">
         <svg className="h-5 w-5 -rotate-90 transform" viewBox="0 0 20 20">
           {/* Background circle */}
-          <circle
-            cx="10"
-            cy="10"
-            r="8"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            opacity="0.2"
-          />
+          <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.2" />
           {/* Progress circle */}
           <circle
             cx="10"

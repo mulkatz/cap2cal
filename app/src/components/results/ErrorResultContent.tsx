@@ -20,7 +20,9 @@ export const ErrorResultContent = ({ reason, onClose }: { reason: ExtractionErro
           {/* Message/Content */}
           <div className="px-6 py-4 text-center text-sm text-gray-300">
             <div className="flex flex-col gap-3">
-              <div className="text-base font-bold tracking-wide text-warn">{t(`types.extractErrorReason.${reason}`)}</div>
+              <div className="text-base font-bold tracking-wide text-warn">
+                {t(`types.extractErrorReason.${reason}`)}
+              </div>
               <p className="text-sm text-gray-300">{t('dialogs.notCaptured.generalAdvice')}</p>
             </div>
           </div>

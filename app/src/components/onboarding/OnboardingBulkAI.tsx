@@ -1,5 +1,4 @@
 import React from 'react';
-import { FileText, Cpu } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // ReactorNode - Glass & Neon Component

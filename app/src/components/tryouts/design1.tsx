@@ -61,7 +61,7 @@ const StarIcon = ({ className }: { className: string }) => (
 export default function App() {
   return (
     // Centering container with a subtle gradient background
-    <div className="font-sans flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-[#0a101f] to-[#1f2937] p-4">
+    <div className="flex min-h-screen w-full items-center justify-center bg-gradient-to-br from-[#0a101f] to-[#1f2937] p-4 font-sans">
       {/* --- Concert Ticket Component --- */}
       <div className="w-full max-w-sm rounded-2xl border border-slate-700 bg-slate-800/80 p-6 shadow-2xl shadow-black/40 backdrop-blur-sm">
         {/* Header Section */}

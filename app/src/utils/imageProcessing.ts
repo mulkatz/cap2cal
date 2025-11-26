@@ -62,17 +62,7 @@ export const cropImageToAspectRatio = (
         return reject(new Error('Failed to get canvas context.'));
       }
 
-      ctx.drawImage(
-        image,
-        sourceX,
-        sourceY,
-        sourceWidth,
-        sourceHeight,
-        0,
-        0,
-        sourceWidth,
-        sourceHeight
-      );
+      ctx.drawImage(image, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, sourceWidth, sourceHeight);
 
       resolve(canvas.toDataURL('image/jpeg', quality));
     };
@@ -126,17 +116,7 @@ export const cropBottom = (
         return;
       }
 
-      ctx.drawImage(
-        image,
-        0,
-        0,
-        newWidth,
-        newHeight,
-        0,
-        0,
-        newWidth,
-        newHeight
-      );
+      ctx.drawImage(image, 0, 0, newWidth, newHeight, 0, 0, newWidth, newHeight);
 
       resolve(canvas.toDataURL(format, quality));
     };

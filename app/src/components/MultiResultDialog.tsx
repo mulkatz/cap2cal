@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { CloseButton } from './buttons/CloseButton.tsx';
 import { cn } from '../utils.ts';
 import EmblaCarousel from './carousel/EmblaCarousel.tsx';
 import { IconCheck } from '../assets/icons';

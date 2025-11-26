@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sheet, SheetRef } from 'react-modal-sheet';
+import { Sheet } from 'react-modal-sheet';
 import { useTranslation } from 'react-i18next';
 import { CTAButton } from '../buttons/CTAButton.tsx';
 import { cn } from '../../utils.ts';

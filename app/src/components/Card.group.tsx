@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
 import { cn } from '../utils.ts';
-import { TextureMultiply } from './TextureMultiply.tsx';
 
 interface Props {
   children: ReactNode;
@@ -19,8 +18,7 @@ export const Card = ({ children, highlight, className, inline = false, usePatter
         'text-secondary',
         { 'max-h-full shrink grow overflow-y-auto': inline },
         className
-      )}
-    >
+      )}>
       {children}
     </div>
   );

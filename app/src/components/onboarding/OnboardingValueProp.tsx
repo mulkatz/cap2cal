@@ -1,5 +1,4 @@
 import React from 'react';
-import { Camera } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // ReactorNode - Glass & Neon Component

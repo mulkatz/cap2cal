@@ -1,7 +1,7 @@
 import clsx, { ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { CaptureEvent } from './models/CaptureEvent.ts';
-import { format, parse, parseISO } from 'date-fns';
+import { parse } from 'date-fns';
 import i18next from 'i18next';
 
 export const openICal = async (iCalString: string) => {

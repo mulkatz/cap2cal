@@ -56,7 +56,7 @@ export class ApiError extends Error implements AppError {
     message: string,
     statusCode?: number,
     originalError?: Error | unknown,
-    context?: Record<string, any>,
+    context?: Record<string, any>
   ) {
     super(message);
     this.name = 'ApiError';
@@ -134,13 +134,9 @@ export async function parseApiError(response: Response, context?: string): Promi
 export function handleFetchError(error: unknown, context?: string): ApiError {
   if (error instanceof TypeError) {
     // Network error
-    return new ApiError(
-      ErrorType.NETWORK_ERROR,
-      i18next.t('errors.networkRequestFailed'),
-      undefined,
-      error,
-      { context },
-    );
+    return new ApiError(ErrorType.NETWORK_ERROR, i18next.t('errors.networkRequestFailed'), undefined, error, {
+      context,
+    });
   }
 
   if (error instanceof Error) {

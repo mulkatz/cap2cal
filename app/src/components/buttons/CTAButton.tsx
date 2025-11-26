@@ -10,7 +10,7 @@ export const CTAButton = ({
   className, // Added missing className to destructuring
   disabled,
   highlight,
-  'data-testid': dataTestId
+  'data-testid': dataTestId,
 }: {
   loading?: boolean;
   text: string;

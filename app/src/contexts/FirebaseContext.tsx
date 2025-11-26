@@ -2,19 +2,19 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import { addDoc, collection, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics, logEvent, setUserProperties } from 'firebase/analytics';
-import { getAuth, initializeAuth, indexedDBLocalPersistence, signInAnonymously, User } from 'firebase/auth';
+import { getAuth, indexedDBLocalPersistence, initializeAuth, signInAnonymously, User } from 'firebase/auth';
 import 'firebase/compat/firestore';
 import 'firebase/compat/analytics';
 import { Capacitor } from '@capacitor/core';
 
 import { isDevelopmentEnvironment } from '../utils.ts';
-import { AnalyticsEvent, AnalyticsParam, ScreenName, type ScreenNameType } from '../utils/analytics.ts';
-import { fetchFeatureFlags, type FeatureFlags } from '../api/api.ts';
+import { AnalyticsEvent, AnalyticsParam, type ScreenNameType } from '../utils/analytics.ts';
+import { type FeatureFlags, fetchFeatureFlags } from '../api/api.ts';
 import {
-  initializePurchases,
-  checkIsProUser,
   addCustomerInfoUpdateListener,
+  checkIsProUser,
   ENTITLEMENT_ID,
+  initializePurchases,
 } from '../services/purchases.service.ts';
 import type { CustomerInfo } from '@revenuecat/purchases-capacitor';
 

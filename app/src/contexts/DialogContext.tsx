@@ -1,4 +1,4 @@
-import React, { createContext, ReactNode, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import React, { createContext, ReactNode, useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { App } from '@capacitor/app';
 import { Capacitor } from '@capacitor/core';
 
@@ -103,7 +103,19 @@ export const DialogProvider: React.FC<{ children: ReactNode }> = ({ children }) 
     };
   }, [handleBack]);
 
-  return <DialogContext.Provider value={{ stack, push, pop, replace, registerBackHandler, unregisterBackHandler }}>{children}</DialogContext.Provider>;
+  return (
+    <DialogContext.Provider
+      value={{
+        stack,
+        push,
+        pop,
+        replace,
+        registerBackHandler,
+        unregisterBackHandler,
+      }}>
+      {children}
+    </DialogContext.Provider>
+  );
 };
 
 export const useDialogContext = () => {
@@ -116,5 +128,11 @@ export const useDialogContext = () => {
 
 export const DialogStack: React.FC = () => {
   const { stack } = useDialogContext();
-  return <div className={`fixed inset-0 z-[70] ${stack.length === 0 ? 'pointer-events-none' : ''}`}>{stack.map((dialog, index) => <React.Fragment key={index}>{dialog}</React.Fragment>)}</div>;
+  return (
+    <div className={`fixed inset-0 z-[70] ${stack.length === 0 ? 'pointer-events-none' : ''}`}>
+      {stack.map((dialog, index) => (
+        <React.Fragment key={index}>{dialog}</React.Fragment>
+      ))}
+    </div>
+  );
 };

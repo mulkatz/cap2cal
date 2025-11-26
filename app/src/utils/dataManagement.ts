@@ -1,5 +1,5 @@
 import { db } from '../models/db';
-import { getAuth, deleteUser as firebaseDeleteUser } from 'firebase/auth';
+import { deleteUser as firebaseDeleteUser, getAuth } from 'firebase/auth';
 import toast from 'react-hot-toast';
 import i18next from 'i18next';
 
@@ -19,7 +19,7 @@ export const exportUserData = async (): Promise<void> => {
       exportDate: new Date().toISOString(),
       userId: currentUser?.uid || 'anonymous',
       appVersion: '1.2.6',
-      events: events.map(event => ({
+      events: events.map((event) => ({
         id: event.id,
         title: event.title,
         kind: event.kind,
@@ -50,7 +50,7 @@ export const exportUserData = async (): Promise<void> => {
 
     // Create JSON blob
     const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-      type: 'application/json'
+      type: 'application/json',
     });
 
     // Create download link
@@ -85,7 +85,7 @@ export const deleteAllUserData = async (): Promise<void> => {
     // 2. Clear localStorage (except essential app data)
     const keysToKeep = ['i18nextLng']; // Keep language preference
     const allKeys = Object.keys(localStorage);
-    allKeys.forEach(key => {
+    allKeys.forEach((key) => {
       if (!keysToKeep.includes(key)) {
         localStorage.removeItem(key);
       }

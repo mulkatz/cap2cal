@@ -1,4 +1,4 @@
-import { IconCamera, IconCamera2, IconCamera3 } from '../../assets/icons';
+import { IconCamera3 } from '../../assets/icons';
 import { ClipLoader } from 'react-spinners';
 import imgButton from './../../assets/images/icon.png';
 import { cn } from '../../utils.ts';

@@ -44,9 +44,7 @@ export const canShowReviewPromptByCooldown = (): boolean => {
   }
 
   const now = new Date();
-  const daysSinceLastPrompt = Math.floor(
-    (now.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24)
-  );
+  const daysSinceLastPrompt = Math.floor((now.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24));
 
   return daysSinceLastPrompt >= COOLDOWN_DAYS;
 };
@@ -87,14 +85,9 @@ export const markReviewPromptShown = (): void => {
 
   localStorage.setItem(REVIEW_PROMPT_SHOWN_KEY, 'true');
   localStorage.setItem(REVIEW_PROMPT_LAST_DATE_KEY, now.toISOString());
-  localStorage.setItem(
-    REVIEW_PROMPT_ATTEMPT_COUNT_KEY,
-    (currentAttempts + 1).toString()
-  );
+  localStorage.setItem(REVIEW_PROMPT_ATTEMPT_COUNT_KEY, (currentAttempts + 1).toString());
 
-  console.log(
-    `[Review Prompt] Marked as shown. Attempt ${currentAttempts + 1}/${MAX_PROMPT_ATTEMPTS}`
-  );
+  console.log(`[Review Prompt] Marked as shown. Attempt ${currentAttempts + 1}/${MAX_PROMPT_ATTEMPTS}`);
 };
 
 /**

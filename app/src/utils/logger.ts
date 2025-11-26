@@ -21,15 +21,6 @@ class Logger {
     this.level = this.isDevelopment ? LogLevel.DEBUG : LogLevel.WARN;
   }
 
-  private shouldLog(level: LogLevel): boolean {
-    return level >= this.level;
-  }
-
-  private formatMessage(level: string, context: string, message: string, ...args: any[]): string {
-    const timestamp = new Date().toISOString();
-    return `[${timestamp}] [${level}] [${context}] ${message}`;
-  }
-
   debug(context: string, message: string, ...args: any[]): void {
     if (this.shouldLog(LogLevel.DEBUG)) {
       console.debug(this.formatMessage('DEBUG', context, message), ...args);
@@ -81,6 +72,15 @@ class Logger {
 
   setLevel(level: LogLevel): void {
     this.level = level;
+  }
+
+  private shouldLog(level: LogLevel): boolean {
+    return level >= this.level;
+  }
+
+  private formatMessage(level: string, context: string, message: string, ...args: any[]): string {
+    const timestamp = new Date().toISOString();
+    return `[${timestamp}] [${level}] [${context}] ${message}`;
   }
 }
 

@@ -19,15 +19,17 @@ export const ExportChooser = ({
     <div className="flex flex-col">
       {/* Title */}
       <div className="flex w-full flex-col gap-5 px-6 pb-4 pt-8 text-center">
-        <h2 className="text-xl font-bold text-white">
-          {t('dialogs.export.title')}
-        </h2>
+        <h2 className="text-xl font-bold text-white">{t('dialogs.export.title')}</h2>
 
         {/* Calendar Options */}
         <div className="flex flex-col gap-3">
           {onApple && <Entry icon={<IconAppleCalendar />} text={t('dialogs.export.appleCalendar')} onClick={onApple} />}
-          {onGoogle && <Entry icon={<IconGoogleCalendar />} text={t('dialogs.export.googleCalendar')} onClick={onGoogle} />}
-          {onOutlook && <Entry icon={<IconOutlookCalendar />} text={t('dialogs.export.microsoftOutlook')} onClick={onOutlook} />}
+          {onGoogle && (
+            <Entry icon={<IconGoogleCalendar />} text={t('dialogs.export.googleCalendar')} onClick={onGoogle} />
+          )}
+          {onOutlook && (
+            <Entry icon={<IconOutlookCalendar />} text={t('dialogs.export.microsoftOutlook')} onClick={onOutlook} />
+          )}
         </div>
       </div>
 
@@ -35,11 +37,7 @@ export const ExportChooser = ({
       <div className="px-6 pb-6">
         <button
           onClick={onClose}
-          className={cn(
-            'w-full py-3 text-center',
-            'text-sm text-gray-400',
-            'transition-opacity hover:text-gray-300'
-          )}>
+          className={cn('w-full py-3 text-center', 'text-sm text-gray-400', 'transition-opacity hover:text-gray-300')}>
           {t('general.cancel')}
         </button>
       </div>

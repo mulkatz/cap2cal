@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import React from 'react';
 
 export const Playground = () => {
   return (
@@ -7,7 +8,6 @@ export const Playground = () => {
     </div>
   );
 };
-import React from 'react';
 
 // A placeholder SVG icon component for clarity.
 // You can replace this with your actual icon library (e.g., Heroicons, Feather).

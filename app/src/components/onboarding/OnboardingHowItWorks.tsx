@@ -1,23 +1,22 @@
 import React from 'react';
-import { Sparkles, Calendar, ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // GlowContainer - Reusable wrapper for High-Voltage glow effect
 const GlowContainer: React.FC<{ children: React.ReactNode; size?: 'sm' | 'md' | 'lg' }> = ({
   children,
-  size = 'md'
+  size = 'md',
 }) => {
   const sizeClasses = {
     sm: 'h-20 w-20',
     md: 'h-24 w-24',
-    lg: 'h-32 w-32'
+    lg: 'h-32 w-32',
   };
 
   return (
     <div className="relative flex items-center justify-center">
       <div
-        className={`relative flex ${sizeClasses[size]} items-center justify-center rounded-full bg-gradient-to-br from-[#E6DE4D]/30 to-[#E6DE4D]/10 shadow-[0_0_30px_-5px_rgba(230,222,77,0.6)] ring-1 ring-[#E6DE4D]/20`}
-      >
+        className={`relative flex ${sizeClasses[size]} items-center justify-center rounded-full bg-gradient-to-br from-[#E6DE4D]/30 to-[#E6DE4D]/10 shadow-[0_0_30px_-5px_rgba(230,222,77,0.6)] ring-1 ring-[#E6DE4D]/20`}>
         {children}
       </div>
     </div>

@@ -1,12 +1,14 @@
 # Premium Modal System
 
-A premium-designed modal/dialog system matching the EventCard aesthetic with smooth animations, glassy effects, and a cohesive design language.
+A premium-designed modal/dialog system matching the EventCard aesthetic with smooth animations, glassy effects, and a
+cohesive design language.
 
 ## Design System
 
 All modals follow these visual guidelines:
 
 ### Container
+
 - **Background:** `primaryElevated` (#2C4156 - Navy)
 - **Border Radius:** Large (`rounded-3xl`)
 - **Border:** Thin 1px border of `white/5` (Glassy effect)
@@ -14,16 +16,19 @@ All modals follow these visual guidelines:
 - **Backdrop:** Dark blurred (`bg-black/80 backdrop-blur-sm`)
 
 ### Typography
+
 - **Font:** 'Plus Jakarta Sans'
 - **Title:** Bold, White, Centered
 - **Body:** Regular, `text-gray-300`, Centered
 
 ### Buttons
+
 - **Primary Action:** Full width, Background `highlight` (Yellow #e6de4d), Text `primaryDark` (Navy), Bold
 - **Secondary Action:** Text-only, `text-gray-400`
 - **Destructive Action:** Background `warn` (#FF2929), Text white
 
 ### Animations
+
 - **Entry:** Fade + translate up animation (`animate-fadeInTranslateY`)
 - **Interaction:** Scale on press (`active:scale-95`)
 
@@ -139,6 +144,7 @@ Returns an object with three methods:
 Shows an alert modal with a single action button.
 
 **Options:**
+
 - `title` (string) - The alert title
 - `message` (string, optional) - The alert message
 - `confirmText` (string, optional) - Text for the confirm button (default: "OK")
@@ -152,6 +158,7 @@ Shows an alert modal with a single action button.
 Shows a confirmation modal with confirm and cancel buttons.
 
 **Options:**
+
 - `title` (string) - The confirmation title
 - `message` (string, optional) - The confirmation message
 - `confirmText` (string, optional) - Text for the confirm button (default: "Confirm")
@@ -167,6 +174,7 @@ Shows a confirmation modal with confirm and cancel buttons.
 Shows a prompt modal with a text input field.
 
 **Options:**
+
 - `title` (string) - The prompt title
 - `message` (string, optional) - The prompt message
 - `placeholder` (string, optional) - Input placeholder text
@@ -232,6 +240,7 @@ interface PremiumPromptProps {
 ### From Native `Alert.alert()`
 
 **Before:**
+
 ```tsx
 Alert.alert(
   'Delete Event',
@@ -244,6 +253,7 @@ Alert.alert(
 ```
 
 **After:**
+
 ```tsx
 const modals = usePremiumModals();
 
@@ -265,6 +275,7 @@ if (confirmed) {
 ## Examples
 
 ### Success Notification
+
 ```tsx
 await modals.alert({
   title: '✓ Success',
@@ -274,6 +285,7 @@ await modals.alert({
 ```
 
 ### Destructive Confirmation
+
 ```tsx
 const shouldDelete = await modals.confirm({
   title: 'Delete Account',
@@ -285,6 +297,7 @@ const shouldDelete = await modals.confirm({
 ```
 
 ### Name Input
+
 ```tsx
 const eventName = await modals.prompt({
   title: 'Create Event',
@@ -300,6 +313,7 @@ if (eventName) {
 ```
 
 ### Email Input
+
 ```tsx
 const email = await modals.prompt({
   title: 'Share Event',

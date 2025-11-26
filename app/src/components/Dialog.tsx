@@ -34,7 +34,7 @@ export const Dialog = ({
 
       {/* Content layer - isolated from backdrop */}
       <div
-        className={'absolute inset-0 flex max-h-screen items-center justify-center p-6 pointer-events-none'}
+        className={'pointer-events-none absolute inset-0 flex max-h-screen items-center justify-center p-6'}
         onClick={closeOnClickOutside ? onClose : undefined}>
         {/* Premium modal container with smooth fade + scale animation */}
         <div

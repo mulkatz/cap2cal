@@ -31,12 +31,8 @@ export const UpgradeDialog: React.FC<UpgradeDialogProps> = ({ onUpgrade, onClose
       </div>
 
       {/* Title & Subtitle */}
-      <h2 className="mb-2 text-center text-xl font-bold text-white">
-        {t('dialogs.upgrade.title')}
-      </h2>
-      <p className="mb-8 text-center text-sm text-gray-300">
-        {t('dialogs.upgrade.subtitle')}
-      </p>
+      <h2 className="mb-2 text-center text-xl font-bold text-white">{t('dialogs.upgrade.title')}</h2>
+      <p className="mb-8 text-center text-sm text-gray-300">{t('dialogs.upgrade.subtitle')}</p>
 
       {/* Benefits */}
       <BenefitsList
@@ -69,11 +65,7 @@ export const UpgradeDialog: React.FC<UpgradeDialogProps> = ({ onUpgrade, onClose
         {/* Secondary/Cancel Button */}
         <button
           onClick={onClose}
-          className={cn(
-            'w-full py-3 text-center',
-            'text-sm text-gray-400',
-            'transition-opacity hover:text-gray-300'
-          )}>
+          className={cn('w-full py-3 text-center', 'text-sm text-gray-400', 'transition-opacity hover:text-gray-300')}>
           {t('dialogs.upgrade.notNow')}
         </button>
       </div>

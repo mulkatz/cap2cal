@@ -6,23 +6,23 @@ import { useFirebaseContext } from '../../contexts/FirebaseContext';
 import { useCrashlytics } from '../../hooks/useCrashlytics';
 import { IconChevronLeft } from '../../assets/icons';
 import {
-  Globe,
-  Zap,
   BarChart3,
-  Trash2,
   BookOpen,
+  Bug,
+  ChevronRight,
   ExternalLink,
-  UserPlus,
+  FileText,
+  Globe,
   MessageCircle,
   Shield,
-  FileText,
-  ChevronRight,
-  Bug,
+  Trash2,
+  UserPlus,
+  Zap,
 } from 'lucide-react';
 import { Feedback } from '../dialogs/Feedback.atom';
 import { Dialog } from '../Dialog';
 import { PremiumConfirm } from '../modals/PremiumModal';
-import { exportUserData, clearLocalStorage, deleteAllUserData } from '../../utils/dataManagement';
+import { clearLocalStorage, deleteAllUserData, exportUserData } from '../../utils/dataManagement';
 import toast from 'react-hot-toast';
 import { AnalyticsEvent } from '../../utils/analytics';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
@@ -371,7 +371,8 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
           <IconChevronLeft size={24} />
         </button>
         <h1 className="text-[20px] font-semibold text-secondary">{t('dialogs.settings.title')}</h1>
-        <div className="w-8" /> {/* Spacer for centering */}
+        <div className="w-8" />
+        {/* Spacer for centering */}
       </div>
 
       {/* Content */}

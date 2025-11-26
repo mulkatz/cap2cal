@@ -1,6 +1,3 @@
-import { ApiEvent } from '../api/model.ts';
-import { CaptureEvent } from './CaptureEvent.ts';
-
 // export const captureEventArrayMock = [
 //   {
 //     title: 'Herbst-FLOHMARKT',

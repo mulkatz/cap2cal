@@ -17,9 +17,7 @@ const PremiumModalContent = ({ title, message, children, actions }: PremiumModal
   return (
     <div className="flex flex-col">
       {/* Title */}
-      <h2 className="px-6 pt-6 text-center text-xl font-bold text-white">
-        {title}
-      </h2>
+      <h2 className="px-6 pt-6 text-center text-xl font-bold text-white">{title}</h2>
 
       {/* Message/Content */}
       {message && (
@@ -49,13 +47,7 @@ interface PremiumAlertProps {
   onClose?: () => void;
 }
 
-export const PremiumAlert = ({
-  title,
-  message,
-  confirmText = 'OK',
-  onConfirm,
-  onClose,
-}: PremiumAlertProps) => {
+export const PremiumAlert = ({ title, message, confirmText = 'OK', onConfirm, onClose }: PremiumAlertProps) => {
   const handleConfirm = () => {
     onConfirm();
     onClose?.();

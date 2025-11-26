@@ -1,5 +1,5 @@
-import { Purchases, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
-import type { CustomerInfo, PurchasesPackage, PurchasesOfferings } from '@revenuecat/purchases-capacitor';
+import type { CustomerInfo, PurchasesOfferings, PurchasesPackage } from '@revenuecat/purchases-capacitor';
+import { LOG_LEVEL, Purchases } from '@revenuecat/purchases-capacitor';
 import { Capacitor } from '@capacitor/core';
 
 /**

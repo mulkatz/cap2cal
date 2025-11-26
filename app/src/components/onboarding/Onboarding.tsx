@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { OnboardingSlide1 } from './OnboardingSlide1.tsx';
 import { OnboardingSlide2 } from './OnboardingSlide2.tsx';
 import { OnboardingSlide3 } from './OnboardingSlide3.tsx';
@@ -6,7 +6,7 @@ import { OnboardingSlide4 } from './OnboardingSlide4.tsx';
 import { OnboardingGetStarted } from './OnboardingGetStarted.tsx';
 import { OnboardingNavigation } from './OnboardingNavigation.tsx';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
-import { AnalyticsEvent, AnalyticsParam, ScreenName } from '../../utils/analytics.ts';
+import { AnalyticsEvent, AnalyticsParam } from '../../utils/analytics.ts';
 import useEmblaCarousel from 'embla-carousel-react';
 
 interface OnboardingProps {
@@ -85,7 +85,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
       </div>
 
       {/* Content */}
-      <div className="relative flex h-full flex-col items-center justify-between py-6 overflow-visible">
+      <div className="relative flex h-full flex-col items-center justify-between overflow-visible py-6">
         {/* Embla Carousel */}
         <div className="embla flex flex-1 items-center justify-center overflow-visible" style={{ width: '100%' }}>
           <div className="embla__viewport overflow-visible" ref={emblaRef}>

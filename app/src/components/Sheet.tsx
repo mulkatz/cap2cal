@@ -1,5 +1,5 @@
 import { Sheet, SheetRef } from 'react-modal-sheet';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '../utils.ts';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../models/db.ts';
@@ -35,10 +35,10 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
           return sortByFilter === 'time'
             ? items.sort((a, b) => b.timestamp - a.timestamp) // Sort by time
             : items.sort((a, b) => {
-              const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
-              const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
-              return startB - startA;
-            });
+                const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
+                const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
+                return startB - startA;
+              });
         }),
     [favouritesFilter, sortByFilter] // Removed db.eventItems as it's stable
   );
@@ -86,9 +86,7 @@ export const CaptureSheet = ({ isOpen, onClose }: Props) => {
                     icon={
                       <IconStar
                         size={16}
-                        className={cn(
-                          favouritesFilter === 'yes' ? 'text-primaryDark' : 'text-secondary'
-                        )}
+                        className={cn(favouritesFilter === 'yes' ? 'text-primaryDark' : 'text-secondary')}
                         fill="currentColor"
                       />
                     }

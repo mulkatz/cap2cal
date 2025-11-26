@@ -1,6 +1,6 @@
 import { ApiError, ApiEvent, ApiFindResult, ApiSuccess } from './model.ts';
 import { logger } from '../utils/logger';
-import { parseApiError, handleFetchError, logError } from '../utils/errorHandler';
+import { handleFetchError, logError } from '../utils/errorHandler';
 
 const ANALYSE_API_URL = 'https://analyse-u6pn2d2dsq-uc.a.run.app';
 const FIND_TICKETS_API_URL = 'https://findtickets-u6pn2d2dsq-uc.a.run.app';

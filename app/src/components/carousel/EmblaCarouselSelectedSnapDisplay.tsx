@@ -27,8 +27,8 @@ export const SelectedSnapDisplay = (props: any) => {
   const { selectedSnap, snapCount } = props;
 
   return (
-    <div className="flex items-center justify-center rounded-full bg-white/10 backdrop-blur-md px-5 py-2">
-      <span className="text-white font-mono font-medium">
+    <div className="flex items-center justify-center rounded-full bg-white/10 px-5 py-2 backdrop-blur-md">
+      <span className="font-mono font-medium text-white">
         {selectedSnap + 1} / {snapCount}
       </span>
     </div>

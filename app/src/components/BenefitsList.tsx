@@ -43,8 +43,7 @@ const BenefitItem: React.FC<BenefitItemProps> = ({ text, variant }) => {
 
   return (
     <div className="flex items-start gap-3">
-      <div
-        className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full ${getBgColor()}`}>
+      <div className={`mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full ${getBgColor()}`}>
         <svg className={`h-3 w-3 ${getIconColor()}`} fill="currentColor" viewBox="0 0 20 20">
           <path
             fillRule="evenodd"

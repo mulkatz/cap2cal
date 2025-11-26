@@ -40,10 +40,7 @@ export const PrevButton = (props: any) => {
 
   return (
     <button
-      className={cn(
-        'ml-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/10',
-        props.className
-      )}
+      className={cn('ml-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/10', props.className)}
       type="button"
       {...restProps}>
       <svg className="embla__button__svg text-white" viewBox="0 0 532 532">
@@ -62,10 +59,7 @@ export const NextButton = (props: any) => {
 
   return (
     <button
-      className={cn(
-        'mr-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/10',
-        props.classeName
-      )}
+      className={cn('mr-6 flex h-10 w-10 items-center justify-center rounded-full bg-white/10', props.classeName)}
       type="button"
       {...restProps}>
       <svg className="embla__button__svg text-white" viewBox="0 0 532 532">

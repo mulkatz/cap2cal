@@ -12,11 +12,7 @@ export const OnboardingTickets: React.FC = () => {
         {/* Icon */}
         <div className="mb-6 flex items-center justify-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-highlight/30 to-highlight/10 shadow-lg shadow-highlight/30 ring-4 ring-highlight/20">
-            <svg
-              className="h-10 w-10 text-highlight"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24">
+            <svg className="h-10 w-10 text-highlight" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -28,9 +24,7 @@ export const OnboardingTickets: React.FC = () => {
         </div>
 
         {/* Title */}
-        <h2 className="mb-4 text-center text-3xl font-bold text-white">
-          {t('dialogs.onboarding.tickets.title')}
-        </h2>
+        <h2 className="mb-4 text-center text-3xl font-bold text-white">{t('dialogs.onboarding.tickets.title')}</h2>
 
         {/* Subtitle */}
         <p className="mb-8 text-center text-lg font-medium leading-relaxed text-gray-300">

@@ -19,7 +19,7 @@ interface AppContextType {
   appLanguage: string; // utc
   userLanguage: string;
   languageOverride: string | null;
-  appState: AppState
+  appState: AppState;
   setAppState: (appState: AppState) => void;
   resultData: ResultData | null;
   setResultData: (resultData: ResultData | null) => void;
@@ -36,7 +36,17 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const languageOverride = appLanguage;
 
   return (
-    <AppContext.Provider value={{ version, appLanguage, userLanguage, languageOverride, appState, setAppState, resultData, setResultData }}>
+    <AppContext.Provider
+      value={{
+        version,
+        appLanguage,
+        userLanguage,
+        languageOverride,
+        appState,
+        setAppState,
+        resultData,
+        setResultData,
+      }}>
       {children}
     </AppContext.Provider>
   );

@@ -1,10 +1,10 @@
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../models/db';
 import { CardController } from '../Card.controller';
 import { Card } from '../Card.group';
-import { IconChevronLeft, IconTriangleRight, IconStar } from '../../assets/icons';
+import { IconChevronLeft, IconStar, IconTriangleRight } from '../../assets/icons';
 import { cn } from '../../utils';
 import type { CaptureEvent } from '../../models/CaptureEvent';
 

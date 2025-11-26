@@ -26,7 +26,7 @@ import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import { AnalyticsEvent, AnalyticsParam } from '../utils/analytics.ts';
 import { Onboarding } from '../components/onboarding/Onboarding.tsx';
 import { logger } from '../utils/logger';
-import { shouldShowReviewPrompt, markReviewPromptShown } from '../utils/reviewPrompt.ts';
+import { markReviewPromptShown, shouldShowReviewPrompt } from '../utils/reviewPrompt.ts';
 import { getCaptureCount } from '../utils/captureLimit.ts';
 import { AppLikePrompt } from '../components/dialogs/AppLikePrompt.atom.tsx';
 import { InAppReview } from '@capacitor-community/in-app-review';

@@ -208,11 +208,11 @@ export const ExtractionErrorReason = {
 // HELPER TYPES
 // ============================================================================
 
-export type AnalyticsEventName = typeof AnalyticsEvent[keyof typeof AnalyticsEvent];
-export type AnalyticsParamName = typeof AnalyticsParam[keyof typeof AnalyticsParam];
-export type AnalyticsUserPropertyName = typeof AnalyticsUserProperty[keyof typeof AnalyticsUserProperty];
-export type ScreenNameType = typeof ScreenName[keyof typeof ScreenName];
-export type ExtractionErrorReasonType = typeof ExtractionErrorReason[keyof typeof ExtractionErrorReason];
+export type AnalyticsEventName = (typeof AnalyticsEvent)[keyof typeof AnalyticsEvent];
+export type AnalyticsParamName = (typeof AnalyticsParam)[keyof typeof AnalyticsParam];
+export type AnalyticsUserPropertyName = (typeof AnalyticsUserProperty)[keyof typeof AnalyticsUserProperty];
+export type ScreenNameType = (typeof ScreenName)[keyof typeof ScreenName];
+export type ExtractionErrorReasonType = (typeof ExtractionErrorReason)[keyof typeof ExtractionErrorReason];
 
 // ============================================================================
 // ANALYTICS UTILITIES

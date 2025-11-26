@@ -3,9 +3,7 @@ import { CameraPreview, CameraPreviewOptions, CameraPreviewPictureOptions } from
 import { cn, getSafeAreaTopHeight } from '../utils.ts';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
-import { MiniButton } from '../components/buttons/MiniButton.tsx';
-import { IconCamera3, IconChevronLeft, IconZap, IconImage, X } from '../assets/icons';
-import { CaptureButton } from '../components/buttons/CaptureButton.tsx';
+import { IconImage, IconZap, X } from '../assets/icons';
 import { AppState } from '../contexts/AppContext.tsx';
 import { CameraInstructionDialog } from '../components/dialogs/CameraInstructionDialog.tsx';
 import { logger } from '../utils/logger';
@@ -547,7 +545,11 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
         <span className={'pt-safe'} />
 
         {/* Native camera preview container */}
-        <div id="cameraPreview" className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover" data-camera-view="true" />
+        <div
+          id="cameraPreview"
+          className="absolute inset-0 [&>*]:h-screen [&>*]:object-cover"
+          data-camera-view="true"
+        />
         {!isPreviewRunning && <div className="absolute inset-0 z-0 bg-black" />}
 
         {isPreviewRunning && (
@@ -558,7 +560,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                 {/* Left: Close Button */}
                 <button
                   onClick={onClose}
-                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 backdrop-blur-sm shadow-md transition-all active:scale-95">
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-black/30 shadow-md backdrop-blur-sm transition-all active:scale-95">
                   <X size={24} className="text-white drop-shadow-md" />
                 </button>
 
@@ -570,7 +572,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                   onClick={() => setFlashEnabled(!flashEnabled)}
                   className={cn(
                     'flex h-10 w-10 items-center justify-center rounded-full transition-all active:scale-95',
-                    flashEnabled ? 'bg-transparent' : 'bg-black/30 backdrop-blur-sm shadow-md'
+                    flashEnabled ? 'bg-transparent' : 'bg-black/30 shadow-md backdrop-blur-sm'
                   )}>
                   <IconZap
                     size={24}
@@ -616,7 +618,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
 
             {/* HELPER TEXT - High-contrast HUD pill */}
             <div className="pointer-events-none absolute left-0 right-0 z-20 flex justify-center bottom-safe-offset-32">
-              <div className="rounded-full border border-white/10 bg-black/50 px-4 py-2 text-xs font-medium text-white backdrop-blur-md shadow-lg">
+              <div className="rounded-full border border-white/10 bg-black/50 px-4 py-2 text-xs font-medium text-white shadow-lg backdrop-blur-md">
                 {t('dialogs.onboarding.camera.scanEventDetails')}
               </div>
             </div>
@@ -627,7 +629,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                 {/* Left: Gallery Button - Subtle glassy appearance */}
                 <button
                   onClick={onImport}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 backdrop-blur-sm shadow-md transition-all active:scale-95">
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 shadow-md backdrop-blur-sm transition-all active:scale-95">
                   <IconImage size={24} className="text-white drop-shadow-md" />
                 </button>
 
@@ -639,7 +641,7 @@ const CameraView = forwardRef<CameraRefProps, CameraViewProps>(
                   {/* Outer Ring - w-20 h-20 with 5px border matching scanner corners */}
                   <div className="flex h-20 w-20 items-center justify-center rounded-full border-[5px] border-white shadow-lg shadow-black/50">
                     {/* Inner Circle - 3D gradient dome effect */}
-                    <div className="h-14 w-14 rounded-full bg-gradient-to-b from-[#F2EC9B] to-[#E6DE4D] border-t-2 border-white/30 shadow-sm" />
+                    <div className="h-14 w-14 rounded-full border-t-2 border-white/30 bg-gradient-to-b from-[#F2EC9B] to-[#E6DE4D] shadow-sm" />
                   </div>
                 </button>
 

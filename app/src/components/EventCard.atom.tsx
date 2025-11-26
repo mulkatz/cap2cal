@@ -1,4 +1,4 @@
-import { IconCalendarPlus, IconCamera, IconExport, IconStar } from '../assets/icons';
+import { IconCalendarPlus, IconCamera, IconStar } from '../assets/icons';
 import { Clock, MapPin, MoreVertical } from 'lucide-react';
 // Import all utilities from a single source
 import { cn } from '../utils.ts';

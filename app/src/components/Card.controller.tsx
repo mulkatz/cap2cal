@@ -9,17 +9,15 @@ import {
   isApplePlatform,
   openATag,
 } from '../utils.ts';
-import { Image } from './dialogs/Image.tsx';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
 import { Dialog } from './Dialog.tsx';
 import { ExportChooser } from './dialogs/ExportChooser.atom.tsx';
 import { Share } from '@capacitor/share';
-import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 import { ImagePreview } from './ImagePreview.tsx';
-import { logger } from '../utils/logger';
 import { CalendarPermissionScope, CapacitorCalendar } from '@ebarooni/capacitor-calendar';
 import { PermissionDeniedAtom } from './dialogs/PermissionDenied.atom.tsx';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {

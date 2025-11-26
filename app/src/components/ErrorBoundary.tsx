@@ -37,6 +37,32 @@ export class ErrorBoundary extends Component<Props, State> {
     }
   }
 
+  public render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+
+      return (
+        <div className="flex min-h-screen flex-col items-center justify-center bg-primary px-6 text-center">
+          <div className="mx-auto max-w-md">
+            <div className="mb-6 text-6xl">😕</div>
+            <h1 className="mb-4 text-2xl font-bold text-secondary">{i18next.t('dialogs.errorBoundary.title')}</h1>
+            <p className="text-tertiary mb-8 text-base leading-relaxed">{i18next.t('dialogs.errorBoundary.message')}</p>
+            <button
+              onClick={this.handleRetry}
+              className="w-full rounded-xl bg-highlight px-6 py-4 font-semibold text-white transition-all active:scale-95">
+              {i18next.t('dialogs.errorBoundary.tryAgain')}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+
   private async logToCrashlytics(error: Error, errorInfo: ErrorInfo) {
     try {
       // Add component stack as custom key
@@ -73,34 +99,4 @@ export class ErrorBoundary extends Component<Props, State> {
   private handleRetry = () => {
     this.setState({ hasError: false, error: null });
   };
-
-  public render() {
-    if (this.state.hasError) {
-      // You can render any custom fallback UI
-      if (this.props.fallback) {
-        return this.props.fallback;
-      }
-
-      return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-primary px-6 text-center">
-          <div className="mx-auto max-w-md">
-            <div className="mb-6 text-6xl">😕</div>
-            <h1 className="mb-4 text-2xl font-bold text-secondary">
-              {i18next.t('dialogs.errorBoundary.title')}
-            </h1>
-            <p className="mb-8 text-base leading-relaxed text-tertiary">
-              {i18next.t('dialogs.errorBoundary.message')}
-            </p>
-            <button
-              onClick={this.handleRetry}
-              className="w-full rounded-xl bg-highlight px-6 py-4 font-semibold text-white transition-all active:scale-95">
-              {i18next.t('dialogs.errorBoundary.tryAgain')}
-            </button>
-          </div>
-        </div>
-      );
-    }
-
-    return this.props.children;
-  }
 }
