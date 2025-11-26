@@ -11,7 +11,6 @@ import { DialogProvider } from './contexts/DialogContext.tsx';
 import { FirebaseProvider } from './contexts/FirebaseContext.tsx';
 import { AppProvider } from './contexts/AppContext.tsx';
 import { EffectProvider } from './contexts/EffectsContext.tsx';
-import { PrivacyPage } from './components/PrivacyPage.tsx';
 import { ErrorBoundary } from './components/ErrorBoundary.tsx';
 import { i18next, initI18n } from './helper/i18nHelper';
 
@@ -29,8 +28,6 @@ createRoot(document.getElementById('root')!).render(
                 <BrowserRouter>
                   <Routes>
                     <Route path="/" element={<App />} />
-                    <Route path="/privacy-policy" element={<PrivacyPage />} />
-                    {/*<Route path="/imprint" element={<ImprintPage />} />*/}
                     <Route path="*" element={<Navigate to="/" replace />} />
                   </Routes>
                 </BrowserRouter>

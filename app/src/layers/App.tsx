@@ -1,7 +1,7 @@
 import CameraView, { CameraRefProps } from './CameraView.tsx';
 import { useDisableOverscroll } from '../hooks/useDisableOverscroll.tsx';
 import { useCrashlytics } from '../hooks/useCrashlytics.tsx';
-import { SplashView } from './SplashView.tsx';
+import { HomeView } from './HomeView.tsx';
 import { ResultView } from './ResultView.tsx';
 import { db } from '../models/db.ts';
 import React, { useEffect, useRef, useState } from 'react';
@@ -711,7 +711,7 @@ export const App = () => {
           {/* Only render SplashView when in home state */}
           {appState === 'home' && (
             <div className="animate-fadeIn">
-              <SplashView
+              <HomeView
                 isLoading={isHandlingCaptureRequest}
                 onCapture={onHandleCapture}
                 hasSavedEvents={hasSavedEvents}

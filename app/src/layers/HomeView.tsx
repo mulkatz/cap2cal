@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
 import { useRipple } from '../hooks/useRipple.tsx';
 
-export const SplashView = ({
+export const HomeView = ({
   isLoading,
   onImport,
   onHistory,
