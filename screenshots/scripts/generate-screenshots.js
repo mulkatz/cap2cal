@@ -28,6 +28,15 @@ const CONFIG = {
   },
   screenshotDelay: 1000, // Wait time before taking screenshot
   navigationDelay: 800, // Wait time after navigation/clicks
+
+  // Safe area simulation for screenshots
+  simulateSafeAreas: true, // Enable/disable safe area simulation
+  safeAreaInsets: {
+    top: 59, // iPhone 15 Pro Max status bar + Dynamic Island (in px)
+    right: 0, // No side notches
+    bottom: 34, // Home indicator (in px)
+    left: 0, // No side notches
+  },
 };
 
 // Parse command line arguments
@@ -119,6 +128,88 @@ async function seedDatabase(page, language) {
   console.log(
     `  ✅ Database seeded with ${eventData.length} events and 1 image`,
   );
+}
+
+// Inject safe area CSS overrides for simulation
+async function injectSafeAreas(page, config) {
+  if (!config.simulateSafeAreas) {
+    console.log("  📱 Safe area simulation: disabled");
+    return;
+  }
+
+  console.log("  📱 Injecting safe area simulation:");
+  console.log(`     Top: ${config.safeAreaInsets.top}px`);
+  console.log(`     Right: ${config.safeAreaInsets.right}px`);
+  console.log(`     Bottom: ${config.safeAreaInsets.bottom}px`);
+  console.log(`     Left: ${config.safeAreaInsets.left}px`);
+
+  const { top, right, bottom, left } = config.safeAreaInsets;
+
+  await page.evaluateOnNewDocument((insets) => {
+    const style = document.createElement("style");
+    style.id = "safe-area-simulation";
+    style.textContent = `
+      /* Override ALL tailwindcss-safe-area plugin utilities with simulated values */
+      /* This approach works regardless of how many safe area classes exist */
+
+      /* Basic safe area utilities */
+      .pt-safe { padding-top: ${insets.top}px !important; }
+      .pr-safe { padding-right: ${insets.right}px !important; }
+      .pb-safe { padding-bottom: ${insets.bottom}px !important; }
+      .pl-safe { padding-left: ${insets.left}px !important; }
+
+      .mt-safe { margin-top: ${insets.top}px !important; }
+      .mr-safe { margin-right: ${insets.right}px !important; }
+      .mb-safe { margin-bottom: ${insets.bottom}px !important; }
+      .ml-safe { margin-left: ${insets.left}px !important; }
+
+      .top-safe { top: ${insets.top}px !important; }
+      .right-safe { right: ${insets.right}px !important; }
+      .bottom-safe { bottom: ${insets.bottom}px !important; }
+      .left-safe { left: ${insets.left}px !important; }
+
+      .inset-safe {
+        top: ${insets.top}px !important;
+        right: ${insets.right}px !important;
+        bottom: ${insets.bottom}px !important;
+        left: ${insets.left}px !important;
+      }
+
+      /* Safe area offset utilities - using regex-like approach via attribute selector */
+      /* These handle classes like .pt-safe-offset-6, .bottom-safe-offset-3, etc. */
+      [class*="pt-safe-offset-"] { padding-top: calc(${insets.top}px + var(--tw-safe-offset, 0px)) !important; }
+      [class*="pb-safe-offset-"] { padding-bottom: calc(${insets.bottom}px + var(--tw-safe-offset, 0px)) !important; }
+      [class*="top-safe-offset-"] { top: calc(${insets.top}px + var(--tw-safe-offset, 0px)) !important; }
+      [class*="bottom-safe-offset-"] { bottom: calc(${insets.bottom}px + var(--tw-safe-offset, 0px)) !important; }
+
+      /* Specific offset classes (for known values) */
+      .pt-safe-offset-0 { padding-top: calc(${insets.top}px + 0px) !important; }
+      .pt-safe-offset-6 { padding-top: calc(${insets.top}px + 1.5rem) !important; }
+      .pt-safe-offset-20 { padding-top: calc(${insets.top}px + 5rem) !important; }
+
+      .pb-safe-offset-0 { padding-bottom: calc(${insets.bottom}px + 0px) !important; }
+      .pb-safe-offset-8 { padding-bottom: calc(${insets.bottom}px + 2rem) !important; }
+      .pb-safe-offset-12 { padding-bottom: calc(${insets.bottom}px + 3rem) !important; }
+      .pb-safe-offset-24 { padding-bottom: calc(${insets.bottom}px + 6rem) !important; }
+
+      .top-safe-offset-0 { top: calc(${insets.top}px + 0px) !important; }
+
+      .bottom-safe-offset-0 { bottom: calc(${insets.bottom}px + 0px) !important; }
+      .bottom-safe-offset-3 { bottom: calc(${insets.bottom}px + 0.75rem) !important; }
+      .bottom-safe-offset-5 { bottom: calc(${insets.bottom}px + 1.25rem) !important; }
+      .bottom-safe-offset-32 { bottom: calc(${insets.bottom}px + 8rem) !important; }
+    `;
+
+    // Inject immediately if DOM is ready
+    if (document.head) {
+      document.head.appendChild(style);
+    } else {
+      // Otherwise wait for DOM to be ready
+      document.addEventListener("DOMContentLoaded", () => {
+        document.head.appendChild(style);
+      });
+    }
+  }, config.safeAreaInsets);
 }
 
 // Skip onboarding by setting localStorage
@@ -705,6 +796,9 @@ async function generateScreenshots() {
 
     // Configure page
     await page.setViewport(CONFIG.viewport);
+
+    // Inject safe area simulation
+    await injectSafeAreas(page, CONFIG);
 
     // Grant camera and microphone permissions
     const context = browser.defaultBrowserContext();
