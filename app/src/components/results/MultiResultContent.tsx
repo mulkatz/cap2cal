@@ -103,7 +103,10 @@ export const MultiResultContent = ({ children, onClose }: { children: ReactNode[
             WebkitOverflowScrolling: 'touch',
           }}>
           {children.map((child, index) => (
-            <div key={index} className="flex min-w-full snap-start items-center justify-center px-4">
+            <div
+              key={index}
+              className="flex min-w-full snap-start items-center justify-center px-4"
+              style={{ scrollSnapStop: 'always' }}>
               {child}
             </div>
           ))}

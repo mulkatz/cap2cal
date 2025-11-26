@@ -126,6 +126,7 @@ export const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
               {screens.map((screen, index) => (
                 <div
                   className="flex min-w-full snap-start items-center justify-center overflow-visible"
+                  style={{ scrollSnapStop: 'always' }}
                   key={index}
                   data-testid={`onboarding-slide-${index}`}>
                   <div className="flex h-full w-full items-center justify-center overflow-visible">{screen}</div>
