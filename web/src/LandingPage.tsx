@@ -5,7 +5,21 @@ import { SeoManager } from './SeoManager.tsx';
 import posthog from './posthog';
 import AppStoreBadge from './assets/icons/Download_on_the_App_Store_RGB_blk.svg';
 import GooglePlayBadge from './assets/icons/Google_Play_Store_badge_EN.svg';
-import { Camera, Calendar, Bot, Zap, Globe, Wifi, Lock, Heart, Ticket, Share2, CheckCircle, X, Menu } from 'lucide-react';
+import {
+  Camera,
+  Calendar,
+  Bot,
+  Zap,
+  Globe,
+  Wifi,
+  Lock,
+  Heart,
+  Ticket,
+  Share2,
+  CheckCircle,
+  X,
+  Menu,
+} from 'lucide-react';
 
 // Icon Wrapper Components
 const IconCamera = () => <Camera size={24} className="text-secondary" aria-hidden="true" />;
@@ -23,7 +37,7 @@ const IconX = () => <X size={24} className="h-6 w-6" aria-hidden="true" />;
 const IconMenu = () => <Menu size={24} className="h-6 w-6" aria-hidden="true" />;
 
 // Placeholder app store URLs - Update these with your actual URLs
-const APP_STORE_URL = 'https://apps.apple.com/app/cap2cal/YOUR_APP_ID'; // TODO: Update with actual iOS App Store URL
+const APP_STORE_URL = 'https://apps.apple.com/de/app/capture2calendar/id6754225481'; // TODO: Update with actual iOS App Store URL
 const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=cx.franz.cap2cal'; // TODO: Update with actual Google Play URL
 
 export default function LandingPage(): JSX.Element {

@@ -6,7 +6,7 @@ export const DownloadPage = () => {
   const [platform, setPlatform] = useState<'ios' | 'android' | 'web'>('web');
   const [redirecting, setRedirecting] = useState(false);
 
-  const APP_STORE_URL = 'https://apps.apple.com/app/cap2cal/YOUR_APP_ID'; // Update this
+  const APP_STORE_URL = 'https://apps.apple.com/de/app/capture2calendar/id6754225481'; // Update this
   const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=cx.franz.cap2cal';
 
   useEffect(() => {
