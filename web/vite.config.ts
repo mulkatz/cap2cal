@@ -18,7 +18,6 @@ export default defineConfig({
             'i18next-browser-languagedetector',
             'i18next-http-backend',
           ],
-          'vendor-firebase': ['firebase/app'],
           'vendor-helmet': ['react-helmet-async'],
           // PostHog will be in its own chunk automatically due to lazy loading
         },
