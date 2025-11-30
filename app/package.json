@@ -12,7 +12,10 @@
     "update-dependencies": "npm run ncu -u",
     "screenshots": "cd ../tools/screenshots && npm run screenshots:all",
     "screenshots:en": "cd ../tools/screenshots && npm run screenshots:en",
-    "screenshots:de": "cd ../tools/screenshots && npm run screenshots:de"
+    "screenshots:de": "cd ../tools/screenshots && npm run screenshots:de",
+    "bump:patch": "node scripts/bump-version.js patch",
+    "bump:minor": "node scripts/bump-version.js minor",
+    "bump:major": "node scripts/bump-version.js major"
   },
   "dependencies": {
     "@capacitor-community/in-app-review": "^7.1.0",
