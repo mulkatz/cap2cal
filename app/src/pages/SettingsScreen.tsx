@@ -15,6 +15,7 @@ import {
   Globe,
   MessageCircle,
   Shield,
+  Star,
   Trash2,
   UserPlus,
   Zap,
@@ -29,6 +30,7 @@ import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { Capacitor } from '@capacitor/core';
 import { cn } from '../utils';
 import { isDeveloperModeEnabled } from '../utils/platform';
+import { requestAppRating, isRatingAvailable } from '../services/rating.service.tsx';
 
 // Icon Wrapper Components
 const GlobeIcon = () => <Globe size={20} className="text-highlight" />;
@@ -46,6 +48,7 @@ const FileTextIcon = () => <FileText size={20} className="text-highlight" />;
 const BugIcon = ({ destructive }: { destructive?: boolean }) => (
   <Bug size={20} className={destructive ? 'text-red-400' : 'text-highlight'} />
 );
+const StarIcon = () => <Star size={20} className="text-highlight" fill="currentColor" />;
 const ChevronRightIcon = () => <ChevronRight size={20} className="text-gray-500" />;
 
 // Setting Row Component
@@ -341,6 +344,13 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
     }
   };
 
+  const handleRateApp = async () => {
+    logAnalyticsEvent(AnalyticsEvent.RATE_APP_SETTINGS_CLICKED);
+
+    // Request app rating with fallback
+    await requestAppRating(true, logAnalyticsEvent, t);
+  };
+
   const getLanguageDisplay = () => {
     return i18n.language.startsWith('en')
       ? t('dialogs.settings.languageEnglish')
@@ -440,6 +450,17 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
               label={t('dialogs.settings.giveFeedback')}
               onClick={handleFeedback}
             />
+            {/* Only show Rate App on native platforms */}
+            {isRatingAvailable() && (
+              <>
+                <SettingDivider />
+                <SettingRow
+                  icon={<StarIcon />}
+                  label={t('dialogs.settings.rateApp')}
+                  onClick={handleRateApp}
+                />
+              </>
+            )}
           </div>
 
           {/* Group 4: Legal */}

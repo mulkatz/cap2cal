@@ -97,6 +97,11 @@
         "inviteLinkCopied": "Invite link copied to clipboard!",
         "testCrashScheduled": "Test crash will trigger in 2 seconds...",
         "testCrashFailed": "Test crash failed. Only available on native platforms."
+      },
+      "rating": {
+        "fallbackMessage": "Didn't see the rating dialog?",
+        "rateOnAppStore": "Rate on App Store",
+        "rateOnPlayStore": "Rate on Play Store"
       }
     },
     "sheet": {
@@ -305,6 +310,7 @@
         "terms": "Terms & Conditions",
         "website": "Visit Website",
         "inviteFriends": "Invite Friends",
+        "rateApp": "Rate App",
         "about": "About",
         "version": "Version",
         "confirmClearStorage": "Clear all events?",

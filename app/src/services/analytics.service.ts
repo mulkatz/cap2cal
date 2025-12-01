@@ -77,6 +77,10 @@ export const AnalyticsEvent = {
   NATIVE_REVIEW_TRIGGERED: 'native_review_triggered',
   NATIVE_REVIEW_SUCCESS: 'native_review_success',
   NATIVE_REVIEW_ERROR: 'native_review_error',
+  NATIVE_REVIEW_FALLBACK_SHOWN: 'native_review_fallback_shown',
+  STORE_OPENED_FROM_FALLBACK: 'store_opened_from_fallback',
+  RATE_APP_SETTINGS_CLICKED: 'rate_app_settings_clicked',
+  STORE_OPENED_DIRECTLY: 'store_opened_directly',
 
   // Subscription & Monetization
   PAYWALL_VIEWED: 'paywall_viewed',

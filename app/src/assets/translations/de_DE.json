@@ -97,6 +97,11 @@
         "inviteLinkCopied": "Einladungslink in Zwischenablage kopiert!",
         "testCrashScheduled": "Test-Absturz wird in 2 Sekunden ausgelöst...",
         "testCrashFailed": "Test-Absturz fehlgeschlagen. Nur auf nativen Plattformen verfügbar."
+      },
+      "rating": {
+        "fallbackMessage": "Bewertungsdialog nicht angezeigt?",
+        "rateOnAppStore": "Im App Store bewerten",
+        "rateOnPlayStore": "Bei Google Play bewerten"
       }
     },
     "sheet": {
@@ -305,6 +310,7 @@
         "terms": "Nutzungsbedingungen",
         "website": "Website besuchen",
         "inviteFriends": "Freunde einladen",
+        "rateApp": "App bewerten",
         "about": "Über",
         "version": "Version",
         "confirmClearStorage": "Alle Events löschen?",

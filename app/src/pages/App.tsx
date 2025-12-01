@@ -30,7 +30,7 @@ import { logger } from '../utils/logger';
 import { markReviewPromptShown, shouldShowReviewPrompt } from '../utils/reviewPrompt.ts';
 import { getCaptureCount } from '../utils/captureLimit.ts';
 import { AppLikePrompt } from '../components/features/dialogs/AppLikePrompt.tsx';
-import { InAppReview } from '@capacitor-community/in-app-review';
+import { requestAppRating } from '../services/rating.service.tsx';
 import { useTranslation } from 'react-i18next';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { cn } from '../utils';
@@ -280,30 +280,30 @@ export const App = () => {
    * Handle when user clicks "Yes, I love it!" on the app like prompt
    */
   const handleAppLiked = async () => {
-    logger.info('ReviewPrompt', 'User clicked "Yes, I love it!" - requesting native review');
+    logger.info('ReviewPrompt', 'User clicked "Yes, I love it!" - requesting native review with fallback');
 
-    try {
-      // Request native in-app review
-      await InAppReview.requestReview();
+    // Use the new rating service with automatic fallback
+    const result = await requestAppRating(true, logAnalyticsEvent, t);
 
-      // Log success - Note: Google/Apple may not always show the dialog
-      logAnalyticsEvent(AnalyticsEvent.NATIVE_REVIEW_TRIGGERED);
-      logger.info('ReviewPrompt', 'Native review API called successfully');
-
-      // In development, log explanation since native dialog won't appear in web
-      if (import.meta.env.DEV) {
-        const platform = Capacitor.getPlatform();
-        logger.info(
-          'ReviewPrompt',
-          `[${platform}] Native review requested. On production builds, the OS may show the review dialog (subject to OS quotas).`
-        );
-      }
-    } catch (error) {
-      // Log error but don't show to user (native review is best-effort)
-      logger.error('ReviewPrompt', 'Native review API failed', error instanceof Error ? error : undefined);
-      logAnalyticsEvent(AnalyticsEvent.NATIVE_REVIEW_ERROR, {
-        error: error instanceof Error ? error.message : 'Unknown error',
+    if (result.success) {
+      logger.info('ReviewPrompt', 'Rating flow completed', {
+        nativeDialogShown: result.nativeDialogShown,
+        fallbackUsed: result.fallbackUsed,
       });
+    } else {
+      logger.warn('ReviewPrompt', 'Rating flow had issues', {
+        error: result.error,
+        fallbackUsed: result.fallbackUsed,
+      });
+    }
+
+    // In development, log explanation since native dialog won't appear in web
+    if (import.meta.env.DEV) {
+      const platform = Capacitor.getPlatform();
+      logger.info(
+        'ReviewPrompt',
+        `[${platform}] Native review requested. On production builds, the OS may show the review dialog (subject to OS quotas). Fallback to store available.`
+      );
     }
   };
 

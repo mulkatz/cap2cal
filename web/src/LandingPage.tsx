@@ -36,9 +36,9 @@ const IconCheckCircle = () => <CheckCircle size={24} className="h-6 w-6 text-gre
 const IconX = () => <X size={24} className="h-6 w-6" aria-hidden="true" />;
 const IconMenu = () => <Menu size={24} className="h-6 w-6" aria-hidden="true" />;
 
-// Placeholder app store URLs - Update these with your actual URLs
-const APP_STORE_URL = 'https://apps.apple.com/de/app/capture2calendar/id6754225481'; // TODO: Update with actual iOS App Store URL
-const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=cx.franz.cap2cal'; // TODO: Update with actual Google Play URL
+// App Store URLs
+const APP_STORE_URL = 'https://apps.apple.com/de/app/capture2calendar/id6754225481';
+const PLAY_STORE_URL = 'https://play.google.com/store/apps/details?id=cx.franz.cap2cal';
 
 export default function LandingPage(): JSX.Element {
   const { t } = useTranslation('landing');

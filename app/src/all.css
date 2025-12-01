@@ -2833,6 +2833,10 @@ main {
   color: rgb(230 222 77 / var(--tw-text-opacity, 1));
 }
 
+.active\:opacity-80:active {
+  opacity: 0.8;
+}
+
 .active\:shadow-\[0_2px_8px_0_rgba\(230\2c 222\2c 77\2c 0\.3\)\]:active {
   --tw-shadow: 0 2px 8px 0 rgba(230,222,77,0.3);
   --tw-shadow-colored: 0 2px 8px 0 var(--tw-shadow-color);
