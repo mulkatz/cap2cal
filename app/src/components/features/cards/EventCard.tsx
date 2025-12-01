@@ -219,7 +219,7 @@ const EventCardAtom = React.memo(
               <div className="mb-5 mt-5">
                 <p
                   className={cn(
-                    'text-[13px] font-normal tracking-[0.5px] text-gray-300 opacity-80',
+                    'text-[13px] font-normal tracking-[0.5px] text-gray-200 opacity-80',
                     shouldTruncate && !isDescriptionExpanded && 'line-clamp-3'
                   )}>
                   {description.short}

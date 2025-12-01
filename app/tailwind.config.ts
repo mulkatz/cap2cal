@@ -26,7 +26,7 @@ const config = {
       },
 
       colors: {
-        secondary: '#E0FDDCFF',
+        secondary: '#F5F5F5',
         // accent: '#376E4EE6',
         accent: '#2C4156',
         accentElevated: '#41526a',
