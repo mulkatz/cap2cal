@@ -16,9 +16,9 @@ const readImageAsBase64 = (filename) => {
 };
 
 // Read all 3 example images
-const base64Image1 = readImageAsBase64("event-capture-example-1.jpg");
-const base64Image2 = readImageAsBase64("event-capture-example-2.jpg");
-const base64Image3 = readImageAsBase64("event-capture-example-3.jpg");
+const base64Image1 = readImageAsBase64("event-capture-example-1.png");
+const base64Image2 = readImageAsBase64("event-capture-example-2.png");
+const base64Image3 = readImageAsBase64("event-capture-example-3.png");
 
 // Export all example images
 export const exampleImage1 = {

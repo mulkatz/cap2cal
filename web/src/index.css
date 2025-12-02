@@ -4,6 +4,7 @@
 
 html {
     scroll-behavior: smooth; /* Ermöglicht sanftes Scrollen für Anker-Links */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 body {
@@ -19,6 +20,7 @@ background: #1B2632;
     /* Entferne feste Hintergrundfarbe, damit Tailwind steuert */
     /* background: white; */
     overscroll-behavior: none; /* Behalte dies bei, wenn gewünscht */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Entferne diesen Block oder kommentiere ihn aus, wenn er nicht benötigt wird */
