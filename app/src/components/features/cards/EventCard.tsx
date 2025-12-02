@@ -220,7 +220,7 @@ const EventCardAtom = React.memo(
             {location && (
               <div className="mt-1.5 flex cursor-pointer items-center gap-2" onClick={onAddress}>
                 <MapPin size={14} strokeWidth={2.5} className="flex-shrink-0 text-highlight" />
-                <span className="text-sm font-normal text-gray-100 underline decoration-gray-500/30 decoration-1 underline-offset-4">
+                <span className="truncate text-sm font-normal text-gray-100 underline decoration-gray-500/30 decoration-1 underline-offset-4">
                   {formatLocation(location?.city, location?.address)}
                 </span>
               </div>
