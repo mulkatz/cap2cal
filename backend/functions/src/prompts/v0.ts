@@ -106,6 +106,9 @@ Key Objectives:
 
 5.  **description** (CRUCIAL):
     * \`short\`: A concise summary (target 4-8 sentences). Avoid repeating title, time/location if clearly in other fields. If no content, put all your knowledge into it to create an inviting text that feels friendly and welcoming, not too cold and clean.
+        * **TONE:** Write in a **personal, friendly, and engaging voice** (as if a friend is recommending this to you).
+        * **INFORMALITY:** If the source text is formal (e.g., "Erleben Sie..."), **rewrite it to be informal** (e.g., "Erlebe...", "Lass dir nicht entgehen...", "Dein Abend..."). Avoid stiff, corporate language.
+        * **CONTENT:** Avoid repeating title, time/location if clearly in other fields. If content is sparse, use your knowledge to write an inviting text that feels welcoming and warm.
     * \`long\`: An expanded description (target 2-3 times \`short\`'s length), providing more context, details, etc. If no content, use \`""\`.
     * The \`description\` object itself, with \`short\` and \`long\` keys, must always be present.
 
