@@ -68,22 +68,34 @@ const formatTimeDisplay = (
 const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: string }; locale?: string }) => {
   if (!dateTime?.date) return null;
 
-  // Parse the date to extract day and month
+  // Parse the date to extract day, month, and year
   const date = new Date(dateTime.date);
   const day = date.getDate().toString();
+  const year = date.getFullYear();
+  const currentYear = new Date().getFullYear();
+
+  // Show year only if it differs from current year
+  const showYear = year !== currentYear;
+
   // Use the provided locale or device's current locale
   const month = new Intl.DateTimeFormat(locale, { month: 'short' }).format(date).toUpperCase();
 
   return (
     <div className="flex w-14 flex-none flex-col overflow-hidden rounded-lg shadow-sm">
-      {/* Top Bar - Month (Electric Yellow) - Increased vertical padding for better spacing */}
-      <div className="bg-highlight px-2 py-1.5 pt-2 text-center">
+      {/* Row 1 - Month (Electric Yellow) */}
+      <div className="bg-highlight px-2 py-1.5 text-center">
         <div className="text-[10px] font-bold tracking-wide text-primaryDark">{month}</div>
       </div>
-      {/* Bottom Body - Day (Dark Navy) */}
-      <div className="bg-primaryDark px-2 py-2 text-center">
+      {/* Row 2 - Day (Dark Navy) */}
+      <div className={cn('bg-primaryDark px-2 text-center', showYear ? 'pt-2' : 'py-2')}>
         <div className="text-xl font-bold leading-none text-white">{day}</div>
       </div>
+      {/* Row 3 - Year (Conditional - only if different from current year) */}
+      {showYear && (
+        <div className="bg-primaryDark px-2 pb-1.5 pt-0.5 text-center">
+          <div className="text-[10px] font-bold text-gray-400">{year}</div>
+        </div>
+      )}
     </div>
   );
 };
