@@ -1783,6 +1783,8 @@ video {
 html {
   scroll-behavior: smooth;
   /* Ermöglicht sanftes Scrollen für Anker-Links */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
 }
 
 body {
@@ -1803,6 +1805,8 @@ body {
   /* background: white; */
   overscroll-behavior: none;
   /* Behalte dies bei, wenn gewünscht */
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
 }
 
 /* Entferne diesen Block oder kommentiere ihn aus, wenn er nicht benötigt wird */
