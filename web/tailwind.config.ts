@@ -21,6 +21,10 @@ const config = {
         buttonShadow: '0px 3px 4px 0px rgba(188, 187, 187, 0.35)',
       },
 
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+      },
+
       colors: {
         secondary: '#E0FDDCFF',
         accent: '#2C4156',
