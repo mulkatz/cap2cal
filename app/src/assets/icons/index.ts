@@ -27,6 +27,8 @@ export {
   Settings as IconGear,
   Zap as IconZap,
   X,
+  ArrowUpDown,
+  ChevronDown,
 } from 'lucide-react';
 
 export { default as IconHeroIcon } from './hero2.svg?react';

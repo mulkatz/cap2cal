@@ -45,7 +45,7 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="flex min-h-screen flex-col items-center justify-center bg-primary px-6 text-center">
+        <div className="flex min-h-screen flex-col items-center justify-center bg-primary px-6 text-center text-secondary">
           <div className="mx-auto max-w-md">
             <div className="mb-6 text-6xl">😕</div>
             <h1 className="mb-4 text-2xl font-bold text-secondary">{i18next.t('dialogs.errorBoundary.title')}</h1>

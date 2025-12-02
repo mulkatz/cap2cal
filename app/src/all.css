@@ -822,10 +822,6 @@ video {
   margin-bottom: 20vh;
 }
 
-.ml-0\.5 {
-  margin-left: 0.125rem;
-}
-
 .ml-6 {
   margin-left: 1.5rem;
 }
@@ -1542,11 +1538,6 @@ video {
   border-color: rgb(65 82 106 / 0.5);
 }
 
-.border-gray-600 {
-  --tw-border-opacity: 1;
-  border-color: rgb(75 85 99 / var(--tw-border-opacity, 1));
-}
-
 .border-highlight {
   --tw-border-opacity: 1;
   border-color: rgb(230 222 77 / var(--tw-border-opacity, 1));
@@ -1659,10 +1650,6 @@ video {
 
 .bg-highlight\/10 {
   background-color: rgb(230 222 77 / 0.1);
-}
-
-.bg-highlight\/5 {
-  background-color: rgb(230 222 77 / 0.05);
 }
 
 .bg-primary {
@@ -1862,6 +1849,10 @@ video {
 
 .fill-primaryDark {
   fill: #1A2632;
+}
+
+.fill-transparent {
+  fill: transparent;
 }
 
 .object-contain {
@@ -2682,11 +2673,6 @@ main {
 
 .embla__viewport {
   overflow: visible !important;
-}
-
-.hover\:border-gray-500:hover {
-  --tw-border-opacity: 1;
-  border-color: rgb(107 114 128 / var(--tw-border-opacity, 1));
 }
 
 .hover\:bg-white\/10:hover {

@@ -4,38 +4,29 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../db/db.ts';
 import { CardController } from '../components/features/cards/CardController.tsx';
 import { Card } from '../components/features/cards/CardGroup.tsx';
-import { IconChevronLeft, IconStar, IconTriangleRight } from '../assets/icons';
+import { IconChevronLeft, IconStar, IconTriangleRight, ArrowUpDown, ChevronDown } from '../assets/icons';
 import { cn } from '../utils';
 import type { CaptureEvent } from '../models/CaptureEvent';
 
 export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose: () => void; isVisible: boolean }) => {
   const { t } = useTranslation();
   const [favouritesFilter, setFavouritesFilter] = useState<keyof typeof favouriteOptions>('no');
-  const [sortByFilter, setSortByFilter] = useState<keyof typeof sortByOptions>('time');
+  const [sortByFilter, setSortByFilter] = useState<keyof typeof sortByOptions>('upcoming');
   const [isScrolled, setIsScrolled] = useState(false);
   const [showPastEvents, setShowPastEvents] = useState(false);
 
   // Always keep query running to maintain cached results for instant display
-  const filteredAndSortedItems = useLiveQuery(
+  const filteredItems = useLiveQuery(
     () =>
       db.eventItems
         .filter((obj) => (favouritesFilter === 'yes' ? !!obj.isFavorite : true))
-        .toArray()
-        .then((items) => {
-          return sortByFilter === 'time'
-            ? items.sort((a, b) => b.timestamp - a.timestamp)
-            : items.sort((a, b) => {
-                const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
-                const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
-                return startB - startA;
-              });
-        }),
-    [favouritesFilter, sortByFilter]
+        .toArray(),
+    [favouritesFilter]
   );
 
   // Separate upcoming and past events
   const { upcomingEvents, pastEvents } = useMemo(() => {
-    if (!filteredAndSortedItems) {
+    if (!filteredItems) {
       return { upcomingEvents: [], pastEvents: [] };
     }
 
@@ -46,7 +37,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
     const upcoming: CaptureEvent[] = [];
     const past: CaptureEvent[] = [];
 
-    filteredAndSortedItems.forEach((item) => {
+    filteredItems.forEach((item) => {
       // Extract just the date (ignore time) for comparison
       const eventDateStr = item.dateTimeFrom?.date;
       if (!eventDateStr) {
@@ -66,22 +57,27 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
       }
     });
 
-    // Sort upcoming events: nearest date first
-    upcoming.sort((a, b) => {
-      const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
-      const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
-      return startA - startB;
-    });
-
-    // Sort past events: most recent first
-    past.sort((a, b) => {
-      const startA = toDateTimeMillis(a.dateTimeFrom) ?? 0;
-      const startB = toDateTimeMillis(b.dateTimeFrom) ?? 0;
-      return startB - startA;
-    });
+    // Sort based on user selection
+    if (sortByFilter === 'recent') {
+      // Sort by timestamp (most recently added first)
+      upcoming.sort((a, b) => b.timestamp - a.timestamp);
+      past.sort((a, b) => b.timestamp - a.timestamp);
+    } else {
+      // Sort by event date (upcoming: nearest first, past: most recent first)
+      upcoming.sort((a, b) => {
+        const startA = getEventSortTimestamp(a);
+        const startB = getEventSortTimestamp(b);
+        return startA - startB; // ASC - nearest dates first
+      });
+      past.sort((a, b) => {
+        const startA = getEventSortTimestamp(a);
+        const startB = getEventSortTimestamp(b);
+        return startB - startA; // DESC - most recent dates first
+      });
+    }
 
     return { upcomingEvents: upcoming, pastEvents: past };
-  }, [filteredAndSortedItems]);
+  }, [filteredItems, sortByFilter]);
 
   const handleSortByChange = useCallback(() => {
     changeFilter(sortByFilter, setSortByFilter as any, Object.keys(sortByOptions) as Array<keyof typeof sortByOptions>);
@@ -129,24 +125,24 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
               onClick={handleFavouritesChange}
               icon={
                 <IconStar
-                  width={14}
-                  height={14}
+                  size={16}
                   className={cn(
-                    favouritesFilter === 'yes' ? 'fill-highlight text-highlight' : 'fill-gray-400 text-gray-400'
+                    favouritesFilter === 'yes' ? 'fill-highlight text-highlight' : 'fill-transparent text-gray-300'
                   )}
                 />
               }
             />
             <FilterChip
-              label={`${t('general.sortBy').replace('Sortieren nach', 'Sortieren')}: ${t(`general.${sortByFilter}`)}`}
+              label={`Sort: ${t(`general.${sortByFilter}`)}`}
               active={false}
               onClick={handleSortByChange}
-              chevron={true}
+              icon={<ArrowUpDown size={16} className="text-gray-300" />}
+              chevron={<ChevronDown size={14} className="text-gray-500" />}
             />
           </div>
 
           {/* Event Cards */}
-          {filteredAndSortedItems && filteredAndSortedItems?.length > 0 ? (
+          {filteredItems && filteredItems?.length > 0 ? (
             <>
               {/* Upcoming Events */}
               {upcomingEvents.map((value) => (
@@ -195,7 +191,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
   );
 });
 
-// Filter Chip Component - Ghost Button Style
+// Filter Chip Component - Ghost Pill Style
 const FilterChip = React.memo(
   ({
     label,
@@ -208,33 +204,20 @@ const FilterChip = React.memo(
     active: boolean;
     onClick: () => void;
     icon?: React.ReactNode;
-    chevron?: boolean;
+    chevron?: React.ReactNode;
   }) => {
     return (
       <button
         onClick={onClick}
         className={cn(
-          'flex flex-shrink-0 items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-all',
+          'flex flex-shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-[14px] font-medium transition-all',
           active
-            ? 'border-highlight bg-highlight/5 text-highlight'
-            : 'border-gray-600 bg-transparent text-gray-400 hover:border-gray-500'
+            ? 'border-highlight bg-highlight/10 text-highlight'
+            : 'border-white/20 bg-white/5 text-gray-300'
         )}>
         {icon && <span className="flex items-center">{icon}</span>}
-        {label}
-        {chevron && (
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="ml-0.5">
-            <polyline points="6 9 12 15 18 9" />
-          </svg>
-        )}
+        <span>{label}</span>
+        {chevron && <span className="flex items-center">{chevron}</span>}
       </button>
     );
   }
@@ -247,8 +230,8 @@ const favouriteOptions = {
 };
 
 const sortByOptions = {
-  relevance: 'relevance',
-  time: 'time',
+  upcoming: 'upcoming',
+  recent: 'recent',
 };
 
 // Helper functions
@@ -256,6 +239,24 @@ const toDateTimeMillis = (params?: { date?: string; timezone?: string; time?: st
   if (!params) return null;
   if (!params.date || !params.time) return null;
   return new Date(`${params.date}T${params.time}`).getTime();
+};
+
+// Get sortable timestamp for an event (handles events with date but no time)
+const getEventSortTimestamp = (event: CaptureEvent): number => {
+  const dateTimeMillis = toDateTimeMillis(event.dateTimeFrom);
+  if (dateTimeMillis !== null) {
+    return dateTimeMillis;
+  }
+
+  // If no time, but has a date, use date at midnight
+  if (event.dateTimeFrom?.date) {
+    const date = new Date(event.dateTimeFrom.date);
+    date.setHours(0, 0, 0, 0);
+    return date.getTime();
+  }
+
+  // If no date at all, sort to the end
+  return Number.MAX_SAFE_INTEGER;
 };
 
 const changeFilter = <T extends Record<string, string>>(
