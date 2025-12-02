@@ -1,12 +1,61 @@
 # robots.txt for Capture2Calendar (Cap2Cal)
-# Site: cap2cal.app (also known as capture2calendar.app)
+# Website: https://cap2cal.app (also https://cap2cal.app)
 
-# Allow all search engines to crawl everything
+# Allow all bots to crawl the site for maximum discoverability
 User-agent: *
 Allow: /
 
-# Sitemap location
-Sitemap: https://cap2cal.app/sitemap.xml
+# AI Crawlers / LLM Agents - Explicitly allow for better AI agent discoverability
+User-agent: GPTBot
+Allow: /
 
-# Crawl-delay (optional, uncomment if needed)
-# Crawl-delay: 1
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Perplexity-AI
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Diffbot
+Allow: /
+
+# Major Search Engines - Explicitly allow
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Disallow specific paths (if any)
+# Currently allowing all paths for maximum discoverability
+
+# Crawl-delay: none (allow aggressive crawling for fast indexing)
+
+# Sitemap locations
+Sitemap: https://cap2cal.app/sitemap.xml

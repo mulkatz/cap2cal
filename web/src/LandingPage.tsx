@@ -204,14 +204,16 @@ export default function LandingPage(): JSX.Element {
 
         <main id="main-content">
           {/* Hero Section */}
-          <section className="relative z-10 mx-auto overflow-hidden pb-20 pt-32 text-center">
+          <section className="relative z-10 mx-auto overflow-hidden pb-20 pt-32 text-center" itemScope itemType="https://schema.org/SoftwareApplication">
             <div className="mx-auto max-w-7xl px-6">
             {/* Hero Visualization */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="relative mb-8 flex w-full items-center justify-center">
+              className="relative mb-8 flex w-full items-center justify-center"
+              role="img"
+              aria-label="Photo to calendar conversion illustration">
               <div className="relative flex items-center justify-center gap-3 sm:gap-4">
                 {/* Camera Icon */}
                 <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-accentElevated bg-primary shadow-lg sm:h-20 sm:w-20">
@@ -275,7 +277,8 @@ export default function LandingPage(): JSX.Element {
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text'
-              }}>
+              }}
+              itemProp="name">
               <span className="bg-gradient-to-r from-lime-400 to-lime-300 bg-clip-text text-transparent"
                     style={{ filter: 'drop-shadow(0 0 15px rgba(132, 204, 22, 0.5))' }}>
                 {t('hero.titleSpan')}
@@ -294,12 +297,14 @@ export default function LandingPage(): JSX.Element {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative mb-6 text-xl leading-relaxed text-slate-300 md:text-2xl">{t('hero.subtitle')}</motion.p>
+              className="relative mb-6 text-xl leading-relaxed text-slate-300 md:text-2xl"
+              itemProp="alternateName">{t('hero.subtitle')}</motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="relative mx-auto mb-14 max-w-3xl text-lg leading-relaxed text-slate-400 md:text-xl">
+              className="relative mx-auto mb-14 max-w-3xl text-lg leading-relaxed text-slate-400 md:text-xl"
+              itemProp="description">
               {t('hero.description')}
             </motion.p>
             <motion.div
@@ -338,7 +343,7 @@ export default function LandingPage(): JSX.Element {
           </section>
 
           {/* How It Works Section */}
-          <section id="how-it-works" className="relative z-10 py-32">
+          <section id="how-it-works" className="relative z-10 py-32" itemScope itemType="https://schema.org/HowTo">
             <div className="mx-auto max-w-7xl px-6">
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
@@ -351,7 +356,8 @@ export default function LandingPage(): JSX.Element {
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text'
-                }}>{t('steps.title')}</motion.h2>
+                }}
+                itemProp="name">{t('steps.title')}</motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -376,7 +382,10 @@ export default function LandingPage(): JSX.Element {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1 }}
                   className="group relative flex h-full flex-col rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
-                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
+                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                  itemProp="step"
+                  itemScope
+                  itemType="https://schema.org/HowToStep">
                   <div className="mb-6 flex items-center gap-4">
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-lime-400/10 ring-2 ring-lime-400/30">
                       <IconCamera />
@@ -385,8 +394,8 @@ export default function LandingPage(): JSX.Element {
                       1.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-white">{t('steps.one.title')}</h3>
-                  <p className="leading-relaxed text-slate-400">{t('steps.one.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">{t('steps.one.title')}</h3>
+                  <p className="leading-relaxed text-slate-400" itemProp="text">{t('steps.one.description')}</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -394,7 +403,10 @@ export default function LandingPage(): JSX.Element {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                   className="group relative flex h-full flex-col rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
-                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
+                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                  itemProp="step"
+                  itemScope
+                  itemType="https://schema.org/HowToStep">
                   <div className="mb-6 flex items-center gap-4">
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-lime-400/10 ring-2 ring-lime-400/30">
                       <IconRobot />
@@ -403,8 +415,8 @@ export default function LandingPage(): JSX.Element {
                       2.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-white">{t('steps.two.title')}</h3>
-                  <p className="leading-relaxed text-slate-400">{t('steps.two.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">{t('steps.two.title')}</h3>
+                  <p className="leading-relaxed text-slate-400" itemProp="text">{t('steps.two.description')}</p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -412,7 +424,10 @@ export default function LandingPage(): JSX.Element {
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.3 }}
                   className="group relative flex h-full flex-col rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
-                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
+                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                  itemProp="step"
+                  itemScope
+                  itemType="https://schema.org/HowToStep">
                   <div className="mb-6 flex items-center gap-4">
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-lime-400/10 ring-2 ring-lime-400/30">
                       <IconCalendar />
@@ -421,8 +436,8 @@ export default function LandingPage(): JSX.Element {
                       3.
                     </div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-white">{t('steps.three.title')}</h3>
-                  <p className="leading-relaxed text-slate-400">{t('steps.three.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">{t('steps.three.title')}</h3>
+                  <p className="leading-relaxed text-slate-400" itemProp="text">{t('steps.three.description')}</p>
                 </motion.div>
               </div>
             </div>

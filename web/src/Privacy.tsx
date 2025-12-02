@@ -46,8 +46,8 @@ export default function Privacy(): JSX.Element {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'instant'
-    })
+      behavior: 'instant',
+    });
   }, []);
 
   return (
@@ -65,12 +65,12 @@ export default function Privacy(): JSX.Element {
         <div className="absolute -bottom-1/4 -left-1/4 h-[900px] w-[900px] rounded-full bg-teal-600/20 blur-[300px]"></div>
 
         {/* Film Grain Texture Overlay */}
-        <div className="absolute inset-0 opacity-[0.03]"
-             style={{
-               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulance type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-               backgroundRepeat: 'repeat'
-             }}>
-        </div>
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulance type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+            backgroundRepeat: 'repeat',
+          }}></div>
       </div>
 
       <div className="relative z-10 min-h-screen">
@@ -84,7 +84,9 @@ export default function Privacy(): JSX.Element {
               onClick={() => posthog.capture('back_to_home_clicked', { from: 'privacy' })}>
               <IconArrowLeft />
             </Link>
-            <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white transition-opacity hover:opacity-80">
+            <Link
+              to="/"
+              className="flex items-center gap-2 text-2xl font-bold text-white transition-opacity hover:opacity-80">
               <span className="text-lime-400">
                 <IconMail />
               </span>
@@ -95,74 +97,76 @@ export default function Privacy(): JSX.Element {
 
         {/* Content */}
         <main className="container mx-auto px-6 py-16">
-          <div className="mx-auto max-w-4xl rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm md:p-12"
-               style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
-            <h1 className="mb-8 text-4xl font-extrabold text-white md:text-5xl"
-                style={{
-                  background: 'linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>
+          <div
+            className="mx-auto max-w-4xl rounded-2xl border-x border-b border-t border-black/40 border-white/10 border-white/20 bg-slate-900/60 p-8 backdrop-blur-sm md:p-12"
+            style={{
+              boxShadow:
+                'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+            }}>
+            <h1
+              className="mb-8 text-4xl font-extrabold text-white md:text-5xl"
+              style={{
+                background: 'linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
               {t('privacy.title')}
             </h1>
 
             <div className="space-y-8 text-slate-400">
               <div>
-                <p className="mb-4 text-sm text-slate-500">
-                  {t('privacy.lastUpdated')}
-                </p>
+                <p className="mb-4 text-sm text-slate-500">{t('privacy.lastUpdated')}</p>
               </div>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.intro.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.intro.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.intro.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.principles.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.principles.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.principles.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.collect.title')}</h2>
-                <p className="mb-3 leading-relaxed">
-                  {t('privacy.collect.intro')}
-                </p>
+                <p className="mb-3 leading-relaxed">{t('privacy.collect.intro')}</p>
                 <ul className="list-inside list-disc space-y-2 pl-4">
                   <li>
-                    <strong className="text-slate-300">{t('privacy.collect.list.account.title')}:</strong> {t('privacy.collect.list.account.content')}
+                    <strong className="text-slate-300">{t('privacy.collect.list.account.title')}:</strong>{' '}
+                    {t('privacy.collect.list.account.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.collect.list.images.title')}:</strong> {t('privacy.collect.list.images.content')}
+                    <strong className="text-slate-300">{t('privacy.collect.list.images.title')}:</strong>{' '}
+                    {t('privacy.collect.list.images.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.collect.list.events.title')}:</strong> {t('privacy.collect.list.events.content')}
+                    <strong className="text-slate-300">{t('privacy.collect.list.events.title')}:</strong>{' '}
+                    {t('privacy.collect.list.events.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.collect.list.usage.title')}:</strong> {t('privacy.collect.list.usage.content')}
+                    <strong className="text-slate-300">{t('privacy.collect.list.usage.title')}:</strong>{' '}
+                    {t('privacy.collect.list.usage.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.collect.list.technical.title')}:</strong> {t('privacy.collect.list.technical.content')}
+                    <strong className="text-slate-300">{t('privacy.collect.list.technical.title')}:</strong>{' '}
+                    {t('privacy.collect.list.technical.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.collect.list.subscription.title')}:</strong> {t('privacy.collect.list.subscription.content')}
+                    <strong className="text-slate-300">{t('privacy.collect.list.subscription.title')}:</strong>{' '}
+                    {t('privacy.collect.list.subscription.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.collect.list.calendar.title')}:</strong> {t('privacy.collect.list.calendar.content')}
+                    <strong className="text-slate-300">{t('privacy.collect.list.calendar.title')}:</strong>{' '}
+                    {t('privacy.collect.list.calendar.content')}
                   </li>
                 </ul>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.use.title')}</h2>
-                <p className="mb-3 leading-relaxed">
-                  {t('privacy.use.intro')}
-                </p>
+                <p className="mb-3 leading-relaxed">{t('privacy.use.intro')}</p>
                 <ul className="list-inside list-disc space-y-2 pl-4">
                   <li>{t('privacy.use.list.provide')}</li>
                   <li>{t('privacy.use.list.process')}</li>
@@ -176,61 +180,54 @@ export default function Privacy(): JSX.Element {
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.aiProcessing.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.aiProcessing.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.aiProcessing.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.dataStorage.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.dataStorage.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.dataStorage.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.sharing.title')}</h2>
-                <p className="mb-3 leading-relaxed">
-                  {t('privacy.sharing.intro')}
-                </p>
+                <p className="mb-3 leading-relaxed">{t('privacy.sharing.intro')}</p>
                 <ul className="list-inside list-disc space-y-2 pl-4">
                   <li>
-                    <strong className="text-slate-300">{t('privacy.sharing.list.providers.title')}:</strong> {t('privacy.sharing.list.providers.content')}
+                    <strong className="text-slate-300">{t('privacy.sharing.list.providers.title')}:</strong>{' '}
+                    {t('privacy.sharing.list.providers.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.sharing.list.calendar.title')}:</strong> {t('privacy.sharing.list.calendar.content')}
+                    <strong className="text-slate-300">{t('privacy.sharing.list.calendar.title')}:</strong>{' '}
+                    {t('privacy.sharing.list.calendar.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.sharing.list.legal.title')}:</strong> {t('privacy.sharing.list.legal.content')}
+                    <strong className="text-slate-300">{t('privacy.sharing.list.legal.title')}:</strong>{' '}
+                    {t('privacy.sharing.list.legal.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.sharing.list.business.title')}:</strong> {t('privacy.sharing.list.business.content')}
+                    <strong className="text-slate-300">{t('privacy.sharing.list.business.title')}:</strong>{' '}
+                    {t('privacy.sharing.list.business.content')}
                   </li>
                   <li>
-                    <strong className="text-slate-300">{t('privacy.sharing.list.consent.title')}:</strong> {t('privacy.sharing.list.consent.content')}
+                    <strong className="text-slate-300">{t('privacy.sharing.list.consent.title')}:</strong>{' '}
+                    {t('privacy.sharing.list.consent.content')}
                   </li>
                 </ul>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.retention.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.retention.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.retention.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.security.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.security.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.security.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.rights.title')}</h2>
-                <p className="mb-3 leading-relaxed">
-                  {t('privacy.rights.intro')}
-                </p>
+                <p className="mb-3 leading-relaxed">{t('privacy.rights.intro')}</p>
                 <ul className="list-inside list-disc space-y-2 pl-4">
                   <li>{t('privacy.rights.list.access')}</li>
                   <li>{t('privacy.rights.list.correct')}</li>
@@ -241,23 +238,17 @@ export default function Privacy(): JSX.Element {
                   <li>{t('privacy.rights.list.withdraw')}</li>
                   <li>{t('privacy.rights.list.complaint')}</li>
                 </ul>
-                <p className="mt-3 leading-relaxed">
-                  {t('privacy.rights.exercise')}
-                </p>
+                <p className="mt-3 leading-relaxed">{t('privacy.rights.exercise')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.cookies.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.cookies.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.cookies.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.thirdParty.title')}</h2>
-                <p className="mb-3 leading-relaxed">
-                  {t('privacy.thirdParty.intro')}
-                </p>
+                <p className="mb-3 leading-relaxed">{t('privacy.thirdParty.intro')}</p>
                 <ul className="list-inside list-disc space-y-2 pl-4">
                   <li>{t('privacy.thirdParty.list.firebase')}</li>
                   <li>{t('privacy.thirdParty.list.gemini')}</li>
@@ -267,44 +258,32 @@ export default function Privacy(): JSX.Element {
                   <li>{t('privacy.thirdParty.list.apple')}</li>
                   <li>{t('privacy.thirdParty.list.google')}</li>
                 </ul>
-                <p className="mt-3 leading-relaxed">
-                  {t('privacy.thirdParty.responsibility')}
-                </p>
+                <p className="mt-3 leading-relaxed">{t('privacy.thirdParty.responsibility')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.international.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.international.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.international.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.california.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.california.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.california.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.gdpr.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.gdpr.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.gdpr.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.children.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.children.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.children.content')}</p>
               </section>
 
               <section>
                 <h2 className="mb-4 text-2xl font-bold text-white">{t('privacy.changes.title')}</h2>
-                <p className="leading-relaxed">
-                  {t('privacy.changes.content')}
-                </p>
+                <p className="leading-relaxed">{t('privacy.changes.content')}</p>
               </section>
 
               <section>
@@ -312,7 +291,7 @@ export default function Privacy(): JSX.Element {
                 <div className="space-y-2 leading-relaxed">
                   <p>{t('privacy.contact.content')}</p>
                   <p>
-                    <a href="mailto:privacy@capture2calendar.app" className="font-medium text-lime-400 hover:underline">
+                    <a href="mailto:privacy@cap2cal.app" className="font-medium text-lime-400 hover:underline">
                       {t('privacy.contact.email')}
                     </a>
                   </p>
