@@ -15,7 +15,7 @@ const IconMail = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="-mt-1 inline-block text-blue-600"
+    className="-mt-1 inline-block text-lime-400"
     aria-hidden="true">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
     <polyline points="22,6 12,13 2,6"></polyline>
@@ -53,19 +53,39 @@ export default function Terms(): JSX.Element {
   return (
     <>
       <SeoManager titleKey="terms.title" descriptionKey="terms.description" />
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50">
+
+      {/* Aurora Background with Film Grain */}
+      <div className="pointer-events-none fixed inset-0 -z-50 overflow-hidden" aria-hidden="true">
+        {/* Base Dark Background */}
+        <div className="absolute inset-0 bg-slate-950"></div>
+
+        {/* Ambient Glows - Strategic Placement */}
+        <div className="absolute -left-1/4 -top-1/4 h-[800px] w-[800px] rounded-full bg-blue-600/20 blur-[300px]"></div>
+        <div className="absolute right-0 top-1/2 h-[1000px] w-[1000px] -translate-y-1/2 translate-x-1/4 rounded-full bg-lime-500/10 blur-[300px]"></div>
+        <div className="absolute -bottom-1/4 -left-1/4 h-[900px] w-[900px] rounded-full bg-teal-600/20 blur-[300px]"></div>
+
+        {/* Film Grain Texture Overlay */}
+        <div className="absolute inset-0 opacity-[0.03]"
+             style={{
+               backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulance type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+               backgroundRepeat: 'repeat'
+             }}>
+        </div>
+      </div>
+
+      <div className="relative z-10 min-h-screen">
         {/* Header */}
-        <header className="sticky top-0 z-50 w-full border-b border-gray-200/70 bg-white/70 backdrop-blur-lg">
+        <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-slate-950/70 backdrop-blur-lg">
           <div className="container mx-auto flex items-center justify-between px-6 py-4">
             <Link
               to="/"
-              className="flex items-center justify-center rounded-lg p-2 text-gray-600 transition-colors hover:bg-gray-100 hover:text-blue-600"
+              className="flex items-center justify-center rounded-lg p-2 text-slate-400 transition-colors hover:bg-white/5 hover:text-lime-400"
               aria-label={t('nav.backHome')}
               onClick={() => posthog.capture('back_to_home_clicked', { from: 'terms' })}>
               <IconArrowLeft />
             </Link>
-            <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-gray-900 transition-opacity hover:opacity-80">
-              <span className="text-blue-600">
+            <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white transition-opacity hover:opacity-80">
+              <span className="text-lime-400">
                 <IconMail />
               </span>
               Cap2Cal
@@ -75,41 +95,48 @@ export default function Terms(): JSX.Element {
 
         {/* Content */}
         <main className="container mx-auto px-6 py-16">
-          <div className="mx-auto max-w-4xl rounded-2xl bg-white p-8 shadow-xl md:p-12">
-            <h1 className="mb-8 bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-4xl font-extrabold text-transparent md:text-5xl">
+          <div className="mx-auto max-w-4xl rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm md:p-12"
+               style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
+            <h1 className="mb-8 text-4xl font-extrabold text-white md:text-5xl"
+                style={{
+                  background: 'linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}>
               {t('terms.title')}
             </h1>
 
-            <div className="space-y-8 text-gray-700">
+            <div className="space-y-8 text-slate-400">
               <div>
-                <p className="mb-4 text-sm text-gray-500">
+                <p className="mb-4 text-sm text-slate-500">
                   {t('terms.lastUpdated')}
                 </p>
               </div>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.acceptance.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.acceptance.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.acceptance.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.eligibility.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.eligibility.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.eligibility.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.description.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.description.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.description.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.account.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.account.title')}</h2>
                 <p className="mb-3 leading-relaxed">
                   {t('terms.account.content')}
                 </p>
@@ -127,7 +154,7 @@ export default function Terms(): JSX.Element {
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.usage.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.usage.title')}</h2>
                 <p className="mb-3 leading-relaxed">
                   {t('terms.usage.intro')}
                 </p>
@@ -149,153 +176,153 @@ export default function Terms(): JSX.Element {
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.aiService.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.aiService.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.aiService.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.content.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.content.title')}</h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.content.userContent.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.content.userContent.title')}</h3>
                     <p className="leading-relaxed">{t('terms.content.userContent.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.content.ourContent.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.content.ourContent.title')}</h3>
                     <p className="leading-relaxed">{t('terms.content.ourContent.content')}</p>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.subscription.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.subscription.title')}</h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.subscription.free.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.subscription.free.title')}</h3>
                     <p className="leading-relaxed">{t('terms.subscription.free.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.subscription.premium.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.subscription.premium.title')}</h3>
                     <p className="leading-relaxed">{t('terms.subscription.premium.content')}</p>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.calendar.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.calendar.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.calendar.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.dataAndPrivacy.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.dataAndPrivacy.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.dataAndPrivacy.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.limits.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.limits.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.limits.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.termination.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.termination.title')}</h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.termination.byUser.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.termination.byUser.title')}</h3>
                     <p className="leading-relaxed">{t('terms.termination.byUser.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.termination.byUs.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.termination.byUs.title')}</h3>
                     <p className="leading-relaxed">{t('terms.termination.byUs.content')}</p>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.warranty.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.warranty.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.warranty.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.limitation.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.limitation.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.limitation.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.indemnification.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.indemnification.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.indemnification.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.dispute.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.dispute.title')}</h2>
                 <div className="space-y-4">
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.dispute.governingLaw.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.dispute.governingLaw.title')}</h3>
                     <p className="leading-relaxed">{t('terms.dispute.governingLaw.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.dispute.arbitration.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.dispute.arbitration.title')}</h3>
                     <p className="leading-relaxed">{t('terms.dispute.arbitration.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-2 text-lg font-semibold text-gray-800">{t('terms.dispute.exceptions.title')}</h3>
+                    <h3 className="mb-2 text-lg font-semibold text-slate-300">{t('terms.dispute.exceptions.title')}</h3>
                     <p className="leading-relaxed">{t('terms.dispute.exceptions.content')}</p>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.general.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.general.title')}</h2>
                 <div className="space-y-3">
                   <div>
-                    <h3 className="mb-1 text-base font-semibold text-gray-800">{t('terms.general.severability.title')}</h3>
+                    <h3 className="mb-1 text-base font-semibold text-slate-300">{t('terms.general.severability.title')}</h3>
                     <p className="leading-relaxed text-sm">{t('terms.general.severability.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-1 text-base font-semibold text-gray-800">{t('terms.general.waiver.title')}</h3>
+                    <h3 className="mb-1 text-base font-semibold text-slate-300">{t('terms.general.waiver.title')}</h3>
                     <p className="leading-relaxed text-sm">{t('terms.general.waiver.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-1 text-base font-semibold text-gray-800">{t('terms.general.assignment.title')}</h3>
+                    <h3 className="mb-1 text-base font-semibold text-slate-300">{t('terms.general.assignment.title')}</h3>
                     <p className="leading-relaxed text-sm">{t('terms.general.assignment.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-1 text-base font-semibold text-gray-800">{t('terms.general.entire.title')}</h3>
+                    <h3 className="mb-1 text-base font-semibold text-slate-300">{t('terms.general.entire.title')}</h3>
                     <p className="leading-relaxed text-sm">{t('terms.general.entire.content')}</p>
                   </div>
                   <div>
-                    <h3 className="mb-1 text-base font-semibold text-gray-800">{t('terms.general.translation.title')}</h3>
+                    <h3 className="mb-1 text-base font-semibold text-slate-300">{t('terms.general.translation.title')}</h3>
                     <p className="leading-relaxed text-sm">{t('terms.general.translation.content')}</p>
                   </div>
                 </div>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.changes.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.changes.title')}</h2>
                 <p className="leading-relaxed">
                   {t('terms.changes.content')}
                 </p>
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.contact.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.contact.title')}</h2>
                 <div className="space-y-2 leading-relaxed">
                   <p>{t('terms.contact.content')}</p>
                   <p>
-                    <a href="mailto:support@capture2calendar.app" className="font-medium text-blue-600 hover:underline">
+                    <a href="mailto:support@capture2calendar.app" className="font-medium text-lime-400 hover:underline">
                       {t('terms.contact.email')}
                     </a>
                   </p>
@@ -305,7 +332,7 @@ export default function Terms(): JSX.Element {
               </section>
 
               <section>
-                <h2 className="mb-4 text-2xl font-bold text-gray-900">{t('terms.acknowledgment.title')}</h2>
+                <h2 className="mb-4 text-2xl font-bold text-white">{t('terms.acknowledgment.title')}</h2>
                 <p className="leading-relaxed font-medium">
                   {t('terms.acknowledgment.content')}
                 </p>
@@ -315,16 +342,18 @@ export default function Terms(): JSX.Element {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-gray-200 bg-white py-8">
-          <div className="container mx-auto px-6 text-center text-sm text-gray-600">
-            <p>&copy; {new Date().getFullYear()} Capture2Calendar. All rights reserved.</p>
-            <div className="mt-4 flex justify-center space-x-6">
-              <Link to="/terms" className="transition-colors hover:text-gray-900">
-                {t('footer.terms')}
-              </Link>
-              <Link to="/privacy" className="transition-colors hover:text-gray-900">
-                {t('footer.privacy')}
-              </Link>
+        <footer className="relative border-t border-white/10 py-12">
+          <div className="relative mx-auto max-w-7xl px-6">
+            <div className="text-center text-sm text-slate-400">
+              <p>&copy; {new Date().getFullYear()} Capture2Calendar. All rights reserved.</p>
+              <div className="mt-4 flex justify-center space-x-6">
+                <Link to="/terms" className="transition-colors hover:text-white">
+                  {t('footer.terms')}
+                </Link>
+                <Link to="/privacy" className="transition-colors hover:text-white">
+                  {t('footer.privacy')}
+                </Link>
+              </div>
             </div>
           </div>
         </footer>
