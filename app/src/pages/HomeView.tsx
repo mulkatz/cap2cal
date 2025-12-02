@@ -51,10 +51,10 @@ export const HomeView = ({
             // 'bg-[radial-gradient(#444cf7_0.5px,transparent_0.5px)] opacity-80 [background-size:20px_20px]'
           )}></div>
         <div className={'absolute inset-0 flex items-center justify-center'}>
-          <div className="mb-[20vh] flex h-full w-3/5 max-w-[320px] flex-col items-center justify-center">
-            <IconHeroIcon />
+          <div className="mb-[20vh] flex h-full flex-col items-center justify-center">
+            {/*<IconHeroIcon />*/}
             {/*<img className={'h-auto w-full object-contain'} src={imgHero} alt="Hero" />*/}
-            <IconHeroText className="w-full" />
+            <IconHeroText className="w-full scale-125" />
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@ export const HomeView = ({
         <button
           onClick={handleCaptureClick}
           className={
-            'relative z-50 flex min-w-60 items-center justify-center gap-2 overflow-hidden rounded-full border-b-4 border-[#C4BD42] bg-highlight px-6 py-4 text-2xl font-bold text-primary shadow-[0_4px_14px_0_rgba(230,222,77,0.4)] transition-all active:translate-y-1 active:border-b-2 active:shadow-[0_2px_8px_0_rgba(230,222,77,0.3)]'
+            'relative z-50 flex min-w-60 items-center justify-center gap-2 overflow-hidden rounded-full border-b-4 border-[#C4BD42] bg-highlight px-6 py-4 text-2xl font-bold text-primary transition-all active:translate-y-1 active:border-b-2 active:shadow-[0_2px_8px_0_rgba(230,222,77,0.3)]'
           }
           data-testid="capture-button">
           {/* Ripple effects */}
