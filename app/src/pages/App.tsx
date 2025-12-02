@@ -34,6 +34,7 @@ import { requestAppRating } from '../services/rating.service.tsx';
 import { useTranslation } from 'react-i18next';
 import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { cn } from '../utils';
+import { HomeViewNew } from './HomeViewNew.tsx';
 
 const isFeedbackVisible = false;
 
@@ -711,7 +712,7 @@ export const App = () => {
           {/* Only render SplashView when in home state */}
           {appState === 'home' && (
             <div className="animate-fadeIn">
-              <HomeView
+              <HomeViewNew
                 isLoading={isHandlingCaptureRequest}
                 onCapture={onHandleCapture}
                 hasSavedEvents={hasSavedEvents}

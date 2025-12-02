@@ -23,6 +23,40 @@
       "newEvent": "New Event",
       "more": "more"
     },
+    "home": {
+      "stats": {
+        "totalEvents": "Total Events",
+        "upcoming": "Upcoming",
+        "thisMonth": "This Month"
+      },
+      "quickActions": {
+        "import": "Import",
+        "history": "History",
+        "favorites": "Favourites",
+        "settings": "Settings"
+      },
+      "eventsPreview": {
+        "title": "Upcoming Events",
+        "seeAll": "See All"
+      },
+      "emptyState": {
+        "title": "Ready to Capture?",
+        "description": "Snap a photo of any event poster, flyer, or ticket. We'll extract all the details instantly.",
+        "feature1": {
+          "title": "AI-Powered Extraction",
+          "description": "Automatically extract titles, dates, times, and locations"
+        },
+        "feature2": {
+          "title": "3-Second Save",
+          "description": "From photo to calendar in just 3 seconds"
+        },
+        "feature3": {
+          "title": "Export Anywhere",
+          "description": "Export to Google, Apple, Outlook, or any calendar app"
+        },
+        "cta": "Tap the Capture button to get started"
+      }
+    },
     "eventCard": {
       "actionSheet": {
         "title": "Event Options",

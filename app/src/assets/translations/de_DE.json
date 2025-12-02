@@ -23,6 +23,40 @@
       "newEvent": "Neues Event",
       "more": "mehr"
     },
+    "home": {
+      "stats": {
+        "totalEvents": "Alle Events",
+        "upcoming": "Bevorstehend",
+        "thisMonth": "Diesen Monat"
+      },
+      "quickActions": {
+        "import": "Importieren",
+        "history": "Verlauf",
+        "favorites": "Favoriten",
+        "settings": "Einstellungen"
+      },
+      "eventsPreview": {
+        "title": "Bevorstehende Events",
+        "seeAll": "Alle anzeigen"
+      },
+      "emptyState": {
+        "title": "Bereit zum Scannen?",
+        "description": "Fotografiere ein Event-Poster, Flyer oder Ticket. Wir extrahieren sofort alle Details.",
+        "feature1": {
+          "title": "KI-gestützte Extraktion",
+          "description": "Titel, Daten, Zeiten und Orte werden automatisch erfasst"
+        },
+        "feature2": {
+          "title": "3-Sekunden-Speicherung",
+          "description": "Vom Foto zum Kalender in nur 3 Sekunden"
+        },
+        "feature3": {
+          "title": "Überall exportieren",
+          "description": "Export zu Google, Apple, Outlook oder jeder Kalender-App"
+        },
+        "cta": "Tippe auf den Scannen-Button um zu starten"
+      }
+    },
     "eventCard": {
       "actionSheet": {
         "title": "Event-Optionen",
