@@ -17,10 +17,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
 
   // Always keep query running to maintain cached results for instant display
   const filteredItems = useLiveQuery(
-    () =>
-      db.eventItems
-        .filter((obj) => (favouritesFilter === 'yes' ? !!obj.isFavorite : true))
-        .toArray(),
+    () => db.eventItems.filter((obj) => (favouritesFilter === 'yes' ? !!obj.isFavorite : true)).toArray(),
     [favouritesFilter]
   );
 
@@ -118,7 +115,7 @@ export const EventHistoryScreen = React.memo(({ onClose, isVisible }: { onClose:
       <div className="flex-1 overflow-y-auto px-4 pt-3 pb-safe-offset-0" onScroll={handleScroll}>
         <div className="mx-auto flex max-w-2xl flex-col gap-4 pb-4">
           {/* Horizontal Chip Filter Row */}
-          <div className="flex gap-3 overflow-x-auto">
+          <div className="flex gap-3 overflow-x-auto scrollbar-hide">
             <FilterChip
               label={t('general.onlyFavourites').replace('Nur ', '')}
               active={favouritesFilter === 'yes'}
@@ -211,9 +208,7 @@ const FilterChip = React.memo(
         onClick={onClick}
         className={cn(
           'flex flex-shrink-0 items-center gap-2 rounded-full border px-4 py-2 text-[14px] font-medium transition-all',
-          active
-            ? 'border-highlight bg-highlight/10 text-highlight'
-            : 'border-white/20 bg-white/5 text-gray-300'
+          active ? 'border-highlight bg-highlight/10 text-highlight' : 'border-white/20 bg-white/5 text-gray-300'
         )}>
         {icon && <span className="flex items-center">{icon}</span>}
         <span>{label}</span>
