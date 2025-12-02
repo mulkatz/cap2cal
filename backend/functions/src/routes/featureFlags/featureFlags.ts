@@ -1,6 +1,6 @@
 import { onRequest } from 'firebase-functions/v2/https';
 import { logger } from 'firebase-functions';
-import { getRemoteConfigValues } from '../auth';
+import { getRemoteConfigValues } from '../../auth';
 
 /**
  * Feature Flags API Endpoint
