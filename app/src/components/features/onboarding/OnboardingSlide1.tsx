@@ -9,15 +9,10 @@ export const OnboardingSlide1: React.FC = () => {
     <div className="flex h-full w-full flex-col items-center justify-center px-6">
       {/* Content Container */}
       <div className="flex w-full max-w-md flex-col items-center">
-        {/* Icon with glow */}
-        <div className="relative mb-12 flex items-center justify-center">
-          {/* Glow effect behind */}
-          <div className="absolute inset-0 -z-10 flex items-center justify-center">
-            <div className="h-48 w-48 rounded-full bg-[#E6DE4D] opacity-20 blur-[80px]" />
-          </div>
-
+        {/* Icon */}
+        <div className="mb-12 flex items-center justify-center">
           {/* Icon container */}
-          <div className="flex h-32 w-32 items-center justify-center rounded-full bg-[#2C4156]/40 shadow-[inset_0_0_20px_rgba(230,222,77,0.2),_0_0_25px_-5px_rgba(230,222,77,0.4)] ring-1 ring-[#E6DE4D]/50">
+          <div className="flex h-32 w-32 items-center justify-center rounded-full bg-[#2C4156]/40 ring-1 ring-[#E6DE4D]/50">
             <Sparkles className="h-16 w-16 text-[#E6DE4D]" strokeWidth={1.5} />
           </div>
         </div>

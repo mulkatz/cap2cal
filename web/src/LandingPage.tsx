@@ -116,12 +116,12 @@ export default function LandingPage(): JSX.Element {
           <div className="absolute -bottom-1/4 -left-1/4 h-[900px] w-[900px] rounded-full bg-teal-600/20 blur-[300px]"></div>
 
           {/* Film Grain Texture Overlay */}
-          <div className="absolute inset-0 opacity-[0.03]"
-               style={{
-                 backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
-                 backgroundRepeat: 'repeat'
-               }}>
-          </div>
+          <div
+            className="absolute inset-0 opacity-[0.03]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E")`,
+              backgroundRepeat: 'repeat',
+            }}></div>
         </div>
         {/* Header */}
         <header className="sticky top-0 z-50 w-full border-b border-cardBorder/50 bg-primaryDark/90 backdrop-blur-lg">
@@ -204,141 +204,149 @@ export default function LandingPage(): JSX.Element {
 
         <main id="main-content">
           {/* Hero Section */}
-          <section className="relative z-10 mx-auto overflow-hidden pb-20 pt-32 text-center" itemScope itemType="https://schema.org/SoftwareApplication">
+          <section
+            className="relative z-10 mx-auto overflow-hidden pb-20 pt-32 text-center"
+            itemScope
+            itemType="https://schema.org/SoftwareApplication">
             <div className="mx-auto max-w-7xl px-6">
-            {/* Hero Visualization */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="relative mb-8 flex w-full items-center justify-center"
-              role="img"
-              aria-label="Photo to calendar conversion illustration">
-              <div className="relative flex items-center justify-center gap-3 sm:gap-4">
-                {/* Camera Icon */}
-                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-accentElevated bg-primary shadow-lg sm:h-20 sm:w-20">
-                  <svg
-                    className="h-8 w-8 text-secondary sm:h-10 sm:w-10"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
+              {/* Hero Visualization */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="relative mb-8 flex w-full items-center justify-center"
+                role="img"
+                aria-label="Photo to calendar conversion illustration">
+                <div className="relative flex items-center justify-center gap-3 sm:gap-4">
+                  {/* Camera Icon */}
+                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-accentElevated bg-primary shadow-lg sm:h-20 sm:w-20">
+                    <svg
+                      className="h-8 w-8 text-secondary sm:h-10 sm:w-10"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </div>
+
+                  {/* Arrow with glow */}
+                  <div className="relative">
+                    <svg
+                      className="h-8 w-8 flex-shrink-0 text-highlight drop-shadow-lg sm:h-12 sm:w-12"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </div>
+
+                  {/* Calendar Icon */}
+                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-accentElevated bg-primary shadow-lg sm:h-20 sm:w-20">
+                    <svg
+                      className="h-8 w-8 text-secondary sm:h-10 sm:w-10"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
                 </div>
+              </motion.div>
 
-                {/* Arrow with glow */}
-                <div className="relative">
-                  <svg
-                    className="h-8 w-8 flex-shrink-0 text-highlight drop-shadow-lg sm:h-12 sm:w-12"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2.5}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                </div>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+                className="relative mb-8 text-6xl font-extrabold leading-[1.1] tracking-tighter md:text-7xl lg:text-8xl"
+                style={{
+                  background: 'linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+                itemProp="name">
+                <span
+                  className="bg-gradient-to-r from-lime-400 to-lime-300 bg-clip-text text-transparent"
+                  style={{ filter: 'drop-shadow(0 0 15px rgba(132, 204, 22, 0.5))' }}>
+                  {t('hero.titleSpan')}
+                </span>{' '}
+                <span>{t('hero.titleMain')}</span>
+              </motion.h1>
 
-                {/* Calendar Icon */}
-                <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full border-2 border-accentElevated bg-primary shadow-lg sm:h-20 sm:w-20">
-                  <svg
-                    className="h-8 w-8 text-secondary sm:h-10 sm:w-10"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </motion.div>
+              {/* Decorative gradient bar */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.2 }}
+                className="mx-auto mb-10 h-1 w-20 rounded-full bg-gradient-to-r from-lime-400/50 to-lime-400"></motion.div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="relative mb-8 text-6xl font-extrabold leading-[1.1] tracking-tighter md:text-7xl lg:text-8xl"
-              style={{
-                background: 'linear-gradient(180deg, #ffffff 0%, #e5e7eb 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}
-              itemProp="name">
-              <span className="bg-gradient-to-r from-lime-400 to-lime-300 bg-clip-text text-transparent"
-                    style={{ filter: 'drop-shadow(0 0 15px rgba(132, 204, 22, 0.5))' }}>
-                {t('hero.titleSpan')}
-              </span>{' '}
-              <span>{t('hero.titleMain')}</span>
-            </motion.h1>
-
-            {/* Decorative gradient bar */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              className="mx-auto mb-10 h-1 w-20 rounded-full bg-gradient-to-r from-lime-400/50 to-lime-400"></motion.div>
-
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative mb-6 text-xl leading-relaxed text-slate-300 md:text-2xl"
-              itemProp="alternateName">{t('hero.subtitle')}</motion.p>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="relative mx-auto mb-14 max-w-3xl text-lg leading-relaxed text-slate-400 md:text-xl"
-              itemProp="description">
-              {t('hero.description')}
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="relative mx-auto flex items-center justify-center gap-4">
-              <button
-                type="button"
-                onClick={() => handleDownloadClick('ios', 'hero')}
-                className="transform transition-transform duration-200 hover:scale-105"
-                aria-label="Download on the App Store">
-                <img src={AppStoreBadge} alt="Download on the App Store" className="h-14" />
-              </button>
-              <button
-                type="button"
-                onClick={() => handleDownloadClick('android', 'hero')}
-                className="transform transition-transform duration-200 hover:scale-105"
-                aria-label="Get it on Google Play">
-                <img src={GooglePlayBadge} alt="Get it on Google Play" className="h-14" />
-              </button>
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              className="relative mt-6 text-sm text-slate-400">{t('hero.subtext')}</motion.p>
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="relative mt-2 text-sm font-bold uppercase tracking-wide text-lime-400">
-              {t('hero.trustBadge')}
-            </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="relative mb-6 text-xl leading-relaxed text-slate-300 md:text-2xl"
+                itemProp="alternateName">
+                {t('hero.subtitle')}
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="relative mx-auto mb-14 max-w-3xl text-lg leading-relaxed text-slate-400 md:text-xl"
+                itemProp="description">
+                {t('hero.description')}
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="relative mx-auto flex items-center justify-center gap-4">
+                <button
+                  type="button"
+                  onClick={() => handleDownloadClick('ios', 'hero')}
+                  className="transform transition-transform duration-200 hover:scale-105"
+                  aria-label="Download on the App Store">
+                  <img src={AppStoreBadge} alt="Download on the App Store" className="h-14" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleDownloadClick('android', 'hero')}
+                  className="transform transition-transform duration-200 hover:scale-105"
+                  aria-label="Get it on Google Play">
+                  <img src={GooglePlayBadge} alt="Get it on Google Play" className="h-14" />
+                </button>
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="relative mt-6 text-sm text-slate-400">
+                {t('hero.subtext')}
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="relative mt-2 text-sm font-bold uppercase tracking-wide text-lime-400">
+                {t('hero.trustBadge')}
+              </motion.p>
             </div>
           </section>
 
@@ -355,15 +363,19 @@ export default function LandingPage(): JSX.Element {
                   background: 'linear-gradient(180deg, #ffffff 0%, #94a3b8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
+                  backgroundClip: 'text',
                 }}
-                itemProp="name">{t('steps.title')}</motion.h2>
+                itemProp="name">
+                {t('steps.title')}
+              </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="mb-4 text-center text-xl leading-relaxed text-slate-400">{t('steps.subtitle')}</motion.p>
+                className="mb-4 text-center text-xl leading-relaxed text-slate-400">
+                {t('steps.subtitle')}
+              </motion.p>
               {/* Decorative gradient bar */}
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
@@ -374,15 +386,20 @@ export default function LandingPage(): JSX.Element {
 
               <div className="relative grid grid-cols-1 gap-8 md:grid-cols-3">
                 {/* Process Flow Line (Hidden on Mobile) */}
-                <div className="absolute left-0 right-0 top-[60px] -z-10 hidden h-0.5 bg-gradient-to-r from-transparent via-white/20 to-transparent md:block" aria-hidden="true"></div>
+                <div
+                  className="absolute left-0 right-0 top-[60px] -z-10 hidden h-0.5 bg-gradient-to-r from-transparent via-white/20 to-transparent md:block"
+                  aria-hidden="true"></div>
 
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="group relative flex h-full flex-col rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
-                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                  className="group relative flex h-full flex-col rounded-2xl border-x border-b border-t border-black/40 border-white/10 border-white/20 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
+                  style={{
+                    boxShadow:
+                      'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                  }}
                   itemProp="step"
                   itemScope
                   itemType="https://schema.org/HowToStep">
@@ -390,20 +407,25 @@ export default function LandingPage(): JSX.Element {
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-lime-400/10 ring-2 ring-lime-400/30">
                       <IconCamera />
                     </div>
-                    <div className="text-5xl font-extrabold text-lime-400">
-                      1.
-                    </div>
+                    <div className="text-5xl font-extrabold text-lime-400">1.</div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">{t('steps.one.title')}</h3>
-                  <p className="leading-relaxed text-slate-400" itemProp="text">{t('steps.one.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">
+                    {t('steps.one.title')}
+                  </h3>
+                  <p className="leading-relaxed text-slate-400" itemProp="text">
+                    {t('steps.one.description')}
+                  </p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 }}
-                  className="group relative flex h-full flex-col rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
-                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                  className="group relative flex h-full flex-col rounded-2xl border-x border-b border-t border-black/40 border-white/10 border-white/20 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
+                  style={{
+                    boxShadow:
+                      'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                  }}
                   itemProp="step"
                   itemScope
                   itemType="https://schema.org/HowToStep">
@@ -411,20 +433,25 @@ export default function LandingPage(): JSX.Element {
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-lime-400/10 ring-2 ring-lime-400/30">
                       <IconRobot />
                     </div>
-                    <div className="text-5xl font-extrabold text-lime-400">
-                      2.
-                    </div>
+                    <div className="text-5xl font-extrabold text-lime-400">2.</div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">{t('steps.two.title')}</h3>
-                  <p className="leading-relaxed text-slate-400" itemProp="text">{t('steps.two.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">
+                    {t('steps.two.title')}
+                  </h3>
+                  <p className="leading-relaxed text-slate-400" itemProp="text">
+                    {t('steps.two.description')}
+                  </p>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.3 }}
-                  className="group relative flex h-full flex-col rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
-                  style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}
+                  className="group relative flex h-full flex-col rounded-2xl border-x border-b border-t border-black/40 border-white/10 border-white/20 bg-slate-900/60 p-8 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
+                  style={{
+                    boxShadow:
+                      'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                  }}
                   itemProp="step"
                   itemScope
                   itemType="https://schema.org/HowToStep">
@@ -432,12 +459,14 @@ export default function LandingPage(): JSX.Element {
                     <div className="flex h-14 w-14 items-center justify-center rounded-full bg-lime-400/10 ring-2 ring-lime-400/30">
                       <IconCalendar />
                     </div>
-                    <div className="text-5xl font-extrabold text-lime-400">
-                      3.
-                    </div>
+                    <div className="text-5xl font-extrabold text-lime-400">3.</div>
                   </div>
-                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">{t('steps.three.title')}</h3>
-                  <p className="leading-relaxed text-slate-400" itemProp="text">{t('steps.three.description')}</p>
+                  <h3 className="mb-3 text-2xl font-bold text-white" itemProp="name">
+                    {t('steps.three.title')}
+                  </h3>
+                  <p className="leading-relaxed text-slate-400" itemProp="text">
+                    {t('steps.three.description')}
+                  </p>
                 </motion.div>
               </div>
             </div>
@@ -454,13 +483,14 @@ export default function LandingPage(): JSX.Element {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6 }}>
-                    <h2 className="mb-4 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl"
-                        style={{
-                          background: 'linear-gradient(180deg, #ffffff 0%, #94a3b8 100%)',
-                          WebkitBackgroundClip: 'text',
-                          WebkitTextFillColor: 'transparent',
-                          backgroundClip: 'text'
-                        }}>
+                    <h2
+                      className="mb-4 text-3xl font-bold leading-tight md:text-4xl lg:text-5xl"
+                      style={{
+                        background: 'linear-gradient(180deg, #ffffff 0%, #94a3b8 100%)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                      }}>
                       {t('demo.title')}
                     </h2>
                     <p className="text-base leading-relaxed text-slate-400 md:text-lg">{t('demo.subtitle')}</p>
@@ -594,14 +624,18 @@ export default function LandingPage(): JSX.Element {
                   background: 'linear-gradient(180deg, #ffffff 0%, #94a3b8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>{t('features.title')}</motion.h2>
+                  backgroundClip: 'text',
+                }}>
+                {t('features.title')}
+              </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="mb-4 text-center text-xl leading-relaxed text-slate-400">{t('features.subtitle')}</motion.p>
+                className="mb-4 text-center text-xl leading-relaxed text-slate-400">
+                {t('features.subtitle')}
+              </motion.p>
               {/* Decorative gradient bar */}
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
@@ -693,14 +727,18 @@ export default function LandingPage(): JSX.Element {
                   background: 'linear-gradient(180deg, #ffffff 0%, #94a3b8 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text'
-                }}>{t('finalCta.title')}</motion.h2>
+                  backgroundClip: 'text',
+                }}>
+                {t('finalCta.title')}
+              </motion.h2>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="mb-4 text-xl leading-relaxed text-slate-400">{t('finalCta.description')}</motion.p>
+                className="mb-4 text-xl leading-relaxed text-slate-400">
+                {t('finalCta.description')}
+              </motion.p>
               {/* Decorative gradient bar */}
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
@@ -735,7 +773,9 @@ export default function LandingPage(): JSX.Element {
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
-                className="mt-8 text-sm text-slate-400">{t('finalCta.trustLine')}</motion.p>
+                className="mt-8 text-sm text-slate-400">
+                {t('finalCta.trustLine')}
+              </motion.p>
             </div>
           </section>
         </main>
@@ -743,8 +783,12 @@ export default function LandingPage(): JSX.Element {
         {/* Footer */}
         <footer className="relative border-t border-white/10 py-12">
           {/* Giant Watermark */}
-          <div className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 overflow-hidden opacity-[0.02]" aria-hidden="true">
-            <p className="text-[10rem] font-bold text-white" style={{ WebkitTextStroke: '2px white', WebkitTextFillColor: 'transparent' }}>
+          <div
+            className="pointer-events-none absolute bottom-0 left-1/2 -translate-x-1/2 overflow-hidden opacity-[0.02]"
+            aria-hidden="true">
+            <p
+              className="text-[10rem] font-bold text-white"
+              style={{ WebkitTextStroke: '2px white', WebkitTextFillColor: 'transparent' }}>
               Capture2Cal
             </p>
           </div>
@@ -823,14 +867,14 @@ function PhoneFrame(): JSX.Element {
   const [currentScreenshot, setCurrentScreenshot] = useState(0);
 
   const screenshots = [
-    '/screenshots/04_home_screen.png',
-    '/screenshots/03_camera_view_1.png',
-    '/screenshots/03b_camera_view_3.png',
-    '/screenshots/04_capture_loading.png',
-    '/screenshots/04a_capture_result_1.png',
-    '/screenshots/05_event_history_after_capture_1.png',
-    '/screenshots/07_event_history_final.png',
-    '/screenshots/08_settings.png',
+    '/screenshots/04_home_screen.jpg',
+    '/screenshots/03_camera_view_1.jpg',
+    '/screenshots/03b_camera_view_3.jpg',
+    '/screenshots/04_capture_loading.jpg',
+    '/screenshots/04a_capture_result_1.jpg',
+    '/screenshots/05_event_history_after_capture_1.jpg',
+    '/screenshots/07_event_history_final.jpg',
+    '/screenshots/08_settings.jpg',
   ];
 
   useEffect(() => {
@@ -907,8 +951,11 @@ function FeatureCard({ icon, title, description, delay = 0 }: FeatureCardProps):
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
-      className="group relative rounded-2xl border-t border-white/20 border-b border-black/40 border-x border-white/10 bg-slate-900/60 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
-      style={{ boxShadow: 'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)' }}>
+      className="group relative rounded-2xl border-x border-b border-t border-black/40 border-white/10 border-white/20 bg-slate-900/60 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-lime-400/50 hover:shadow-[0_0_30px_-10px_rgba(132,204,22,0.3)]"
+      style={{
+        boxShadow:
+          'inset 0 1px 0 0 rgba(255, 255, 255, 0.1), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+      }}>
       <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-lime-400/10 ring-2 ring-lime-400/30">
         {icon}
       </div>
