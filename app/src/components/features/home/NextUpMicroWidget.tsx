@@ -126,9 +126,6 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
               )}
             </p>
           </div>
-
-          {/* Subtle bottom highlight bar */}
-          <div className="absolute bottom-0 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-gradient-to-r from-transparent via-highlight to-transparent opacity-50" />
         </div>
       </div>
     );
