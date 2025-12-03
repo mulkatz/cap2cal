@@ -177,7 +177,7 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
 
             {/* Event Info */}
             <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
-              <span className="w-full truncate text-base font-semibold text-slate-200">{title}</span>
+              <span className="w-full truncate text-left text-base font-semibold text-slate-200">{title}</span>
               <span className="text-sm text-slate-400">
                 {formattedDate}
                 {formattedTime && ` • ${formattedTime}`}
