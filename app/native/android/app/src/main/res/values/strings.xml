@@ -4,4 +4,9 @@
     <string name="title_activity_main">Cap2Cal</string>
     <string name="package_name">cx.franz.cap2cal</string>
     <string name="custom_url_scheme">cx.franz.cap2cal</string>
+
+    <!-- Permission rationale messages (shown before system dialog) -->
+    <string name="permission_camera_rationale">Cap2Cal needs camera access to scan event posters, flyers, and tickets.</string>
+    <string name="permission_photos_rationale">Cap2Cal needs access to your photos to import and scan event images.</string>
+    <string name="permission_calendar_rationale">Cap2Cal needs calendar access to save events directly to your calendar.</string>
 </resources>
