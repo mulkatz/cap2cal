@@ -28,6 +28,10 @@
         "headline": "Upcoming Event",
         "startScanning": "Start scanning events to see them here",
         "noUpcoming": "No upcoming events"
+      },
+      "onboarding": {
+        "headline": "Never Miss an Event Again",
+        "description": "Capture any event poster, flyer, or ticket with your camera and instantly save it to your calendar"
       }
     },
     "eventCard": {

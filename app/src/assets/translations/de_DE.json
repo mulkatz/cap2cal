@@ -28,6 +28,10 @@
         "headline": "Bevorstehendes Event",
         "startScanning": "Scanne Events, um sie hier zu sehen",
         "noUpcoming": "Keine bevorstehenden Events"
+      },
+      "onboarding": {
+        "headline": "Verpasse nie wieder ein Event",
+        "description": "Scanne Plakate, Flyer oder Tickets mit deiner Kamera und speichere sie sofort in deinem Kalender"
       }
     },
     "eventCard": {

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../../db/db';
-import { Clock } from 'lucide-react';
+import { Clock, Sparkles } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { cn } from '../../../utils';
 
@@ -84,24 +84,39 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
 
   const hasNoEvents = !allEvents || allEvents.length === 0;
 
-  // If no events at all, show getting started message
+  // If no events at all, show motivating onboarding message
   if (hasNoEvents) {
     return (
-      <div className="flex flex-col items-center gap-3">
-        {/* Headline */}
-        <h3 className="text-xs font-medium uppercase tracking-wider text-white/40">
-          {t('home.microWidget.headline', 'Upcoming Events')}
-        </h3>
-
-        {/* Empty state message */}
+      <div className="flex flex-col items-center gap-3 px-6 animate-fade-in">
+        {/* Glass card with highlight accent */}
         <div
           className={cn(
-            'rounded-2xl border border-white/10 bg-white/5 px-8 py-4 backdrop-blur-sm',
-            'animate-fade-in'
+            'relative flex flex-col items-center gap-3 text-center max-w-[300px]',
+            'rounded-3xl border border-highlight/20 bg-white/5 backdrop-blur-sm',
+            'px-8 py-6',
+            'shadow-[0_0_20px_rgba(230,222,77,0.1)]'
           )}>
-          <span className="text-sm text-slate-300">
-            {t('home.microWidget.startScanning', 'Start scanning events to see them here')}
-          </span>
+          {/* Sparkle icon with highlight glow */}
+          <div className="relative">
+            <div className="absolute inset-0 blur-xl bg-highlight/30 animate-pulse" />
+            <Sparkles size={32} className="relative text-highlight" strokeWidth={2} />
+          </div>
+
+          {/* Text content */}
+          <div className="flex flex-col items-center gap-2">
+            <h3 className="text-lg font-bold text-slate-100 tracking-tight">
+              {t('home.onboarding.headline', 'Never Miss an Event Again')}
+            </h3>
+            <p className="text-sm text-slate-300 leading-relaxed">
+              {t(
+                'home.onboarding.description',
+                'Capture any event poster, flyer, or ticket with your camera and instantly save it to your calendar'
+              )}
+            </p>
+          </div>
+
+          {/* Subtle bottom highlight bar */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-1 w-16 bg-gradient-to-r from-transparent via-highlight to-transparent opacity-50 rounded-full" />
         </div>
       </div>
     );
