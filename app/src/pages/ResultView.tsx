@@ -14,7 +14,7 @@ export const ResultView = ({ onClose }: { onClose: () => void }) => {
       {/* Magic pattern background */}
       <div className="absolute inset-0 bg-primary">
         <div className={'magicpattern absolute inset-0 flex'} />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/30" />
       </div>
 
       {/* Content */}
