@@ -23,6 +23,13 @@
       "newEvent": "New Event",
       "more": "more"
     },
+    "home": {
+      "microWidget": {
+        "headline": "Upcoming Event",
+        "startScanning": "Start scanning events to see them here",
+        "noUpcoming": "No upcoming events"
+      }
+    },
     "eventCard": {
       "actionSheet": {
         "title": "Event Options",

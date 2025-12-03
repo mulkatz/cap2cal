@@ -53,6 +53,7 @@ export const App = () => {
   const cameraRef = useRef<CameraRefProps>(null);
   const [showFeedback, setShowFeedback] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [historySortBy, setHistorySortBy] = useState<'upcoming' | 'recent'>('upcoming');
   const [showSettings, setShowSettings] = useState(false);
   const [initialised, setInitialised] = useState(false);
   const [hasSeenOnboarding, setHasSeenOnboarding] = useState(() => {
@@ -331,10 +332,11 @@ export const App = () => {
     }
   };
 
-  const onHistory = () => {
+  const onHistory = (sortBy: 'upcoming' | 'recent' = 'upcoming') => {
     // Track event history opened (only when opening, not closing)
     if (!showHistory) {
       logAnalyticsEvent(AnalyticsEvent.HISTORY_OPENED);
+      setHistorySortBy(sortBy);
     }
     setShowHistory(!showHistory);
   };
@@ -748,7 +750,11 @@ export const App = () => {
         {appState === 'home' && (
           <>
             <Backdrop isVisible={showHistory} onClick={() => setShowHistory(false)} />
-            <EventHistoryScreen onClose={() => setShowHistory(false)} isVisible={showHistory} />
+            <EventHistoryScreen
+              onClose={() => setShowHistory(false)}
+              isVisible={showHistory}
+              initialSortBy={historySortBy}
+            />
           </>
         )}
 

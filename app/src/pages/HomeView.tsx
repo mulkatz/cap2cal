@@ -5,6 +5,7 @@ import { MiniButton } from '../components/ui/buttons/MiniButton.tsx';
 import { useTranslation } from 'react-i18next';
 import { ClipLoader } from 'react-spinners';
 import { useRipple } from '../hooks/useRipple.tsx';
+import { NextUpMicroWidget } from '../components/features/home/NextUpMicroWidget.tsx';
 
 export const HomeView = ({
   isLoading,
@@ -20,7 +21,7 @@ export const HomeView = ({
 }: {
   isLoading: boolean;
   onImport: () => void;
-  onHistory: () => void;
+  onHistory: (sortBy?: 'upcoming' | 'recent') => void;
   hasSavedEvents: boolean;
   onFeedback: () => void;
   isFeedbackVisible: boolean;
@@ -31,6 +32,10 @@ export const HomeView = ({
 }) => {
   const { t } = useTranslation();
   const { ripples, addRipple } = useRipple();
+
+  const handleUpcomingEventClick = () => {
+    onHistory('upcoming');
+  };
 
   const handleUpgradeClick = () => {
     onShowPaywall?.('upgrade_button_click');
@@ -51,10 +56,15 @@ export const HomeView = ({
             // 'bg-[radial-gradient(#444cf7_0.5px,transparent_0.5px)] opacity-80 [background-size:20px_20px]'
           )}></div>
         <div className={'absolute inset-0 flex items-center justify-center'}>
-          <div className="mb-[20vh] flex h-full flex-col items-center justify-center">
+          <div className="mb-[20vh] flex h-full flex-col items-center justify-center gap-8">
             {/*<IconHeroIcon />*/}
             {/*<img className={'h-auto w-full object-contain'} src={imgHero} alt="Hero" />*/}
             <IconHeroText className="w-full scale-125" />
+
+            {/* Upcoming Event Widget */}
+            <div className="pointer-events-auto mt-2">
+              <NextUpMicroWidget onEventClick={handleUpcomingEventClick} />
+            </div>
           </div>
         </div>
       </div>

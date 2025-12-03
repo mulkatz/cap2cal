@@ -23,6 +23,13 @@
       "newEvent": "Neues Event",
       "more": "mehr"
     },
+    "home": {
+      "microWidget": {
+        "headline": "Bevorstehendes Event",
+        "startScanning": "Scanne Events, um sie hier zu sehen",
+        "noUpcoming": "Keine bevorstehenden Events"
+      }
+    },
     "eventCard": {
       "actionSheet": {
         "title": "Event-Optionen",
