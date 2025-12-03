@@ -93,8 +93,7 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
           className={cn(
             'relative flex flex-col items-center gap-3 text-center max-w-[300px]',
             'rounded-3xl border border-highlight/20 bg-white/5 backdrop-blur-sm',
-            'px-8 py-6',
-            'shadow-[0_0_20px_rgba(230,222,77,0.1)]'
+            'px-8 py-6'
           )}>
           {/* Sparkle icon with highlight glow */}
           <div className="relative">
