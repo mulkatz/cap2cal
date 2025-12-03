@@ -62,7 +62,7 @@ export const HomeView = ({
             <IconHeroText className="w-full scale-125" />
 
             {/* Upcoming Event Widget */}
-            <div className="pointer-events-auto mt-2">
+            <div className="pointer-events-auto mt-2 w-full">
               <NextUpMicroWidget onEventClick={handleUpcomingEventClick} />
             </div>
           </div>
