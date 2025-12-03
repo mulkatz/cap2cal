@@ -1838,11 +1838,6 @@ video {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.via-highlight {
-  --tw-gradient-to: rgb(230 222 77 / 0)  var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), #e6de4d var(--tw-gradient-via-position), var(--tw-gradient-to);
-}
-
 .to-\[\#2C4156\] {
   --tw-gradient-to: #2C4156 var(--tw-gradient-to-position);
 }
