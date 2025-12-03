@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { db } from '../../../db/db';
 import { Clock, Sparkles } from 'lucide-react';
@@ -54,6 +54,16 @@ const formatTime = (timeStr?: string): string => {
  */
 export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventClick }) => {
   const { t, i18n } = useTranslation();
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Delay showing the widget to allow data to load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 750);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // Query upcoming events
   const allEvents = useLiveQuery(() => db.eventItems.toArray());
@@ -84,9 +94,12 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
 
   const hasNoEvents = !allEvents || allEvents.length === 0;
 
-  // If no events at all, show motivating onboarding message
+  // Render content based on state
+  let content;
+
   if (hasNoEvents) {
-    return (
+    // If no events at all, show motivating onboarding message
+    content = (
       <div className="mx-4 flex flex-col items-center gap-3 px-6">
         {/* Glass card with highlight accent */}
         <div
@@ -119,11 +132,9 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
         </div>
       </div>
     );
-  }
-
-  // If no upcoming event but has past events, show ready message
-  if (!nextEvent) {
-    return (
+  } else if (!nextEvent) {
+    // If no upcoming event but has past events, show ready message
+    content = (
       <div className="flex w-full justify-center px-8">
         <div className="flex w-full max-w-[600px] flex-col items-center gap-3">
           {/* Headline */}
@@ -142,37 +153,47 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
         </div>
       </div>
     );
+  } else {
+    // Show upcoming event
+    const { title, dateTimeFrom } = nextEvent;
+    const formattedDate = formatEventDate(dateTimeFrom?.date, i18n.language);
+    const formattedTime = formatTime(dateTimeFrom?.time);
+
+    content = (
+      <div className="flex w-full max-w-[100vw] justify-center px-8">
+        <div className="flex w-full flex-col items-center gap-3">
+          <h3 className="text-xs font-medium uppercase tracking-wider text-white/40">
+            {t('home.microWidget.headline', 'Upcoming Events')}
+          </h3>
+          {/* Event Widget - larger size */}
+          <button
+            onClick={() => onEventClick?.()}
+            className={cn(
+              'group flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-8 py-4 backdrop-blur-sm transition-all',
+              'hover:border-highlight/30 hover:bg-white/10 active:scale-[0.98]'
+            )}>
+            {/* Clock Icon */}
+            <Clock size={20} className="flex-shrink-0 text-slate-400 transition-colors group-hover:text-highlight" />
+
+            {/* Event Info */}
+            <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
+              <span className="w-full truncate text-base font-semibold text-slate-200">{title}</span>
+              <span className="text-sm text-slate-400">
+                {formattedDate}
+                {formattedTime && ` • ${formattedTime}`}
+              </span>
+            </div>
+          </button>
+        </div>
+      </div>
+    );
   }
 
-  const { title, dateTimeFrom } = nextEvent;
-  const formattedDate = formatEventDate(dateTimeFrom?.date, i18n.language);
-  const formattedTime = formatTime(dateTimeFrom?.time);
-
   return (
-    <div className="flex w-full max-w-[100vw] justify-center px-8">
-      <div className="flex w-full flex-col items-center gap-3">
-        <h3 className="text-xs font-medium uppercase tracking-wider text-white/40">
-          {t('home.microWidget.headline', 'Upcoming Events')}
-        </h3>
-        {/* Event Widget - larger size */}
-        <button
-          onClick={() => onEventClick?.()}
-          className={cn(
-            'group flex w-full items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-8 py-4 backdrop-blur-sm transition-all',
-            'hover:border-highlight/30 hover:bg-white/10 active:scale-[0.98]'
-          )}>
-          {/* Clock Icon */}
-          <Clock size={20} className="flex-shrink-0 text-slate-400 transition-colors group-hover:text-highlight" />
-
-          {/* Event Info */}
-          <div className="flex min-w-0 flex-1 flex-col items-start gap-0.5">
-            <span className="w-full truncate text-base font-semibold text-slate-200">{title}</span>
-            <span className="text-sm text-slate-400">
-              {formattedDate}
-              {formattedTime && ` • ${formattedTime}`}
-            </span>
-          </div>
-        </button>
+    <div className="flex h-full w-full items-center justify-center">
+      <div
+        className={cn('w-full transition-opacity duration-500', isVisible ? 'opacity-100' : 'opacity-0')}>
+        {content}
       </div>
     </div>
   );
