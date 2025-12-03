@@ -130,7 +130,7 @@ export const HomeView = ({
 
       <MiniButton
         icon={<IconCalendar size={26} />}
-        onClick={onHistory}
+        onClick={() => onHistory()}
         className={'absolute right-4 bottom-safe-offset-5'}
         visible={hasSavedEvents}
         data-testid="history-button"

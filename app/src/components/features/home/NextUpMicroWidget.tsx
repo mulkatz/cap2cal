@@ -109,14 +109,14 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
             'px-8 py-6'
           )}>
           {/* Sparkle icon with highlight glow */}
-          <div className="relative">
-            <div className="absolute inset-0 animate-pulse bg-highlight/30 blur-xl" />
-            <Sparkles size={32} className="relative text-highlight" strokeWidth={2} />
-          </div>
+          {/*<div className="relative">*/}
+          {/*  <div className="absolute inset-0 animate-pulse bg-highlight/30 blur-xl" />*/}
+          {/*  <Sparkles size={32} className="relative text-highlight" strokeWidth={2} />*/}
+          {/*</div>*/}
 
           {/* Text content */}
           <div className="flex flex-col items-center gap-2">
-            <h3 className="text-lg font-bold tracking-tight text-slate-100">
+            <h3 className="whitespace-pre-wrap text-lg font-bold tracking-tight text-slate-100">
               {t('home.onboarding.headline', 'Never Miss an Event Again')}
             </h3>
             <p className="text-sm leading-relaxed text-slate-300">
@@ -191,8 +191,7 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
 
   return (
     <div className="flex h-full w-full items-center justify-center">
-      <div
-        className={cn('w-full transition-opacity duration-500', isVisible ? 'opacity-100' : 'opacity-0')}>
+      <div className={cn('w-full transition-opacity duration-500', isVisible ? 'opacity-100' : 'opacity-0')}>
         {content}
       </div>
     </div>

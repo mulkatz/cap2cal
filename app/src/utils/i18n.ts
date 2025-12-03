@@ -30,8 +30,24 @@ export function initI18n() {
     })
     .then(() => {
       console.info('i18n initialized');
-      // i18next.changeLanguage('en-EN');
-      // i18next.changeLanguage('da-DK');
+
+      // Normalize language to either 'en-GB' or 'de-DE'
+      const currentLang = i18next.language;
+      let normalizedLang: string;
+
+      if (currentLang.startsWith('de')) {
+        normalizedLang = 'de-DE';
+      } else {
+        // Default to English for all other languages
+        normalizedLang = 'en-GB';
+      }
+
+      // Only change language if it needs normalization
+      if (currentLang !== normalizedLang) {
+        i18next.changeLanguage(normalizedLang);
+        localStorage.setItem('i18nextLng', normalizedLang);
+        console.info(`Normalized language from '${currentLang}' to '${normalizedLang}'`);
+      }
     });
 }
 
