@@ -54,8 +54,8 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
       format: [pdfWidth, pdfHeight],
     });
 
-    // --- 1. Fill background with dark blue-gray (#1E2E3F) ---
-    pdf.setFillColor(30, 46, 63); // #1E2E3F
+    // --- 1. Fill background with very dark blue-gray (#0D1117) ---
+    pdf.setFillColor(13, 17, 23); // #0D1117 (GitHub dark theme)
     pdf.rect(0, 0, pdfWidth, pdfHeight, 'F'); // Fill entire page
 
     // --- 2. Add Event Card Screenshot (centered with padding) ---
@@ -66,30 +66,43 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
     // --- 3. Add clickable links ---
     logger.info('pdfGenerator', 'Adding clickable link overlays...');
 
-    // 3a. Location link (if provided) - positioned in middle-upper area of card
+    // 3a. Location link (if provided)
     if (locationText && locationUrl) {
-      // Location is typically after date badge and title, roughly 80-120px from top (21-32mm)
-      // Estimate: 25% from top of card, height ~20px (5mm)
-      const locationYOffset = cardHeightMm * 0.25; // Approximate Y position
-      const locationHeightMm = 5; // Height of clickable area
+      // Location layout (from card top):
+      // - Padding top: 20px (5.3mm)
+      // - Date badge + title + kind: ~90px (24mm)
+      // - Time row: ~30px (8mm)
+      // - Location row: ~30px (8mm) ← TARGET
+      // Total from card top: ~140px (37mm)
+      // But photo adds variable height above, so calculate from a percentage
+
+      // Use 45% from top as starting point (works for various photo heights)
+      const locationYOffset = cardHeightMm * 0.45;
+      const locationHeightMm = 12; // Tall clickable area (45px) for better coverage
       const locationY = paddingMm + locationYOffset;
-      const locationX = paddingMm;
-      const locationWidthMm = cardWidthMm;
+      const locationX = paddingMm; // Full left edge
+      const locationWidthMm = cardWidthMm; // Full width
 
       pdf.link(locationX, locationY, locationWidthMm, locationHeightMm, { url: locationUrl });
-      logger.info('pdfGenerator', `Added location link: ${locationUrl}`);
+      logger.info('pdfGenerator', `Added location link at Y=${locationY.toFixed(2)}mm: ${locationUrl}`);
     }
 
-    // 3b. Branding footer link - positioned at bottom of card
-    // Footer is approximately the last 50-55px (13-15mm) of the card
-    const footerHeightMm = 14; // Height of the branding footer area
-    const footerY = paddingMm + cardHeightMm - footerHeightMm; // Y position of footer
-    const footerX = paddingMm + cardWidthMm * 0.2; // Start 20% from left (center area)
-    const footerWidthMm = cardWidthMm * 0.6; // Use 60% width (centered)
+    // 3b. Branding footer link - positioned at BOTTOM of card
+    // Footer is the last element, calculate from bottom UP
+    // Footer structure:
+    // - Border-top + padding-top: 16px (4mm)
+    // - Text line: 32px (8.5mm)
+    // - Padding-bottom: 20px (5.3mm)
+    // Total: ~68px (18mm)
 
-    // Add invisible clickable rectangle over branding text
+    const footerHeightMm = 18; // Full footer height
+    const footerY = paddingMm + cardHeightMm - footerHeightMm; // Start from bottom
+    const footerX = paddingMm; // Full width, centered by content
+    const footerWidthMm = cardWidthMm; // Full width
+
+    // Add invisible clickable rectangle over entire footer area
     pdf.link(footerX, footerY, footerWidthMm, footerHeightMm, { url: 'https://cap2cal.app/invite' });
-    logger.info('pdfGenerator', 'Added branding footer link');
+    logger.info('pdfGenerator', `Added branding footer link at Y=${footerY.toFixed(2)}mm`);
 
     // --- 4. Add metadata ---
     pdf.setProperties({
@@ -120,6 +133,6 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
  */
 export const getEventInviteUrl = (eventId: string): string => {
   // TODO: Replace with your actual invite page URL
-  const baseUrl = 'https://capture2calendar.app/invite';
+  const baseUrl = 'https://cap2cal.app/invite';
   return `${baseUrl}/${eventId}`;
 };

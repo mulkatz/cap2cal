@@ -210,6 +210,9 @@ const EventCardAtom = React.memo(
           // Create Google Maps search URL
           const searchQuery = encodeURIComponent(locationText);
           locationUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+          console.log('PDF: Location data prepared:', { locationText, locationUrl });
+        } else {
+          console.log('PDF: No location data available');
         }
 
         // 3. Generate PDF with tight bounds and dark background
@@ -252,9 +255,10 @@ const EventCardAtom = React.memo(
           highlight={isFavourite && !isShareVariant}
           inline
           usePattern
-          className={
-            'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
-          }>
+          className={cn(
+            'max-h-[60vh] border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80',
+            isShareVariant ? 'overflow-hidden shadow-none' : 'overflow-hidden shadow-lg'
+          )}>
           {/* Event Photo (Share Variant Only) */}
           {isShareVariant && data.img?.id && (
             <div className="w-full">
@@ -343,19 +347,29 @@ const EventCardAtom = React.memo(
               </div>
             )}
 
-            {/* Row 6 (Footer): Action Buttons + Tickets OR Branding */}
+            {/* Row 6 (Footer): Action Buttons + Tickets OR Ticket + Branding */}
             {isShareVariant ? (
-              /* Share Variant: Branding Footer */
-              <div className="mt-4 border-t border-white/10 pt-4 text-center">
-                <a
-                  href="https://cap2cal.app/invite"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2 transition-colors hover:text-highlight hover:decoration-highlight/50">
-                  Made with <span className="text-red-500">❤</span>{' '}
-                  <span className="text-white">Capture2Calendar</span>
-                </a>
-              </div>
+              /* Share Variant: Ticket Button + Branding Footer */
+              <>
+                {/* Ticket Button (if available) */}
+                {showTicketButton && (
+                  <div className="flex pt-2">
+                    <TicketButton isFavourite={isFavourite} id={id} />
+                  </div>
+                )}
+
+                {/* Branding Footer */}
+                <div className="mt-4 border-t border-white/10 pt-4 text-center">
+                  <a
+                    href="https://cap2cal.app/invite"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2 transition-colors hover:text-highlight hover:decoration-highlight/50">
+                    Made with <span className="text-red-500">❤</span>{' '}
+                    <span className="text-white">Capture2Calendar</span>
+                  </a>
+                </div>
+              </>
             ) : (
               /* Default Variant: Action Buttons */
               <div className="flex items-center gap-2 pt-2">
@@ -397,9 +411,7 @@ const EventCardAtom = React.memo(
               highlight={false}
               inline={false}
               usePattern
-              className={
-                'overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
-              }>
+              className={'overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-none'}>
               {/* Event Photo (Share Variant) */}
               {data.img?.id && (
                 <div className="w-full">
@@ -451,6 +463,13 @@ const EventCardAtom = React.memo(
                     <p className="text-[13px] font-normal tracking-[0.5px] text-gray-200 opacity-80">
                       {description.short}
                     </p>
+                  </div>
+                )}
+
+                {/* Ticket Button (if available) */}
+                {showTicketButton && (
+                  <div className="flex pt-2">
+                    <TicketButton isFavourite={isFavourite} id={id} />
                   </div>
                 )}
 
