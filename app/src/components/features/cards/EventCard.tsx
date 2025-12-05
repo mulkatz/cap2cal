@@ -11,6 +11,9 @@ import { useTranslation } from 'react-i18next';
 import { Dialog } from '../../ui/Dialog.tsx';
 import { useEventCardScreenshot } from '../../../hooks/useEventCardScreenshot.tsx';
 import { Capacitor } from '@capacitor/core';
+import { generateEventPdf, getEventInviteUrl } from '../../../utils/pdfGenerator';
+import { db } from '../../../db/db';
+import { useShare } from '../../../hooks/useShare';
 
 type Props = {
   data: CaptureEvent;
@@ -115,6 +118,9 @@ const EventCardAtom = React.memo(
     // Screenshot hook
     const { takeScreenshot, isCapturing } = useEventCardScreenshot({ format: 'png' });
 
+    // Share hook
+    const { sharePdfFile } = useShare();
+
     const {
       title,
       kind,
@@ -172,7 +178,7 @@ const EventCardAtom = React.memo(
       document.body.removeChild(link);
     };
 
-    // Handle share button click - capture screenshot
+    // Handle share button click - generate PDF and share
     const handleShare = async () => {
       if (!cardRef.current) {
         return;
@@ -180,22 +186,55 @@ const EventCardAtom = React.memo(
 
       setShowActionSheet(false);
 
-      const imagePath = await takeScreenshot(cardRef.current);
+      try {
+        // 1. Capture the event card as screenshot
+        const cardScreenshotDataUrl = await takeScreenshot(cardRef.current);
 
-      if (imagePath) {
+        if (!cardScreenshotDataUrl) {
+          console.error('Failed to capture card screenshot');
+          return;
+        }
+
+        // 2. Retrieve the original event photo from database (if available)
+        let eventPhotoDataUrl: string | undefined;
+
+        if (data.img?.id) {
+          const imageData = await db.images.get(data.img.id);
+          if (imageData?.dataUrl) {
+            eventPhotoDataUrl = imageData.dataUrl;
+          }
+        }
+
+        // 3. Generate the invite URL
+        const inviteUrl = getEventInviteUrl(id || timestamp.toString());
+
+        // 4. Generate PDF with photo + card + link
+        const pdfBase64 = await generateEventPdf({
+          eventPhotoDataUrl,
+          cardScreenshotDataUrl,
+          eventTitle: title || 'Event',
+          inviteUrl,
+        });
+
+        // 5. Generate filename
+        const now = Date.now();
+        const filename = `${title?.replace(/[^a-z0-9]/gi, '-').toLowerCase() || 'event'}-${now}.pdf`;
+
+        // 6. Share or download based on platform
         const platform = Capacitor.getPlatform();
 
         if (platform === 'web') {
           // On web: Trigger download for testing
-          const timestamp = Date.now();
-          const filename = `event-card-${title?.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${timestamp}.png`;
-          triggerDownload(imagePath, filename);
-          console.log('Screenshot downloaded:', filename);
+          const pdfDataUrl = `data:application/pdf;base64,${pdfBase64}`;
+          triggerDownload(pdfDataUrl, filename);
+          console.log('PDF downloaded:', filename);
         } else {
-          // On native: Log file path
-          console.log('Screenshot saved to:', imagePath);
-          // You can inspect the file in the device's cache directory
+          // On native: Use share functionality
+          await sharePdfFile(pdfBase64, filename);
+          console.log('PDF shared:', filename);
         }
+      } catch (error) {
+        console.error('Failed to generate/share PDF:', error);
       }
     };
 
