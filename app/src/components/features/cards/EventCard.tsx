@@ -121,6 +121,7 @@ const EventCardAtom = React.memo(
     // Refs for the card elements
     const cardRef = useRef<HTMLDivElement>(null); // Default variant (visible)
     const shareCardRef = useRef<HTMLDivElement>(null); // Share variant (hidden, for PDF only)
+    const shareCardContainerRef = useRef<HTMLDivElement>(null); // Container for share card (to control visibility)
 
     // Refs for interactive elements (to measure positions for PDF clickable areas)
     const locationRef = useRef<HTMLDivElement>(null);
@@ -194,7 +195,7 @@ const EventCardAtom = React.memo(
 
     // Handle share button click - fetch tickets if needed, generate PDF and share
     const handleShare = async () => {
-      if (!shareCardRef.current) {
+      if (!shareCardRef.current || !shareCardContainerRef.current) {
         console.error('Share card ref not available');
         return;
       }
@@ -222,17 +223,59 @@ const EventCardAtom = React.memo(
           }
         }
 
-        // 2. Capture the share variant card as screenshot (includes photo + branding)
+        // 2. Pre-load the event image if it exists (critical for iOS)
+        if (data.img?.dataUrl) {
+          console.log('[handleShare] Pre-loading event image...');
+          const imageDataUrl = data.img.dataUrl; // Store in variable for TypeScript
+          try {
+            const img = new Image();
+            await new Promise<void>((resolve, reject) => {
+              img.onload = () => {
+                console.log('[handleShare] Event image loaded successfully:', img.width, 'x', img.height);
+                resolve();
+              };
+              img.onerror = (e) => {
+                console.error('[handleShare] Event image failed to load:', e);
+                reject(e);
+              };
+              img.src = imageDataUrl;
+            });
+
+            // Ensure image is fully decoded
+            if (img.decode) {
+              await img.decode();
+              console.log('[handleShare] Event image decoded successfully');
+            }
+          } catch (error) {
+            console.error('[handleShare] Error pre-loading image:', error);
+            // Continue anyway - screenshot might work without it
+          }
+        }
+
+        // 3. Temporarily make the share card visible for screenshot (but keep it off-screen)
+        console.log('[handleShare] Making share card temporarily visible...');
+        shareCardContainerRef.current.style.visibility = 'visible';
+
+        // Wait for browser to paint the share card with the pre-loaded image
+        await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+        console.log('[handleShare] Share card painted, taking screenshot...');
+
+        // 4. Capture the share variant card as screenshot (includes photo + branding)
         const cardScreenshotDataUrl = await takeScreenshot(shareCardRef.current);
+        console.log('[handleShare] Screenshot captured, dataUrl length:', cardScreenshotDataUrl?.length || 0);
+
+        // 5. Hide the share card again
+        shareCardContainerRef.current.style.visibility = 'hidden';
 
         if (!cardScreenshotDataUrl) {
           console.error('Failed to capture card screenshot');
+          shareCardContainerRef.current.style.visibility = 'hidden';
           setIsPreparingShare(false);
           setShowActionSheet(false);
           return;
         }
 
-        // 3. Measure interactive element positions relative to card
+        // 6. Measure interactive element positions relative to card
         const cardRect = shareCardRef.current.getBoundingClientRect();
 
         // Helper to measure an element's position relative to the card
@@ -253,7 +296,7 @@ const EventCardAtom = React.memo(
         const ticketButtonMeasurement = shouldRenderTicketButton ? measureElement(ticketButtonRef) : null;
         const footerLinkMeasurement = measureElement(footerLinkRef);
 
-        // 4. Prepare location data for clickable link (if available)
+        // 7. Prepare location data for clickable link (if available)
         let locationText: string | undefined;
         let locationUrl: string | undefined;
 
@@ -264,12 +307,13 @@ const EventCardAtom = React.memo(
           locationUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
         }
 
-        // 5. Prepare ticket URL (if available)
-        const ticketUrl = currentTicketLink && currentTicketLink !== null
-          ? `https://${currentTicketLink.replace(/^(https?:\/\/)?(www\.)?/, 'www.')}`
-          : undefined;
+        // 8. Prepare ticket URL (if available)
+        const ticketUrl =
+          currentTicketLink && currentTicketLink !== null
+            ? `https://${currentTicketLink.replace(/^(https?:\/\/)?(www\.)?/, 'www.')}`
+            : undefined;
 
-        // 6. Generate PDF with tight bounds, dark background, and accurate clickable areas
+        // 9. Generate PDF with tight bounds, dark background, and accurate clickable areas
         const pdfBase64 = await generateEventPdf({
           cardScreenshotDataUrl,
           eventTitle: title || 'Event',
@@ -282,16 +326,16 @@ const EventCardAtom = React.memo(
           pixelRatio: PIXEL_RATIO, // Pass pixel ratio for coordinate scaling
         });
 
-        // 7. Generate filename (localized, human-readable)
+        // 10. Generate filename (localized, human-readable)
         const cleanTitle = (title || t('general.newEvent', 'New Event'))
           .replace(/[<>:"/\\|?*]/g, '') // Remove invalid filename characters
           .trim();
         const filename = `${t('share.eventFilename', { title: cleanTitle })}.pdf`;
 
-        // 8. Share message
+        // 11. Share message
         const shareMessage = t('share.message', 'Check out this event I found! 🎉');
 
-        // 9. Share or download based on platform
+        // 12. Share or download based on platform
         const platform = Capacitor.getPlatform();
 
         if (platform === 'web') {
@@ -309,6 +353,10 @@ const EventCardAtom = React.memo(
         setShowActionSheet(false);
       } catch (error) {
         console.error('Failed to generate/share PDF:', error);
+        // Make sure to hide the share card even on error
+        if (shareCardContainerRef.current) {
+          shareCardContainerRef.current.style.visibility = 'hidden';
+        }
         setIsPreparingShare(false);
         setShowActionSheet(false);
       }
@@ -470,15 +518,18 @@ const EventCardAtom = React.memo(
         {/* Hidden Share Variant Card (for PDF generation only) */}
         {!isShareVariant && (
           <div
-            className="pointer-events-none fixed left-[-9999px] top-0 w-[400px] opacity-0"
+            ref={shareCardContainerRef}
+            className="pointer-events-none fixed left-[-9999px] top-0 w-[400px]"
             aria-hidden="true"
-            style={{ zIndex: -1000 }}>
+            style={{ visibility: 'hidden', zIndex: -1000 }}>
             <Card
               ref={shareCardRef}
               highlight={false}
               inline={false}
               usePattern
-              className={'overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-none'}>
+              className={
+                'overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-none'
+              }>
               {/* Event Photo (Share Variant) */}
               {data.img?.id && (
                 <div className="w-full">
@@ -534,11 +585,13 @@ const EventCardAtom = React.memo(
                 )}
 
                 {/* Ticket Button (only if ticket link exists, NOT if explicitly null) */}
-                {showTicketButton && (ticketDirectLink || alreadyFetchedTicketLink) && alreadyFetchedTicketLink !== null && (
-                  <div ref={ticketButtonRef} className="flex pt-2">
-                    <TicketButton isFavourite={isFavourite} id={id} />
-                  </div>
-                )}
+                {showTicketButton &&
+                  (ticketDirectLink || alreadyFetchedTicketLink) &&
+                  alreadyFetchedTicketLink !== null && (
+                    <div ref={ticketButtonRef} className="flex pt-2">
+                      <TicketButton isFavourite={isFavourite} id={id} />
+                    </div>
+                  )}
 
                 {/* Branding Footer */}
                 <div className="mt-4 border-t border-white/10 pt-4 text-center">

@@ -53,7 +53,7 @@
       "checkOutTool": "Schau dir dieses tolle Tool an: {{title}}\n{{description}}\nBesuche: {{link}}",
       "appTitle": "Capture2Calendar",
       "appDescription": "Füge Events ganz einfach aus Fotos zu deinem Kalender hinzu!",
-      "eventFilename": "Veranstaltung - {{title}}",
+      "eventFilename": "{{title}} (Cap2Cal)",
       "message": "Schau dir dieses Event an, das ich gefunden habe! 🎉"
     },
     "errors": {

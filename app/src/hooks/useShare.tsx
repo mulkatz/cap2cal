@@ -13,13 +13,8 @@ export const useShare = () => {
         directory: Directory.Cache,
       });
 
-      // Get proper content URI for sharing (important for Android)
-      const uriResult = await Filesystem.getUri({
-        path: fileName,
-        directory: Directory.Cache,
-      });
-
-      const shareableUri = uriResult.uri;
+      // Use the URI from writeFile - Share plugin handles platform differences
+      const shareableUri = writeFileResult.uri;
 
       const canShare = await Share.canShare();
       if (!canShare.value) {
