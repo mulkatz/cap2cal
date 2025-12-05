@@ -201,19 +201,32 @@ const EventCardAtom = React.memo(
           return;
         }
 
-        // 2. Generate PDF with tight bounds and black background
+        // 2. Prepare location data for clickable link (if available)
+        let locationText: string | undefined;
+        let locationUrl: string | undefined;
+
+        if (location) {
+          locationText = formatLocation(location.city, location.address);
+          // Create Google Maps search URL
+          const searchQuery = encodeURIComponent(locationText);
+          locationUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
+        }
+
+        // 3. Generate PDF with tight bounds and dark background
         const pdfBase64 = await generateEventPdf({
           cardScreenshotDataUrl,
           eventTitle: title || 'Event',
+          locationText,
+          locationUrl,
         });
 
-        // 3. Generate filename (localized, human-readable)
+        // 4. Generate filename (localized, human-readable)
         const cleanTitle = (title || t('general.newEvent', 'New Event'))
           .replace(/[<>:"/\\|?*]/g, '') // Remove invalid filename characters
           .trim();
         const filename = `${t('share.eventFilename', { title: cleanTitle })}.pdf`;
 
-        // 4. Share or download based on platform
+        // 5. Share or download based on platform
         const platform = Capacitor.getPlatform();
 
         if (platform === 'web') {
@@ -338,9 +351,8 @@ const EventCardAtom = React.memo(
                   href="https://cap2cal.app/invite"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2 transition-colors hover:text-highlight hover:decoration-highlight/50">
-                  <span>Made with</span>
-                  <span className="text-red-500">❤</span>
+                  className="inline-block text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2 transition-colors hover:text-highlight hover:decoration-highlight/50">
+                  Made with <span className="text-red-500">❤</span>{' '}
                   <span className="text-white">Capture2Calendar</span>
                 </a>
               </div>
@@ -448,9 +460,8 @@ const EventCardAtom = React.memo(
                     href="https://cap2cal.app/invite"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2">
-                    <span>Made with</span>
-                    <span className="text-red-500">❤</span>
+                    className="inline-block text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2">
+                    Made with <span className="text-red-500">❤</span>{' '}
                     <span className="text-white">Capture2Calendar</span>
                   </a>
                 </div>

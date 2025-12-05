@@ -4,21 +4,24 @@ import { logger } from './logger';
 export interface GenerateEventPdfOptions {
   cardScreenshotDataUrl: string; // Event card screenshot with photo already inside (required)
   eventTitle: string;
+  locationText?: string; // Optional location text for clickable link
+  locationUrl?: string; // Optional maps URL for location
 }
 
 /**
- * Generates a PDF with tight bounds around the event card screenshot on a black background
+ * Generates a PDF with tight bounds around the event card screenshot on a dark background
  *
  * @param options - PDF generation options
  * @returns Base64-encoded PDF data (without data URL prefix)
  *
  * Layout:
- * - Black background
+ * - Dark blue-gray background (#1E2E3F)
  * - Event card screenshot (with photo, details, and branding footer already included)
  * - Small padding around the card
+ * - Clickable links: location (if provided) and branding footer
  */
 export const generateEventPdf = async (options: GenerateEventPdfOptions): Promise<string> => {
-  const { cardScreenshotDataUrl, eventTitle } = options;
+  const { cardScreenshotDataUrl, eventTitle, locationText, locationUrl } = options;
 
   try {
     logger.info('pdfGenerator', 'Starting PDF generation...');
@@ -51,8 +54,8 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
       format: [pdfWidth, pdfHeight],
     });
 
-    // --- 1. Fill background with black ---
-    pdf.setFillColor(0, 0, 0); // Black
+    // --- 1. Fill background with dark blue-gray (#1E2E3F) ---
+    pdf.setFillColor(30, 46, 63); // #1E2E3F
     pdf.rect(0, 0, pdfWidth, pdfHeight, 'F'); // Fill entire page
 
     // --- 2. Add Event Card Screenshot (centered with padding) ---
@@ -60,18 +63,33 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
 
     pdf.addImage(cardScreenshotDataUrl, 'PNG', paddingMm, paddingMm, cardWidthMm, cardHeightMm);
 
-    // --- 3. Add invisible clickable link over branding footer ---
-    logger.info('pdfGenerator', 'Adding clickable link overlay...');
+    // --- 3. Add clickable links ---
+    logger.info('pdfGenerator', 'Adding clickable link overlays...');
 
-    // Branding footer is at the bottom of the card (approximately last 60px / 16mm)
-    // We'll create a clickable rectangle over the footer area
-    const footerHeightMm = 16; // Height of the branding footer area
+    // 3a. Location link (if provided) - positioned in middle-upper area of card
+    if (locationText && locationUrl) {
+      // Location is typically after date badge and title, roughly 80-120px from top (21-32mm)
+      // Estimate: 25% from top of card, height ~20px (5mm)
+      const locationYOffset = cardHeightMm * 0.25; // Approximate Y position
+      const locationHeightMm = 5; // Height of clickable area
+      const locationY = paddingMm + locationYOffset;
+      const locationX = paddingMm;
+      const locationWidthMm = cardWidthMm;
+
+      pdf.link(locationX, locationY, locationWidthMm, locationHeightMm, { url: locationUrl });
+      logger.info('pdfGenerator', `Added location link: ${locationUrl}`);
+    }
+
+    // 3b. Branding footer link - positioned at bottom of card
+    // Footer is approximately the last 50-55px (13-15mm) of the card
+    const footerHeightMm = 14; // Height of the branding footer area
     const footerY = paddingMm + cardHeightMm - footerHeightMm; // Y position of footer
-    const footerX = paddingMm; // X position (start of card)
-    const footerWidthMm = cardWidthMm; // Full width of card
+    const footerX = paddingMm + cardWidthMm * 0.2; // Start 20% from left (center area)
+    const footerWidthMm = cardWidthMm * 0.6; // Use 60% width (centered)
 
-    // Add invisible clickable rectangle
+    // Add invisible clickable rectangle over branding text
     pdf.link(footerX, footerY, footerWidthMm, footerHeightMm, { url: 'https://cap2cal.app/invite' });
+    logger.info('pdfGenerator', 'Added branding footer link');
 
     // --- 4. Add metadata ---
     pdf.setProperties({
