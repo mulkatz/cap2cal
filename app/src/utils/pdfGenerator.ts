@@ -1,27 +1,51 @@
 import { jsPDF } from 'jspdf';
 import { logger } from './logger';
 
+export interface ElementMeasurement {
+  x: number; // Position relative to card (pixels)
+  y: number;
+  width: number;
+  height: number;
+}
+
 export interface GenerateEventPdfOptions {
   cardScreenshotDataUrl: string; // Event card screenshot with photo already inside (required)
   eventTitle: string;
   locationText?: string; // Optional location text for clickable link
   locationUrl?: string; // Optional maps URL for location
+  // Precise measurements of interactive elements (CSS pixels, relative to card)
+  locationMeasurement?: ElementMeasurement | null;
+  ticketButtonMeasurement?: ElementMeasurement | null;
+  footerLinkMeasurement?: ElementMeasurement | null;
+  pixelRatio?: number; // Screenshot pixel ratio (default: 2) - measurements need to be scaled by this
 }
 
 /**
  * Generates a PDF with tight bounds around the event card screenshot on a dark background
  *
- * @param options - PDF generation options
+ * @param options - PDF generation options including precise measurements of interactive elements
  * @returns Base64-encoded PDF data (without data URL prefix)
  *
  * Layout:
- * - Dark blue-gray background (#1E2E3F)
+ * - Very dark blue-gray background (#0D1117)
  * - Event card screenshot (with photo, details, and branding footer already included)
- * - Small padding around the card
- * - Clickable links: location (if provided) and branding footer
+ * - Small padding (5mm) around the card
+ * - Accurately positioned clickable links based on element measurements:
+ *   - Location (if provided) - links to Google Maps
+ *   - Footer link - links to cap2cal.app/invite
+ *   - Ticket button (measured for future use)
  */
 export const generateEventPdf = async (options: GenerateEventPdfOptions): Promise<string> => {
-  const { cardScreenshotDataUrl, eventTitle, locationText, locationUrl } = options;
+  const {
+    cardScreenshotDataUrl,
+    eventTitle,
+    locationText,
+    locationUrl,
+    locationMeasurement,
+    ticketButtonMeasurement,
+    footerLinkMeasurement,
+    pixelRatio = 2,
+  } = options;
 
   try {
     logger.info('pdfGenerator', 'Starting PDF generation...');
@@ -63,46 +87,54 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
 
     pdf.addImage(cardScreenshotDataUrl, 'PNG', paddingMm, paddingMm, cardWidthMm, cardHeightMm);
 
-    // --- 3. Add clickable links ---
-    logger.info('pdfGenerator', 'Adding clickable link overlays...');
+    // --- 3. Add clickable links based on precise measurements ---
+    logger.info('pdfGenerator', 'Adding clickable link overlays using measured positions...');
 
-    // 3a. Location link (if provided)
-    if (locationText && locationUrl) {
-      // Location layout (from card top):
-      // - Padding top: 20px (5.3mm)
-      // - Date badge + title + kind: ~90px (24mm)
-      // - Time row: ~30px (8mm)
-      // - Location row: ~30px (8mm) ← TARGET
-      // Total from card top: ~140px (37mm)
-      // But photo adds variable height above, so calculate from a percentage
+    // Helper to convert element measurement to PDF coordinates
+    const addClickableArea = (
+      measurement: ElementMeasurement,
+      url: string,
+      label: string
+    ) => {
+      // Scale CSS pixel measurements by pixel ratio to match actual image dimensions
+      const scaledX = measurement.x * pixelRatio;
+      const scaledY = measurement.y * pixelRatio;
+      const scaledWidth = measurement.width * pixelRatio;
+      const scaledHeight = measurement.height * pixelRatio;
 
-      // Use 45% from top as starting point (works for various photo heights)
-      const locationYOffset = cardHeightMm * 0.45;
-      const locationHeightMm = 12; // Tall clickable area (45px) for better coverage
-      const locationY = paddingMm + locationYOffset;
-      const locationX = paddingMm; // Full left edge
-      const locationWidthMm = cardWidthMm; // Full width
+      // Convert scaled pixels to mm (same ratio used for card dimensions)
+      const xMm = scaledX * pxToMm;
+      const yMm = scaledY * pxToMm;
+      const widthMm = scaledWidth * pxToMm;
+      const heightMm = scaledHeight * pxToMm;
 
-      pdf.link(locationX, locationY, locationWidthMm, locationHeightMm, { url: locationUrl });
-      logger.info('pdfGenerator', `Added location link at Y=${locationY.toFixed(2)}mm: ${locationUrl}`);
+      // Add PDF padding offset
+      const pdfX = paddingMm + xMm;
+      const pdfY = paddingMm + yMm; // Use Y as-is (top-down), don't invert
+
+      // Add clickable link
+      pdf.link(pdfX, pdfY, widthMm, heightMm, { url });
+
+      logger.info('pdfGenerator', `Added ${label} link at PDF=(${pdfX.toFixed(2)}mm, ${pdfY.toFixed(2)}mm) size=(${widthMm.toFixed(2)}mm x ${heightMm.toFixed(2)}mm)`);
+    };
+
+    // Add clickable areas for each measured element
+    if (locationMeasurement && locationText && locationUrl) {
+      addClickableArea(locationMeasurement, locationUrl, 'location');
+    } else if (!locationMeasurement && locationText) {
+      logger.warn('pdfGenerator', 'Location text provided but no measurement found');
     }
 
-    // 3b. Branding footer link - positioned at BOTTOM of card
-    // Footer is the last element, calculate from bottom UP
-    // Footer structure:
-    // - Border-top + padding-top: 16px (4mm)
-    // - Text line: 32px (8.5mm)
-    // - Padding-bottom: 20px (5.3mm)
-    // Total: ~68px (18mm)
+    if (ticketButtonMeasurement) {
+      // For now, ticket button doesn't have a specific URL - could be added later
+      logger.info('pdfGenerator', `Ticket button position measured: (${ticketButtonMeasurement.x.toFixed(2)}px, ${ticketButtonMeasurement.y.toFixed(2)}px)`);
+    }
 
-    const footerHeightMm = 18; // Full footer height
-    const footerY = paddingMm + cardHeightMm - footerHeightMm; // Start from bottom
-    const footerX = paddingMm; // Full width, centered by content
-    const footerWidthMm = cardWidthMm; // Full width
-
-    // Add invisible clickable rectangle over entire footer area
-    pdf.link(footerX, footerY, footerWidthMm, footerHeightMm, { url: 'https://cap2cal.app/invite' });
-    logger.info('pdfGenerator', `Added branding footer link at Y=${footerY.toFixed(2)}mm`);
+    if (footerLinkMeasurement) {
+      addClickableArea(footerLinkMeasurement, 'https://cap2cal.app/invite', 'footer');
+    } else {
+      logger.warn('pdfGenerator', 'Footer link measurement not found');
+    }
 
     // --- 4. Add metadata ---
     pdf.setProperties({

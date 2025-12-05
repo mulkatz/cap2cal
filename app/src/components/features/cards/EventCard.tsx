@@ -120,8 +120,14 @@ const EventCardAtom = React.memo(
     const cardRef = useRef<HTMLDivElement>(null); // Default variant (visible)
     const shareCardRef = useRef<HTMLDivElement>(null); // Share variant (hidden, for PDF only)
 
-    // Screenshot hook
-    const { takeScreenshot, isCapturing } = useEventCardScreenshot({ format: 'png' });
+    // Refs for interactive elements (to measure positions for PDF clickable areas)
+    const locationRef = useRef<HTMLDivElement>(null);
+    const ticketButtonRef = useRef<HTMLDivElement>(null);
+    const footerLinkRef = useRef<HTMLAnchorElement>(null);
+
+    // Screenshot hook (pixelRatio: 2 for high quality)
+    const PIXEL_RATIO = 2;
+    const { takeScreenshot, isCapturing } = useEventCardScreenshot({ format: 'png', pixelRatio: PIXEL_RATIO });
 
     // Share hook
     const { sharePdfFile } = useShare();
@@ -201,7 +207,27 @@ const EventCardAtom = React.memo(
           return;
         }
 
-        // 2. Prepare location data for clickable link (if available)
+        // 2. Measure interactive element positions relative to card
+        const cardRect = shareCardRef.current.getBoundingClientRect();
+
+        // Helper to measure an element's position relative to the card
+        const measureElement = (ref: React.RefObject<HTMLElement>) => {
+          if (!ref.current) return null;
+          const rect = ref.current.getBoundingClientRect();
+          return {
+            x: rect.left - cardRect.left, // Position relative to card
+            y: rect.top - cardRect.top,
+            width: rect.width,
+            height: rect.height,
+          };
+        };
+
+        // Measure each interactive element
+        const locationMeasurement = location ? measureElement(locationRef) : null;
+        const ticketButtonMeasurement = showTicketButton ? measureElement(ticketButtonRef) : null;
+        const footerLinkMeasurement = measureElement(footerLinkRef);
+
+        // 3. Prepare location data for clickable link (if available)
         let locationText: string | undefined;
         let locationUrl: string | undefined;
 
@@ -210,17 +236,18 @@ const EventCardAtom = React.memo(
           // Create Google Maps search URL
           const searchQuery = encodeURIComponent(locationText);
           locationUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
-          console.log('PDF: Location data prepared:', { locationText, locationUrl });
-        } else {
-          console.log('PDF: No location data available');
         }
 
-        // 3. Generate PDF with tight bounds and dark background
+        // 4. Generate PDF with tight bounds, dark background, and accurate clickable areas
         const pdfBase64 = await generateEventPdf({
           cardScreenshotDataUrl,
           eventTitle: title || 'Event',
           locationText,
           locationUrl,
+          locationMeasurement,
+          ticketButtonMeasurement,
+          footerLinkMeasurement,
+          pixelRatio: PIXEL_RATIO, // Pass pixel ratio for coordinate scaling
         });
 
         // 4. Generate filename (localized, human-readable)
@@ -449,7 +476,7 @@ const EventCardAtom = React.memo(
 
                 {/* Location */}
                 {location && (
-                  <div className="mt-1.5 flex items-center gap-2">
+                  <div ref={locationRef} className="mt-1.5 flex items-center gap-2">
                     <MapPin size={14} strokeWidth={2.5} className="flex-shrink-0 text-highlight" />
                     <span className="truncate text-sm font-normal text-gray-100">
                       {formatLocation(location?.city, location?.address)}
@@ -468,7 +495,7 @@ const EventCardAtom = React.memo(
 
                 {/* Ticket Button (if available) */}
                 {showTicketButton && (
-                  <div className="flex pt-2">
+                  <div ref={ticketButtonRef} className="flex pt-2">
                     <TicketButton isFavourite={isFavourite} id={id} />
                   </div>
                 )}
@@ -476,6 +503,7 @@ const EventCardAtom = React.memo(
                 {/* Branding Footer */}
                 <div className="mt-4 border-t border-white/10 pt-4 text-center">
                   <a
+                    ref={footerLinkRef}
                     href="https://cap2cal.app/invite"
                     target="_blank"
                     rel="noopener noreferrer"
