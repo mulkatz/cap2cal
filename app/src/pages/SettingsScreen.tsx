@@ -23,6 +23,8 @@ import {
 import { Feedback } from '../components/features/dialogs/FeedbackDialog.tsx';
 import { Dialog } from '../components/ui/Dialog.tsx';
 import { PremiumConfirm } from '../components/features/modals/PremiumModal.tsx';
+import { Card } from '../components/features/cards/CardGroup.tsx';
+import { AppLikePrompt } from '../components/features/dialogs/AppLikePrompt.tsx';
 import { clearLocalStorage, deleteAllUserData, exportUserData } from '../utils/dataManagement';
 import toast from 'react-hot-toast';
 import { AnalyticsEvent } from '../services/analytics.service';
@@ -344,11 +346,46 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
     }
   };
 
-  const handleRateApp = async () => {
+  const handleRateApp = () => {
     logAnalyticsEvent(AnalyticsEvent.RATE_APP_SETTINGS_CLICKED);
 
+    // Show AppPrompt dialog first (instead of directly showing native rating)
+    dialogs.push(
+      <Dialog
+        onClose={() => {
+          logAnalyticsEvent(AnalyticsEvent.REVIEW_PROMPT_DISMISSED);
+          dialogs.pop();
+        }}>
+        <Card>
+          <AppLikePrompt onLike={handleAppLiked} onDislike={handleAppDisliked} />
+        </Card>
+      </Dialog>
+    );
+  };
+
+  /**
+   * Handle when user clicks "Yes, I love it!" from settings rate app
+   */
+  const handleAppLiked = async () => {
     // Request app rating with fallback
     await requestAppRating(true, logAnalyticsEvent, t);
+  };
+
+  /**
+   * Handle when user clicks "Not really" from settings rate app
+   */
+  const handleAppDisliked = () => {
+    // Show feedback dialog
+    dialogs.push(
+      <Dialog
+        onClose={() => {
+          dialogs.pop();
+        }}>
+        <Card>
+          <Feedback />
+        </Card>
+      </Dialog>
+    );
   };
 
   const getLanguageDisplay = () => {

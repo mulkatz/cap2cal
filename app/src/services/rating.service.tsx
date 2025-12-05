@@ -76,15 +76,7 @@ export const requestAppRating = async (
     if (platform === 'ios') {
       return await handleIOSRatingFallback(showToastOnFallback, logAnalyticsEvent, t);
     } else if (platform === 'android') {
-      // On Android, we could potentially check the result
-      // but the API doesn't reliably tell us if dialog was shown
-      // For now, we'll assume success and let user trigger manually if needed
-      logAnalyticsEvent?.(AnalyticsEvent.NATIVE_REVIEW_SUCCESS, { platform });
-      return {
-        success: true,
-        nativeDialogShown: true, // Assume shown (can't verify)
-        fallbackUsed: false,
-      };
+      return await handleAndroidRatingFallback(showToastOnFallback, logAnalyticsEvent, t);
     }
 
     logAnalyticsEvent?.(AnalyticsEvent.NATIVE_REVIEW_SUCCESS, { platform });
@@ -127,7 +119,7 @@ const handleIOSRatingFallback = async (
   logger.info('RatingService', 'iOS: Waiting 1.5s for native dialog, then showing fallback option');
 
   // Wait for native dialog to potentially appear
-  await new Promise(resolve => setTimeout(resolve, 1500));
+  await new Promise((resolve) => setTimeout(resolve, 1500));
 
   // Show subtle fallback option (toast)
   if (showToast) {
@@ -139,13 +131,71 @@ const handleIOSRatingFallback = async (
     toast(
       (toastData) => (
         <div className="flex items-center gap-3">
-          <span className="text-sm text-white">
-            {fallbackMessage}
-          </span>
+          <span className="text-sm text-white">{fallbackMessage}</span>
           <button
             onClick={() => {
               toast.dismiss(toastData.id);
               logAnalyticsEvent?.(AnalyticsEvent.STORE_OPENED_FROM_FALLBACK, { platform: 'ios' });
+              openAppStore(logAnalyticsEvent);
+            }}
+            className="rounded-full bg-highlight px-3 py-1 text-xs font-semibold text-primaryDark transition-opacity active:opacity-80">
+            {buttonText}
+          </button>
+        </div>
+      ),
+      {
+        duration: 6000,
+        position: 'bottom-center',
+        style: {
+          background: '#1a1a1a',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          borderRadius: '16px',
+          padding: '12px 16px',
+        },
+      }
+    );
+  }
+
+  return {
+    success: true,
+    nativeDialogShown: true, // We assume it might have been shown
+    fallbackUsed: true, // We offered fallback
+  };
+};
+
+/**
+ * Android-specific: Wait for native dialog, then offer Play Store fallback
+ *
+ * Android API also doesn't reliably tell us if the dialog was shown.
+ * The dialog may not appear if the user already rated, quota exceeded, or recently dismissed.
+ * We wait 1.5s to give the native dialog time to appear, then offer
+ * a subtle option to go to the Play Store.
+ */
+const handleAndroidRatingFallback = async (
+  showToast: boolean,
+  logAnalyticsEvent?: (event: string, params?: Record<string, any>) => void,
+  t?: (key: string) => string
+): Promise<RatingResult> => {
+  logger.info('RatingService', 'Android: Waiting 1.5s for native dialog, then showing fallback option');
+
+  // Wait for native dialog to potentially appear
+  await new Promise((resolve) => setTimeout(resolve, 1500));
+
+  // Show subtle fallback option (toast)
+  if (showToast) {
+    logAnalyticsEvent?.(AnalyticsEvent.NATIVE_REVIEW_FALLBACK_SHOWN, { platform: 'android' });
+
+    const fallbackMessage = t?.('toasts.rating.fallbackMessage') || "Didn't see the rating dialog?";
+    const buttonText = t?.('toasts.rating.rateOnPlayStore') || 'Rate on Play Store';
+
+    toast(
+      (toastData) => (
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-white">{fallbackMessage}</span>
+          <button
+            onClick={() => {
+              toast.dismiss(toastData.id);
+              logAnalyticsEvent?.(AnalyticsEvent.STORE_OPENED_FROM_FALLBACK, { platform: 'android' });
               openAppStore(logAnalyticsEvent);
             }}
             className="rounded-full bg-highlight px-3 py-1 text-xs font-semibold text-primaryDark transition-opacity active:opacity-80">
@@ -206,14 +256,22 @@ export const openAppStore = async (
     window.open(primaryUrl, '_system');
     logger.info('RatingService', 'Opened store via market:// URL');
   } catch (error) {
-    logger.warn('RatingService', 'market:// URL failed, trying HTTPS fallback', error instanceof Error ? error : undefined);
+    logger.warn(
+      'RatingService',
+      'market:// URL failed, trying HTTPS fallback',
+      error instanceof Error ? error : undefined
+    );
 
     try {
       // Fallback to HTTPS URL
       window.open(fallbackUrl, '_system');
       logger.info('RatingService', 'Opened store via HTTPS URL');
     } catch (fallbackError) {
-      logger.error('RatingService', 'Both store URLs failed', fallbackError instanceof Error ? fallbackError : undefined);
+      logger.error(
+        'RatingService',
+        'Both store URLs failed',
+        fallbackError instanceof Error ? fallbackError : undefined
+      );
     }
   }
 };
