@@ -12,7 +12,7 @@
     "cta": "Download for iOS",
     "ctaAndroid": "Get on Google Play",
     "subtext": "Start with our free plan. Premium features available.",
-    "trustBadge": "Join thousands of users who never miss events"
+    "trustBadge": "Never miss another event again"
   },
   "steps": {
     "title": "From Poster to Calendar in 3 Seconds",
@@ -62,7 +62,7 @@
     "subtitle": "Built to capture and organize events effortlessly",
     "aiAccuracy": {
       "title": "AI-Powered Extraction",
-      "description": "Advanced AI trained on 100,000+ event posters delivers 99% accuracy across 8 languages and multiple event formats."
+      "description": "Advanced AI delivers accurate event extraction across 8 languages and multiple event formats."
     },
     "lightning": {
       "title": "Lightning Fast",
@@ -134,10 +134,10 @@
     "timeOther": "Requires search",
     "timeCap2cal": "3 seconds",
     "accuracy": "Accuracy",
-    "accuracyManual": "90% (typos)",
-    "accuracyLens": "70% (no context)",
-    "accuracyOther": "95% (if listed)",
-    "accuracyCap2cal": "99%",
+    "accuracyManual": "Prone to typos",
+    "accuracyLens": "Limited context",
+    "accuracyOther": "Only if listed",
+    "accuracyCap2cal": "High accuracy",
     "calendar": "Calendar Integration",
     "offline": "Offline Mode",
     "tickets": "Ticket Links",
@@ -155,7 +155,7 @@
     "title": "Got Questions? We've Got Answers.",
     "q1": {
       "question": "How accurate is the AI extraction?",
-      "answer": "Cap2Cal's AI achieves 99% accuracy on event posters. Our model has been trained on over 100,000 posters across 8 languages. In rare cases where the AI isn't confident, you'll see an editable preview before saving."
+      "answer": "Cap2Cal uses advanced AI to accurately extract event details from posters across 8 languages. In cases where the AI isn't confident, you'll see an editable preview before saving to ensure accuracy."
     },
     "q2": {
       "question": "Which calendars does Cap2Cal work with?",
@@ -179,7 +179,7 @@
     },
     "q7": {
       "question": "What makes Cap2Cal different from Google Lens?",
-      "answer": "While Google Lens can extract text from images, it doesn't understand events or integrate with calendars. Cap2Cal is purpose-built for event posters, achieving 99% accuracy and seamlessly adding events to your calendar in one tap."
+      "answer": "While Google Lens can extract text from images, it doesn't understand events or integrate with calendars. Cap2Cal is purpose-built for event posters and seamlessly adds events to your calendar in one tap."
     },
     "q8": {
       "question": "Can I share events with friends?",
@@ -191,7 +191,7 @@
     "description": "Download Cap2Cal and transform how you discover events.",
     "cta": "Download for iOS",
     "ctaAndroid": "Get on Google Play",
-    "trustLine": "Join thousands of users who've saved hours of manual entry"
+    "trustLine": "Save hours of manual entry every month"
   },
   "footer": {
     "copyright": "© {{year}} Capture2Calendar. All rights reserved.",
@@ -205,5 +205,14 @@
     "legal": "Legal",
     "terms": "Terms of Service",
     "privacy": "Privacy Policy"
+  },
+  "download": {
+    "title": "Download Cap2Cal",
+    "description": "Download Capture2Calendar for iOS and Android. Turn event posters into calendar entries instantly with AI. Never miss an event again.",
+    "heading": "Cap2Cal",
+    "tagline": "AI-Powered Event Capture",
+    "subtitle": "Turn any event poster into a calendar entry with AI. Never type event details manually again.",
+    "redirecting": "Redirecting to app store...",
+    "visitWebsite": "Visit Website"
   }
 }

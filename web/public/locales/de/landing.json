@@ -12,7 +12,7 @@
     "cta": "Download für iOS",
     "ctaAndroid": "Jetzt bei Google Play",
     "subtext": "Starte mit unserem kostenlosen Plan. Premium-Funktionen verfügbar.",
-    "trustBadge": "Tausende Nutzer verpassen keine Events mehr"
+    "trustBadge": "Verpasse nie wieder ein Event"
   },
   "steps": {
     "title": "Vom Poster zum Kalender in 3 Sekunden",
@@ -62,7 +62,7 @@
     "subtitle": "Alles für deine perfekte Event-Planung",
     "aiAccuracy": {
       "title": "KI-gestützte Extraktion",
-      "description": "Fortschrittliche KI, trainiert mit 100.000+ Event-Postern, liefert 99% Genauigkeit in 8 Sprachen und mehreren Event-Formaten."
+      "description": "Fortschrittliche KI liefert präzise Event-Extraktion in 8 Sprachen und mehreren Event-Formaten."
     },
     "lightning": {
       "title": "Blitzschnell",
@@ -134,10 +134,10 @@
     "timeOther": "Suche erforderlich",
     "timeCap2cal": "3 Sekunden",
     "accuracy": "Genauigkeit",
-    "accuracyManual": "90% (Tippfehler)",
-    "accuracyLens": "70% (kein Kontext)",
-    "accuracyOther": "95% (wenn gelistet)",
-    "accuracyCap2cal": "99%",
+    "accuracyManual": "Anfällig für Tippfehler",
+    "accuracyLens": "Eingeschränkter Kontext",
+    "accuracyOther": "Nur wenn gelistet",
+    "accuracyCap2cal": "Hohe Genauigkeit",
     "calendar": "Kalender-Integration",
     "offline": "Offline-Modus",
     "tickets": "Ticket-Links",
@@ -155,7 +155,7 @@
     "title": "Fragen? Wir haben Antworten.",
     "q1": {
       "question": "Wie genau ist die KI-Extraktion?",
-      "answer": "Cap2Cals KI erreicht 99% Genauigkeit bei Event-Postern. Unser Modell wurde mit über 100.000 Postern in 8 Sprachen trainiert. In seltenen Fällen, in denen die KI nicht sicher ist, siehst du eine bearbeitbare Vorschau vor dem Speichern."
+      "answer": "Cap2Cal nutzt fortschrittliche KI, um Event-Details präzise aus Postern in 8 Sprachen zu extrahieren. In Fällen, in denen die KI nicht sicher ist, siehst du eine bearbeitbare Vorschau vor dem Speichern, um Genauigkeit zu gewährleisten."
     },
     "q2": {
       "question": "Mit welchen Kalendern funktioniert Cap2Cal?",
@@ -179,7 +179,7 @@
     },
     "q7": {
       "question": "Was unterscheidet Cap2Cal von Google Lens?",
-      "answer": "Während Google Lens Text aus Bildern extrahieren kann, versteht es keine Events und integriert sich nicht mit Kalendern. Cap2Cal ist speziell für Event-Poster entwickelt, erreicht 99% Genauigkeit und fügt Events nahtlos mit einem Klick zu deinem Kalender hinzu."
+      "answer": "Während Google Lens Text aus Bildern extrahieren kann, versteht es keine Events und integriert sich nicht mit Kalendern. Cap2Cal ist speziell für Event-Poster entwickelt und fügt Events nahtlos mit einem Klick zu deinem Kalender hinzu."
     },
     "q8": {
       "question": "Kann ich Events mit Freunden teilen?",
@@ -191,7 +191,7 @@
     "description": "Lade Cap2Cal herunter und verwandle, wie du Events entdeckst.",
     "cta": "Download für iOS",
     "ctaAndroid": "Jetzt bei Google Play",
-    "trustLine": "Tausende Nutzer haben Stunden manueller Eingabe gespart"
+    "trustLine": "Spare Stunden manueller Eingabe jeden Monat"
   },
   "footer": {
     "copyright": "© {{year}} Capture2Calendar. Alle Rechte vorbehalten.",
@@ -205,5 +205,14 @@
     "legal": "Rechtliches",
     "terms": "Nutzungsbedingungen",
     "privacy": "Datenschutz"
+  },
+  "download": {
+    "title": "Cap2Cal herunterladen",
+    "description": "Lade Capture2Calendar für iOS und Android herunter. Verwandle Event-Poster sofort in Kalendereinträge mit KI. Verpasse nie wieder ein Event.",
+    "heading": "Cap2Cal",
+    "tagline": "KI-gestützte Event-Erfassung",
+    "subtitle": "Verwandle jedes Event-Poster in einen Kalendereintrag mit KI. Tippe nie wieder Event-Details manuell ein.",
+    "redirecting": "Weiterleitung zum App Store...",
+    "visitWebsite": "Zur Website"
   }
 }

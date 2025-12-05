@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import AppStoreBadge from '../assets/icons/Download_on_the_App_Store_RGB_blk.svg';
 import GooglePlayBadge from '../assets/icons/Google_Play_Store_badge_EN.svg';
+import { SeoManager } from '../SeoManager';
 
 export const DownloadPage = () => {
+  const { t } = useTranslation('landing');
   const [platform, setPlatform] = useState<'ios' | 'android' | 'web'>('web');
   const [redirecting, setRedirecting] = useState(false);
 
@@ -36,6 +39,7 @@ export const DownloadPage = () => {
   if (redirecting) {
     return (
       <>
+        <SeoManager titleKey="download.title" descriptionKey="download.description" />
         {/* Aurora Background with Film Grain */}
         <div className="pointer-events-none fixed inset-0 -z-50 overflow-hidden" aria-hidden="true">
           {/* Base Dark Background */}
@@ -62,12 +66,12 @@ export const DownloadPage = () => {
             <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center">
               <img src="/app-icon.png" alt="Cap2Cal" className="h-20 w-20 rounded-2xl shadow-lg" />
             </div>
-            <h1 className="mb-2 text-3xl font-bold text-white">Cap2Cal</h1>
+            <h1 className="mb-2 text-3xl font-bold text-white">{t('download.heading')}</h1>
             <div className="mb-6 inline-block rounded-full bg-lime-400/10 px-4 py-2 text-sm font-semibold text-lime-400 ring-2 ring-lime-400/30">
-              AI-Powered Event Capture
+              {t('download.tagline')}
             </div>
             <div className="mx-auto mb-4 h-10 w-10 animate-spin rounded-full border-4 border-slate-700 border-t-lime-400"></div>
-            <p className="text-slate-400">Redirecting to app store...</p>
+            <p className="text-slate-400">{t('download.redirecting')}</p>
           </div>
         </div>
       </>
@@ -76,6 +80,7 @@ export const DownloadPage = () => {
 
   return (
     <>
+      <SeoManager titleKey="download.title" descriptionKey="download.description" />
       {/* Aurora Background with Film Grain */}
       <div className="pointer-events-none fixed inset-0 -z-50 overflow-hidden" aria-hidden="true">
         {/* Base Dark Background */}
@@ -103,17 +108,17 @@ export const DownloadPage = () => {
             <img src="/app-icon.png" alt="Cap2Cal" className="h-24 w-24 rounded-2xl shadow-lg" />
           </div>
 
-          <h1 className="mb-3 text-4xl font-bold text-white">Cap2Cal</h1>
+          <h1 className="mb-3 text-4xl font-bold text-white">{t('download.heading')}</h1>
 
           <div className="mb-6 inline-block rounded-full bg-lime-400/10 px-5 py-2 text-sm font-semibold text-lime-400 ring-2 ring-lime-400/30">
-            AI-Powered Event Capture
+            {t('download.tagline')}
           </div>
 
           {/* Decorative gradient bar */}
           <div className="mx-auto mb-6 h-1 w-20 rounded-full bg-gradient-to-r from-lime-400/50 to-lime-400"></div>
 
           <p className="mb-8 text-lg leading-relaxed text-slate-300">
-            Turn any event poster into a calendar entry with AI. Never type event details manually again.
+            {t('download.subtitle')}
           </p>
 
           {platform === 'web' ? (
@@ -137,7 +142,7 @@ export const DownloadPage = () => {
               <a
                 href="/"
                 className="mt-6 inline-block rounded-xl border border-white/10 bg-white/5 px-8 py-3 font-semibold text-white transition-all hover:border-lime-400/30 hover:bg-white/10">
-                Visit Website
+                {t('download.visitWebsite')}
               </a>
             </div>
           ) : (

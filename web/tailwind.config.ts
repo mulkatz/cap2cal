@@ -6,10 +6,10 @@ const config = {
   prefix: '',
   theme: {
     screens: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '900px',  // Custom: Two-column layout for device frame + promotional points
-      'xl': '1280px',
+      sm: '640px',
+      md: '768px',
+      lg: '900px', // Custom: Two-column layout for device frame + promotional points
+      xl: '1280px',
       '2xl': '1536px',
     },
     fontFamily: {
@@ -26,7 +26,7 @@ const config = {
       },
 
       colors: {
-        secondary: '#E0FDDCFF',
+        secondary: '#F5F5F5',
         accent: '#2C4156',
         accentElevated: '#41526a',
         primary: '#1E2E3F',

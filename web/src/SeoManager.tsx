@@ -229,13 +229,6 @@ export function SeoManager({ titleKey, descriptionKey, titleValue }: SeoManagerP
                 priceCurrency: 'USD',
                 availability: 'https://schema.org/InStock',
               },
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                ratingCount: '1250',
-                bestRating: '5',
-                worstRating: '1',
-              },
               description:
                 currentLang === 'de'
                   ? 'Fotografiere Event-Poster und füge sie sofort zu deinem Kalender hinzu. KI-gestützte Event-Erfassung in 3 Sekunden. Funktioniert mit Google Calendar, Apple Calendar, Outlook und mehr.'
@@ -356,7 +349,7 @@ export function SeoManager({ titleKey, descriptionKey, titleValue }: SeoManagerP
                         name: 'Wie genau ist die KI-Extraktion?',
                         acceptedAnswer: {
                           '@type': 'Answer',
-                          text: 'Die KI von Cap2Cal erreicht 99% Genauigkeit bei Event-Postern. Unser Modell wurde mit über 100.000 Postern in 8 Sprachen trainiert.',
+                          text: 'Cap2Cal nutzt fortschrittliche KI, um Event-Details präzise aus Postern in 8 Sprachen zu extrahieren. In Fällen, in denen die KI nicht sicher ist, siehst du eine bearbeitbare Vorschau vor dem Speichern.',
                         },
                       },
                       {
@@ -398,7 +391,7 @@ export function SeoManager({ titleKey, descriptionKey, titleValue }: SeoManagerP
                         name: 'How accurate is the AI extraction?',
                         acceptedAnswer: {
                           '@type': 'Answer',
-                          text: "Cap2Cal's AI achieves 99% accuracy on event posters. Our model has been trained on over 100,000 posters across 8 languages.",
+                          text: 'Cap2Cal uses advanced AI to accurately extract event details from posters across 8 languages. In cases where the AI isn\'t confident, you\'ll see an editable preview before saving.',
                         },
                       },
                       {
@@ -438,7 +431,7 @@ export function SeoManager({ titleKey, descriptionKey, titleValue }: SeoManagerP
                         name: 'How is Cap2Cal different from Google Lens?',
                         acceptedAnswer: {
                           '@type': 'Answer',
-                          text: "While Google Lens can extract text from images, it doesn't understand events or integrate with calendars. Cap2Cal is purpose-built for event posters, achieving 99% accuracy and seamlessly adding events to your calendar in one tap.",
+                          text: "While Google Lens can extract text from images, it doesn't understand events or integrate with calendars. Cap2Cal is purpose-built for event posters and seamlessly adds events to your calendar in one tap.",
                         },
                       },
                     ],
