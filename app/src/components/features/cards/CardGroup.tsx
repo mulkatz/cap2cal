@@ -9,17 +9,22 @@ interface Props {
   usePattern?: boolean;
 }
 
-export const Card = ({ children, highlight, className, inline = false, usePattern = false }: Props) => {
-  return (
-    <div
-      className={cn(
-        'relative flex flex-col items-start rounded-[20px] bg-primaryDark text-start text-[21px] text-white drop-shadow-lg',
-        'transition-all duration-[300ms]',
-        'text-secondary',
-        { 'max-h-full shrink grow overflow-y-auto': inline },
-        className
-      )}>
-      {children}
-    </div>
-  );
-};
+export const Card = React.forwardRef<HTMLDivElement, Props>(
+  ({ children, highlight, className, inline = false, usePattern = false }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          'relative flex flex-col items-start rounded-[20px] bg-primaryDark text-start text-[21px] text-white drop-shadow-lg',
+          'transition-all duration-[300ms]',
+          'text-secondary',
+          { 'max-h-full shrink grow overflow-y-auto': inline },
+          className
+        )}>
+        {children}
+      </div>
+    );
+  }
+);
+
+Card.displayName = 'Card';

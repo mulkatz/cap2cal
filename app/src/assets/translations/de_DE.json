@@ -38,6 +38,7 @@
       "actionSheet": {
         "title": "Event-Optionen",
         "share": "Event teilen",
+        "capturing": "Erfasse...",
         "comingSoon": "Demnächst",
         "delete": "Event löschen",
         "cancel": "Abbrechen"

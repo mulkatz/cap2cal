@@ -38,6 +38,7 @@
       "actionSheet": {
         "title": "Event Options",
         "share": "Share Event",
+        "capturing": "Capturing...",
         "comingSoon": "Coming Soon",
         "delete": "Delete Event",
         "cancel": "Cancel"

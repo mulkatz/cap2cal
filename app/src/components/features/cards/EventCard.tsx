@@ -4,11 +4,13 @@ import { Clock, MapPin, MoreVertical } from 'lucide-react';
 import { cn } from '../../../utils.ts';
 import { IconButton } from '../../ui/buttons/IconButton.tsx';
 import { CaptureEvent } from '../../../models/CaptureEvent.ts';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { TicketButton } from '../TicketButton.tsx';
 import { Card } from './CardGroup.tsx';
 import { useTranslation } from 'react-i18next';
 import { Dialog } from '../../ui/Dialog.tsx';
+import { useEventCardScreenshot } from '../../../hooks/useEventCardScreenshot.tsx';
+import { Capacitor } from '@capacitor/core';
 
 type Props = {
   data: CaptureEvent;
@@ -107,6 +109,12 @@ const EventCardAtom = React.memo(
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [showActionSheet, setShowActionSheet] = useState(false);
 
+    // Ref for the card element (for screenshot capture)
+    const cardRef = useRef<HTMLDivElement>(null);
+
+    // Screenshot hook
+    const { takeScreenshot, isCapturing } = useEventCardScreenshot({ format: 'png' });
+
     const {
       title,
       kind,
@@ -154,10 +162,48 @@ const EventCardAtom = React.memo(
       return parts.join(', ');
     };
 
+    // Helper: Trigger browser download (web only)
+    const triggerDownload = (dataUrl: string, filename: string) => {
+      const link = document.createElement('a');
+      link.href = dataUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    };
+
+    // Handle share button click - capture screenshot
+    const handleShare = async () => {
+      if (!cardRef.current) {
+        return;
+      }
+
+      setShowActionSheet(false);
+
+      const imagePath = await takeScreenshot(cardRef.current);
+
+      if (imagePath) {
+        const platform = Capacitor.getPlatform();
+
+        if (platform === 'web') {
+          // On web: Trigger download for testing
+          const timestamp = Date.now();
+          const filename = `event-card-${title?.replace(/[^a-z0-9]/gi, '-').toLowerCase()}-${timestamp}.png`;
+          triggerDownload(imagePath, filename);
+          console.log('Screenshot downloaded:', filename);
+        } else {
+          // On native: Log file path
+          console.log('Screenshot saved to:', imagePath);
+          // You can inspect the file in the device's cache directory
+        }
+      }
+    };
+
     // --- Render ---
     return (
       <>
         <Card
+          ref={cardRef}
           highlight={isFavourite}
           inline
           usePattern
@@ -286,18 +332,22 @@ const EventCardAtom = React.memo(
 
               {/* Options */}
               <div className="space-y-3">
-                {/* Share Option - Disabled/Placeholder */}
+                {/* Share Option */}
                 <button
-                  disabled
-                  className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-left text-gray-400 opacity-50 transition-colors">
+                  onClick={handleShare}
+                  disabled={isCapturing}
+                  className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-left text-white transition-colors active:bg-white/10 disabled:opacity-50">
                   <div className="flex items-center gap-3">
                     <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                       <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
                       <polyline points="16 6 12 2 8 6" />
                       <line x1="12" y1="2" x2="12" y2="15" />
                     </svg>
-                    <span className="font-medium">{t('eventCard.actionSheet.share', 'Share Event')}</span>
-                    <span className="ml-auto text-xs">({t('eventCard.actionSheet.comingSoon', 'Coming Soon')})</span>
+                    <span className="font-medium">
+                      {isCapturing
+                        ? t('eventCard.actionSheet.capturing', 'Capturing...')
+                        : t('eventCard.actionSheet.share', 'Share Event')}
+                    </span>
                   </div>
                 </button>
 
