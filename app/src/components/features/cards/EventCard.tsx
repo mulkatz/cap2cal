@@ -24,6 +24,7 @@ type Props = {
   onDelete: () => void;
   onAddress?: () => void;
   locale?: string; // Dynamic locale prop (e.g., 'en-US', 'de-DE')
+  variant?: 'default' | 'share'; // Share variant for PDF generation (no interactive buttons, includes photo)
 };
 
 // Helper: Convert ALL CAPS text to Title Case
@@ -107,13 +108,17 @@ const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: st
 
 // ## Main Component: EventCardAtom
 const EventCardAtom = React.memo(
-  ({ data, onFavourite, isFavourite, onImage, onExport, onDelete, onAddress, locale }: Props) => {
+  ({ data, onFavourite, isFavourite, onImage, onExport, onDelete, onAddress, locale, variant = 'default' }: Props) => {
     const { t, i18n } = useTranslation();
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [showActionSheet, setShowActionSheet] = useState(false);
 
-    // Ref for the card element (for screenshot capture)
-    const cardRef = useRef<HTMLDivElement>(null);
+    // Check if we're in share variant mode
+    const isShareVariant = variant === 'share';
+
+    // Refs for the card elements
+    const cardRef = useRef<HTMLDivElement>(null); // Default variant (visible)
+    const shareCardRef = useRef<HTMLDivElement>(null); // Share variant (hidden, for PDF only)
 
     // Screenshot hook
     const { takeScreenshot, isCapturing } = useEventCardScreenshot({ format: 'png' });
@@ -141,9 +146,9 @@ const EventCardAtom = React.memo(
     // Format time display with locale
     const formattedTime = formatTimeDisplay(dateTimeFrom, dateTimeTo, effectiveLocale);
 
-    // Character limit for description truncation
+    // Character limit for description truncation (disabled in share variant)
     const TRUNCATE_LENGTH = 120;
-    const shouldTruncate = description?.short && description.short.length > TRUNCATE_LENGTH;
+    const shouldTruncate = !isShareVariant && description?.short && description.short.length > TRUNCATE_LENGTH;
 
     // Check if event has passed (more than 1 day ago)
     const isEventPassed = () => {
@@ -180,47 +185,35 @@ const EventCardAtom = React.memo(
 
     // Handle share button click - generate PDF and share
     const handleShare = async () => {
-      if (!cardRef.current) {
+      if (!shareCardRef.current) {
+        console.error('Share card ref not available');
         return;
       }
 
       setShowActionSheet(false);
 
       try {
-        // 1. Capture the event card as screenshot
-        const cardScreenshotDataUrl = await takeScreenshot(cardRef.current);
+        // 1. Capture the share variant card as screenshot (includes photo + branding)
+        const cardScreenshotDataUrl = await takeScreenshot(shareCardRef.current);
 
         if (!cardScreenshotDataUrl) {
           console.error('Failed to capture card screenshot');
           return;
         }
 
-        // 2. Retrieve the original event photo from database (if available)
-        let eventPhotoDataUrl: string | undefined;
-
-        if (data.img?.id) {
-          const imageData = await db.images.get(data.img.id);
-          if (imageData?.dataUrl) {
-            eventPhotoDataUrl = imageData.dataUrl;
-          }
-        }
-
-        // 3. Generate the invite URL
-        const inviteUrl = getEventInviteUrl(id || timestamp.toString());
-
-        // 4. Generate PDF with photo + card + link
+        // 2. Generate PDF with tight bounds and black background
         const pdfBase64 = await generateEventPdf({
-          eventPhotoDataUrl,
           cardScreenshotDataUrl,
           eventTitle: title || 'Event',
-          inviteUrl,
         });
 
-        // 5. Generate filename
-        const now = Date.now();
-        const filename = `${title?.replace(/[^a-z0-9]/gi, '-').toLowerCase() || 'event'}-${now}.pdf`;
+        // 3. Generate filename (localized, human-readable)
+        const cleanTitle = (title || t('general.newEvent', 'New Event'))
+          .replace(/[<>:"/\\|?*]/g, '') // Remove invalid filename characters
+          .trim();
+        const filename = `${t('share.eventFilename', { title: cleanTitle })}.pdf`;
 
-        // 6. Share or download based on platform
+        // 4. Share or download based on platform
         const platform = Capacitor.getPlatform();
 
         if (platform === 'web') {
@@ -242,13 +235,24 @@ const EventCardAtom = React.memo(
     return (
       <>
         <Card
-          ref={cardRef}
-          highlight={isFavourite}
+          ref={isShareVariant ? shareCardRef : cardRef}
+          highlight={isFavourite && !isShareVariant}
           inline
           usePattern
           className={
             'max-h-[60vh] overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
           }>
+          {/* Event Photo (Share Variant Only) */}
+          {isShareVariant && data.img?.id && (
+            <div className="w-full">
+              <img
+                src={data.img.dataUrl}
+                alt={title || 'Event'}
+                className="h-auto w-full rounded-t-[20px] object-contain"
+              />
+            </div>
+          )}
+
           <div className="flex w-full flex-col p-5">
             {/* Row 1 (Header): Date Badge + Title + Star */}
             <div className="mb-3 flex items-start gap-3">
@@ -268,27 +272,21 @@ const EventCardAtom = React.memo(
                 )}
               </div>
 
-              {/* Favorite Star - Yellow Circle when Active */}
-              <button
-                onClick={onFavourite}
-                className={cn(
-                  'flex-shrink-0 transition-all active:scale-90',
-                  isFavourite ? 'rounded-full bg-highlight p-1.5' : ''
-                )}>
-                <IconStar
-                  width={20}
-                  height={20}
-                  className={cn(isFavourite ? 'fill-primaryDark text-primaryDark' : 'fill-gray-400 text-gray-400')}
-                />
-                {/*<IconStar*/}
-                {/*  size={24}*/}
-                {/*  className={cn(*/}
-                {/*    'transition-colors',*/}
-                {/*    isFavourite ? 'text-primaryDark' : 'text-gray-400'*/}
-                {/*  )}*/}
-                {/*  fill={isFavourite ? 'currentColor' : 'none'}*/}
-                {/*/>*/}
-              </button>
+              {/* Favorite Star - Hidden in share variant */}
+              {!isShareVariant && (
+                <button
+                  onClick={onFavourite}
+                  className={cn(
+                    'flex-shrink-0 transition-all active:scale-90',
+                    isFavourite ? 'rounded-full bg-highlight p-1.5' : ''
+                  )}>
+                  <IconStar
+                    width={20}
+                    height={20}
+                    className={cn(isFavourite ? 'fill-primaryDark text-primaryDark' : 'fill-gray-400 text-gray-400')}
+                  />
+                </button>
+              )}
             </div>
 
             {/* Row 3 (Time): Dedicated Time row between Category and Location */}
@@ -332,33 +330,134 @@ const EventCardAtom = React.memo(
               </div>
             )}
 
-            {/* Row 6 (Footer): Action Buttons + Tickets */}
-            <div className="flex items-center gap-2 pt-2">
-              {/* Three-Dot Menu Button */}
-              <IconButton
-                onClick={() => setShowActionSheet(true)}
-                icon={<MoreVertical size={23} />}
-                className="h-10 w-10"
-              />
-              {/* Camera Icon (22px - slightly larger for optical balance) */}
-              <IconButton
-                onClick={onImage}
-                icon={<IconCamera size={22} />}
-                className="h-10 w-10"
-                data-testid={`event-image-icon-${id || timestamp}`}
-              />
-              {/* Calendar Icon (20px) */}
-              <IconButton onClick={onExport} icon={<IconCalendarPlus size={20} />} className="h-10 w-10" />
+            {/* Row 6 (Footer): Action Buttons + Tickets OR Branding */}
+            {isShareVariant ? (
+              /* Share Variant: Branding Footer */
+              <div className="mt-4 border-t border-white/10 pt-4 text-center">
+                <a
+                  href="https://cap2cal.app/invite"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2 transition-colors hover:text-highlight hover:decoration-highlight/50">
+                  <span>Made with</span>
+                  <span className="text-red-500">❤</span>
+                  <span className="text-white">Capture2Calendar</span>
+                </a>
+              </div>
+            ) : (
+              /* Default Variant: Action Buttons */
+              <div className="flex items-center gap-2 pt-2">
+                {/* Three-Dot Menu Button */}
+                <IconButton
+                  onClick={() => setShowActionSheet(true)}
+                  icon={<MoreVertical size={23} />}
+                  className="h-10 w-10"
+                />
+                {/* Camera Icon (22px - slightly larger for optical balance) */}
+                <IconButton
+                  onClick={onImage}
+                  icon={<IconCamera size={22} />}
+                  className="h-10 w-10"
+                  data-testid={`event-image-icon-${id || timestamp}`}
+                />
+                {/* Calendar Icon (20px) */}
+                <IconButton onClick={onExport} icon={<IconCalendarPlus size={20} />} className="h-10 w-10" />
 
-              {/* Ticket Button - Full Pill, Yellow Background, Solid Icon, Bold Text */}
-              {showTicketButton && (
-                <div className="flex-1">
-                  <TicketButton isFavourite={isFavourite} id={id} />
-                </div>
-              )}
-            </div>
+                {/* Ticket Button - Full Pill, Yellow Background, Solid Icon, Bold Text */}
+                {showTicketButton && (
+                  <div className="flex-1">
+                    <TicketButton isFavourite={isFavourite} id={id} />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </Card>
+
+        {/* Hidden Share Variant Card (for PDF generation only) */}
+        {!isShareVariant && (
+          <div
+            className="pointer-events-none fixed left-[-9999px] top-0 w-[400px] opacity-0"
+            aria-hidden="true"
+            style={{ zIndex: -1000 }}>
+            <Card
+              ref={shareCardRef}
+              highlight={false}
+              inline={false}
+              usePattern
+              className={
+                'overflow-hidden border border-white/5 bg-primaryElevated bg-gradient-to-br from-primaryElevated to-primaryElevated/80 shadow-lg'
+              }>
+              {/* Event Photo (Share Variant) */}
+              {data.img?.id && (
+                <div className="w-full">
+                  <img
+                    src={data.img.dataUrl}
+                    alt={title || 'Event'}
+                    className="h-auto w-full rounded-t-[20px] object-contain"
+                  />
+                </div>
+              )}
+
+              <div className="flex w-full flex-col p-5">
+                {/* Header: Date Badge + Title (no star) */}
+                <div className="mb-3 flex items-start gap-3">
+                  <DateBadge dateTime={dateTimeFrom} locale={effectiveLocale} />
+                  <div className="flex-1 self-start">
+                    <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
+                    {kind && (
+                      <div className="mt-2">
+                        <span className="inline-block rounded-full bg-highlight/10 px-2.5 py-1 text-xs font-medium text-highlight">
+                          {kind}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Time */}
+                {formattedTime && (
+                  <div className="mt-2 flex items-center gap-1.5">
+                    <Clock size={16} className="text-gray-400" />
+                    <span className="text-sm font-medium text-gray-200">{formattedTime}</span>
+                  </div>
+                )}
+
+                {/* Location */}
+                {location && (
+                  <div className="mt-1.5 flex items-center gap-2">
+                    <MapPin size={14} strokeWidth={2.5} className="flex-shrink-0 text-highlight" />
+                    <span className="truncate text-sm font-normal text-gray-100">
+                      {formatLocation(location?.city, location?.address)}
+                    </span>
+                  </div>
+                )}
+
+                {/* Description (always expanded) */}
+                {description?.short && (
+                  <div className="mb-5 mt-5">
+                    <p className="text-[13px] font-normal tracking-[0.5px] text-gray-200 opacity-80">
+                      {description.short}
+                    </p>
+                  </div>
+                )}
+
+                {/* Branding Footer */}
+                <div className="mt-4 border-t border-white/10 pt-4 text-center">
+                  <a
+                    href="https://cap2cal.app/invite"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-gray-400 underline decoration-gray-400/50 underline-offset-2">
+                    <span>Made with</span>
+                    <span className="text-red-500">❤</span>
+                    <span className="text-white">Capture2Calendar</span>
+                  </a>
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
 
         {/* Action Sheet */}
         {showActionSheet && (

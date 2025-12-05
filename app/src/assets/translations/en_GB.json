@@ -51,7 +51,8 @@
       "checkOutPdf": "Check out this PDF: {{fileName}}",
       "checkOutTool": "Check out this awesome tool: {{title}}\n{{description}}\nVisit: {{link}}",
       "appTitle": "Capture2Calendar",
-      "appDescription": "Easily add events to your calendar from photos!"
+      "appDescription": "Easily add events to your calendar from photos!",
+      "eventFilename": "Event - {{title}}"
     },
     "errors": {
       "failedProcessSharedImage": "Failed to process shared image. Please try again.",

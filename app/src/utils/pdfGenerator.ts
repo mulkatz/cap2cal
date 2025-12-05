@@ -2,109 +2,76 @@ import { jsPDF } from 'jspdf';
 import { logger } from './logger';
 
 export interface GenerateEventPdfOptions {
-  eventPhotoDataUrl?: string; // Original event photo (optional)
-  cardScreenshotDataUrl: string; // Event card screenshot (required)
+  cardScreenshotDataUrl: string; // Event card screenshot with photo already inside (required)
   eventTitle: string;
-  inviteUrl: string; // URL to the web invite page
 }
 
 /**
- * Generates a PDF containing the event photo and card screenshot with an interactive link
+ * Generates a PDF with tight bounds around the event card screenshot on a black background
  *
  * @param options - PDF generation options
  * @returns Base64-encoded PDF data (without data URL prefix)
  *
  * Layout:
- * - Event photo at the top (if provided)
- * - Event card screenshot below the photo
- * - Interactive link at the bottom: "View full event details: [URL]"
+ * - Black background
+ * - Event card screenshot (with photo, details, and branding footer already included)
+ * - Small padding around the card
  */
 export const generateEventPdf = async (options: GenerateEventPdfOptions): Promise<string> => {
-  const { eventPhotoDataUrl, cardScreenshotDataUrl, eventTitle, inviteUrl } = options;
+  const { cardScreenshotDataUrl, eventTitle } = options;
 
   try {
     logger.info('pdfGenerator', 'Starting PDF generation...');
 
-    // Create PDF in portrait mode, A4 size
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4',
+    // Get card image dimensions
+    const img = new Image();
+    img.src = cardScreenshotDataUrl;
+    await new Promise((resolve) => {
+      img.onload = resolve;
     });
 
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
-    const margin = 10; // 10mm margin
-    const contentWidth = pageWidth - 2 * margin;
+    const cardWidthPx = img.width;
+    const cardHeightPx = img.height;
 
-    let currentY = margin;
+    // Convert pixels to mm (assuming 96 DPI)
+    const pxToMm = 0.264583;
+    const paddingMm = 5; // 5mm padding around the card
 
-    // --- 1. Add Event Photo (if provided) ---
-    if (eventPhotoDataUrl) {
-      logger.info('pdfGenerator', 'Adding event photo...');
+    const cardWidthMm = cardWidthPx * pxToMm;
+    const cardHeightMm = cardHeightPx * pxToMm;
+    const pdfWidth = cardWidthMm + 2 * paddingMm;
+    const pdfHeight = cardHeightMm + 2 * paddingMm;
 
-      // Get image dimensions to calculate aspect ratio
-      const imgProps = pdf.getImageProperties(eventPhotoDataUrl);
-      const imgAspectRatio = imgProps.width / imgProps.height;
+    logger.info('pdfGenerator', `PDF dimensions: ${pdfWidth.toFixed(2)}mm x ${pdfHeight.toFixed(2)}mm`);
 
-      // Calculate image dimensions (max width: contentWidth, maintain aspect ratio)
-      let imgWidth = contentWidth;
-      let imgHeight = imgWidth / imgAspectRatio;
+    // Create PDF with custom size (tight bounds)
+    const pdf = new jsPDF({
+      orientation: pdfWidth > pdfHeight ? 'landscape' : 'portrait',
+      unit: 'mm',
+      format: [pdfWidth, pdfHeight],
+    });
 
-      // If image is too tall, scale down to fit
-      const maxPhotoHeight = pageHeight * 0.4; // Max 40% of page height
-      if (imgHeight > maxPhotoHeight) {
-        imgHeight = maxPhotoHeight;
-        imgWidth = imgHeight * imgAspectRatio;
-      }
+    // --- 1. Fill background with black ---
+    pdf.setFillColor(0, 0, 0); // Black
+    pdf.rect(0, 0, pdfWidth, pdfHeight, 'F'); // Fill entire page
 
-      // Center the image horizontally
-      const imgX = (pageWidth - imgWidth) / 2;
-
-      pdf.addImage(eventPhotoDataUrl, 'PNG', imgX, currentY, imgWidth, imgHeight);
-      currentY += imgHeight + 10; // Add 10mm spacing
-    }
-
-    // --- 2. Add Event Card Screenshot ---
+    // --- 2. Add Event Card Screenshot (centered with padding) ---
     logger.info('pdfGenerator', 'Adding event card screenshot...');
 
-    const cardProps = pdf.getImageProperties(cardScreenshotDataUrl);
-    const cardAspectRatio = cardProps.width / cardProps.height;
+    pdf.addImage(cardScreenshotDataUrl, 'PNG', paddingMm, paddingMm, cardWidthMm, cardHeightMm);
 
-    // Calculate card dimensions
-    let cardWidth = contentWidth;
-    let cardHeight = cardWidth / cardAspectRatio;
+    // --- 3. Add invisible clickable link over branding footer ---
+    logger.info('pdfGenerator', 'Adding clickable link overlay...');
 
-    // Check if card fits on remaining space, otherwise scale down
-    const remainingHeight = pageHeight - currentY - margin - 20; // Reserve 20mm for link at bottom
-    if (cardHeight > remainingHeight) {
-      cardHeight = remainingHeight;
-      cardWidth = cardHeight * cardAspectRatio;
-    }
+    // Branding footer is at the bottom of the card (approximately last 60px / 16mm)
+    // We'll create a clickable rectangle over the footer area
+    const footerHeightMm = 16; // Height of the branding footer area
+    const footerY = paddingMm + cardHeightMm - footerHeightMm; // Y position of footer
+    const footerX = paddingMm; // X position (start of card)
+    const footerWidthMm = cardWidthMm; // Full width of card
 
-    // Center the card horizontally
-    const cardX = (pageWidth - cardWidth) / 2;
-
-    pdf.addImage(cardScreenshotDataUrl, 'PNG', cardX, currentY, cardWidth, cardHeight);
-    currentY += cardHeight + 10; // Add 10mm spacing
-
-    // --- 3. Add Interactive Link ---
-    logger.info('pdfGenerator', 'Adding interactive link...');
-
-    // Set font for link text
-    pdf.setFontSize(10);
-    pdf.setTextColor(0, 102, 204); // Blue color for link
-
-    const linkText = 'View full event details';
-    const linkTextWidth = pdf.getTextWidth(linkText);
-    const linkX = (pageWidth - linkTextWidth) / 2;
-
-    // Add clickable link
-    pdf.textWithLink(linkText, linkX, currentY, { url: inviteUrl });
-
-    // Add underline to make it look like a link
-    pdf.setDrawColor(0, 102, 204);
-    pdf.line(linkX, currentY + 0.5, linkX + linkTextWidth, currentY + 0.5);
+    // Add invisible clickable rectangle
+    pdf.link(footerX, footerY, footerWidthMm, footerHeightMm, { url: 'https://cap2cal.app/invite' });
 
     // --- 4. Add metadata ---
     pdf.setProperties({
@@ -115,7 +82,7 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
       creator: 'Capture2Calendar App',
     });
 
-    // --- 5. Generate base64 output ---
+    // --- 4. Generate base64 output ---
     logger.info('pdfGenerator', 'PDF generation complete');
 
     // Get base64 string (without data URL prefix)
