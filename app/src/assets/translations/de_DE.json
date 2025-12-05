@@ -39,6 +39,7 @@
         "title": "Event-Optionen",
         "share": "Event teilen",
         "capturing": "Erfasse...",
+        "preparing": "Vorbereiten...",
         "comingSoon": "Demnächst",
         "delete": "Event löschen",
         "cancel": "Abbrechen"
@@ -52,7 +53,8 @@
       "checkOutTool": "Schau dir dieses tolle Tool an: {{title}}\n{{description}}\nBesuche: {{link}}",
       "appTitle": "Capture2Calendar",
       "appDescription": "Füge Events ganz einfach aus Fotos zu deinem Kalender hinzu!",
-      "eventFilename": "Veranstaltung - {{title}}"
+      "eventFilename": "Veranstaltung - {{title}}",
+      "message": "Schau dir dieses Event an, das ich gefunden habe! 🎉"
     },
     "errors": {
       "failedProcessSharedImage": "Geteiltes Bild konnte nicht verarbeitet werden. Bitte versuche es erneut.",

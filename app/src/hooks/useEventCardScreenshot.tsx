@@ -92,14 +92,18 @@ export const useEventCardScreenshot = (
       const platform = Capacitor.getPlatform();
 
       if (platform === 'ios' || platform === 'android') {
-        const result = await Filesystem.writeFile({
+        // On native platforms, save to filesystem but return as data URL
+        // (file:// URIs can't be loaded in WebView context for PDF generation)
+        await Filesystem.writeFile({
           path: filename,
           data: base64Data,
           directory: Directory.Cache,
         });
 
-        logger.info('useEventCardScreenshot', `Screenshot saved to: ${result.uri}`);
-        return result.uri;
+        logger.info('useEventCardScreenshot', `Screenshot saved to cache`);
+
+        // Return as data URL for use in WebView (PDF generation)
+        return dataUrl;
       } else {
         // For web platform, return data URL directly
         logger.info('useEventCardScreenshot', 'Running on web, returning data URL');

@@ -13,6 +13,7 @@ export interface GenerateEventPdfOptions {
   eventTitle: string;
   locationText?: string; // Optional location text for clickable link
   locationUrl?: string; // Optional maps URL for location
+  ticketUrl?: string; // Optional ticket link URL
   // Precise measurements of interactive elements (CSS pixels, relative to card)
   locationMeasurement?: ElementMeasurement | null;
   ticketButtonMeasurement?: ElementMeasurement | null;
@@ -41,6 +42,7 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
     eventTitle,
     locationText,
     locationUrl,
+    ticketUrl,
     locationMeasurement,
     ticketButtonMeasurement,
     footerLinkMeasurement,
@@ -125,9 +127,10 @@ export const generateEventPdf = async (options: GenerateEventPdfOptions): Promis
       logger.warn('pdfGenerator', 'Location text provided but no measurement found');
     }
 
-    if (ticketButtonMeasurement) {
-      // For now, ticket button doesn't have a specific URL - could be added later
-      logger.info('pdfGenerator', `Ticket button position measured: (${ticketButtonMeasurement.x.toFixed(2)}px, ${ticketButtonMeasurement.y.toFixed(2)}px)`);
+    if (ticketButtonMeasurement && ticketUrl) {
+      addClickableArea(ticketButtonMeasurement, ticketUrl, 'ticket');
+    } else if (ticketButtonMeasurement && !ticketUrl) {
+      logger.warn('pdfGenerator', 'Ticket button measurement found but no ticket URL provided');
     }
 
     if (footerLinkMeasurement) {

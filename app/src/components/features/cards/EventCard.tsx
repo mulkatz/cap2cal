@@ -14,6 +14,7 @@ import { Capacitor } from '@capacitor/core';
 import { generateEventPdf, getEventInviteUrl } from '../../../utils/pdfGenerator';
 import { db } from '../../../db/db';
 import { useShare } from '../../../hooks/useShare';
+import { findTickets } from '../../../services/api';
 
 type Props = {
   data: CaptureEvent;
@@ -112,6 +113,7 @@ const EventCardAtom = React.memo(
     const { t, i18n } = useTranslation();
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [showActionSheet, setShowActionSheet] = useState(false);
+    const [isPreparingShare, setIsPreparingShare] = useState(false);
 
     // Check if we're in share variant mode
     const isShareVariant = variant === 'share';
@@ -144,6 +146,7 @@ const EventCardAtom = React.memo(
       timestamp,
       ticketAvailableProbability,
       alreadyFetchedTicketLink,
+      ticketSearchQuery,
     } = data;
 
     // Use provided locale or fall back to i18n language
@@ -189,25 +192,47 @@ const EventCardAtom = React.memo(
       document.body.removeChild(link);
     };
 
-    // Handle share button click - generate PDF and share
+    // Handle share button click - fetch tickets if needed, generate PDF and share
     const handleShare = async () => {
       if (!shareCardRef.current) {
         console.error('Share card ref not available');
         return;
       }
 
-      setShowActionSheet(false);
+      // Keep dialog open with loading state
+      setIsPreparingShare(true);
 
       try {
-        // 1. Capture the share variant card as screenshot (includes photo + branding)
+        // 1. Check if we need to fetch ticket link first
+        let currentTicketLink = ticketDirectLink || alreadyFetchedTicketLink;
+
+        if (!currentTicketLink && alreadyFetchedTicketLink === undefined && ticketSearchQuery) {
+          // Need to fetch ticket link
+          console.log('Fetching ticket link before PDF generation...');
+          const ticketResult = await findTickets(ticketSearchQuery, i18n.language);
+
+          if (ticketResult && ticketResult.ticketLinks.length > 0) {
+            currentTicketLink = ticketResult.ticketLinks[0];
+            // Update database with fetched link
+            await db.eventItems.update(data, { ...data, alreadyFetchedTicketLink: currentTicketLink });
+          } else {
+            // No tickets found, mark as null
+            await db.eventItems.update(data, { ...data, alreadyFetchedTicketLink: null });
+            currentTicketLink = null;
+          }
+        }
+
+        // 2. Capture the share variant card as screenshot (includes photo + branding)
         const cardScreenshotDataUrl = await takeScreenshot(shareCardRef.current);
 
         if (!cardScreenshotDataUrl) {
           console.error('Failed to capture card screenshot');
+          setIsPreparingShare(false);
+          setShowActionSheet(false);
           return;
         }
 
-        // 2. Measure interactive element positions relative to card
+        // 3. Measure interactive element positions relative to card
         const cardRect = shareCardRef.current.getBoundingClientRect();
 
         // Helper to measure an element's position relative to the card
@@ -222,12 +247,13 @@ const EventCardAtom = React.memo(
           };
         };
 
-        // Measure each interactive element
+        // Measure each interactive element (only if they should be rendered)
+        const shouldRenderTicketButton = showTicketButton && currentTicketLink && currentTicketLink !== null;
         const locationMeasurement = location ? measureElement(locationRef) : null;
-        const ticketButtonMeasurement = showTicketButton ? measureElement(ticketButtonRef) : null;
+        const ticketButtonMeasurement = shouldRenderTicketButton ? measureElement(ticketButtonRef) : null;
         const footerLinkMeasurement = measureElement(footerLinkRef);
 
-        // 3. Prepare location data for clickable link (if available)
+        // 4. Prepare location data for clickable link (if available)
         let locationText: string | undefined;
         let locationUrl: string | undefined;
 
@@ -238,25 +264,34 @@ const EventCardAtom = React.memo(
           locationUrl = `https://www.google.com/maps/search/?api=1&query=${searchQuery}`;
         }
 
-        // 4. Generate PDF with tight bounds, dark background, and accurate clickable areas
+        // 5. Prepare ticket URL (if available)
+        const ticketUrl = currentTicketLink && currentTicketLink !== null
+          ? `https://${currentTicketLink.replace(/^(https?:\/\/)?(www\.)?/, 'www.')}`
+          : undefined;
+
+        // 6. Generate PDF with tight bounds, dark background, and accurate clickable areas
         const pdfBase64 = await generateEventPdf({
           cardScreenshotDataUrl,
           eventTitle: title || 'Event',
           locationText,
           locationUrl,
+          ticketUrl,
           locationMeasurement,
           ticketButtonMeasurement,
           footerLinkMeasurement,
           pixelRatio: PIXEL_RATIO, // Pass pixel ratio for coordinate scaling
         });
 
-        // 4. Generate filename (localized, human-readable)
+        // 7. Generate filename (localized, human-readable)
         const cleanTitle = (title || t('general.newEvent', 'New Event'))
           .replace(/[<>:"/\\|?*]/g, '') // Remove invalid filename characters
           .trim();
         const filename = `${t('share.eventFilename', { title: cleanTitle })}.pdf`;
 
-        // 5. Share or download based on platform
+        // 8. Share message
+        const shareMessage = t('share.message', 'Check out this event I found! 🎉');
+
+        // 9. Share or download based on platform
         const platform = Capacitor.getPlatform();
 
         if (platform === 'web') {
@@ -265,12 +300,17 @@ const EventCardAtom = React.memo(
           triggerDownload(pdfDataUrl, filename);
           console.log('PDF downloaded:', filename);
         } else {
-          // On native: Use share functionality
-          await sharePdfFile(pdfBase64, filename);
+          // On native: Use share functionality with message
+          await sharePdfFile(pdfBase64, filename, shareMessage);
           console.log('PDF shared:', filename);
         }
+
+        setIsPreparingShare(false);
+        setShowActionSheet(false);
       } catch (error) {
         console.error('Failed to generate/share PDF:', error);
+        setIsPreparingShare(false);
+        setShowActionSheet(false);
       }
     };
 
@@ -493,8 +533,8 @@ const EventCardAtom = React.memo(
                   </div>
                 )}
 
-                {/* Ticket Button (if available) */}
-                {showTicketButton && (
+                {/* Ticket Button (only if ticket link exists, NOT if explicitly null) */}
+                {showTicketButton && (ticketDirectLink || alreadyFetchedTicketLink) && alreadyFetchedTicketLink !== null && (
                   <div ref={ticketButtonRef} className="flex pt-2">
                     <TicketButton isFavourite={isFavourite} id={id} />
                   </div>
@@ -531,17 +571,28 @@ const EventCardAtom = React.memo(
                 {/* Share Option */}
                 <button
                   onClick={handleShare}
-                  disabled={isCapturing}
+                  disabled={isPreparingShare}
                   className="w-full rounded-xl bg-white/5 px-4 py-3.5 text-left text-white transition-colors active:bg-white/10 disabled:opacity-50">
                   <div className="flex items-center gap-3">
-                    <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
-                      <polyline points="16 6 12 2 8 6" />
-                      <line x1="12" y1="2" x2="12" y2="15" />
-                    </svg>
+                    {isPreparingShare ? (
+                      <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                    ) : (
+                      <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+                        <polyline points="16 6 12 2 8 6" />
+                        <line x1="12" y1="2" x2="12" y2="15" />
+                      </svg>
+                    )}
                     <span className="font-medium">
-                      {isCapturing
-                        ? t('eventCard.actionSheet.capturing', 'Capturing...')
+                      {isPreparingShare
+                        ? t('eventCard.actionSheet.preparing', 'Preparing...')
                         : t('eventCard.actionSheet.share', 'Share Event')}
                     </span>
                   </div>

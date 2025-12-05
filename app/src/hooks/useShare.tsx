@@ -4,15 +4,22 @@ import { useTranslation } from 'react-i18next';
 
 export const useShare = () => {
   const { t } = useTranslation();
-  const sharePdfFile = async (pdfBase64Data: string, fileName: string) => {
+  const sharePdfFile = async (pdfBase64Data: string, fileName: string, message?: string) => {
     try {
+      // Write file to cache directory
       const writeFileResult = await Filesystem.writeFile({
         path: fileName,
         data: pdfBase64Data,
         directory: Directory.Cache,
       });
 
-      const nativePath = writeFileResult.uri;
+      // Get proper content URI for sharing (important for Android)
+      const uriResult = await Filesystem.getUri({
+        path: fileName,
+        directory: Directory.Cache,
+      });
+
+      const shareableUri = uriResult.uri;
 
       const canShare = await Share.canShare();
       if (!canShare.value) {
@@ -21,11 +28,12 @@ export const useShare = () => {
 
       await Share.share({
         title: t('share.shareFile', { fileName }),
-        text: t('share.checkOutPdf', { fileName }),
-        files: [nativePath],
+        text: message || t('share.checkOutPdf', { fileName }),
+        files: [shareableUri],
         dialogTitle: t('share.shareFile', { fileName }),
       });
     } catch (error) {
+      console.error('Failed to share PDF:', error);
       // Error handling could be enhanced here
     }
   };

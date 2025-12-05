@@ -39,6 +39,7 @@
         "title": "Event Options",
         "share": "Share Event",
         "capturing": "Capturing...",
+        "preparing": "Preparing...",
         "comingSoon": "Coming Soon",
         "delete": "Delete Event",
         "cancel": "Cancel"
@@ -52,7 +53,8 @@
       "checkOutTool": "Check out this awesome tool: {{title}}\n{{description}}\nVisit: {{link}}",
       "appTitle": "Capture2Calendar",
       "appDescription": "Easily add events to your calendar from photos!",
-      "eventFilename": "Event - {{title}}"
+      "eventFilename": "Event - {{title}}",
+      "message": "Check out this event I found! 🎉"
     },
     "errors": {
       "failedProcessSharedImage": "Failed to process shared image. Please try again.",
