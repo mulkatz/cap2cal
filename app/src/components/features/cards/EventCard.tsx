@@ -256,10 +256,9 @@ const EventCardAtom = React.memo(
           }
         }
 
-        // 3. Move share card on-screen for screenshot
-        console.log('[handleShare] Moving share card on-screen for screenshot...');
-        const originalLeft = shareCardContainerRef.current.style.left;
-        shareCardContainerRef.current.style.left = '0px';
+        // 3. Make share card slightly visible for iOS screenshot (2% at bottom)
+        console.log('[handleShare] Preparing share card for screenshot...');
+        shareCardContainerRef.current.style.transform = 'translateY(98%)';
 
         // Wait for browser to paint the share card
         await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
@@ -305,12 +304,12 @@ const EventCardAtom = React.memo(
         const cardScreenshotDataUrl = await takeScreenshot(shareCardRef.current);
         console.log('[handleShare] Screenshot captured, dataUrl length:', cardScreenshotDataUrl?.length || 0);
 
-        // 5. Move the share card back off-screen
-        shareCardContainerRef.current.style.left = originalLeft;
+        // 5. Hide the share card again (completely off-screen)
+        shareCardContainerRef.current.style.transform = 'translateY(100%)';
 
         if (!cardScreenshotDataUrl) {
           console.error('Failed to capture card screenshot');
-          shareCardContainerRef.current.style.left = originalLeft;
+          shareCardContainerRef.current.style.transform = 'translateY(100%)';
           setIsPreparingShare(false);
           setShowActionSheet(false);
           return;
@@ -396,7 +395,7 @@ const EventCardAtom = React.memo(
         console.error('Failed to generate/share PDF:', error);
         // Make sure to hide the share card even on error
         if (shareCardContainerRef.current) {
-          shareCardContainerRef.current.style.left = '-9999px';
+          shareCardContainerRef.current.style.transform = 'translateY(100%)';
         }
         setIsPreparingShare(false);
         setShowActionSheet(false);
@@ -560,9 +559,9 @@ const EventCardAtom = React.memo(
         {!isShareVariant && (
           <div
             ref={shareCardContainerRef}
-            className="pointer-events-none fixed left-[-9999px] top-0 w-[400px]"
+            className="pointer-events-none fixed bottom-0 left-0 w-[400px]"
             aria-hidden="true"
-            style={{ zIndex: -1000 }}>
+            style={{ transform: 'translateY(100%)', zIndex: -1000 }}>
             <Card
               ref={shareCardRef}
               highlight={false}

@@ -692,10 +692,6 @@ video {
   left: 1rem;
 }
 
-.left-\[-9999px\] {
-  left: -9999px;
-}
-
 .right-0 {
   right: 0px;
 }
