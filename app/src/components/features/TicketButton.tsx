@@ -18,14 +18,19 @@ export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boo
     findTickets(searchQuery, i18n).then(async (value) => {
       if (value === null) {
         await db.eventItems.update(item, { ...item, alreadyFetchedTicketLink: null });
+        setFetching(false);
         return;
       }
 
-      // if (value.ticketLinks.length > 0) {
-      await db.eventItems.update(item, { ...item, alreadyFetchedTicketLink: value.ticketLinks[0] || null });
-      // }
-
+      const ticketLink = value.ticketLinks[0] || null;
+      await db.eventItems.update(item, { ...item, alreadyFetchedTicketLink: ticketLink });
       setFetching(false);
+
+      // Auto-open the ticket link if found
+      if (ticketLink) {
+        onTicket(ticketLink);
+      }
+
       return;
     });
   };
@@ -41,7 +46,7 @@ export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boo
     return (
       <CTAButton
         highlight={isFavourite}
-        text={t('general.buyTickets')}
+        text={t('general.searchTickets')}
         icon={<IconTicket size={20} strokeWidth={2} />}
         onClick={() => onTicket(item.ticketDirectLink!)}
       />
