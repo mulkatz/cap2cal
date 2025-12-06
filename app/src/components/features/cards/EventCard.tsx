@@ -209,7 +209,7 @@ const EventCardAtom = React.memo(
 
         if (!currentTicketLink && alreadyFetchedTicketLink === undefined && ticketSearchQuery) {
           // Need to fetch ticket link
-          console.log('Fetching ticket link before PDF generation...');
+          console.log('[handleShare] Fetching ticket link before PDF generation...');
           const ticketResult = await findTickets(ticketSearchQuery, i18n.language);
 
           if (ticketResult && ticketResult.ticketLinks.length > 0) {
@@ -221,6 +221,10 @@ const EventCardAtom = React.memo(
             await db.eventItems.update(data, { ...data, alreadyFetchedTicketLink: null });
             currentTicketLink = null;
           }
+
+          // Wait for database update to propagate to useLiveQuery observers
+          console.log('[handleShare] Waiting for database update to propagate...');
+          await new Promise((resolve) => setTimeout(resolve, 300));
         }
 
         // 2. Pre-load the event image if it exists (critical for iOS)
@@ -252,24 +256,61 @@ const EventCardAtom = React.memo(
           }
         }
 
-        // 3. Temporarily make the share card visible for screenshot (but keep it off-screen)
-        console.log('[handleShare] Making share card temporarily visible...');
-        shareCardContainerRef.current.style.visibility = 'visible';
+        // 3. Move share card on-screen for screenshot
+        console.log('[handleShare] Moving share card on-screen for screenshot...');
+        const originalLeft = shareCardContainerRef.current.style.left;
+        shareCardContainerRef.current.style.left = '0px';
 
-        // Wait for browser to paint the share card with the pre-loaded image
+        // Wait for browser to paint the share card
         await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-        console.log('[handleShare] Share card painted, taking screenshot...');
+
+        // 3.5. Wait for TicketButton to render if it should be shown
+        // TicketButton uses useLiveQuery which is async, so we need to wait for it
+        const shouldShowTicketButton =
+          showTicketButton && (ticketDirectLink || alreadyFetchedTicketLink) && alreadyFetchedTicketLink !== null;
+
+        if (shouldShowTicketButton && ticketButtonRef.current) {
+          console.log('[handleShare] Waiting for ticket button to render...');
+          const maxWaitTime = 3000; // Max 3 seconds
+          const startTime = Date.now();
+
+          // Poll until the ticket button has actual button element (not just container div)
+          while (Date.now() - startTime < maxWaitTime) {
+            // Check if there's an actual button element inside (TicketButton renders a button)
+            const button = ticketButtonRef.current.querySelector('button');
+            if (button && button.offsetHeight > 0) {
+              console.log('[handleShare] Ticket button rendered successfully', button.offsetHeight);
+              // Extra wait to ensure full paint
+              await new Promise((resolve) => setTimeout(resolve, 100));
+              break;
+            }
+            // Wait 50ms before checking again
+            await new Promise((resolve) => setTimeout(resolve, 50));
+          }
+
+          const finalButton = ticketButtonRef.current.querySelector('button');
+          if (!finalButton || finalButton.offsetHeight === 0) {
+            console.warn('[handleShare] Ticket button did not render in time', {
+              hasButton: !!finalButton,
+              buttonHeight: finalButton?.offsetHeight,
+              containerHeight: ticketButtonRef.current.offsetHeight,
+              containerChildren: ticketButtonRef.current.children.length,
+            });
+          }
+        }
+
+        console.log('[handleShare] Share card ready, taking screenshot...');
 
         // 4. Capture the share variant card as screenshot (includes photo + branding)
         const cardScreenshotDataUrl = await takeScreenshot(shareCardRef.current);
         console.log('[handleShare] Screenshot captured, dataUrl length:', cardScreenshotDataUrl?.length || 0);
 
-        // 5. Hide the share card again
-        shareCardContainerRef.current.style.visibility = 'hidden';
+        // 5. Move the share card back off-screen
+        shareCardContainerRef.current.style.left = originalLeft;
 
         if (!cardScreenshotDataUrl) {
           console.error('Failed to capture card screenshot');
-          shareCardContainerRef.current.style.visibility = 'hidden';
+          shareCardContainerRef.current.style.left = originalLeft;
           setIsPreparingShare(false);
           setShowActionSheet(false);
           return;
@@ -355,7 +396,7 @@ const EventCardAtom = React.memo(
         console.error('Failed to generate/share PDF:', error);
         // Make sure to hide the share card even on error
         if (shareCardContainerRef.current) {
-          shareCardContainerRef.current.style.visibility = 'hidden';
+          shareCardContainerRef.current.style.left = '-9999px';
         }
         setIsPreparingShare(false);
         setShowActionSheet(false);
@@ -521,7 +562,7 @@ const EventCardAtom = React.memo(
             ref={shareCardContainerRef}
             className="pointer-events-none fixed left-[-9999px] top-0 w-[400px]"
             aria-hidden="true"
-            style={{ visibility: 'hidden', zIndex: -1000 }}>
+            style={{ zIndex: -1000 }}>
             <Card
               ref={shareCardRef}
               highlight={false}
