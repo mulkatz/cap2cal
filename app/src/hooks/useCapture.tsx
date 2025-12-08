@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { useDialogContext } from '../contexts/DialogContext.tsx';
 import { ApiEvent, ExtractionError } from '../models/api.types.ts';
 import { db } from '../db/db.ts';
-import { fetchData } from '../services/api.ts';
+import { fetchData, scanData, enrichEvent } from '../services/api.ts';
 import { useTranslation } from 'react-i18next';
 import { useFirebaseContext } from '../contexts/FirebaseContext.tsx';
 import i18next from 'i18next';
@@ -13,6 +13,8 @@ import { useAppContext } from '../contexts/AppContext.tsx';
 import { AnalyticsEvent, AnalyticsParam, getEventFieldsPresence } from '../services/analytics.service.ts';
 import { getCaptureCount, hasReachedLimit, incrementCaptureCount, resetCaptureCount } from '../utils/captureLimit.ts';
 import { logger } from '../utils/logger';
+import { optimizeBase64Image, optimizeImageForAI } from '../utils/imageOptimization';
+// import { getCachedEnrichment, setCachedEnrichment, cleanupEnrichmentCache } from '../utils/enrichmentCache';
 import type { PurchaseError } from '../services/purchases.service.ts';
 import {
   isRevenueCatEnabled,
@@ -52,6 +54,18 @@ export const useCapture = () => {
     };
 
     try {
+      // Optimize image before upload to reduce size
+      let optimizedImage = imgUrl;
+      try {
+        const optimizationStart = performance.now();
+        optimizedImage = await optimizeBase64Image(imgUrl);
+        const optimizationDuration = performance.now() - optimizationStart;
+        logger.info('Capture', `Image optimization completed in ${optimizationDuration.toFixed(0)}ms`);
+      } catch (error) {
+        logger.warn('Capture', 'Image optimization failed, using original', error instanceof Error ? error : undefined);
+        // Continue with original image if optimization fails
+      }
+
       // Get auth token to send to backend
       const authToken = await getAuthToken();
 
@@ -59,7 +73,8 @@ export const useCapture = () => {
       const uploadStartTime = performance.now();
       logAnalyticsEvent(AnalyticsEvent.IMAGE_UPLOAD_STARTED);
 
-      const result = await fetchData(imgUrl, i18next.language, authToken || undefined);
+      // Use fast scan endpoint instead of full extraction
+      const result = await scanData(optimizedImage, i18next.language, authToken || undefined);
 
       // Track upload completion
       const uploadDuration = performance.now() - uploadStartTime;
@@ -158,7 +173,7 @@ export const useCapture = () => {
             },
             duration: 2500,
           });
-          await Promise.all(events.map((event) => saveEvent(event, imgUrl)));
+          await Promise.all(events.map((event) => saveEvent(event, optimizedImage)));
 
           // Set result data and transition to result state
           setResultData({
@@ -166,6 +181,9 @@ export const useCapture = () => {
             events: events,
           });
           setAppState('result');
+
+          // Start background enrichment for all events
+          enrichEventsInBackground(events, i18next.language, authToken || undefined);
         } else {
           toast.success(t('toasts.capture.singleEvent'), {
             style: {
@@ -175,7 +193,7 @@ export const useCapture = () => {
             },
             duration: 2500,
           });
-          await saveEvent(events[0], imgUrl);
+          await saveEvent(events[0], optimizedImage);
 
           // Set result data and transition to result state
           setResultData({
@@ -183,6 +201,9 @@ export const useCapture = () => {
             events: [events[0]],
           });
           setAppState('result');
+
+          // Start background enrichment for single event
+          enrichEventsInBackground([events[0]], i18next.language, authToken || undefined);
         }
         return;
       }
@@ -461,6 +482,129 @@ export const useCapture = () => {
     setAppState('home');
   };
 
+  /**
+   * Enriches a single event with retry logic
+   * Uses exponential backoff (1s, 2s, 4s delays)
+   * Cache functionality disabled for now
+   */
+  const enrichEventWithRetry = async (
+    event: CaptureEvent,
+    i18n: string,
+    authToken?: string,
+    maxRetries: number = 3
+  ): Promise<void> => {
+    // Cache functionality disabled
+    // const cachedData = getCachedEnrichment(event);
+    // if (cachedData) {
+    //   logger.info('Enrichment', `Using cached enrichment for event: ${event.id}`);
+    //   const updatedEvent: CaptureEvent = {
+    //     ...event,
+    //     description: cachedData.description,
+    //     tags: cachedData.tags,
+    //     location: cachedData.location || event.location,
+    //     ticketAvailableProbability: cachedData.ticketAvailableProbability ?? event.ticketAvailableProbability,
+    //     ticketSearchQuery: cachedData.ticketSearchQuery || event.ticketSearchQuery,
+    //     isEnriched: true,
+    //   };
+    //   await db.eventItems.update(event.id, updatedEvent);
+    //   logAnalyticsEvent(AnalyticsEvent.EXTRACTION_SUCCESS, {
+    //     enrichment: 'cached',
+    //     event_id: event.id,
+    //   });
+    //   return;
+    // }
+
+    let lastError: Error | null = null;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        logger.debug('Enrichment', `Enriching event: ${event.id} (attempt ${attempt}/${maxRetries})`);
+
+        // Call enrich API
+        const enrichedData = await enrichEvent(event, i18n, authToken);
+
+        if (enrichedData) {
+          // Merge enriched data back into the event
+          const updatedEvent: CaptureEvent = {
+            ...event,
+            description: enrichedData.description || event.description,
+            tags: enrichedData.tags || event.tags,
+            location: enrichedData.location || event.location,
+            ticketAvailableProbability: enrichedData.ticketAvailableProbability ?? event.ticketAvailableProbability,
+            ticketSearchQuery: enrichedData.ticketSearchQuery || event.ticketSearchQuery,
+            isEnriched: true,
+          };
+
+          // Update in database
+          await db.eventItems.update(event.id, updatedEvent);
+
+          // Cache disabled for now
+          // setCachedEnrichment(event, {
+          //   description: enrichedData.description!,
+          //   tags: enrichedData.tags!,
+          //   location: enrichedData.location,
+          //   ticketAvailableProbability: enrichedData.ticketAvailableProbability,
+          //   ticketSearchQuery: enrichedData.ticketSearchQuery,
+          // });
+
+          logger.info('Enrichment', `Successfully enriched event: ${event.id} on attempt ${attempt}`);
+
+          // Log analytics
+          logAnalyticsEvent(AnalyticsEvent.EXTRACTION_SUCCESS, {
+            enrichment: 'completed',
+            event_id: event.id,
+            attempts: attempt,
+          });
+
+          return; // Success - exit retry loop
+        } else {
+          logger.warn('Enrichment', `Enrichment returned null for event: ${event.id} (attempt ${attempt})`);
+          lastError = new Error('Enrichment returned null');
+        }
+      } catch (error) {
+        lastError = error instanceof Error ? error : new Error('Unknown enrichment error');
+        logger.warn('Enrichment', `Attempt ${attempt} failed for event ${event.id}`, lastError);
+
+        // If not the last attempt, wait before retrying (exponential backoff)
+        if (attempt < maxRetries) {
+          const delayMs = Math.pow(2, attempt - 1) * 1000; // 1s, 2s, 4s
+          logger.debug('Enrichment', `Retrying in ${delayMs}ms...`);
+          await new Promise((resolve) => setTimeout(resolve, delayMs));
+        }
+      }
+    }
+
+    // All retries failed
+    logger.error('Enrichment', `All ${maxRetries} attempts failed for event ${event.id}`, lastError || undefined);
+
+    // Mark as not enriched to allow future retry if needed
+    await db.eventItems.update(event.id, { isEnriched: false });
+
+    // Log analytics
+    logAnalyticsEvent('enrichment_failed', {
+      event_id: event.id,
+      attempts: maxRetries,
+      error: lastError?.message || 'unknown',
+    });
+  };
+
+  /**
+   * Enriches events in the background after initial scan completes
+   * Updates database and UI as enrichment completes for each event
+   * Includes retry logic with exponential backoff
+   */
+  const enrichEventsInBackground = async (events: CaptureEvent[], i18n: string, authToken?: string) => {
+    logger.info('Enrichment', `Starting background enrichment for ${events.length} event(s)`);
+
+    // Enrich each event in parallel with retry logic
+    const enrichmentPromises = events.map((event) => enrichEventWithRetry(event, i18n, authToken));
+
+    // Wait for all enrichments to complete (or fail)
+    await Promise.allSettled(enrichmentPromises);
+
+    logger.info('Enrichment', 'Background enrichment completed for all events');
+  };
+
   const saveEvent = async (event: CaptureEvent, imgUrl: string) => {
     await db.eventItems.add(event, event.id);
     const img = { id: event.id, dataUrl: imgUrl, capturedAt: Date.now() };
@@ -471,7 +615,7 @@ export const useCapture = () => {
     ref.current?.click();
   };
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>, ref: RefObject<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>, ref: RefObject<HTMLInputElement>) => {
     const file = event.target.files ? event.target.files[0] : null;
     logger.debug('FileImport', 'File selection initiated');
 
@@ -479,20 +623,43 @@ export const useCapture = () => {
     logAnalyticsEvent(AnalyticsEvent.IMAGE_SELECTED_FROM_GALLERY);
 
     if (file) {
-      const dataType = file.type;
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        logger.debug('FileImport', 'File read completed', { fileType: dataType });
-        const base64String = reader.result as string; // The result is a Base64 string
-        onCaptured(base64String, 'gallery');
+      try {
+        // Optimize the image file before processing
+        logger.debug('FileImport', 'Optimizing image file', {
+          originalSize: `${(file.size / 1024 / 1024).toFixed(2)}MB`,
+          fileType: file.type
+        });
+
+        const optimizedBase64 = await optimizeImageForAI(file);
+        logger.debug('FileImport', 'Image optimization completed');
+
+        onCaptured(optimizedBase64, 'gallery');
 
         if (ref?.current) {
           ref.current.value = '';
         }
-      };
-      reader.readAsDataURL(file); // Convert the file to a Base64 string
+      } catch (error) {
+        logger.error('FileImport', 'Failed to optimize image', error instanceof Error ? error : undefined);
+
+        // Fallback: use original file if optimization fails
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64String = reader.result as string;
+          onCaptured(base64String, 'gallery');
+
+          if (ref?.current) {
+            ref.current.value = '';
+          }
+        };
+        reader.readAsDataURL(file);
+      }
     }
   };
+
+  // Cache cleanup disabled for now
+  // useEffect(() => {
+  //   cleanupEnrichmentCache();
+  // }, []);
 
   // Dev function to test paywall - only in development
   useEffect(() => {

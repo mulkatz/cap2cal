@@ -15,6 +15,8 @@ import { generateEventPdf, getEventInviteUrl } from '../../../utils/pdfGenerator
 import { db } from '../../../db/db';
 import { useShare } from '../../../hooks/useShare';
 import { findTickets } from '../../../services/api';
+import { TextSkeleton } from '../../ui/TextSkeleton';
+import { ConfidenceBadge } from '../../ui/ConfidenceBadge';
 
 type Props = {
   data: CaptureEvent;
@@ -435,13 +437,18 @@ const EventCardAtom = React.memo(
               <div className="flex-1 self-start">
                 <h3 className="line-clamp-2 text-lg font-semibold leading-tight text-white">{title}</h3>
 
-                {kind && (
-                  <div className="mt-2">
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  {kind && (
                     <span className="inline-block rounded-full bg-highlight/10 px-2.5 py-1 text-xs font-medium text-highlight">
                       {kind}
                     </span>
-                  </div>
-                )}
+                  )}
+
+                  {/* Confidence Badge - Only show if confidence exists and not in share variant */}
+                  {!isShareVariant && data.confidence && (
+                    <ConfidenceBadge score={data.confidence.score} issues={data.confidence.issues} size="small" />
+                  )}
+                </div>
               </div>
 
               {/* Favorite Star - Hidden in share variant */}
@@ -481,26 +488,32 @@ const EventCardAtom = React.memo(
               </div>
             )}
 
-            {/* Row 5 (Body): Description with Smart Read More */}
-            {description?.short && (
-              <div className="mb-5 mt-5">
-                <p
-                  className={cn(
-                    'text-[13px] font-normal tracking-[0.5px] text-gray-200 opacity-80',
-                    shouldTruncate && !isDescriptionExpanded && 'line-clamp-3'
-                  )}>
-                  {description.short}
-                </p>
-                {/* Only show "Read More" button if text is long enough */}
-                {shouldTruncate && !isDescriptionExpanded && (
-                  <button
-                    onClick={() => setIsDescriptionExpanded(true)}
-                    className="mt-0.5 text-[13px] font-normal tracking-[0.5px] text-highlight">
-                    {t('general.more', 'mehr')}
-                  </button>
-                )}
-              </div>
-            )}
+            {/* Row 5 (Body): Description with Smart Read More OR Loading Skeleton */}
+            <div className="mb-5 mt-5">
+              {!data.isEnriched ? (
+                // Show loading skeleton while enrichment is in progress
+                <TextSkeleton lines={2} className="opacity-50" />
+              ) : description?.short ? (
+                // Show enriched description
+                <>
+                  <p
+                    className={cn(
+                      'text-[13px] font-normal tracking-[0.5px] text-gray-200 opacity-80',
+                      shouldTruncate && !isDescriptionExpanded && 'line-clamp-3'
+                    )}>
+                    {description.short}
+                  </p>
+                  {/* Only show "Read More" button if text is long enough */}
+                  {shouldTruncate && !isDescriptionExpanded && (
+                    <button
+                      onClick={() => setIsDescriptionExpanded(true)}
+                      className="mt-0.5 text-[13px] font-normal tracking-[0.5px] text-highlight">
+                      {t('general.more', 'mehr')}
+                    </button>
+                  )}
+                </>
+              ) : null}
+            </div>
 
             {/* Row 6 (Footer): Action Buttons + Tickets OR Ticket + Branding */}
             {isShareVariant ? (

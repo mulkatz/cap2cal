@@ -57,6 +57,12 @@ export type ApiEvent = {
   ticketDirectLink?: string;
   ticketAvailableProbability?: number;
   ticketSearchQuery?: string;
+  confidence?: {
+    score: number;
+    issues: string[];
+  };
+  isEnriched?: boolean;
+  _rawContext?: string; // Internal: raw text from scan for enrichment
 };
 
 export type ExtractionError =
