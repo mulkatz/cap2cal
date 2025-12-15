@@ -12,6 +12,12 @@ import { AIResponseSchema, AIResponse } from './schema';
 // Temperature variations for parallel calls - slight differences to hedge against malformed JSON
 const TEMPERATURES = [0.05, 0.1, 0.15] as const;
 
+// Reuse VertexAI client across requests (connection pooling, faster warm starts)
+const vertexAI = new VertexAI({
+  project: GCLOUD_PROJECT,
+  location: VERTEX_AI_LOCATION,
+});
+
 // Types for tracking AI call results
 interface AICallResult {
   index: number;
@@ -240,7 +246,7 @@ async function findFirstValidResult(
 export const analyse = onRequest(
   {
     region: VERTEX_AI_LOCATION,
-    memory: '4GiB',
+    memory: '2GiB',
     timeoutSeconds: 180,
     cors: true,
     // @ts-ignore
@@ -277,11 +283,7 @@ export const analyse = onRequest(
       imageSize: image.length,
     });
 
-    const vertexAI = new VertexAI({
-      project: GCLOUD_PROJECT,
-      location: VERTEX_AI_LOCATION,
-    });
-
+    // Get model with language-specific system instruction (vertexAI client is reused at module level)
     const generativeModel = vertexAI.getGenerativeModel({
       model: 'gemini-2.5-flash',
       systemInstruction: { role: 'model', parts: [{ text: v0({ i18n }) }] },
