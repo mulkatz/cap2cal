@@ -150,7 +150,7 @@ export const EventHistoryScreen = React.memo(
                 }
               />
               <FilterChip
-                label={`${t('general.sortBy')} ${t(`general.${sortByFilter}`)}`}
+                label={t(`general.${sortByFilter}`)}
                 active={false}
                 onClick={handleSortByChange}
                 icon={<ArrowUpDown size={16} className="text-gray-300" />}
