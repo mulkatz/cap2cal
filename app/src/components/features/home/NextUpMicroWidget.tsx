@@ -10,7 +10,12 @@ interface NextUpMicroWidgetProps {
 }
 
 // Format date to readable format
-const formatEventDate = (dateStr?: string, locale?: string): string => {
+const formatEventDate = (
+  dateStr: string | undefined,
+  locale: string | undefined,
+  todayLabel: string,
+  tomorrowLabel: string
+): string => {
   if (!dateStr) return '';
   const date = new Date(dateStr);
   const now = new Date();
@@ -21,9 +26,9 @@ const formatEventDate = (dateStr?: string, locale?: string): string => {
   const eventDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
   if (eventDate.getTime() === today.getTime()) {
-    return 'Today';
+    return todayLabel;
   } else if (eventDate.getTime() === tomorrow.getTime()) {
-    return 'Tomorrow';
+    return tomorrowLabel;
   } else {
     return new Intl.DateTimeFormat(locale || 'en-GB', {
       weekday: 'short',
@@ -34,11 +39,11 @@ const formatEventDate = (dateStr?: string, locale?: string): string => {
 };
 
 // Format time
-const formatTime = (timeStr?: string): string => {
+const formatTime = (timeStr?: string, locale?: string): string => {
   if (!timeStr) return '';
   try {
     const dummyDate = new Date(`2000-01-01T${timeStr}`);
-    return dummyDate.toLocaleTimeString('en-GB', {
+    return dummyDate.toLocaleTimeString(locale || 'en-GB', {
       hour: '2-digit',
       minute: '2-digit',
     });
@@ -153,8 +158,13 @@ export const NextUpMicroWidget: React.FC<NextUpMicroWidgetProps> = ({ onEventCli
   } else {
     // Show upcoming event
     const { title, dateTimeFrom } = nextEvent;
-    const formattedDate = formatEventDate(dateTimeFrom?.date, i18n.language);
-    const formattedTime = formatTime(dateTimeFrom?.time);
+    const formattedDate = formatEventDate(
+      dateTimeFrom?.date,
+      i18n.language,
+      t('general.today'),
+      t('general.tomorrow')
+    );
+    const formattedTime = formatTime(dateTimeFrom?.time, i18n.language);
 
     content = (
       <div className="flex w-full max-w-[100vw] justify-center px-8">

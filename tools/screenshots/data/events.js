@@ -263,5 +263,398 @@ export const events = {
       timestamp: 1736280000000,
       isFavorite: true
     }
+  ],
+  'es-ES': [
+    {
+      id: "event-es-001",
+      title: "Festival de Verano 2025",
+      kind: "Festival de Música",
+      tags: ["música", "festival", "aire libre", "verano"],
+      description: {
+        short: "Festival al aire libre de tres días con más de 50 artistas en múltiples escenarios",
+        long: "Únete al festival de música más grande del verano. Disfruta de increíbles actuaciones en vivo de artistas de renombre mundial, descubre nuevos talentos y disfruta de food trucks, instalaciones artísticas y más."
+      },
+      dateTimeFrom: {
+        date: "2025-07-18",
+        time: "16:00"
+      },
+      dateTimeTo: {
+        date: "2025-07-20",
+        time: "23:00"
+      },
+      location: {
+        city: "Barcelona",
+        address: "Parc del Fòrum, Rambla de Prim"
+      },
+      links: ["https://festivaldeverano.example.es"],
+      ticketSearchQuery: "Festival de Verano Barcelona 2025",
+      ticketAvailableProbability: 95,
+      timestamp: 1736640000000,
+      isFavorite: true
+    },
+    {
+      id: "event-es-002",
+      title: "Conferencia Tech Innovation",
+      kind: "Conferencia",
+      tags: ["tecnología", "negocios", "networking", "IA"],
+      description: {
+        short: "Conferencia tecnológica líder sobre IA, computación en la nube e innovaciones futuras",
+        long: "Conéctate con líderes de la industria, asiste a talleres y descubre lo último en tecnología. Los temas incluyen inteligencia artificial, aprendizaje automático, arquitectura cloud y ciberseguridad."
+      },
+      dateTimeFrom: {
+        date: "2025-09-15",
+        time: "09:00"
+      },
+      dateTimeTo: {
+        date: "2025-09-17",
+        time: "18:00"
+      },
+      location: {
+        city: "Madrid",
+        address: "IFEMA, Av. Partenón 5"
+      },
+      links: ["https://techinnovation.example.es"],
+      ticketSearchQuery: "Tech Innovation Madrid",
+      ticketAvailableProbability: 80,
+      timestamp: 1736550000000,
+      isFavorite: false
+    },
+    {
+      id: "event-es-003",
+      title: "30 Cumpleaños de Sara",
+      kind: "Fiesta de Cumpleaños",
+      tags: ["cumpleaños", "fiesta", "celebración"],
+      description: {
+        short: "¡Fiesta sorpresa para el 30 cumpleaños de Sara! Código de vestimenta: Cóctel",
+        long: "Únete a nosotros para celebrar el cumpleaños especial de Sara. Habrá cena, bebidas, baile y muchas sorpresas. Por favor, llega a las 19:00. Confirmación requerida."
+      },
+      dateTimeFrom: {
+        date: "2025-06-14",
+        time: "19:00"
+      },
+      dateTimeTo: {
+        date: "2025-06-14",
+        time: "23:30"
+      },
+      location: {
+        city: "Valencia",
+        address: "Terraza del Mar, Paseo Neptuno 42"
+      },
+      timestamp: 1736460000000,
+      isFavorite: true
+    },
+    {
+      id: "event-es-004",
+      title: "Retiro de Yoga y Bienestar",
+      kind: "Retiro de Bienestar",
+      tags: ["yoga", "bienestar", "meditación", "salud"],
+      description: {
+        short: "Retiro de fin de semana con yoga, meditación y cocina saludable"
+      },
+      dateTimeFrom: {
+        date: "2025-08-08",
+        time: "15:00"
+      },
+      dateTimeTo: {
+        date: "2025-08-10",
+        time: "14:00"
+      },
+      location: {
+        city: "Mallorca",
+        address: "Resort Son Vida, Carrer de la Bonanova"
+      },
+      ticketSearchQuery: "Retiro Yoga Mallorca",
+      ticketAvailableProbability: 70,
+      timestamp: 1736370000000,
+      isFavorite: false
+    },
+    {
+      id: "event-es-005",
+      title: "Comic Con España",
+      kind: "Convención",
+      tags: ["cómics", "cultura pop", "cosplay", "entretenimiento"],
+      description: {
+        short: "La convención de cultura pop definitiva con invitados famosos, paneles y productos exclusivos"
+      },
+      dateTimeFrom: {
+        date: "2025-07-24",
+        time: "10:00"
+      },
+      dateTimeTo: {
+        date: "2025-07-27",
+        time: "19:00"
+      },
+      location: {
+        city: "Sevilla",
+        address: "FIBES, Av. Alcalde Luis Uruñuela"
+      },
+      links: ["https://comiccon.example.es"],
+      ticketSearchQuery: "Comic Con Sevilla 2025",
+      ticketAvailableProbability: 60,
+      timestamp: 1736280000000,
+      isFavorite: true
+    }
+  ],
+  'fr-FR': [
+    {
+      id: "event-fr-001",
+      title: "Festival d'Été 2025",
+      kind: "Festival de Musique",
+      tags: ["musique", "festival", "plein air", "été"],
+      description: {
+        short: "Festival en plein air de trois jours avec plus de 50 artistes sur plusieurs scènes",
+        long: "Rejoignez-nous pour le plus grand festival de musique de l'été ! Vivez des performances live incroyables d'artistes de renommée mondiale, découvrez de nouveaux talents et profitez des food trucks, installations artistiques et plus encore."
+      },
+      dateTimeFrom: {
+        date: "2025-07-18",
+        time: "16:00"
+      },
+      dateTimeTo: {
+        date: "2025-07-20",
+        time: "23:00"
+      },
+      location: {
+        city: "Paris",
+        address: "Parc de la Villette, 211 Avenue Jean Jaurès"
+      },
+      links: ["https://festivaldete.example.fr"],
+      ticketSearchQuery: "Festival d'Été Paris 2025",
+      ticketAvailableProbability: 95,
+      timestamp: 1736640000000,
+      isFavorite: true
+    },
+    {
+      id: "event-fr-002",
+      title: "Conférence Tech Innovation",
+      kind: "Conférence",
+      tags: ["technologie", "business", "networking", "IA"],
+      description: {
+        short: "Conférence tech de référence sur l'IA, le cloud computing et les innovations futures",
+        long: "Connectez-vous avec les leaders de l'industrie, participez à des ateliers et découvrez les dernières technologies. Les sujets incluent l'intelligence artificielle, le machine learning, l'architecture cloud et la cybersécurité."
+      },
+      dateTimeFrom: {
+        date: "2025-09-15",
+        time: "09:00"
+      },
+      dateTimeTo: {
+        date: "2025-09-17",
+        time: "18:00"
+      },
+      location: {
+        city: "Lyon",
+        address: "Centre de Congrès, 50 Quai Charles de Gaulle"
+      },
+      links: ["https://techinnovation.example.fr"],
+      ticketSearchQuery: "Tech Innovation Lyon",
+      ticketAvailableProbability: 80,
+      timestamp: 1736550000000,
+      isFavorite: false
+    },
+    {
+      id: "event-fr-003",
+      title: "30 ans de Sarah",
+      kind: "Fête d'anniversaire",
+      tags: ["anniversaire", "fête", "célébration"],
+      description: {
+        short: "Fête surprise pour les 30 ans de Sarah ! Code vestimentaire : Tenue cocktail",
+        long: "Rejoignez-nous pour célébrer l'anniversaire spécial de Sarah. Il y aura dîner, boissons, danse et plein de surprises. Veuillez arriver à 19h. RSVP obligatoire."
+      },
+      dateTimeFrom: {
+        date: "2025-06-14",
+        time: "19:00"
+      },
+      dateTimeTo: {
+        date: "2025-06-14",
+        time: "23:30"
+      },
+      location: {
+        city: "Nice",
+        address: "Le Rooftop, 15 Promenade des Anglais"
+      },
+      timestamp: 1736460000000,
+      isFavorite: true
+    },
+    {
+      id: "event-fr-004",
+      title: "Retraite Yoga & Bien-être",
+      kind: "Retraite Bien-être",
+      tags: ["yoga", "bien-être", "méditation", "santé"],
+      description: {
+        short: "Retraite weekend avec yoga, méditation et cuisine saine"
+      },
+      dateTimeFrom: {
+        date: "2025-08-08",
+        time: "15:00"
+      },
+      dateTimeTo: {
+        date: "2025-08-10",
+        time: "14:00"
+      },
+      location: {
+        city: "Provence",
+        address: "Domaine de la Paix, Route de Gordes"
+      },
+      ticketSearchQuery: "Retraite Yoga Provence",
+      ticketAvailableProbability: 70,
+      timestamp: 1736370000000,
+      isFavorite: false
+    },
+    {
+      id: "event-fr-005",
+      title: "Comic Con France",
+      kind: "Convention",
+      tags: ["comics", "culture pop", "cosplay", "divertissement"],
+      description: {
+        short: "La convention ultime de culture pop avec des invités célèbres, des panels et des produits exclusifs"
+      },
+      dateTimeFrom: {
+        date: "2025-07-24",
+        time: "10:00"
+      },
+      dateTimeTo: {
+        date: "2025-07-27",
+        time: "19:00"
+      },
+      location: {
+        city: "Paris",
+        address: "Paris Expo, Porte de Versailles"
+      },
+      links: ["https://comiccon.example.fr"],
+      ticketSearchQuery: "Comic Con Paris 2025",
+      ticketAvailableProbability: 60,
+      timestamp: 1736280000000,
+      isFavorite: true
+    }
+  ],
+  'pt-BR': [
+    {
+      id: "event-pt-001",
+      title: "Festival de Verão 2025",
+      kind: "Festival de Música",
+      tags: ["música", "festival", "ao ar livre", "verão"],
+      description: {
+        short: "Festival ao ar livre de três dias com mais de 50 artistas em múltiplos palcos",
+        long: "Venha para o maior festival de música do verão! Viva apresentações incríveis de artistas mundialmente famosos, descubra novos talentos e aproveite food trucks, instalações artísticas e muito mais."
+      },
+      dateTimeFrom: {
+        date: "2025-07-18",
+        time: "16:00"
+      },
+      dateTimeTo: {
+        date: "2025-07-20",
+        time: "23:00"
+      },
+      location: {
+        city: "São Paulo",
+        address: "Parque Ibirapuera, Av. Pedro Álvares Cabral"
+      },
+      links: ["https://festivaldeverao.example.br"],
+      ticketSearchQuery: "Festival de Verão São Paulo 2025",
+      ticketAvailableProbability: 95,
+      timestamp: 1736640000000,
+      isFavorite: true
+    },
+    {
+      id: "event-pt-002",
+      title: "Conferência Tech Innovation",
+      kind: "Conferência",
+      tags: ["tecnologia", "negócios", "networking", "IA"],
+      description: {
+        short: "Conferência tech líder sobre IA, computação em nuvem e inovações futuras",
+        long: "Conecte-se com líderes da indústria, participe de workshops e descubra as últimas tecnologias. Os temas incluem inteligência artificial, machine learning, arquitetura cloud e cibersegurança."
+      },
+      dateTimeFrom: {
+        date: "2025-09-15",
+        time: "09:00"
+      },
+      dateTimeTo: {
+        date: "2025-09-17",
+        time: "18:00"
+      },
+      location: {
+        city: "Rio de Janeiro",
+        address: "Centro de Convenções SulAmérica, Av. Paulo de Frontin"
+      },
+      links: ["https://techinnovation.example.br"],
+      ticketSearchQuery: "Tech Innovation Rio de Janeiro",
+      ticketAvailableProbability: 80,
+      timestamp: 1736550000000,
+      isFavorite: false
+    },
+    {
+      id: "event-pt-003",
+      title: "30 Anos da Sara",
+      kind: "Festa de Aniversário",
+      tags: ["aniversário", "festa", "celebração"],
+      description: {
+        short: "Festa surpresa para os 30 anos da Sara! Dress code: Traje social",
+        long: "Junte-se a nós para celebrar o aniversário especial da Sara. Teremos jantar, drinks, dança e muitas surpresas. Por favor, chegue às 19h. Confirmação necessária."
+      },
+      dateTimeFrom: {
+        date: "2025-06-14",
+        time: "19:00"
+      },
+      dateTimeTo: {
+        date: "2025-06-14",
+        time: "23:30"
+      },
+      location: {
+        city: "Belo Horizonte",
+        address: "Rooftop Jardins, Av. Afonso Pena 1500"
+      },
+      timestamp: 1736460000000,
+      isFavorite: true
+    },
+    {
+      id: "event-pt-004",
+      title: "Retiro de Yoga e Bem-estar",
+      kind: "Retiro de Bem-estar",
+      tags: ["yoga", "bem-estar", "meditação", "saúde"],
+      description: {
+        short: "Retiro de fim de semana com yoga, meditação e culinária saudável"
+      },
+      dateTimeFrom: {
+        date: "2025-08-08",
+        time: "15:00"
+      },
+      dateTimeTo: {
+        date: "2025-08-10",
+        time: "14:00"
+      },
+      location: {
+        city: "Búzios",
+        address: "Spa Resort Búzios, Rua das Pedras"
+      },
+      ticketSearchQuery: "Retiro Yoga Búzios",
+      ticketAvailableProbability: 70,
+      timestamp: 1736370000000,
+      isFavorite: false
+    },
+    {
+      id: "event-pt-005",
+      title: "Comic Con Brasil",
+      kind: "Convenção",
+      tags: ["quadrinhos", "cultura pop", "cosplay", "entretenimento"],
+      description: {
+        short: "A convenção definitiva de cultura pop com convidados famosos, painéis e produtos exclusivos"
+      },
+      dateTimeFrom: {
+        date: "2025-07-24",
+        time: "10:00"
+      },
+      dateTimeTo: {
+        date: "2025-07-27",
+        time: "19:00"
+      },
+      location: {
+        city: "São Paulo",
+        address: "São Paulo Expo, Rodovia dos Imigrantes"
+      },
+      links: ["https://comiccon.example.br"],
+      ticketSearchQuery: "Comic Con São Paulo 2025",
+      ticketAvailableProbability: 60,
+      timestamp: 1736280000000,
+      isFavorite: true
+    }
   ]
 };

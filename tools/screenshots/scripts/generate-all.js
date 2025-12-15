@@ -2,7 +2,7 @@
 
 import { generateScreenshots } from './generate-screenshots.js';
 
-const LANGUAGES = ['en-GB', 'de-DE'];
+const LANGUAGES = ['en-GB', 'de-DE', 'es-ES', 'fr-FR', 'pt-BR'];
 
 async function generateAllScreenshots() {
   console.log('\n🌍 Generating screenshots for all languages');

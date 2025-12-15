@@ -163,9 +163,9 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
   };
 
   const handleLanguageChange = async () => {
-    // Toggle between English and German for now
-    const currentLang = i18n.language.startsWith('en') ? 'en-GB' : 'de-DE';
-    const newLang = currentLang === 'en-GB' ? 'de-DE' : 'en-GB';
+    // Import getNextLanguage to cycle through all supported languages
+    const { getNextLanguage } = await import('../utils/i18n');
+    const newLang = getNextLanguage(i18n.language);
 
     await i18n.changeLanguage(newLang);
     localStorage.setItem('i18nextLng', newLang);
@@ -389,9 +389,12 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
   };
 
   const getLanguageDisplay = () => {
-    return i18n.language.startsWith('en')
-      ? t('dialogs.settings.languageEnglish')
-      : t('dialogs.settings.languageGerman');
+    const lang = i18n.language;
+    if (lang.startsWith('de')) return t('dialogs.settings.languageGerman');
+    if (lang.startsWith('es')) return t('dialogs.settings.languageSpanish');
+    if (lang.startsWith('fr')) return t('dialogs.settings.languageFrench');
+    if (lang.startsWith('pt')) return t('dialogs.settings.languagePortuguese');
+    return t('dialogs.settings.languageEnglish');
   };
 
   const getThemeDisplay = () => {

@@ -7,6 +7,9 @@
     "screenshots": "node scripts/generate-screenshots.js",
     "screenshots:en": "node scripts/generate-screenshots.js --lang en-GB",
     "screenshots:de": "node scripts/generate-screenshots.js --lang de-DE",
+    "screenshots:es": "node scripts/generate-screenshots.js --lang es-ES",
+    "screenshots:fr": "node scripts/generate-screenshots.js --lang fr-FR",
+    "screenshots:pt": "node scripts/generate-screenshots.js --lang pt-BR",
     "screenshots:all": "node scripts/generate-all.js"
   },
   "dependencies": {
