@@ -246,7 +246,7 @@ async function findFirstValidResult(
 export const analyse = onRequest(
   {
     region: VERTEX_AI_LOCATION,
-    memory: '2GiB',
+    memory: '4GiB',
     timeoutSeconds: 180,
     cors: true,
     // @ts-ignore
