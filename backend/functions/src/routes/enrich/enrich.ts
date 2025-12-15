@@ -4,6 +4,7 @@ import { GCLOUD_PROJECT, VERTEX_AI_LOCATION } from '../../config';
 import { validateCaptureRequest } from '../../auth';
 import { logger } from 'firebase-functions';
 import { v2_enricher } from '../../prompts/v2_enricher';
+import { jsonrepair } from 'jsonrepair';
 
 export const enrich = onRequest(
   {
@@ -81,7 +82,39 @@ export const enrich = onRequest(
         return;
       }
 
-      const enrichedData = JSON.parse(candidates[0].content.parts[0].text);
+      let textResponse = candidates[0].content.parts[0].text;
+
+      // SANITIZATION LAYER
+      // 1. Remove Markdown code blocks if they slip through (defensive coding)
+      textResponse = textResponse.replace(/^```json/gm, '').replace(/^```/gm, '').trim();
+
+      let enrichedData;
+      try {
+        // 2. Try native parse first (fastest)
+        enrichedData = JSON.parse(textResponse);
+      } catch (parseError: any) {
+        logger.warn('Native JSON parse failed during enrichment, attempting repair...', {
+          error: parseError.message,
+          textLength: textResponse.length,
+          eventId: event.id,
+        });
+
+        try {
+          // 3. Attempt to repair truncated/malformed JSON
+          const repaired = jsonrepair(textResponse);
+          enrichedData = JSON.parse(repaired);
+          logger.info('Enrichment JSON repaired successfully', { eventId: event.id });
+        } catch (repairError: any) {
+          // 4. If repair fails, log the RAW text for debugging
+          logger.error('Enrichment JSON Repair failed. Raw output:', {
+            rawText: textResponse.substring(0, 1000), // Log first 1000 chars
+            error: repairError.message,
+            eventId: event.id,
+          });
+          response.status(500).json({ message: 'Failed to parse enrichment data from AI response.' });
+          return;
+        }
+      }
 
       logger.info('Successfully enriched event', {
         eventId: event.id,

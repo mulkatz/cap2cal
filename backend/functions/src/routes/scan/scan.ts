@@ -5,6 +5,7 @@ import { GCLOUD_PROJECT, VERTEX_AI_LOCATION } from '../../config';
 import { validateCaptureRequest, incrementUserCaptureCount } from '../../auth';
 import { logger } from 'firebase-functions';
 import { v1_scanner } from '../../prompts/v1_scanner';
+import { jsonrepair } from 'jsonrepair';
 
 export const scan = onRequest(
   {
@@ -73,8 +74,37 @@ export const scan = onRequest(
         return;
       }
 
-      const jsonText = candidates[0].content.parts[0].text;
-      const rawJson = JSON.parse(jsonText);
+      let textResponse = candidates[0].content.parts[0].text;
+
+      // SANITIZATION LAYER
+      // 1. Remove Markdown code blocks if they slip through (defensive coding)
+      textResponse = textResponse.replace(/^```json/gm, '').replace(/^```/gm, '').trim();
+
+      let rawJson;
+      try {
+        // 2. Try native parse first (fastest)
+        rawJson = JSON.parse(textResponse);
+      } catch (parseError: any) {
+        logger.warn('Native JSON parse failed, attempting repair...', {
+          error: parseError.message,
+          textLength: textResponse.length,
+        });
+
+        try {
+          // 3. Attempt to repair truncated/malformed JSON
+          const repaired = jsonrepair(textResponse);
+          rawJson = JSON.parse(repaired);
+          logger.info('JSON repaired successfully');
+        } catch (repairError: any) {
+          // 4. If repair fails, log the RAW text for debugging
+          logger.error('JSON Repair failed. Raw output:', {
+            rawText: textResponse.substring(0, 1000), // Log first 1000 chars
+            error: repairError.message,
+          });
+          response.status(500).json({ message: 'Failed to parse event data from AI response.' });
+          return;
+        }
+      }
 
       // Check if it's an error response
       if (rawJson.status === 'error') {

@@ -7,6 +7,7 @@ import { GCLOUD_PROJECT, GEMINI_MODEL_ID, VERTEX_AI_LOCATION } from '../../confi
 import { validateCaptureRequest, incrementUserCaptureCount } from '../../auth';
 import { logger } from 'firebase-functions';
 import { v0 } from '../../prompts/v0';
+import { jsonrepair } from 'jsonrepair';
 
 export const analyse = onRequest(
   {
@@ -74,8 +75,37 @@ export const analyse = onRequest(
         return;
       }
 
-      const jsonText = candidates[0].content.parts[0].text;
-      const data = JSON.parse(jsonText);
+      let textResponse = candidates[0].content.parts[0].text;
+
+      // SANITIZATION LAYER
+      // 1. Remove Markdown code blocks if they slip through (defensive coding)
+      textResponse = textResponse.replace(/^```json/gm, '').replace(/^```/gm, '').trim();
+
+      let data;
+      try {
+        // 2. Try native parse first (fastest)
+        data = JSON.parse(textResponse);
+      } catch (parseError: any) {
+        logger.warn('Native JSON parse failed, attempting repair...', {
+          error: parseError.message,
+          textLength: textResponse.length,
+        });
+
+        try {
+          // 3. Attempt to repair truncated/malformed JSON
+          const repaired = jsonrepair(textResponse);
+          data = JSON.parse(repaired);
+          logger.info('JSON repaired successfully');
+        } catch (repairError: any) {
+          // 4. If repair fails, log the RAW text for debugging
+          logger.error('JSON Repair failed. Raw output:', {
+            rawText: textResponse.substring(0, 1000), // Log first 1000 chars
+            error: repairError.message,
+          });
+          response.status(500).json({ message: 'Failed to parse event data from AI response.' });
+          return;
+        }
+      }
 
       if (data?.data?.items) {
         data.data.items = data.data.items.map((item: any) => ({
