@@ -1,0 +1,11 @@
+/* Camera permission */
+"NSCameraUsageDescription" = "Cap2Cal ha bisogno dell'accesso alla fotocamera per scansionare poster, volantini e biglietti di eventi.";
+
+/* Photo Library access */
+"NSPhotoLibraryUsageDescription" = "Cap2Cal ha bisogno dell'accesso alle tue foto per importare e scansionare immagini di eventi.";
+
+/* Photo Library add */
+"NSPhotoLibraryAddUsageDescription" = "Cap2Cal ha bisogno dell'accesso per salvare le immagini degli eventi scansionati nella tua libreria foto.";
+
+/* Calendar access */
+"NSCalendarsUsageDescription" = "Cap2Cal ha bisogno dell'accesso al calendario per salvare gli eventi direttamente nel tuo calendario.";

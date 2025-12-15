@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Cap2Cal</string>
+    <string name="title_activity_main">Cap2Cal</string>
+    <string name="package_name">cx.franz.cap2cal</string>
+    <string name="custom_url_scheme">cx.franz.cap2cal</string>
+
+    <!-- Permission rationale messages (shown before system dialog) -->
+    <string name="permission_camera_rationale">Cap2Cal a besoin d\'accéder à l\'appareil photo pour scanner des affiches, flyers et billets d\'événements.</string>
+    <string name="permission_photos_rationale">Cap2Cal a besoin d\'accéder à vos photos pour importer et scanner des images d\'événements.</string>
+    <string name="permission_calendar_rationale">Cap2Cal a besoin d\'accéder au calendrier pour enregistrer des événements directement dans votre calendrier.</string>
+</resources>

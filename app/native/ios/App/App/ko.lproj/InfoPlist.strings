@@ -1,0 +1,11 @@
+/* Camera permission */
+"NSCameraUsageDescription" = "Cap2Cal은 이벤트 포스터, 전단지 및 티켓을 스캔하기 위해 카메라 접근 권한이 필요합니다.";
+
+/* Photo Library access */
+"NSPhotoLibraryUsageDescription" = "Cap2Cal은 이벤트 이미지를 가져오고 스캔하기 위해 사진 접근 권한이 필요합니다.";
+
+/* Photo Library add */
+"NSPhotoLibraryAddUsageDescription" = "Cap2Cal은 스캔한 이벤트 이미지를 사진 라이브러리에 저장하기 위해 접근 권한이 필요합니다.";
+
+/* Calendar access */
+"NSCalendarsUsageDescription" = "Cap2Cal은 이벤트를 캘린더에 직접 저장하기 위해 캘린더 접근 권한이 필요합니다.";

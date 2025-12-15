@@ -1,0 +1,11 @@
+/* Camera permission */
+"NSCameraUsageDescription" = "Cap2Cal heeft cameratoegang nodig om evenementposters, flyers en tickets te scannen.";
+
+/* Photo Library access */
+"NSPhotoLibraryUsageDescription" = "Cap2Cal heeft toegang tot je foto's nodig om evenementafbeeldingen te importeren en scannen.";
+
+/* Photo Library add */
+"NSPhotoLibraryAddUsageDescription" = "Cap2Cal heeft toegang nodig om gescande evenementafbeeldingen op te slaan in je fotobibliotheek.";
+
+/* Calendar access */
+"NSCalendarsUsageDescription" = "Cap2Cal heeft kalendertoegang nodig om evenementen direct in je agenda op te slaan.";
