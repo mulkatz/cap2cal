@@ -4,7 +4,18 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpApi from 'i18next-http-backend';
 
 // Supported languages in order for cycling
-export const SUPPORTED_LANGUAGES = ['en-GB', 'de-DE', 'es-ES', 'fr-FR', 'pt-BR'] as const;
+export const SUPPORTED_LANGUAGES = [
+  'en-GB',
+  'de-DE',
+  'es-ES',
+  'fr-FR',
+  'pt-BR',
+  'it-IT',
+  'nl-NL',
+  'ja-JP',
+  'ko-KR',
+  'pl-PL',
+] as const;
 export type SupportedLanguage = (typeof SUPPORTED_LANGUAGES)[number];
 
 // Language display names (in their native language)
@@ -14,6 +25,11 @@ export const LANGUAGE_DISPLAY_NAMES: Record<SupportedLanguage, string> = {
   'es-ES': 'Español',
   'fr-FR': 'Français',
   'pt-BR': 'Português',
+  'it-IT': 'Italiano',
+  'nl-NL': 'Nederlands',
+  'ja-JP': '日本語',
+  'ko-KR': '한국어',
+  'pl-PL': 'Polski',
 };
 
 // Translation key for language display
@@ -23,6 +39,11 @@ export const LANGUAGE_TRANSLATION_KEYS: Record<SupportedLanguage, string> = {
   'es-ES': 'dialogs.settings.languageSpanish',
   'fr-FR': 'dialogs.settings.languageFrench',
   'pt-BR': 'dialogs.settings.languagePortuguese',
+  'it-IT': 'dialogs.settings.languageItalian',
+  'nl-NL': 'dialogs.settings.languageDutch',
+  'ja-JP': 'dialogs.settings.languageJapanese',
+  'ko-KR': 'dialogs.settings.languageKorean',
+  'pl-PL': 'dialogs.settings.languagePolish',
 };
 
 /**
@@ -49,6 +70,16 @@ function normalizeLanguage(detectedLang: string): SupportedLanguage {
       return 'fr-FR';
     case 'pt':
       return 'pt-BR';
+    case 'it':
+      return 'it-IT';
+    case 'nl':
+      return 'nl-NL';
+    case 'ja':
+      return 'ja-JP';
+    case 'ko':
+      return 'ko-KR';
+    case 'pl':
+      return 'pl-PL';
     default:
       // Default to English for all other languages
       return 'en-GB';

@@ -10,6 +10,11 @@
     "screenshots:es": "node scripts/generate-screenshots.js --lang es-ES",
     "screenshots:fr": "node scripts/generate-screenshots.js --lang fr-FR",
     "screenshots:pt": "node scripts/generate-screenshots.js --lang pt-BR",
+    "screenshots:it": "node scripts/generate-screenshots.js --lang it-IT",
+    "screenshots:nl": "node scripts/generate-screenshots.js --lang nl-NL",
+    "screenshots:ja": "node scripts/generate-screenshots.js --lang ja-JP",
+    "screenshots:ko": "node scripts/generate-screenshots.js --lang ko-KR",
+    "screenshots:pl": "node scripts/generate-screenshots.js --lang pl-PL",
     "screenshots:all": "node scripts/generate-all.js"
   },
   "dependencies": {

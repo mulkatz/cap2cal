@@ -1,0 +1,449 @@
+{
+  "general": {
+    "okay": "OK",
+    "cancel": "Anuluj",
+    "yes": "Tak",
+    "no": "Nie",
+    "relevance": "Trafność",
+    "time": "Czas",
+    "upcoming": "Nadchodzące",
+    "recent": "Ostatnie",
+    "onlyFavourites": "Tylko ulubione",
+    "sortBy": "",
+    "ctaStart": "Zdjęcie",
+    "yourCaptures": "Twoje wydarzenia",
+    "searchTickets": "Bilety",
+    "buyTickets": "Bilety",
+    "noTicketsAvailable": "Brak biletów",
+    "getTicket": "Kup bilety",
+    "agenda": "Agenda",
+    "legal": "Informacje prawne",
+    "capture": "Przechwycenie",
+    "newEvent": "Nowe wydarzenie",
+    "more": "więcej",
+    "today": "Dzisiaj",
+    "tomorrow": "Jutro"
+  },
+  "home": {
+    "microWidget": {
+      "headline": "Nadchodzące wydarzenie",
+      "startScanning": "Zacznij skanować wydarzenia, aby je tutaj zobaczyć",
+      "noUpcoming": "Brak nadchodzących wydarzeń"
+    },
+    "onboarding": {
+      "headline": "Nigdy nie przegap wydarzenia",
+      "description": "Przechwytuj plakaty wydarzeń, ulotki lub bilety aparatem i natychmiast zapisuj je w kalendarzu"
+    }
+  },
+  "eventCard": {
+    "actionSheet": {
+      "title": "Opcje wydarzenia",
+      "share": "Udostępnij wydarzenie",
+      "capturing": "Przechwytywanie...",
+      "preparing": "Przygotowywanie...",
+      "comingSoon": "Wkrótce",
+      "delete": "Usuń wydarzenie",
+      "cancel": "Anuluj"
+    }
+  },
+  "share": {
+    "title": "Cap2Cal - Przechwytywanie wydarzeń AI",
+    "text": "Sprawdź Cap2Cal! Zamień dowolny plakat wydarzenia w wpis kalendarza za pomocą AI.",
+    "shareFile": "Udostępnij {{fileName}}",
+    "checkOutPdf": "Sprawdź ten PDF: {{fileName}}",
+    "checkOutTool": "Sprawdź to świetne narzędzie: {{title}}\n{{description}}\nOdwiedź: {{link}}",
+    "appTitle": "Capture2Calendar",
+    "appDescription": "Łatwo dodawaj wydarzenia do kalendarza ze zdjęć!",
+    "eventFilename": "{{title}} (Cap2Cal)",
+    "message": "Sprawdź to wydarzenie, które znalazłem!"
+  },
+  "errors": {
+    "failedProcessSharedImage": "Nie udało się przetworzyć udostępnionego obrazu. Spróbuj ponownie.",
+    "networkRequestFailed": "Żądanie sieciowe nie powiodło się. Sprawdź połączenie.",
+    "requestTimedOut": "Żądanie przekroczyło limit czasu. Spróbuj ponownie.",
+    "networkConnectionFailed": "Połączenie sieciowe nie powiodło się. Sprawdź połączenie internetowe.",
+    "authenticationFailed": "Uwierzytelnianie nie powiodło się. Zaloguj się ponownie.",
+    "captureLimitReached": "Osiągnięto limit przechwytywania. Uaktualnij, aby kontynuować.",
+    "tooManyRequests": "Zbyt wiele żądań. Poczekaj chwilę i spróbuj ponownie.",
+    "serverError": "Błąd serwera. Spróbuj ponownie później.",
+    "notAnEvent": "To nie wygląda na wydarzenie. Spróbuj innego obrazu.",
+    "invalidImage": "Nieprawidłowy obraz. Spróbuj ponownie.",
+    "cameraError": "Błąd aparatu. Sprawdź uprawnienia aparatu.",
+    "permissionDenied": "Odmowa uprawnień. Włącz wymagane uprawnienia.",
+    "validationError": "Błąd walidacji. Sprawdź wprowadzone dane.",
+    "unexpectedError": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie."
+  },
+  "toasts": {
+    "feedback": {
+      "success": "Dziękujemy za opinię!",
+      "error": "Dziękujemy za opinię!"
+    },
+    "extract": {
+      "success": "Przechwycono!",
+      "error": "Nie udało się przechwycić."
+    },
+    "capture": {
+      "singleEvent": "Wydarzenie przechwycone!",
+      "multipleEvents": "Przechwycono {{count}} wydarzeń!"
+    },
+    "subscription": {
+      "success": "Witamy w Pro!",
+      "restored": "Zakupy przywrócone!",
+      "noPurchases": "Nie znaleziono aktywnych subskrypcji",
+      "restoreError": "Nie udało się przywrócić zakupów",
+      "networkError": "Błąd sieci. Sprawdź połączenie.",
+      "paymentFailed": "Płatność nie powiodła się. Spróbuj ponownie.",
+      "productUnavailable": "Ten plan jest obecnie niedostępny.",
+      "unknownError": "Coś poszło nie tak. Spróbuj ponownie."
+    },
+    "dataManagement": {
+      "exportSuccess": "Dane wyeksportowane pomyślnie",
+      "exportError": "Nie udało się wyeksportować danych",
+      "deleteSuccess": "Wszystkie dane usunięte pomyślnie",
+      "deleteError": "Nie udało się usunąć danych",
+      "clearSuccess": "Pamięć wyczyszczona pomyślnie",
+      "clearError": "Nie udało się wyczyścić pamięci",
+      "reAuthRequired": "Zaloguj się ponownie, aby usunąć konto"
+    },
+    "settings": {
+      "analyticsEnabled": "Analityka włączona",
+      "analyticsDisabled": "Analityka wyłączona",
+      "vibrationEnabled": "Wibracje włączone",
+      "vibrationDisabled": "Wibracje wyłączone",
+      "languageChanged": "Język zmieniony",
+      "themeSoon": "Obsługa motywów wkrótce!",
+      "inviteLinkCopied": "Link zaproszenia skopiowany do schowka!",
+      "testCrashScheduled": "Testowa awaria nastąpi za 2 sekundy...",
+      "testCrashFailed": "Testowa awaria nie powiodła się. Dostępne tylko na platformach natywnych."
+    },
+    "rating": {
+      "fallbackMessage": "Nie widziałeś okna oceny?",
+      "rateOnAppStore": "Oceń w App Store",
+      "rateOnPlayStore": "Oceń w Play Store"
+    }
+  },
+  "sheet": {
+    "header": "Twoje wydarzenia",
+    "noFavouritesYet": "Brak ulubionych",
+    "showPastEvents": "Pokaż przeszłe wydarzenia"
+  },
+  "dialogs": {
+    "onboarding": {
+      "valueProp": {
+        "title": "Przechwytuj wszystko",
+        "subtitle": "Plakaty, ulotki, odręczne notatki—jeśli ma datę, możemy ją odczytać. Po prostu zrób zdjęcie."
+      },
+      "howItWorks": {
+        "title": "Szczegóły napędzane przez AI",
+        "subtitle": "Automatycznie wyodrębniamy tytuły, daty, godziny i lokalizacje. Koniec z ręcznym pisaniem.",
+        "step1Title": "Zrób zdjęcie",
+        "step1Description": "Zrób zdjęcie lub zaimportuj cokolwiek z informacją o dacie",
+        "step2Title": "Odczytaj i zapisz",
+        "step2Description": "AI odczytuje wszystkie szczegóły i zapisuje wydarzenie w bibliotece aplikacji",
+        "step3Title": "Zawsze dostępne",
+        "step3Description": "Eksportuj do kalendarza, udostępniaj wydarzenia, kupuj bilety i nawiguj do lokalizacji"
+      },
+      "bulkAI": {
+        "title": "Natychmiastowa inteligencja masowa",
+        "subtitle": "Skanuj stosy ulotek naraz. Nasza AI wyodrębnia każdy szczegół—daty, godziny, lokalizacje—w sekundy."
+      },
+      "lifestyle": {
+        "title": "Nigdy nic nie przegap",
+        "subtitle": "Dziel się planami z przyjaciółmi, otrzymuj terminowe przypomnienia i bądź osobą, która zawsze wie, co się dzieje."
+      },
+      "shareExtension": {
+        "title": "Przechwytuj z dowolnego miejsca",
+        "subtitle": "Widzisz wydarzenie w mediach społecznościowych lub w galerii? Użyj arkusza udostępniania systemu, aby wysłać je bezpośrednio do Capture2Calendar."
+      },
+      "tickets": {
+        "title": "Kupuj bilety natychmiast",
+        "subtitle": "Nigdy nie przegap swoich ulubionych wydarzeń. Znajdź i kup bilety bezpośrednio z aplikacji.",
+        "feature1": "Szukaj wydarzeń w pobliżu dzięki zintegrowanemu wyszukiwaniu biletów",
+        "feature2": "Porównuj ceny od wielu sprzedawców natychmiast",
+        "feature3": "Bezpieczna kasa — zarezerwuj miejsce w sekundy",
+        "exampleLabel": "Przykład",
+        "exampleEventName": "Letni Festiwal 2025",
+        "buyButton": "Kup bilety"
+      },
+      "slide1": {
+        "eyebrow": "Napędzane przez AI",
+        "title": "Bez ręcznego wpisywania",
+        "body": "Chwileczkę, prawie gotowe. Nasza AI automatycznie przechwytuje wszystkie szczegóły wydarzenia."
+      },
+      "slide2": {
+        "eyebrow": "Szczegóły gotowe",
+        "title": "Daty, bilety, lokalizacje",
+        "body": "Wszystkie szczegóły wydarzenia wyodrębnione i zorganizowane. Gotowe do synchronizacji."
+      },
+      "slide3": {
+        "eyebrow": "Zapisz wspomnienie",
+        "title": "Zachowaj oryginalny skan",
+        "body": "Przechwycone obrazy są zapisywane wraz z każdym wydarzeniem jako odniesienie."
+      },
+      "slide4": {
+        "eyebrow": "Synchronizuj z kalendarzem",
+        "title": "Działa ze wszystkimi głównymi aplikacjami",
+        "body": "Eksportuj do Apple Calendar, Google Calendar, Outlook i innych jednym dotknięciem."
+      },
+      "freeTrial": {
+        "title": "Gotowy, aby zacząć?",
+        "bullet1": "Natychmiastowe przechwytywanie i przechowywanie wydarzeń",
+        "bullet2": "Eksportuj do wszystkich swoich kalendarzy",
+        "bullet3": "Dostęp do biletów, udostępnianie wydarzeń i nawigacja",
+        "permissionsTitle": "Potrzebne uprawnienia:",
+        "permissionCamera": "Aparat — do fotografowania wydarzeń",
+        "permissionCalendar": "Kalendarz — do zapisywania wydarzeń"
+      },
+      "getStarted": {
+        "title": "Wykryj każde wydarzenie",
+        "mainTitle": "Skanuje notatki, ulotki i zaproszenia",
+        "subtitle": "Uzyskaj pełny obraz. Kupuj bilety, nawiguj do miejsca i eksportuj do kalendarza jednym dotknięciem.",
+        "bullet1": "Natychmiastowe przechwytywanie i przechowywanie wydarzeń",
+        "bullet2": "Eksportuj do wszystkich swoich kalendarzy",
+        "bullet3": "Dostęp do biletów, udostępnianie wydarzeń i nawigacja",
+        "permissionsTitle": "Potrzebne uprawnienia:",
+        "permissionCamera": "Aparat — do fotografowania wydarzeń",
+        "permissionCalendar": "Kalendarz — do zapisywania wydarzeń"
+      },
+      "cameraInstruction": {
+        "title": "Skanuj wydarzenia",
+        "description1": "Aby pomóc nam dokładnie zidentyfikować Twoje wydarzenia, zrób zdjęcie, które wyraźnie pokazuje informacje o dacie.",
+        "description2": "Może to być bilet, ulotka lub dowolny dokument zawierający datę wydarzenia.",
+        "button": "Rozumiem!"
+      },
+      "camera": {
+        "scanEventDetails": "Skanuj szczegóły wydarzenia"
+      },
+      "navigation": {
+        "next": "Dalej",
+        "skip": "Pomiń",
+        "getStarted": "Rozpocznij"
+      }
+    },
+    "firstStart": {
+      "title": "Pierwsze uruchomienie",
+      "description": "To było pierwsze uruchomienie"
+    },
+    "feedback": {
+      "title": "Wyślij opinię",
+      "description": "Ciągle ulepszamy Cap2Cal. Twoja opinia pomaga nam tworzyć lepszą aplikację!",
+      "idea": "Pomysł",
+      "bug": "Błąd",
+      "inputPlaceholder": "Podziel się swoimi przemyśleniami...",
+      "send": "Wyślij"
+    },
+    "appLikePrompt": {
+      "title": "Czy podoba Ci się Capture2Calendar?",
+      "description": "Chcielibyśmy poznać Twoją opinię!",
+      "yes": "Tak, uwielbiam!",
+      "notReally": "Niezbyt",
+      "dismiss": "Może później"
+    },
+    "privacyConsent": {
+      "title": "Witamy w Capture2Calendar",
+      "intro": "Dbamy o Twoją prywatność. Oto co powinieneś wiedzieć:",
+      "imageProcessingTitle": "Przetwarzanie obrazów:",
+      "imageProcessingDescription": "Zdjęcia, które robisz, są wysyłane do AI Gemini Google w celu wyodrębnienia informacji o wydarzeniu. Obrazy nie są przechowywane na naszych serwerach.",
+      "analyticsTitle": "Analityka:",
+      "analyticsDescription": "Zbieramy anonimowe dane użytkowania, aby ulepszyć aplikację. Możesz to wyłączyć w dowolnym momencie w Ustawieniach.",
+      "yourRightsTitle": "Twoje prawa:",
+      "yourRightsDescription": "Możesz wyeksportować lub usunąć wszystkie swoje dane w dowolnym momencie z ekranu Ustawienia.",
+      "privacyPolicyLink": "Przeczytaj pełną Politykę prywatności",
+      "acceptButton": "Akceptuj i kontynuuj"
+    },
+    "export": {
+      "title": "Eksportuj do",
+      "appleCalendar": "Apple Calendar",
+      "googleCalendar": "Google Calendar",
+      "microsoftOutlook": "Microsoft Outlook"
+    },
+    "notCaptured": {
+      "title": "Nie udało się przechwycić",
+      "generalAdvice": "Ups! Nie udało się uchwycić wszystkich szczegółów wydarzenia. Spróbuj wyraźniejszego zdjęcia—rozmycie lub brakujące informacje mogą powodować problemy!"
+    },
+    "permissionDenied": {
+      "title": "Wymagane uprawnienie",
+      "cameraAdvice": "Nie możemy przechwytywać wydarzeń bez dostępu do aparatu. Udziel uprawnień w ustawieniach, aby rozpocząć przechwytywanie.",
+      "calendarAdvice": "Nie możemy zapisywać wydarzeń bez dostępu do kalendarza. Udziel uprawnień w ustawieniach, aby korzystać z tej funkcji.",
+      "photosAdvice": "Nie możemy importować zdjęć bez dostępu do biblioteki. Udziel uprawnień w ustawieniach, aby korzystać z tej funkcji.",
+      "toSettings": "Przejdź do ustawień",
+      "cancel": "Anuluj"
+    },
+    "upgrade": {
+      "title": "Osiągnięto limit przechwytywania",
+      "subtitle": "Wykorzystałeś wszystkie darmowe przechwycenia",
+      "benefit1": "Nieograniczone przechwytywanie wydarzeń",
+      "benefit2": "Priorytetowe przetwarzanie",
+      "benefit3": "Zaawansowane funkcje",
+      "pricing": "19,99 zł/miesiąc",
+      "cta": "Uaktualnij do Pro",
+      "notNow": "Nie teraz",
+      "capturesRemaining": "Pozostało {{count}} przechwytów"
+    },
+    "paywall": {
+      "title": "Nigdy nie przegap wydarzenia",
+      "subtitle": "Osiągnąłeś darmowy limit. Uaktualnij, aby przechwytywać nieograniczoną liczbę wydarzeń i nigdy więcej żadnego nie przegapić!",
+      "bestValue": "NAJLEPSZA WARTOŚĆ",
+      "yearlyTitle": "Plan roczny",
+      "yearlySubtext": "Tylko 16,66 zł/miesiąc - Oszczędź 17%",
+      "perYear": "/rok",
+      "monthlyTitle": "Plan miesięczny",
+      "monthlySubtext": "Rozliczanie miesięczne, anuluj w dowolnym momencie",
+      "perMonth": "/miesiąc",
+      "whatsIncluded": "Co zawiera",
+      "benefit1": "Nieograniczone przechwytywanie wydarzeń - koniec z limitami",
+      "benefit2": "Priorytetowe przetwarzanie AI - szybsze wyniki",
+      "benefit3": "Zaawansowane wykrywanie wydarzeń - przechwytuj złożone wydarzenia",
+      "benefit4": "Wspieraj niezależny rozwój - pomóż nam tworzyć więcej funkcji",
+      "testimonial": "\"Ta aplikacja oszczędza mi godziny każdego tygodnia!\" - Sara, użytkownik Pro",
+      "cta": "Kontynuuj z {{plan}}",
+      "notNow": "Może później",
+      "restorePurchases": "Przywróć zakupy",
+      "legalText": "Subskrypcja odnawia się automatycznie, jeśli nie zostanie anulowana. Anuluj w dowolnym momencie w Ustawieniach.",
+      "processing": "Przetwarzanie..."
+    },
+    "settings": {
+      "title": "Ustawienia",
+      "preferences": "Preferencje",
+      "language": "Język",
+      "theme": "Motyw",
+      "vibration": "Wibracje",
+      "vibrationDescription": "Dotykowe sprzężenie zwrotne dla interakcji",
+      "appearance": "Wygląd",
+      "privacy": "Prywatność i dane",
+      "analytics": "Analityka",
+      "analyticsDescription": "Pomóż nam się doskonalić, udostępniając anonimowe dane użytkowania",
+      "dataManagement": "Zarządzanie danymi",
+      "exportData": "Pobierz moje dane",
+      "exportDataDescription": "Eksportuj wszystkie wydarzenia jako JSON",
+      "clearStorage": "Wyczyść pamięć",
+      "clearStorageDescription": "Usuń wszystkie zapisane wydarzenia z urządzenia",
+      "resetOnboarding": "Samouczek",
+      "resetOnboardingDescription": "Obejrzyj samouczek powitalny ponownie",
+      "deleteAccount": "Usuń moje konto",
+      "deleteAccountDescription": "Trwale usuń wszystkie dane i konto",
+      "other": "Inne",
+      "giveFeedback": "Prześlij opinię",
+      "privacyPolicy": "Polityka prywatności",
+      "terms": "Regulamin",
+      "website": "Odwiedź stronę",
+      "inviteFriends": "Zaproś znajomych",
+      "rateApp": "Oceń aplikację",
+      "about": "O aplikacji",
+      "version": "Wersja",
+      "confirmClearStorage": "Wyczyścić wszystkie wydarzenia?",
+      "confirmClearStorageMessage": "To usunie wszystkie zapisane wydarzenia z urządzenia. Ta czynność jest nieodwracalna.",
+      "confirmDeleteAccount": "Usunąć konto?",
+      "confirmDeleteAccountMessage": "To trwale usunie wszystkie Twoje dane i konto. Ta czynność jest nieodwracalna.",
+      "testCrashlytics": "Testuj raportowanie awarii",
+      "testCrashlyticsDescription": "Wywołaj testową awarię, aby sprawdzić, czy raportowanie awarii działa",
+      "confirmTestCrash": "Wywołać testową awarię?",
+      "confirmTestCrashMessage": "To celowo spowoduje awarię aplikacji, aby przetestować raportowanie awarii. Aplikacja automatycznie się zrestartuje. Kontynuować?",
+      "themeLight": "Jasny",
+      "themeDark": "Ciemny",
+      "themeSystem": "Systemowy",
+      "languageEnglish": "English",
+      "languageGerman": "Deutsch",
+      "languageSpanish": "Español",
+      "languageFrench": "Français",
+      "languagePortuguese": "Português",
+      "languageItalian": "Italiano",
+      "languageDutch": "Nederlands",
+      "languageJapanese": "日本語",
+      "languageKorean": "한국어",
+      "languagePolish": "Polski"
+    },
+    "errorBoundary": {
+      "title": "Ups!",
+      "message": "Stało się coś nieoczekiwanego. Nie martw się—Twoje dane są bezpieczne. Zostaliśmy powiadomieni i zbadamy sprawę.",
+      "tryAgain": "Spróbuj ponownie"
+    },
+    "loading": {
+      "phrases": {
+        "phrase1": {
+          "1": "Chwileczkę, zbieram wszystkie szczegóły...",
+          "2": "Przeglądam dane...",
+          "3": "Przygotowuję wszystkie informacje!",
+          "4": "Upewniam się, że wszystko jest na miejscu...",
+          "5": "Sekundkę, prawie gotowe..."
+        },
+        "phrase2": {
+          "1": "Poczekaj, pobieram wszystkie informacje...",
+          "2": "Pracuję nad tym, przygotowuję wszystko...",
+          "3": "Prawie mam wszystko, czego potrzebujesz...",
+          "4": "Pozwól, że to dla Ciebie skończę...",
+          "5": "Wytrzymaj, ostatnie szlify!"
+        },
+        "phrase3": {
+          "1": "Zbieram każdą informację...",
+          "2": "Upewniam się, że jest idealne...",
+          "3": "Składam wszystkie elementy...",
+          "4": "Prawie gotowe, zostań ze mną...",
+          "5": "Jeszcze trochę cierpliwości!"
+        },
+        "phrase4": {
+          "1": "Daj mi sekundę, skanuję wszystkie opcje...",
+          "2": "Prawie skończyłem...",
+          "3": "Przeglądam każdy szczegół...",
+          "4": "Wytrzymaj, prawie gotowe!",
+          "5": "Zaraz skończę!"
+        },
+        "phrase5": {
+          "1": "Finalizuję wszystko, prawie gotowe...",
+          "2": "Sprawdzam wszystkie informacje...",
+          "3": "Ostatnie drobne poprawki...",
+          "4": "Upewniam się, że wszystko jest idealne...",
+          "5": "Prawie gotowe, dziękuję za cierpliwość!"
+        }
+      }
+    },
+    "imagePreview": {
+      "title": "Oryginalny skan",
+      "metadata": "Zeskanowano 27 lis • 20:00"
+    },
+    "privacyPage": {
+      "title": "Polityka prywatności",
+      "lastUpdated": "Ostatnia aktualizacja: 15 października 2025",
+      "section1Title": "1. Wprowadzenie",
+      "section1Body": "Dziękujemy za korzystanie z Capture2Calendar (\"my\", \"nas\", \"nasz\"). Zobowiązujemy się chronić Twoje dane osobowe i prawo do prywatności. Niniejsza Polityka prywatności wyjaśnia, jakie informacje zbieramy, jak ich używamy i jakie masz prawa w związku z nimi.",
+      "section2Title": "2. Administrator danych",
+      "section2Body": "Administratorem danych odpowiedzialnym za Twoje dane osobowe jest:",
+      "controllerName": "Franz Benthin",
+      "controllerAddress": "Adres: Hauptstraße 123, 12345 Berlin, Niemcy",
+      "controllerEmail": "E-mail: privacy@capture2calendar.app",
+      "controllerPhone": "Telefon: +49 123 456789",
+      "section3Title": "3. Hosting i pliki dziennika serwera",
+      "section3Intro": "Nasza aplikacja i usługi są hostowane na bezpiecznych serwerach. Podczas korzystania z naszej aplikacji następujące informacje techniczne mogą być automatycznie zbierane w plikach dziennika serwera:",
+      "section3Item1": "Adres IP",
+      "section3Item2": "Data i godzina dostępu",
+      "section3Item3": "Typ i wersja przeglądarki",
+      "section3Item4": "System operacyjny",
+      "section3Item5": "Odwiedzone strony w naszej aplikacji",
+      "section3Item6": "URL odsyłający (strona, z której uzyskałeś dostęp do naszej aplikacji)",
+      "section3Body": "Dane te są zbierane w celach bezpieczeństwa, w celu zapewnienia stabilności i niezawodności naszych usług oraz w celu poprawy doświadczenia użytkownika. Podstawą prawną tego przetwarzania jest nasz uzasadniony interes w utrzymaniu bezpiecznej i funkcjonalnej usługi (art. 6 ust. 1 lit. f RODO).",
+      "section6Title": "6. Twoje prawa jako osoby, której dane dotyczą",
+      "section6Intro": "Zgodnie z RODO masz następujące prawa dotyczące swoich danych osobowych:",
+      "section6Right1": "Prawo dostępu: Możesz zażądać kopii danych osobowych, które przechowujemy na Twój temat.",
+      "section6Right2": "Prawo do sprostowania: Możesz poprosić nas o poprawienie wszelkich niedokładnych lub niekompletnych danych.",
+      "section6Right3": "Prawo do usunięcia: Możesz zażądać usunięcia swoich danych osobowych.",
+      "section6Right4": "Prawo do ograniczenia: Możesz poprosić nas o ograniczenie przetwarzania Twoich danych w określonych okolicznościach.",
+      "section6Right5": "Prawo do przenoszenia danych: Możesz zażądać swoich danych w ustrukturyzowanym, powszechnie używanym formacie.",
+      "section6Right6": "Prawo do sprzeciwu: Możesz sprzeciwić się przetwarzaniu Twoich danych opartemu na uzasadnionych interesach.",
+      "section6Right7": "Prawo do wycofania zgody: Jeśli przetwarzanie opiera się na zgodzie, możesz ją wycofać w dowolnym momencie.",
+      "section7Title": "7. Zmiany w naszej Polityce prywatności",
+      "section7Body": "Możemy od czasu do czasu aktualizować niniejszą Politykę prywatności. Powiadomimy Cię o wszelkich zmianach, publikując nową Politykę prywatności na tej stronie i aktualizując datę \"Ostatnia aktualizacja\". Zalecamy okresowe przeglądanie niniejszej Polityki prywatności w celu sprawdzenia ewentualnych zmian."
+    }
+  },
+  "types": {
+    "extractErrorReason": {
+      "IMAGE_TOO_BLURRED": "Obraz zbyt rozmazany",
+      "MULTIPLE_EVENTS_FOUND": "Znaleziono wiele wydarzeń",
+      "LOW_CONTRAST_OR_POOR_LIGHTING": "Niski kontrast lub słabe oświetlenie",
+      "TEXT_TOO_SMALL": "Tekst zbyt mały",
+      "OVERLAPPING_TEXT_OR_GRAPHICS": "Nakładające się informacje",
+      "PROBABLY_NOT_AN_EVENT": "To nie było wydarzenie",
+      "LIMIT_REACHED": "Osiągnięto limit przechwytywania",
+      "UNKNOWN": "Wystąpił nieznany błąd"
+    }
+  }
+}

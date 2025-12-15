@@ -394,6 +394,11 @@ export const SettingsScreen = React.memo(({ onClose, isVisible }: { onClose: () 
     if (lang.startsWith('es')) return t('dialogs.settings.languageSpanish');
     if (lang.startsWith('fr')) return t('dialogs.settings.languageFrench');
     if (lang.startsWith('pt')) return t('dialogs.settings.languagePortuguese');
+    if (lang.startsWith('it')) return t('dialogs.settings.languageItalian');
+    if (lang.startsWith('nl')) return t('dialogs.settings.languageDutch');
+    if (lang.startsWith('ja')) return t('dialogs.settings.languageJapanese');
+    if (lang.startsWith('ko')) return t('dialogs.settings.languageKorean');
+    if (lang.startsWith('pl')) return t('dialogs.settings.languagePolish');
     return t('dialogs.settings.languageEnglish');
   };
 

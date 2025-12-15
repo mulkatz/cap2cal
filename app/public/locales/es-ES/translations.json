@@ -346,7 +346,12 @@
       "languageGerman": "Deutsch",
       "languageSpanish": "Español",
       "languageFrench": "Français",
-      "languagePortuguese": "Português"
+      "languagePortuguese": "Português",
+      "languageItalian": "Italiano",
+      "languageDutch": "Nederlands",
+      "languageJapanese": "日本語",
+      "languageKorean": "한국어",
+      "languagePolish": "Polski"
     },
     "errorBoundary": {
       "title": "¡Ups!",

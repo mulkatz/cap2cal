@@ -1,0 +1,449 @@
+{
+  "general": {
+    "okay": "Oké",
+    "cancel": "Annuleren",
+    "yes": "Ja",
+    "no": "Nee",
+    "relevance": "Relevantie",
+    "time": "Tijd",
+    "upcoming": "Aanstaande",
+    "recent": "Recent",
+    "onlyFavourites": "Alleen favorieten",
+    "sortBy": "",
+    "ctaStart": "Foto",
+    "yourCaptures": "Je evenementen",
+    "searchTickets": "Tickets",
+    "buyTickets": "Tickets",
+    "noTicketsAvailable": "Geen tickets",
+    "getTicket": "Tickets kopen",
+    "agenda": "Agenda",
+    "legal": "Juridisch",
+    "capture": "Vastleggen",
+    "newEvent": "Nieuw evenement",
+    "more": "meer",
+    "today": "Vandaag",
+    "tomorrow": "Morgen"
+  },
+  "home": {
+    "microWidget": {
+      "headline": "Aanstaand evenement",
+      "startScanning": "Begin met scannen van evenementen om ze hier te zien",
+      "noUpcoming": "Geen aanstaande evenementen"
+    },
+    "onboarding": {
+      "headline": "Mis nooit meer een evenement",
+      "description": "Leg elke evenementposter, flyer of ticket vast met je camera en sla het direct op in je agenda"
+    }
+  },
+  "eventCard": {
+    "actionSheet": {
+      "title": "Evenement opties",
+      "share": "Evenement delen",
+      "capturing": "Vastleggen...",
+      "preparing": "Voorbereiden...",
+      "comingSoon": "Binnenkort",
+      "delete": "Evenement verwijderen",
+      "cancel": "Annuleren"
+    }
+  },
+  "share": {
+    "title": "Cap2Cal - AI Evenement Vastleggen",
+    "text": "Bekijk Cap2Cal! Verander elke evenementposter in een agenda-item met AI.",
+    "shareFile": "{{fileName}} delen",
+    "checkOutPdf": "Bekijk deze PDF: {{fileName}}",
+    "checkOutTool": "Bekijk deze geweldige tool: {{title}}\n{{description}}\nBezoek: {{link}}",
+    "appTitle": "Capture2Calendar",
+    "appDescription": "Voeg eenvoudig evenementen toe aan je agenda vanuit foto's!",
+    "eventFilename": "{{title}} (Cap2Cal)",
+    "message": "Bekijk dit evenement dat ik heb gevonden!"
+  },
+  "errors": {
+    "failedProcessSharedImage": "Kan gedeelde afbeelding niet verwerken. Probeer het opnieuw.",
+    "networkRequestFailed": "Netwerkverzoek mislukt. Controleer je verbinding.",
+    "requestTimedOut": "Verzoek is verlopen. Probeer het opnieuw.",
+    "networkConnectionFailed": "Netwerkverbinding mislukt. Controleer je internetverbinding.",
+    "authenticationFailed": "Authenticatie mislukt. Log opnieuw in.",
+    "captureLimitReached": "Vastleglimiet bereikt. Upgrade om door te gaan.",
+    "tooManyRequests": "Te veel verzoeken. Wacht even en probeer het opnieuw.",
+    "serverError": "Serverfout. Probeer het later opnieuw.",
+    "notAnEvent": "Dit lijkt geen evenement te zijn. Probeer een andere afbeelding.",
+    "invalidImage": "Ongeldige afbeelding. Probeer het opnieuw.",
+    "cameraError": "Camerafout. Controleer je camera-instellingen.",
+    "permissionDenied": "Toestemming geweigerd. Schakel de vereiste machtigingen in.",
+    "validationError": "Validatiefout. Controleer je invoer.",
+    "unexpectedError": "Er is een onverwachte fout opgetreden. Probeer het opnieuw."
+  },
+  "toasts": {
+    "feedback": {
+      "success": "Bedankt voor je feedback!",
+      "error": "Bedankt voor je feedback!"
+    },
+    "extract": {
+      "success": "Vastgelegd!",
+      "error": "Kon dat niet vastleggen."
+    },
+    "capture": {
+      "singleEvent": "Evenement vastgelegd!",
+      "multipleEvents": "{{count}} evenementen vastgelegd!"
+    },
+    "subscription": {
+      "success": "Welkom bij Pro!",
+      "restored": "Aankopen hersteld!",
+      "noPurchases": "Geen actieve abonnementen gevonden",
+      "restoreError": "Kan aankopen niet herstellen",
+      "networkError": "Netwerkfout. Controleer je verbinding.",
+      "paymentFailed": "Betaling mislukt. Probeer het opnieuw.",
+      "productUnavailable": "Dit abonnement is momenteel niet beschikbaar.",
+      "unknownError": "Er is iets misgegaan. Probeer het opnieuw."
+    },
+    "dataManagement": {
+      "exportSuccess": "Gegevens succesvol geëxporteerd",
+      "exportError": "Kan gegevens niet exporteren",
+      "deleteSuccess": "Alle gegevens succesvol verwijderd",
+      "deleteError": "Kan gegevens niet verwijderen",
+      "clearSuccess": "Opslag succesvol gewist",
+      "clearError": "Kan opslag niet wissen",
+      "reAuthRequired": "Log opnieuw in om je account te verwijderen"
+    },
+    "settings": {
+      "analyticsEnabled": "Analytics ingeschakeld",
+      "analyticsDisabled": "Analytics uitgeschakeld",
+      "vibrationEnabled": "Trillen ingeschakeld",
+      "vibrationDisabled": "Trillen uitgeschakeld",
+      "languageChanged": "Taal gewijzigd",
+      "themeSoon": "Thema-ondersteuning komt binnenkort!",
+      "inviteLinkCopied": "Uitnodigingslink gekopieerd naar klembord!",
+      "testCrashScheduled": "Testcrash wordt over 2 seconden geactiveerd...",
+      "testCrashFailed": "Testcrash mislukt. Alleen beschikbaar op native platforms."
+    },
+    "rating": {
+      "fallbackMessage": "Heb je het beoordelingsvenster niet gezien?",
+      "rateOnAppStore": "Beoordeel in App Store",
+      "rateOnPlayStore": "Beoordeel in Play Store"
+    }
+  },
+  "sheet": {
+    "header": "Je evenementen",
+    "noFavouritesYet": "Nog geen favorieten",
+    "showPastEvents": "Toon afgelopen evenementen"
+  },
+  "dialogs": {
+    "onboarding": {
+      "valueProp": {
+        "title": "Leg alles vast",
+        "subtitle": "Posters, flyers, handgeschreven notities—als het een datum heeft, kunnen we het lezen. Maak gewoon een foto."
+      },
+      "howItWorks": {
+        "title": "AI-aangedreven details",
+        "subtitle": "We extraheren automatisch titels, datums, tijden en locaties. Geen handmatig typen meer.",
+        "step1Title": "Maak een foto",
+        "step1Description": "Maak een foto of importeer alles met datuminformatie",
+        "step2Title": "Lezen en opslaan",
+        "step2Description": "AI leest alle details en slaat het evenement op in je app-bibliotheek",
+        "step3Title": "Altijd beschikbaar",
+        "step3Description": "Exporteer naar agenda, deel evenementen, koop tickets en navigeer naar locaties"
+      },
+      "bulkAI": {
+        "title": "Directe bulk-intelligentie",
+        "subtitle": "Scan stapels flyers in één keer. Onze AI extraheert elk detail—datums, tijden, locaties—in seconden."
+      },
+      "lifestyle": {
+        "title": "Mis nooit iets",
+        "subtitle": "Deel plannen met vrienden, ontvang tijdige herinneringen en wees degene die altijd weet wat er gebeurt."
+      },
+      "shareExtension": {
+        "title": "Leg vast vanaf overal",
+        "subtitle": "Zie je een evenement op social media of in je galerij? Gebruik het systeemdeelmenu om het direct naar Capture2Calendar te sturen."
+      },
+      "tickets": {
+        "title": "Koop tickets direct",
+        "subtitle": "Mis nooit je favoriete evenementen. Vind en koop tickets rechtstreeks vanuit de app.",
+        "feature1": "Zoek evenementen bij jou in de buurt met geïntegreerd ticket zoeken",
+        "feature2": "Vergelijk prijzen van meerdere verkopers direct",
+        "feature3": "Veilig afrekenen — boek je plek in seconden",
+        "exampleLabel": "Voorbeeld",
+        "exampleEventName": "Zomerfestival 2025",
+        "buyButton": "Tickets kopen"
+      },
+      "slide1": {
+        "eyebrow": "AI-aangedreven",
+        "title": "Geen handmatig typen nodig",
+        "body": "Een seconde, bijna klaar. Onze AI legt alle evenementdetails automatisch vast."
+      },
+      "slide2": {
+        "eyebrow": "Details klaar",
+        "title": "Datums, tickets, locaties",
+        "body": "Alle evenementdetails, geëxtraheerd en georganiseerd. Klaar om te synchroniseren."
+      },
+      "slide3": {
+        "eyebrow": "Bewaar de herinnering",
+        "title": "Bewaar de originele scan",
+        "body": "Je vastgelegde afbeeldingen worden bij elk evenement opgeslagen als referentie."
+      },
+      "slide4": {
+        "eyebrow": "Sync naar agenda",
+        "title": "Werkt met alle grote apps",
+        "body": "Exporteer naar Apple Calendar, Google Calendar, Outlook en meer met één tik."
+      },
+      "freeTrial": {
+        "title": "Klaar om te beginnen?",
+        "bullet1": "Direct evenementen vastleggen en opslaan",
+        "bullet2": "Exporteer naar al je agenda's",
+        "bullet3": "Toegang tot tickets, deel evenementen en navigeer",
+        "permissionsTitle": "Snelle machtigingen die we nodig hebben:",
+        "permissionCamera": "Camera — om evenementen te fotograferen",
+        "permissionCalendar": "Agenda — om je evenementen op te slaan"
+      },
+      "getStarted": {
+        "title": "Detecteer elk evenement",
+        "mainTitle": "Scant notities, flyers en uitnodigingen",
+        "subtitle": "Krijg het volledige plaatje. Koop tickets, navigeer naar de locatie en exporteer naar je agenda met één tik.",
+        "bullet1": "Direct evenementen vastleggen en opslaan",
+        "bullet2": "Exporteer naar al je agenda's",
+        "bullet3": "Toegang tot tickets, deel evenementen en navigeer",
+        "permissionsTitle": "Snelle machtigingen die we nodig hebben:",
+        "permissionCamera": "Camera — om evenementen te fotograferen",
+        "permissionCalendar": "Agenda — om je evenementen op te slaan"
+      },
+      "cameraInstruction": {
+        "title": "Scan evenementen",
+        "description1": "Om ons te helpen je evenementen nauwkeurig te identificeren, maak een foto die de datuminformatie duidelijk toont.",
+        "description2": "Dit kan een ticket, flyer of elk document met de evenementdatum zijn.",
+        "button": "Begrepen!"
+      },
+      "camera": {
+        "scanEventDetails": "Scan evenementdetails"
+      },
+      "navigation": {
+        "next": "Volgende",
+        "skip": "Overslaan",
+        "getStarted": "Aan de slag"
+      }
+    },
+    "firstStart": {
+      "title": "Eerste start",
+      "description": "Dit was de eerste start"
+    },
+    "feedback": {
+      "title": "Feedback versturen",
+      "description": "We verbeteren Cap2Cal continu. Je feedback helpt ons een betere app te bouwen!",
+      "idea": "Idee",
+      "bug": "Bug",
+      "inputPlaceholder": "Deel je gedachten...",
+      "send": "Versturen"
+    },
+    "appLikePrompt": {
+      "title": "Vind je Capture2Calendar leuk?",
+      "description": "We horen graag wat je ervan vindt!",
+      "yes": "Ja, ik vind het geweldig!",
+      "notReally": "Niet echt",
+      "dismiss": "Misschien later"
+    },
+    "privacyConsent": {
+      "title": "Welkom bij Capture2Calendar",
+      "intro": "We geven om je privacy. Dit moet je weten:",
+      "imageProcessingTitle": "Beeldverwerking:",
+      "imageProcessingDescription": "Foto's die je maakt worden naar Google's Gemini AI gestuurd om evenementinformatie te extraheren. Afbeeldingen worden niet op onze servers opgeslagen.",
+      "analyticsTitle": "Analytics:",
+      "analyticsDescription": "We verzamelen anonieme gebruiksgegevens om de app te verbeteren. Je kunt dit op elk moment uitschakelen in Instellingen.",
+      "yourRightsTitle": "Je rechten:",
+      "yourRightsDescription": "Je kunt al je gegevens op elk moment exporteren of verwijderen vanuit het Instellingenscherm.",
+      "privacyPolicyLink": "Lees het volledige privacybeleid",
+      "acceptButton": "Accepteren en doorgaan"
+    },
+    "export": {
+      "title": "Exporteren naar",
+      "appleCalendar": "Apple Calendar",
+      "googleCalendar": "Google Calendar",
+      "microsoftOutlook": "Microsoft Outlook"
+    },
+    "notCaptured": {
+      "title": "Kon niet vastleggen",
+      "generalAdvice": "Oeps! Kon niet alle evenementdetails vastleggen. Probeer een duidelijkere foto—wazigheid of ontbrekende info kan problemen veroorzaken!"
+    },
+    "permissionDenied": {
+      "title": "Toestemming nodig",
+      "cameraAdvice": "We kunnen geen evenementen vastleggen zonder cameratoegang. Geef toestemming in je instellingen om te beginnen met vastleggen.",
+      "calendarAdvice": "We kunnen geen evenementen opslaan zonder agendatoegang. Geef toestemming in je instellingen om deze functie te gebruiken.",
+      "photosAdvice": "We kunnen geen foto's importeren zonder bibliotheektoegang. Geef toestemming in je instellingen om deze functie te gebruiken.",
+      "toSettings": "Ga naar instellingen",
+      "cancel": "Annuleren"
+    },
+    "upgrade": {
+      "title": "Vastleglimiet bereikt",
+      "subtitle": "Je hebt al je gratis vastleggingen gebruikt",
+      "benefit1": "Onbeperkt evenementen vastleggen",
+      "benefit2": "Prioriteitsverwerking",
+      "benefit3": "Geavanceerde functies",
+      "pricing": "€4,99/maand",
+      "cta": "Upgrade naar Pro",
+      "notNow": "Niet nu",
+      "capturesRemaining": "{{count}} vastleggingen over"
+    },
+    "paywall": {
+      "title": "Mis nooit een evenement",
+      "subtitle": "Je hebt je gratis limiet bereikt. Upgrade om onbeperkt evenementen vast te leggen en mis er nooit meer één!",
+      "bestValue": "BESTE WAARDE",
+      "yearlyTitle": "Jaarabonnement",
+      "yearlySubtext": "Slechts €0,83/maand - Bespaar 17%",
+      "perYear": "/jaar",
+      "monthlyTitle": "Maandabonnement",
+      "monthlySubtext": "Maandelijks gefactureerd, op elk moment opzegbaar",
+      "perMonth": "/maand",
+      "whatsIncluded": "Wat is inbegrepen",
+      "benefit1": "Onbeperkt evenementen vastleggen - nooit meer een limiet",
+      "benefit2": "Prioriteit AI-verwerking - snellere resultaten",
+      "benefit3": "Geavanceerde evenementdetectie - leg complexe evenementen vast",
+      "benefit4": "Steun indie-ontwikkeling - help ons meer functies te bouwen",
+      "testimonial": "\"Deze app bespaart me elke week uren!\" - Sara, Pro-gebruiker",
+      "cta": "Doorgaan met {{plan}}",
+      "notNow": "Misschien later",
+      "restorePurchases": "Aankopen herstellen",
+      "legalText": "Abonnement wordt automatisch verlengd tenzij opgezegd. Op elk moment opzegbaar in Instellingen.",
+      "processing": "Verwerken..."
+    },
+    "settings": {
+      "title": "Instellingen",
+      "preferences": "Voorkeuren",
+      "language": "Taal",
+      "theme": "Thema",
+      "vibration": "Trillen",
+      "vibrationDescription": "Haptische feedback voor interacties",
+      "appearance": "Uiterlijk",
+      "privacy": "Privacy en gegevens",
+      "analytics": "Analytics",
+      "analyticsDescription": "Help ons verbeteren door anonieme gebruiksgegevens te delen",
+      "dataManagement": "Gegevensbeheer",
+      "exportData": "Mijn gegevens downloaden",
+      "exportDataDescription": "Exporteer al je evenementen als JSON",
+      "clearStorage": "Opslag wissen",
+      "clearStorageDescription": "Verwijder alle opgeslagen evenementen van je apparaat",
+      "resetOnboarding": "Tutorial",
+      "resetOnboardingDescription": "Bekijk de welkomsttutorial opnieuw",
+      "deleteAccount": "Mijn account verwijderen",
+      "deleteAccountDescription": "Verwijder permanent alle gegevens en je account",
+      "other": "Overig",
+      "giveFeedback": "Feedback geven",
+      "privacyPolicy": "Privacybeleid",
+      "terms": "Algemene voorwaarden",
+      "website": "Website bezoeken",
+      "inviteFriends": "Vrienden uitnodigen",
+      "rateApp": "App beoordelen",
+      "about": "Over",
+      "version": "Versie",
+      "confirmClearStorage": "Alle evenementen wissen?",
+      "confirmClearStorageMessage": "Dit verwijdert alle opgeslagen evenementen van je apparaat. Deze actie kan niet ongedaan worden gemaakt.",
+      "confirmDeleteAccount": "Je account verwijderen?",
+      "confirmDeleteAccountMessage": "Dit verwijdert permanent al je gegevens en je account. Deze actie kan niet ongedaan worden gemaakt.",
+      "testCrashlytics": "Crashrapportage testen",
+      "testCrashlyticsDescription": "Activeer een testcrash om te verifiëren dat crashrapportage werkt",
+      "confirmTestCrash": "Een testcrash activeren?",
+      "confirmTestCrashMessage": "Dit zal de app opzettelijk laten crashen om crashrapportage te testen. De app zal automatisch opnieuw opstarten. Doorgaan?",
+      "themeLight": "Licht",
+      "themeDark": "Donker",
+      "themeSystem": "Systeem",
+      "languageEnglish": "English",
+      "languageGerman": "Deutsch",
+      "languageSpanish": "Español",
+      "languageFrench": "Français",
+      "languagePortuguese": "Português",
+      "languageItalian": "Italiano",
+      "languageDutch": "Nederlands",
+      "languageJapanese": "日本語",
+      "languageKorean": "한국어",
+      "languagePolish": "Polski"
+    },
+    "errorBoundary": {
+      "title": "Oeps!",
+      "message": "Er is iets onverwachts gebeurd. Maak je geen zorgen - je gegevens zijn veilig. We zijn op de hoogte gesteld en zullen dit onderzoeken.",
+      "tryAgain": "Opnieuw proberen"
+    },
+    "loading": {
+      "phrases": {
+        "phrase1": {
+          "1": "Even geduld, alle details worden verzameld...",
+          "2": "Nu in de gegevens aan het duiken...",
+          "3": "Alle informatie wordt voor je klaargezet!",
+          "4": "Zorgen dat alles op zijn plek staat...",
+          "5": "Een seconde, bijna klaar..."
+        },
+        "phrase2": {
+          "1": "Wacht even, alle goodies worden opgehaald...",
+          "2": "Ik ben ermee bezig, alles wordt klaargemaakt...",
+          "3": "Bijna alles wat je nodig hebt...",
+          "4": "Laat me dit voor je afronden...",
+          "5": "Nog even geduld, laatste aanpassingen komen eraan!"
+        },
+        "phrase3": {
+          "1": "Alle informatie wordt verzameld...",
+          "2": "Zorgen dat het perfect is voor je...",
+          "3": "Alle puzzelstukjes worden samengevoegd...",
+          "4": "Bijna klaar, blijf even bij me...",
+          "5": "Nog even geduld!"
+        },
+        "phrase4": {
+          "1": "Geef me een seconde, alle opties worden gescand...",
+          "2": "Bijna klaar hiermee...",
+          "3": "Elk detail wordt voor je doorgenomen...",
+          "4": "Volhouden, bijna compleet!",
+          "5": "Bijna klaar!"
+        },
+        "phrase5": {
+          "1": "Alles wordt afgerond, we zijn bijna klaar...",
+          "2": "Alle info wordt nog even gecontroleerd...",
+          "3": "Laatste kleine aanpassingen...",
+          "4": "Zorgen dat alles perfect is...",
+          "5": "Bijna klaar, bedankt voor je geduld!"
+        }
+      }
+    },
+    "imagePreview": {
+      "title": "Bronscan",
+      "metadata": "Gescand op 27 nov • 20:00"
+    },
+    "privacyPage": {
+      "title": "Privacybeleid",
+      "lastUpdated": "Laatst bijgewerkt: 15 oktober 2025",
+      "section1Title": "1. Inleiding",
+      "section1Body": "Bedankt voor het gebruik van Capture2Calendar (\"wij\", \"ons\", \"onze\"). Wij zetten ons in voor de bescherming van je persoonlijke gegevens en je recht op privacy. Dit Privacybeleid legt uit welke informatie we verzamelen, hoe we deze gebruiken en welke rechten je hebt met betrekking tot deze informatie.",
+      "section2Title": "2. Verwerkingsverantwoordelijke",
+      "section2Body": "De verwerkingsverantwoordelijke voor je persoonlijke gegevens is:",
+      "controllerName": "Franz Benthin",
+      "controllerAddress": "Adres: Hauptstraße 123, 12345 Berlijn, Duitsland",
+      "controllerEmail": "E-mail: privacy@capture2calendar.app",
+      "controllerPhone": "Telefoon: +49 123 456789",
+      "section3Title": "3. Hosting en serverlogbestanden",
+      "section3Intro": "Onze app en diensten worden gehost op beveiligde servers. Wanneer je onze app gebruikt, kan de volgende technische informatie automatisch worden verzameld in serverlogbestanden:",
+      "section3Item1": "IP-adres",
+      "section3Item2": "Datum en tijd van toegang",
+      "section3Item3": "Browsertype en -versie",
+      "section3Item4": "Besturingssysteem",
+      "section3Item5": "Bezochte pagina's binnen onze app",
+      "section3Item6": "Verwijzende URL (de pagina vanwaar je onze app hebt geopend)",
+      "section3Body": "Deze gegevens worden verzameld voor beveiligingsdoeleinden, om de stabiliteit en betrouwbaarheid van onze diensten te waarborgen en om de gebruikerservaring te verbeteren. De rechtsgrondslag voor deze verwerking is ons legitieme belang bij het onderhouden van een veilige en functionele dienst (Art. 6(1)(f) AVG).",
+      "section6Title": "6. Je rechten als betrokkene",
+      "section6Intro": "Onder de AVG heb je de volgende rechten met betrekking tot je persoonlijke gegevens:",
+      "section6Right1": "Recht op inzage: Je kunt een kopie opvragen van de persoonlijke gegevens die we over je bewaren.",
+      "section6Right2": "Recht op rectificatie: Je kunt ons vragen onjuiste of onvolledige gegevens te corrigeren.",
+      "section6Right3": "Recht op verwijdering: Je kunt verzoeken om verwijdering van je persoonlijke gegevens.",
+      "section6Right4": "Recht op beperking: Je kunt ons vragen de verwerking van je gegevens in bepaalde omstandigheden te beperken.",
+      "section6Right5": "Recht op gegevensoverdraagbaarheid: Je kunt je gegevens opvragen in een gestructureerd, gangbaar formaat.",
+      "section6Right6": "Recht van bezwaar: Je kunt bezwaar maken tegen de verwerking van je gegevens op basis van legitieme belangen.",
+      "section6Right7": "Recht om toestemming in te trekken: Als de verwerking is gebaseerd op toestemming, kun je deze op elk moment intrekken.",
+      "section7Title": "7. Wijzigingen in ons privacybeleid",
+      "section7Body": "We kunnen dit Privacybeleid van tijd tot tijd bijwerken. We zullen je op de hoogte stellen van wijzigingen door het nieuwe Privacybeleid op deze pagina te plaatsen en de datum \"Laatst bijgewerkt\" aan te passen. We raden je aan dit Privacybeleid regelmatig te bekijken voor eventuele wijzigingen."
+    }
+  },
+  "types": {
+    "extractErrorReason": {
+      "IMAGE_TOO_BLURRED": "Afbeelding te wazig",
+      "MULTIPLE_EVENTS_FOUND": "Meerdere evenementen gevonden",
+      "LOW_CONTRAST_OR_POOR_LIGHTING": "Laag contrast of slechte belichting",
+      "TEXT_TOO_SMALL": "Tekst te klein",
+      "OVERLAPPING_TEXT_OR_GRAPHICS": "Overlappende informatie",
+      "PROBABLY_NOT_AN_EVENT": "Dit was geen evenement",
+      "LIMIT_REACHED": "Vastleglimiet bereikt",
+      "UNKNOWN": "Onbekende fout opgetreden"
+    }
+  }
+}

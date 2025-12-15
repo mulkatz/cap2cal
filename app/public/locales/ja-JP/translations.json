@@ -1,0 +1,449 @@
+{
+  "general": {
+    "okay": "OK",
+    "cancel": "キャンセル",
+    "yes": "はい",
+    "no": "いいえ",
+    "relevance": "関連性",
+    "time": "時間",
+    "upcoming": "予定",
+    "recent": "最近",
+    "onlyFavourites": "お気に入りのみ",
+    "sortBy": "",
+    "ctaStart": "写真",
+    "yourCaptures": "イベント",
+    "searchTickets": "チケット",
+    "buyTickets": "チケット",
+    "noTicketsAvailable": "チケットなし",
+    "getTicket": "チケットを取得",
+    "agenda": "アジェンダ",
+    "legal": "法的情報",
+    "capture": "キャプチャ",
+    "newEvent": "新しいイベント",
+    "more": "もっと見る",
+    "today": "今日",
+    "tomorrow": "明日"
+  },
+  "home": {
+    "microWidget": {
+      "headline": "次のイベント",
+      "startScanning": "イベントをスキャンして、ここに表示しましょう",
+      "noUpcoming": "予定されているイベントはありません"
+    },
+    "onboarding": {
+      "headline": "イベントを見逃さない",
+      "description": "カメラでイベントのポスター、チラシ、チケットを撮影して、カレンダーに即座に保存できます"
+    }
+  },
+  "eventCard": {
+    "actionSheet": {
+      "title": "イベントオプション",
+      "share": "イベントを共有",
+      "capturing": "キャプチャ中...",
+      "preparing": "準備中...",
+      "comingSoon": "近日公開",
+      "delete": "イベントを削除",
+      "cancel": "キャンセル"
+    }
+  },
+  "share": {
+    "title": "Cap2Cal - AIイベントキャプチャ",
+    "text": "Cap2Calをチェック！AIでイベントポスターをカレンダーに変換できます。",
+    "shareFile": "{{fileName}}を共有",
+    "checkOutPdf": "このPDFをご覧ください：{{fileName}}",
+    "checkOutTool": "この素晴らしいツールをチェック：{{title}}\n{{description}}\n訪問：{{link}}",
+    "appTitle": "Capture2Calendar",
+    "appDescription": "写真から簡単にカレンダーにイベントを追加！",
+    "eventFilename": "{{title}} (Cap2Cal)",
+    "message": "このイベントを見つけました！"
+  },
+  "errors": {
+    "failedProcessSharedImage": "共有画像を処理できませんでした。もう一度お試しください。",
+    "networkRequestFailed": "ネットワークリクエストが失敗しました。接続を確認してください。",
+    "requestTimedOut": "リクエストがタイムアウトしました。もう一度お試しください。",
+    "networkConnectionFailed": "ネットワーク接続が失敗しました。インターネット接続を確認してください。",
+    "authenticationFailed": "認証に失敗しました。再度ログインしてください。",
+    "captureLimitReached": "キャプチャ制限に達しました。続行するにはアップグレードしてください。",
+    "tooManyRequests": "リクエストが多すぎます。しばらく待ってからもう一度お試しください。",
+    "serverError": "サーバーエラー。後でもう一度お試しください。",
+    "notAnEvent": "イベントではないようです。別の画像をお試しください。",
+    "invalidImage": "無効な画像です。もう一度お試しください。",
+    "cameraError": "カメラエラー。カメラの権限を確認してください。",
+    "permissionDenied": "権限が拒否されました。必要な権限を有効にしてください。",
+    "validationError": "検証エラー。入力を確認してください。",
+    "unexpectedError": "予期しないエラーが発生しました。もう一度お試しください。"
+  },
+  "toasts": {
+    "feedback": {
+      "success": "フィードバックをありがとうございます！",
+      "error": "フィードバックをありがとうございます！"
+    },
+    "extract": {
+      "success": "キャプチャしました！",
+      "error": "キャプチャできませんでした。"
+    },
+    "capture": {
+      "singleEvent": "イベントをキャプチャしました！",
+      "multipleEvents": "{{count}}件のイベントをキャプチャしました！"
+    },
+    "subscription": {
+      "success": "Proへようこそ！",
+      "restored": "購入を復元しました！",
+      "noPurchases": "アクティブなサブスクリプションが見つかりません",
+      "restoreError": "購入を復元できませんでした",
+      "networkError": "ネットワークエラー。接続を確認してください。",
+      "paymentFailed": "支払いに失敗しました。もう一度お試しください。",
+      "productUnavailable": "このプランは現在利用できません。",
+      "unknownError": "問題が発生しました。もう一度お試しください。"
+    },
+    "dataManagement": {
+      "exportSuccess": "データを正常にエクスポートしました",
+      "exportError": "データをエクスポートできませんでした",
+      "deleteSuccess": "すべてのデータを正常に削除しました",
+      "deleteError": "データを削除できませんでした",
+      "clearSuccess": "ストレージを正常にクリアしました",
+      "clearError": "ストレージをクリアできませんでした",
+      "reAuthRequired": "アカウントを削除するには再度ログインしてください"
+    },
+    "settings": {
+      "analyticsEnabled": "分析が有効になりました",
+      "analyticsDisabled": "分析が無効になりました",
+      "vibrationEnabled": "振動が有効になりました",
+      "vibrationDisabled": "振動が無効になりました",
+      "languageChanged": "言語が変更されました",
+      "themeSoon": "テーマサポートは近日公開！",
+      "inviteLinkCopied": "招待リンクをクリップボードにコピーしました！",
+      "testCrashScheduled": "テストクラッシュが2秒後に発生します...",
+      "testCrashFailed": "テストクラッシュに失敗しました。ネイティブプラットフォームでのみ利用可能です。"
+    },
+    "rating": {
+      "fallbackMessage": "評価ダイアログが表示されませんでしたか？",
+      "rateOnAppStore": "App Storeで評価",
+      "rateOnPlayStore": "Play Storeで評価"
+    }
+  },
+  "sheet": {
+    "header": "あなたのイベント",
+    "noFavouritesYet": "お気に入りはまだありません",
+    "showPastEvents": "過去のイベントを表示"
+  },
+  "dialogs": {
+    "onboarding": {
+      "valueProp": {
+        "title": "すべてをキャプチャ",
+        "subtitle": "ポスター、チラシ、手書きメモ—日付があれば読み取れます。写真を撮るだけです。"
+      },
+      "howItWorks": {
+        "title": "AIパワーの詳細抽出",
+        "subtitle": "タイトル、日付、時間、場所を自動的に抽出します。手入力は不要です。",
+        "step1Title": "写真を撮る",
+        "step1Description": "日付情報が含まれているものを撮影またはインポート",
+        "step2Title": "読み取り＆保存",
+        "step2Description": "AIがすべての詳細を読み取り、アプリライブラリにイベントを保存",
+        "step3Title": "いつでも利用可能",
+        "step3Description": "カレンダーにエクスポート、イベントを共有、チケットを購入、場所にナビゲート"
+      },
+      "bulkAI": {
+        "title": "瞬時の一括処理",
+        "subtitle": "チラシの山を一度にスキャン。AIが日付、時間、場所などすべての詳細を数秒で抽出します。"
+      },
+      "lifestyle": {
+        "title": "何も見逃さない",
+        "subtitle": "友達と予定を共有し、タイムリーなリマインダーを受け取り、いつも何が起きているか知っている人になりましょう。"
+      },
+      "shareExtension": {
+        "title": "どこからでもキャプチャ",
+        "subtitle": "ソーシャルメディアやギャラリーでイベントを見ましたか？システムの共有シートを使用して、Capture2Calendarに直接送信できます。"
+      },
+      "tickets": {
+        "title": "チケットを即座に購入",
+        "subtitle": "お気に入りのイベントを見逃さない。アプリから直接チケットを検索・購入できます。",
+        "feature1": "統合チケット検索で近くのイベントを検索",
+        "feature2": "複数の販売者の価格を即座に比較",
+        "feature3": "安全なチェックアウト—数秒で予約",
+        "exampleLabel": "例",
+        "exampleEventName": "サマーフェスティバル2025",
+        "buyButton": "チケットを購入"
+      },
+      "slide1": {
+        "eyebrow": "AIパワー",
+        "title": "手入力は不要",
+        "body": "もう少しお待ちください。AIがすべてのイベント詳細を自動的にキャプチャします。"
+      },
+      "slide2": {
+        "eyebrow": "詳細準備完了",
+        "title": "日付、チケット、場所",
+        "body": "すべてのイベント詳細が抽出され、整理されています。同期の準備ができています。"
+      },
+      "slide3": {
+        "eyebrow": "思い出を保存",
+        "title": "オリジナルのスキャンを保持",
+        "body": "キャプチャした画像は参照用に各イベントと一緒に保存されます。"
+      },
+      "slide4": {
+        "eyebrow": "カレンダーに同期",
+        "title": "主要なアプリすべてに対応",
+        "body": "ワンタップでAppleカレンダー、Googleカレンダー、Outlookなどにエクスポートできます。"
+      },
+      "freeTrial": {
+        "title": "始める準備はできましたか？",
+        "bullet1": "イベントの即時キャプチャと保存",
+        "bullet2": "すべてのカレンダーにエクスポート",
+        "bullet3": "チケットへのアクセス、イベント共有、ナビゲーション",
+        "permissionsTitle": "必要な権限：",
+        "permissionCamera": "カメラ—イベントを撮影するため",
+        "permissionCalendar": "カレンダー—イベントを保存するため"
+      },
+      "getStarted": {
+        "title": "あらゆるイベントを検出",
+        "mainTitle": "メモ、チラシ、招待状をスキャン",
+        "subtitle": "完全な情報を取得。チケット購入、会場へのナビゲート、ワンタップでカレンダーにエクスポート。",
+        "bullet1": "イベントの即時キャプチャと保存",
+        "bullet2": "すべてのカレンダーにエクスポート",
+        "bullet3": "チケットへのアクセス、イベント共有、ナビゲーション",
+        "permissionsTitle": "必要な権限：",
+        "permissionCamera": "カメラ—イベントを撮影するため",
+        "permissionCalendar": "カレンダー—イベントを保存するため"
+      },
+      "cameraInstruction": {
+        "title": "イベントをスキャン",
+        "description1": "イベントを正確に識別するために、日付情報が明確に表示されている写真を撮影してください。",
+        "description2": "チケット、チラシ、イベント日付が含まれている文書などが対象です。",
+        "button": "わかりました！"
+      },
+      "camera": {
+        "scanEventDetails": "イベント詳細をスキャン"
+      },
+      "navigation": {
+        "next": "次へ",
+        "skip": "スキップ",
+        "getStarted": "始める"
+      }
+    },
+    "firstStart": {
+      "title": "初回起動",
+      "description": "これは初回起動でした"
+    },
+    "feedback": {
+      "title": "フィードバックを送信",
+      "description": "Cap2Calを常に改善しています。あなたのフィードバックがより良いアプリを作るのに役立ちます！",
+      "idea": "アイデア",
+      "bug": "バグ",
+      "inputPlaceholder": "ご意見をお聞かせください...",
+      "send": "送信"
+    },
+    "appLikePrompt": {
+      "title": "Capture2Calendarを気に入っていますか？",
+      "description": "ご意見をお聞かせください！",
+      "yes": "はい、気に入っています！",
+      "notReally": "あまり",
+      "dismiss": "また後で"
+    },
+    "privacyConsent": {
+      "title": "Capture2Calendarへようこそ",
+      "intro": "プライバシーを大切にしています。知っておいていただきたいこと：",
+      "imageProcessingTitle": "画像処理：",
+      "imageProcessingDescription": "撮影した写真はGoogleのGemini AIに送信され、イベント情報を抽出します。画像は当社のサーバーに保存されません。",
+      "analyticsTitle": "分析：",
+      "analyticsDescription": "アプリを改善するために匿名の使用データを収集します。設定でいつでも無効にできます。",
+      "yourRightsTitle": "あなたの権利：",
+      "yourRightsDescription": "設定画面からいつでもすべてのデータをエクスポートまたは削除できます。",
+      "privacyPolicyLink": "プライバシーポリシーの全文を読む",
+      "acceptButton": "同意して続行"
+    },
+    "export": {
+      "title": "エクスポート先",
+      "appleCalendar": "Appleカレンダー",
+      "googleCalendar": "Googleカレンダー",
+      "microsoftOutlook": "Microsoft Outlook"
+    },
+    "notCaptured": {
+      "title": "キャプチャできませんでした",
+      "generalAdvice": "おっと！すべてのイベント詳細を取得できませんでした。より鮮明な写真をお試しください—ぼやけや情報不足が問題を引き起こす可能性があります！"
+    },
+    "permissionDenied": {
+      "title": "権限が必要です",
+      "cameraAdvice": "カメラへのアクセスなしではイベントをキャプチャできません。設定で権限を許可してキャプチャを開始してください。",
+      "calendarAdvice": "カレンダーへのアクセスなしではイベントを保存できません。設定で権限を許可してこの機能を使用してください。",
+      "photosAdvice": "ライブラリへのアクセスなしでは写真をインポートできません。設定で権限を許可してこの機能を使用してください。",
+      "toSettings": "設定へ",
+      "cancel": "キャンセル"
+    },
+    "upgrade": {
+      "title": "キャプチャ制限に達しました",
+      "subtitle": "無料キャプチャをすべて使用しました",
+      "benefit1": "無制限のイベントキャプチャ",
+      "benefit2": "優先処理",
+      "benefit3": "高度な機能",
+      "pricing": "¥700/月",
+      "cta": "Proにアップグレード",
+      "notNow": "今はしない",
+      "capturesRemaining": "残り{{count}}回のキャプチャ"
+    },
+    "paywall": {
+      "title": "イベントを見逃さない",
+      "subtitle": "無料制限に達しました。アップグレードして無制限にイベントをキャプチャし、二度と見逃さない！",
+      "bestValue": "お得",
+      "yearlyTitle": "年間プラン",
+      "yearlySubtext": "月額わずか¥580 - 17%お得",
+      "perYear": "/年",
+      "monthlyTitle": "月額プラン",
+      "monthlySubtext": "毎月請求、いつでもキャンセル可能",
+      "perMonth": "/月",
+      "whatsIncluded": "含まれるもの",
+      "benefit1": "無制限のイベントキャプチャ - 制限なし",
+      "benefit2": "優先AI処理 - より高速な結果",
+      "benefit3": "高度なイベント検出 - 複雑なイベントをキャプチャ",
+      "benefit4": "インディー開発を支援 - より多くの機能の構築を支援",
+      "testimonial": "「このアプリで毎週何時間も節約できます！」- サラ、Proユーザー",
+      "cta": "{{plan}}で続行",
+      "notNow": "また後で",
+      "restorePurchases": "購入を復元",
+      "legalText": "キャンセルしない限りサブスクリプションは自動更新されます。設定でいつでもキャンセルできます。",
+      "processing": "処理中..."
+    },
+    "settings": {
+      "title": "設定",
+      "preferences": "設定",
+      "language": "言語",
+      "theme": "テーマ",
+      "vibration": "振動",
+      "vibrationDescription": "操作時の触覚フィードバック",
+      "appearance": "外観",
+      "privacy": "プライバシーとデータ",
+      "analytics": "分析",
+      "analyticsDescription": "匿名の使用データを共有して改善に協力",
+      "dataManagement": "データ管理",
+      "exportData": "データをダウンロード",
+      "exportDataDescription": "すべてのイベントをJSONとしてエクスポート",
+      "clearStorage": "ストレージをクリア",
+      "clearStorageDescription": "デバイスから保存されたすべてのイベントを削除",
+      "resetOnboarding": "チュートリアル",
+      "resetOnboardingDescription": "ウェルカムチュートリアルを再度表示",
+      "deleteAccount": "アカウントを削除",
+      "deleteAccountDescription": "すべてのデータとアカウントを永久に削除",
+      "other": "その他",
+      "giveFeedback": "フィードバックを送る",
+      "privacyPolicy": "プライバシーポリシー",
+      "terms": "利用規約",
+      "website": "ウェブサイトを訪問",
+      "inviteFriends": "友達を招待",
+      "rateApp": "アプリを評価",
+      "about": "情報",
+      "version": "バージョン",
+      "confirmClearStorage": "すべてのイベントをクリアしますか？",
+      "confirmClearStorageMessage": "デバイスから保存されたすべてのイベントが削除されます。この操作は取り消せません。",
+      "confirmDeleteAccount": "アカウントを削除しますか？",
+      "confirmDeleteAccountMessage": "すべてのデータとアカウントが永久に削除されます。この操作は取り消せません。",
+      "testCrashlytics": "クラッシュレポートをテスト",
+      "testCrashlyticsDescription": "テストクラッシュをトリガーしてクラッシュレポートが機能していることを確認",
+      "confirmTestCrash": "テストクラッシュをトリガーしますか？",
+      "confirmTestCrashMessage": "クラッシュレポートをテストするために意図的にアプリをクラッシュさせます。アプリは自動的に再起動します。続行しますか？",
+      "themeLight": "ライト",
+      "themeDark": "ダーク",
+      "themeSystem": "システム",
+      "languageEnglish": "English",
+      "languageGerman": "Deutsch",
+      "languageSpanish": "Español",
+      "languageFrench": "Français",
+      "languagePortuguese": "Português",
+      "languageItalian": "Italiano",
+      "languageDutch": "Nederlands",
+      "languageJapanese": "日本語",
+      "languageKorean": "한국어",
+      "languagePolish": "Polski"
+    },
+    "errorBoundary": {
+      "title": "おっと！",
+      "message": "予期しないことが起こりました。ご安心ください—データは安全です。報告を受けて調査します。",
+      "tryAgain": "もう一度試す"
+    },
+    "loading": {
+      "phrases": {
+        "phrase1": {
+          "1": "少々お待ちください、すべての詳細を収集中...",
+          "2": "データを調査中...",
+          "3": "すべての情報を準備中！",
+          "4": "すべてが整っていることを確認中...",
+          "5": "あと少し..."
+        },
+        "phrase2": {
+          "1": "お待ちください、すべての情報を取得中...",
+          "2": "準備中です...",
+          "3": "必要なものがほぼ揃いました...",
+          "4": "仕上げ中...",
+          "5": "もう少しお待ちください、最終調整中！"
+        },
+        "phrase3": {
+          "1": "すべての情報を収集中...",
+          "2": "完璧にするために確認中...",
+          "3": "すべてのピースを組み合わせ中...",
+          "4": "もう少しです、お待ちください...",
+          "5": "もう少しお待ちください！"
+        },
+        "phrase4": {
+          "1": "少々お待ちください、すべてのオプションをスキャン中...",
+          "2": "ほぼ完了です...",
+          "3": "すべての詳細を確認中...",
+          "4": "もう少しで完了です！",
+          "5": "まもなく完了します！"
+        },
+        "phrase5": {
+          "1": "最終処理中、もう少しで完了...",
+          "2": "すべての情報を再確認中...",
+          "3": "最後の微調整中...",
+          "4": "完璧であることを確認中...",
+          "5": "もう少しです、お待ちいただきありがとうございます！"
+        }
+      }
+    },
+    "imagePreview": {
+      "title": "元のスキャン",
+      "metadata": "スキャン日時：11月27日 • 20:00"
+    },
+    "privacyPage": {
+      "title": "プライバシーポリシー",
+      "lastUpdated": "最終更新日：2025年10月15日",
+      "section1Title": "1. はじめに",
+      "section1Body": "Capture2Calendar（「当社」、「私たち」、「当社の」）をご利用いただきありがとうございます。当社はお客様の個人情報とプライバシーの権利を保護することに取り組んでいます。このプライバシーポリシーは、収集する情報、その使用方法、およびそれに関連するお客様の権利について説明します。",
+      "section2Title": "2. データ管理者",
+      "section2Body": "お客様の個人情報を管理するデータ管理者は次のとおりです：",
+      "controllerName": "Franz Benthin",
+      "controllerAddress": "住所：Hauptstraße 123, 12345 ベルリン、ドイツ",
+      "controllerEmail": "メール：privacy@capture2calendar.app",
+      "controllerPhone": "電話：+49 123 456789",
+      "section3Title": "3. ホスティングとサーバーログファイル",
+      "section3Intro": "当社のアプリとサービスは安全なサーバーでホストされています。アプリを使用すると、以下の技術情報がサーバーログファイルに自動的に収集される場合があります：",
+      "section3Item1": "IPアドレス",
+      "section3Item2": "アクセス日時",
+      "section3Item3": "ブラウザの種類とバージョン",
+      "section3Item4": "オペレーティングシステム",
+      "section3Item5": "アプリ内で訪問したページ",
+      "section3Item6": "リファラーURL（アプリにアクセスした元のページ）",
+      "section3Body": "このデータは、セキュリティ目的、サービスの安定性と信頼性を確保するため、およびユーザーエクスペリエンスを向上させるために収集されます。この処理の法的根拠は、安全で機能的なサービスを維持するための当社の正当な利益です（GDPR第6条(1)(f)）。",
+      "section6Title": "6. データ主体としてのあなたの権利",
+      "section6Intro": "GDPRの下で、お客様は個人データに関して以下の権利を有します：",
+      "section6Right1": "アクセス権：当社が保持するお客様の個人データのコピーを要求できます。",
+      "section6Right2": "訂正権：不正確または不完全なデータの訂正を求めることができます。",
+      "section6Right3": "消去権：個人データの削除を要求できます。",
+      "section6Right4": "制限権：特定の状況下でデータ処理の制限を求めることができます。",
+      "section6Right5": "データポータビリティ権：構造化された一般的に使用される形式でデータを要求できます。",
+      "section6Right6": "異議申立権：正当な利益に基づくデータ処理に異議を唱えることができます。",
+      "section6Right7": "同意撤回権：処理が同意に基づく場合、いつでも撤回できます。",
+      "section7Title": "7. プライバシーポリシーの変更",
+      "section7Body": "当社は随時このプライバシーポリシーを更新することがあります。変更がある場合は、このページに新しいプライバシーポリシーを掲載し、「最終更新日」を更新することでお知らせします。変更がないか定期的にこのプライバシーポリシーを確認することをお勧めします。"
+    }
+  },
+  "types": {
+    "extractErrorReason": {
+      "IMAGE_TOO_BLURRED": "画像がぼやけています",
+      "MULTIPLE_EVENTS_FOUND": "複数のイベントが見つかりました",
+      "LOW_CONTRAST_OR_POOR_LIGHTING": "コントラストが低いか照明が悪い",
+      "TEXT_TOO_SMALL": "テキストが小さすぎます",
+      "OVERLAPPING_TEXT_OR_GRAPHICS": "情報が重なっています",
+      "PROBABLY_NOT_AN_EVENT": "イベントではありませんでした",
+      "LIMIT_REACHED": "キャプチャ制限に達しました",
+      "UNKNOWN": "不明なエラーが発生しました"
+    }
+  }
+}
