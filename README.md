@@ -224,9 +224,9 @@ cap2cal/
 
 | Document | Description |
 |----------|-------------|
-| **[App Store Copy](./docs/marketing/APP-STORE-COPY.md)** | Store listing content |
-| **[Translations](./docs/marketing/app-store-translations.md)** | Localized listings |
-| **[Pitch Deck](./docs/marketing/pitch-deck.md)** | Investor presentation |
+| **[App Store Copy](docs/marketing/deprecated/APP-STORE-COPY.md)** | Store listing content |
+| **[Translations](docs/marketing/deprecated/app-store-translations.md)** | Localized listings |
+| **[Pitch Deck](docs/marketing/deprecated/pitch-deck.md)** | Investor presentation |
 
 **[Browse all documentation](./docs/README.md)**
 

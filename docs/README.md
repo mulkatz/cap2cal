@@ -90,28 +90,28 @@ Business strategy and analytics documentation:
 
 App store listings, copy, and promotional content:
 
-- **[App Store Copy](./marketing/APP-STORE-COPY.md)** (397 lines)
+- **[App Store Copy](marketing/deprecated/APP-STORE-COPY.md)** (397 lines)
   - Promotional text (170 characters)
   - App description (4000 characters)
   - Keywords and metadata
   - **Use this** for App Store/Google Play submissions
 
-- **[Store Translations](./marketing/app-store-translations.md)** (587 lines)
+- **[Store Translations](marketing/deprecated/app-store-translations.md)** (587 lines)
   - Localized app store listings
   - Multi-language support (EN, DE, more planned)
   - **Use this** for international markets
 
-- **[App Store Listing Guide](./marketing/app-store-listing.md)** (227 lines)
+- **[App Store Listing Guide](marketing/deprecated/app-store-listing.md)** (227 lines)
   - Store listing best practices
   - Screenshot requirements
   - Review guidelines
 
-- **[Pitch Deck](./marketing/pitch-deck.md)** (910 lines)
+- **[Pitch Deck](marketing/deprecated/pitch-deck.md)** (910 lines)
   - Investor presentation content
   - Problem, solution, market, traction
   - **Use this** for fundraising conversations
 
-- **[Pitch Deck Sources](./marketing/pitch-deck-sources.md)** (455 lines)
+- **[Pitch Deck Sources](marketing/deprecated/pitch-deck-sources.md)** (455 lines)
   - Supporting data and research
   - Market statistics
   - Competitor analysis
