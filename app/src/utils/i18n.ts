@@ -96,8 +96,8 @@ export function getNextLanguage(currentLang: string): SupportedLanguage {
   return SUPPORTED_LANGUAGES[nextIndex];
 }
 
-export function initI18n() {
-  i18next
+export function initI18n(): Promise<void> {
+  return i18next
     .use(HttpApi)
     .use(LanguageDetector)
     .use(initReactI18next)
@@ -129,7 +129,7 @@ export function initI18n() {
 
       // React-specific optimizations
       react: {
-        useSuspense: false, // Don't block render waiting for translations
+        useSuspense: false,
       },
     })
     .then(() => {
