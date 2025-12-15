@@ -113,31 +113,6 @@ export interface CustomSearchResponse {
   items?: SearchResultItem[];
 }
 
-export const TICKET_PROVIDER_DOMAINS: string[] = [
-  'ticketmaster.com',
-  'livenation.com',
-  'eventim.de',
-  'eventim.com',
-  'eventim.co.uk',
-  'eventim.pl',
-  'stubhub.com',
-  'seatgeek.com',
-  'axs.com',
-  'ticketweb.com',
-  'eventbrite.com',
-  'seetickets.com',
-  'songkick.com',
-  'bandsintown.com',
-  'viagogo.com',
-  'ticketcorner.ch',
-  'oeticket.com',
-  'ticketone.it',
-  'fnacspectacles.com',
-  'ticketportal.cz',
-  'ticketswap.com',
-  'ra.co',
-  'dice.fm',
-  'ticketmaster.co.uk',
-  'ticketmaster.ca',
-  'ticketmaster.de',
-];
+// Import comprehensive provider list from providers.ts
+// This export is kept for backwards compatibility
+export { ALL_PROVIDER_DOMAINS as TICKET_PROVIDER_DOMAINS } from './providers';

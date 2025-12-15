@@ -3,6 +3,8 @@ import { logger } from 'firebase-functions';
 import axios from 'axios';
 import { defineSecret } from 'firebase-functions/params';
 import { TICKET_PROVIDER_DOMAINS } from './models';
+import { ALL_PROVIDER_DOMAINS, REGIONAL_PROVIDERS, Region } from './providers';
+import { detectRegion } from './regionDetection';
 
 const GOOGLE_CUSTOM_SEARCH_API_KEY = defineSecret('GOOGLE_CUSTOM_SEARCH_API_KEY');
 const GOOGLE_CUSTOM_SEARCH_CX_ID = defineSecret('GOOGLE_CUSTOM_SEARCH_CX_ID');
@@ -24,7 +26,7 @@ type FindTicketsResponse = {
 export const findTickets = onRequest(
   { secrets: [GOOGLE_CUSTOM_SEARCH_API_KEY, GOOGLE_CUSTOM_SEARCH_CX_ID], cors: true },
   async (request, response) => {
-    const { query, i18n } = request.body;
+    const { query, i18n, region: explicitRegion } = request.body;
 
     const API_KEY_VALUE = GOOGLE_CUSTOM_SEARCH_API_KEY.value();
     const CX_ID_VALUE = GOOGLE_CUSTOM_SEARCH_CX_ID.value();
@@ -39,6 +41,10 @@ export const findTickets = onRequest(
       response.status(500).json({ error: 'Server configuration error' });
       return;
     }
+
+    // Detect user's region from language/locale
+    const detectedRegion = detectRegion(i18n, explicitRegion);
+    logger.info(`Region detection: i18n=${i18n}, explicit=${explicitRegion}, detected=${detectedRegion}`);
 
     try {
       logger.info(`Received query: ${query}`);
@@ -70,7 +76,8 @@ export const findTickets = onRequest(
             const url = new URL(item.link);
             const domain = url.hostname.replace(/^www\./, '');
 
-            if (TICKET_PROVIDER_DOMAINS.some((providerDomain) => domain.includes(providerDomain))) {
+            // Use the expanded ALL_PROVIDER_DOMAINS list for filtering
+            if (ALL_PROVIDER_DOMAINS.some((providerDomain) => domain.includes(providerDomain))) {
               uniqueTicketLinks.add(item.link);
             }
           } catch (urlError) {
@@ -79,16 +86,15 @@ export const findTickets = onRequest(
         }
       }
       ticketLinks.push(...Array.from(uniqueTicketLinks));
-      logger.info(`Found ${ticketLinks.length} potential ticket links`);
-
-      const unorderedTicketLinks = {
-        query,
-        ticketLinks,
-      };
+      logger.info(`Found ${ticketLinks.length} potential ticket links for region ${detectedRegion}`);
 
       try {
-        const sortedTicketData = sortTicketLinksByLikeliness(unorderedTicketLinks);
-        response.status(200).json(sortedTicketData);
+        // Sort by regional priority instead of hardcoded Eventim-first
+        const sortedLinks = sortTicketLinksByRegion(ticketLinks, detectedRegion);
+        response.status(200).json({
+          query,
+          ticketLinks: sortedLinks,
+        });
       } catch (error) {
         logger.error('Failed to sort ticket links', error);
         response.status(500).json({ error: 'Failed to sort ticket links.' });
@@ -100,6 +106,51 @@ export const findTickets = onRequest(
   }
 );
 
+/**
+ * Extract domain from URL for matching against provider list
+ */
+const extractDomain = (url: string): string => {
+  try {
+    const urlObj = new URL(url);
+    return urlObj.hostname.replace(/^www\./, '').toLowerCase();
+  } catch {
+    return url.toLowerCase();
+  }
+};
+
+/**
+ * Sort ticket links by regional priority
+ *
+ * Links from primary providers for the detected region appear first,
+ * followed by secondary providers, then other providers.
+ *
+ * @param ticketLinks - Array of ticket URLs
+ * @param region - Detected user region
+ * @returns Sorted array of ticket URLs
+ */
+const sortTicketLinksByRegion = (ticketLinks: string[], region: Region): string[] => {
+  const config = REGIONAL_PROVIDERS[region] || REGIONAL_PROVIDERS.GLOBAL;
+
+  const primary: string[] = [];
+  const secondary: string[] = [];
+  const other: string[] = [];
+
+  for (const link of ticketLinks) {
+    const domain = extractDomain(link);
+
+    if (config.primary.some((p) => domain.includes(p))) {
+      primary.push(link);
+    } else if (config.secondary.some((s) => domain.includes(s))) {
+      secondary.push(link);
+    } else {
+      other.push(link);
+    }
+  }
+
+  return [...primary, ...secondary, ...other];
+};
+
+// Keep legacy function for backwards compatibility (not used but preserved)
 const sortTicketLinksByLikeliness = (unorderedTicketLinks: FindTicketsResponse): FindTicketsResponse => {
   const eventimItem = unorderedTicketLinks.ticketLinks.find((item) => item.includes('eventim'));
 

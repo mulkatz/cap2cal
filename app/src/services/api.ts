@@ -118,6 +118,7 @@ export const findTickets = async (query: string, i18n: string): Promise<ApiFindR
       },
       body: JSON.stringify({
         query,
+        i18n, // Send language for regional ticket provider prioritization
       }),
     });
 
