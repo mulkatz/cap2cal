@@ -124,6 +124,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
             paid_only: false,
             free_capture_limit: 5,
             in_app_rating: true,
+            ticket_search_enabled: true,
           });
         }
       } catch (error) {
@@ -133,6 +134,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
           paid_only: false,
           free_capture_limit: 5,
           in_app_rating: true,
+          ticket_search_enabled: true,
         });
       } finally {
         setFeatureFlagsLoading(false);

@@ -153,6 +153,7 @@ export interface FeatureFlags {
   paid_only: boolean;
   free_capture_limit: number;
   in_app_rating?: boolean; // Enable/disable in-app review prompts (default: true)
+  ticket_search_enabled?: boolean; // Enable/disable ticket search functionality (default: true)
 }
 
 /**

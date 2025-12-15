@@ -8,11 +8,16 @@ import { CameraPreview } from '@michaelwolz/camera-preview-lite';
 import i18next from 'i18next';
 import { useTranslation } from 'react-i18next';
 import { IconTicket } from '../../assets/icons';
+import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 
 export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boolean }) => {
+  const { featureFlags } = useFirebaseContext();
   const [fetching, setFetching] = useState(false);
   const { t } = useTranslation();
   const i18n = i18next.language;
+
+  // Check if ticket search is enabled (defaults to true for backwards compatibility)
+  const ticketSearchEnabled = featureFlags?.ticket_search_enabled ?? true;
   const fetchTickets = (item: CaptureEvent, searchQuery: string) => {
     setFetching(true);
     findTickets(searchQuery, i18n).then(async (value) => {
@@ -36,6 +41,11 @@ export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boo
   };
 
   const item = useLiveQuery(async () => await db.eventItems.where('id').equals(id).first()) || null;
+
+  // If ticket search is disabled via remote config, don't render the button
+  if (!ticketSearchEnabled) {
+    return null;
+  }
 
   if (!item) {
     // console.error(`error reading event with id ${id}. item not found`); //fixme is called onrender
