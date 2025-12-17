@@ -90,9 +90,11 @@ Before extracting text, perform an internal **Visual Layer Separation**:
     * Major events/Conferences: 0.8 - 1.0
     * Local meetups/Personal appointments: 0.0 - 0.1
 7.  **ticketSearchQuery** (Logic):
+    * **CRITICAL:** This query must be in the **ORIGINAL LANGUAGE** of the source material (poster/flyer), NOT translated. This ensures ticket searches find results on local vendor websites.
     * **If** \`ticketDirectLink\` is missing **AND** \`ticketAvailableProbability\` > 0.6:
-        * *Scenario A (Vendor found):* \`"Artist" "Venue" "Date" site:vendor.domain\`
-        * *Scenario B (General):* \`"Artist" "Venue" "Date" Tickets\`
+        * Use the **original untranslated** artist name, venue name, and city name exactly as they appear on the source.
+        * Format: \`"Artist" "Venue" "City" "YYYY-MM-DD"\` (no additional keywords like "Tickets" - the search engine handles this).
+        * Example for a German event: \`"DJ Shadow" "Huxley's Neue Welt" "Berlin" "2025-03-15"\` (NOT "Berlín" or "Entradas").
     * **Else:** Return \`""\`.
 
 ---

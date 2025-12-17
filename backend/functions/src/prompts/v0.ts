@@ -136,19 +136,21 @@ Key Objectives:
 
 11. **ticketSearchQuery** (CRUCIAL):
     * This field must always be included in the response.
+    * **CRITICAL:** This query must be in the **ORIGINAL LANGUAGE** of the source material (poster/flyer), NOT translated. This ensures ticket searches find results on local vendor websites.
     * If no \`ticketDirectLink\` is found AND the \`ticketAvailableProbability\` is high (e.g., > 0.6), you MUST generate an optimized Google search query based on the following logic.
     * If the conditions for generating a query are not met, provide an empty string (\`""\`).
 
     * **Query Generation Logic (Decision Tree):**
-        1.  **First, inspect the input for vendor logos or names.** Look for clues like "Eventim," "Ticketmaster," etc.
-        2.  **If a specific vendor is identified:** Construct a **High-Precision Query**.
-            * **Structure:** \`"Artist/Event"\` \`"Venue"\` \`"Date"\` \`site:[vendor_domain.de]\`
-            * **Example:** If a Ticketmaster logo is seen, generate: \`"Mario Barth" "Waldbühne Berlin" "09.05.2026" site:ticketmaster.de\`
-        3.  **If NO specific vendor is identified:** Construct a **High-Coverage Query**.
-            * **Structure:** \`"Artist/Event"\` \`"Venue"\` \`"Date"\` \`Tickets\`
-            * **Example:** \`"Mario Barth" "Waldbühne Berlin" "09.05.2026" Tickets\`
+        1.  **Use ORIGINAL untranslated names:** Artist name, venue name, and city name must be exactly as they appear on the source material, NOT translated.
+        2.  **First, inspect the input for vendor logos or names.** Look for clues like "Eventim," "Ticketmaster," etc.
+        3.  **If a specific vendor is identified:** Construct a **High-Precision Query**.
+            * **Structure:** \`"Artist/Event"\` \`"Venue"\` \`"City"\` \`"YYYY-MM-DD"\` \`site:[vendor_domain]\`
+            * **Example:** If a Ticketmaster logo is seen on a German poster, generate: \`"Mario Barth" "Waldbühne Berlin" "Berlin" "2026-05-09" site:ticketmaster.de\`
+        4.  **If NO specific vendor is identified:** Construct a **High-Coverage Query**.
+            * **Structure:** \`"Artist/Event"\` \`"Venue"\` \`"City"\` \`"YYYY-MM-DD"\`
+            * **Example for a German event:** \`"Mario Barth" "Waldbühne Berlin" "Berlin" "2026-05-09"\` (NOT "Berlín" or with translated keywords like "Entradas")
 
-    * **Summary of Goal:** Your primary goal is to create the single search query most likely to place the official, primary ticket seller as the #1 result. Use the high-precision method whenever possible, as it's safer and more direct. Use the high-coverage method as the intelligent fallback.
+    * **Summary of Goal:** Your primary goal is to create the single search query most likely to place the official, primary ticket seller as the #1 result. Always use the ORIGINAL language from the source to maximize search accuracy on local ticket vendor websites.
 
 ---
 
