@@ -350,7 +350,9 @@ const EventCardAtom = React.memo(
         // 8. Prepare ticket URL (if available)
         const ticketUrl =
           currentTicketLink && currentTicketLink !== null
-            ? `https://${currentTicketLink.replace(/^(https?:\/\/)?(www\.)?/, 'www.')}`
+            ? (currentTicketLink.startsWith('http://') || currentTicketLink.startsWith('https://')
+                ? currentTicketLink
+                : 'https://' + currentTicketLink)
             : undefined;
 
         // 9. Generate PDF with tight bounds, dark background, and accurate clickable areas

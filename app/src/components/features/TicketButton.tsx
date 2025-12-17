@@ -93,16 +93,15 @@ export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boo
   return null;
 };
 const onTicket = async (link: string) => {
-  let sanitizedLink = link.replace(/^(https?:\/\/)?(www\.)?/, '');
-  if (!sanitizedLink.startsWith('www.')) {
-    sanitizedLink = 'www.' + sanitizedLink;
-  }
+  // Ensure the link has a valid protocol, but preserve the domain as-is
+  const sanitizedLink = link.startsWith('http://') || link.startsWith('https://')
+    ? link
+    : 'https://' + link;
 
-  // Prepend 'https://' to make the link valid for window.open
   try {
     await CameraPreview.stop();
   } catch (e) {
     console.error('camera preview already stopped');
   }
-  window.open('https://' + sanitizedLink, '_blank');
+  window.open(sanitizedLink, '_blank');
 };

@@ -270,13 +270,12 @@ export const CardController = React.memo(({ data }: { data: CaptureEvent }) => {
   }, [dialogs, item]);
 
   const onTicket = useCallback((link: string) => {
-    let sanitizedLink = link.replace(/^(https?:\/\/)?(www\.)?/, '');
-    if (!sanitizedLink.startsWith('www.')) {
-      sanitizedLink = 'www.' + sanitizedLink;
-    }
+    // Ensure the link has a valid protocol, but preserve the domain as-is
+    const sanitizedLink = link.startsWith('http://') || link.startsWith('https://')
+      ? link
+      : 'https://' + link;
 
-    // Prepend 'https://' to make the link valid for window.open
-    window.open('https://' + sanitizedLink, '_blank');
+    window.open(sanitizedLink, '_blank');
   }, []);
 
   const onWeblink = useCallback(() => {
