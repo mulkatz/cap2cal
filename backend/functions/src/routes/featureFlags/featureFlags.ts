@@ -48,7 +48,6 @@ export const featureFlags = onRequest(
       logger.error('Error fetching feature flags', error);
       response.status(500).json({
         error: 'Internal server error',
-        message: error.message,
       });
     }
   }

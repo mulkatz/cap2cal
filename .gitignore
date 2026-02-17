@@ -26,6 +26,13 @@ dist-ssr
 .env
 .firebase
 
+# Firebase native configs
+**/google-services.json
+**/GoogleService-Info.plist
+
+# Claude Code
+**/.claude/
+
 # Screenshots
 screenshots/output
 screenshots/node_modules

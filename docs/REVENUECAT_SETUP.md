@@ -327,7 +327,7 @@ firebase deploy --only functions
 
 After deployment, copy the function URL:
 ```
-https://us-central1-cap2cal.cloudfunctions.net/revenuecatWebhook
+https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/revenuecatWebhook
 ```
 
 ### 2. Configure Webhook in RevenueCat
@@ -335,7 +335,7 @@ https://us-central1-cap2cal.cloudfunctions.net/revenuecatWebhook
 1. Go to RevenueCat Dashboard → **Project Settings** → **Integrations** → **Webhooks**
 2. Click "Add Webhook"
 3. Enter:
-   - **URL**: `https://us-central1-cap2cal.cloudfunctions.net/revenuecatWebhook`
+   - **URL**: `https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/revenuecatWebhook`
    - **Events**: Select all events (recommended):
      - INITIAL_PURCHASE
      - RENEWAL

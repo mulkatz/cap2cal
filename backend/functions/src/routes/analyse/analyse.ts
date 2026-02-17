@@ -382,7 +382,6 @@ export const analyse = onRequest(
 
       response.status(500).json({
         message: 'An unexpected error occurred during processing.',
-        error: e.message,
         requestId: logContext.requestId,
       });
     }

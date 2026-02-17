@@ -101,7 +101,7 @@ export const findTickets = onRequest(
       }
     } catch (error: any) {
       logger.error('Error in findTickets function:', error.message, error.stack);
-      response.status(500).json({ error: 'Failed to process the request.', details: error.message });
+      response.status(500).json({ error: 'Failed to process the request.' });
     }
   }
 );

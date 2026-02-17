@@ -277,7 +277,7 @@ useEffect(() => {
 #### Cloud Function: `featureFlags`
 **File**: `backend/functions/src/featureFlags/featureFlags.ts`
 
-**Endpoint**: `GET https://featureflags-u6pn2d2dsq-uc.a.run.app`
+**Endpoint**: `GET https://YOUR_FEATURE_FLAGS_URL`
 
 **Response**:
 ```json
@@ -1540,7 +1540,7 @@ firebase deploy --only functions:featureFlags
 
 **Verify**:
 ```bash
-curl https://featureflags-u6pn2d2dsq-uc.a.run.app
+curl https://YOUR_FEATURE_FLAGS_URL
 # Expected: {"paid_only":false,"free_capture_limit":5}
 ```
 

@@ -4,10 +4,6 @@ const config: CapacitorConfig = {
   appId: 'cx.franz.cap2cal',
   appName: 'Cap2Cal',
   webDir: 'dist',
-  // server: {
-  //   url: 'http://192.168.179.66:9000',
-  //   cleartext: true,
-  // },
   android: {
     path: './native/android',
   },

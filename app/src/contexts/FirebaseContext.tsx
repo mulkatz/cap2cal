@@ -8,6 +8,7 @@ import 'firebase/compat/analytics';
 import { Capacitor } from '@capacitor/core';
 
 import { isDevelopmentEnvironment } from '../utils.ts';
+import { logger } from '../utils/logger';
 import { AnalyticsEvent, AnalyticsParam, type ScreenNameType } from '../services/analytics.service.ts';
 import { type FeatureFlags, fetchFeatureFlags } from '../services/api.ts';
 import {
@@ -28,14 +29,8 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Debug: Validate Firebase config at module load time
 if (!firebaseConfig.apiKey || !firebaseConfig.projectId || !firebaseConfig.appId) {
-  console.error('[Firebase Config] CRITICAL: Missing required Firebase configuration!', {
-    hasApiKey: !!firebaseConfig.apiKey,
-    hasProjectId: !!firebaseConfig.projectId,
-    hasAppId: !!firebaseConfig.appId,
-    hasAuthDomain: !!firebaseConfig.authDomain,
-  });
+  throw new Error('Missing required Firebase configuration. Check your .env file.');
 }
 
 // Initialize Firebase once at module level (singleton pattern)
@@ -61,9 +56,9 @@ try {
     firebaseAuth = getAuth(firebaseApp);
   }
 
-  console.log('[Firebase] Initialized successfully');
+  logger.info('Firebase', 'Initialized successfully');
 } catch (error: any) {
-  console.error('[Firebase] Failed to initialize:', error);
+  logger.error('Firebase', 'Failed to initialize', error);
 }
 
 // Define the types for the context
@@ -91,7 +86,7 @@ const FirebaseContext = createContext<FirebaseContextType | undefined>(undefined
 // Define a provider component
 export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const platform = Capacitor.getPlatform();
-  console.log(`[FirebaseProvider] Mounting provider on platform: ${platform}`);
+  logger.debug('FirebaseProvider', `Mounting on platform: ${platform}`);
 
   // Use singleton instances instead of re-initializing
   const app = firebaseApp;
@@ -116,9 +111,9 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         const flags = await fetchFeatureFlags();
         if (flags) {
           setFeatureFlags(flags);
-          console.log('[Feature Flags] Loaded:', flags);
+          logger.debug('FeatureFlags', 'Loaded', flags);
         } else {
-          console.warn('[Feature Flags] Failed to load, using defaults');
+          logger.warn('FeatureFlags', 'Failed to load, using defaults');
           // Set default values if fetch fails
           setFeatureFlags({
             paid_only: false,
@@ -128,7 +123,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
           });
         }
       } catch (error) {
-        console.error('[Feature Flags] Error loading:', error);
+        logger.error('FeatureFlags', 'Error loading', error);
         // Set default values on error
         setFeatureFlags({
           paid_only: false,
@@ -159,17 +154,10 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         hasAttemptedSignIn = true;
 
         try {
-          const result = await signInAnonymously(auth);
-          console.log('[Auth] Anonymous sign-in successful:', result.user.uid);
+          await signInAnonymously(auth);
+          logger.debug('Auth', 'Anonymous sign-in successful');
         } catch (error: any) {
-          console.error('[Auth] Anonymous sign-in failed:', error);
-
-          // Log specific error codes for troubleshooting
-          if (error?.code === 'auth/configuration-not-found') {
-            console.error('Anonymous authentication is not enabled in Firebase Console');
-          } else if (error?.code === 'auth/unauthorized-domain') {
-            console.error('Domain not authorized in Firebase Console');
-          }
+          logger.error('Auth', 'Anonymous sign-in failed', error);
         }
       }
     });
@@ -189,7 +177,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
     const initSubscription = async () => {
       try {
-        console.log('[FirebaseContext] Initializing RevenueCat for user:', user.uid);
+        logger.debug('FirebaseContext', 'Initializing RevenueCat');
 
         // Initialize RevenueCat with Firebase UID
         await initializePurchases(user.uid);
@@ -215,7 +203,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         // Set up listener for subscription changes
         addCustomerInfoUpdateListener(async (customerInfo: CustomerInfo) => {
           const hasProEntitlement = customerInfo.entitlements.active[ENTITLEMENT_ID] !== undefined;
-          console.log('[FirebaseContext] Subscription status changed:', hasProEntitlement);
+          logger.debug('FirebaseContext', `Subscription status changed: ${hasProEntitlement}`);
 
           setIsPro(hasProEntitlement);
 
@@ -229,9 +217,9 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
               },
               { merge: true }
             );
-            console.log('[FirebaseContext] Synced isPro to Firestore:', hasProEntitlement);
+            logger.debug('FirebaseContext', `Synced isPro to Firestore: ${hasProEntitlement}`);
           } catch (error) {
-            console.error('[FirebaseContext] Failed to sync isPro to Firestore:', error);
+            logger.error('FirebaseContext', 'Failed to sync isPro to Firestore', error);
           }
 
           // Log analytics event
@@ -243,7 +231,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
         setIsProLoading(false);
       } catch (error) {
-        console.error('[FirebaseContext] Failed to initialize subscription:', error);
+        logger.error('FirebaseContext', 'Failed to initialize subscription', error);
         setIsProLoading(false);
       }
     };
@@ -271,7 +259,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
         await setDoc(userDocRef, { isPro: proStatus }, { merge: true });
       }
     } catch (error) {
-      console.error('[FirebaseContext] Failed to refresh pro status:', error);
+      logger.error('FirebaseContext', 'Failed to refresh pro status', error);
     } finally {
       setIsProLoading(false);
     }
@@ -279,7 +267,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const logAnalyticsEvent = (event: string, data?: any) => {
     if (isDevelopmentEnvironment()) {
-      console.warn(`[Analytics] ${event}`, data || '');
+      logger.debug('Analytics', event, data || '');
       return;
     }
 
@@ -300,7 +288,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const setAnalyticsUserProperty = (property: string, value: string | number | boolean) => {
     if (isDevelopmentEnvironment()) {
-      console.warn(`[Analytics User Property] ${property} = ${value}`);
+      logger.debug('Analytics', `User Property: ${property} = ${value}`);
       return;
     }
 
@@ -320,7 +308,7 @@ export const FirebaseProvider: React.FC<{ children: ReactNode }> = ({ children }
 
   const getAuthToken = async (): Promise<string | null> => {
     if (!user) {
-      console.warn('[Auth] Cannot get auth token - user not authenticated');
+      logger.warn('Auth', 'Cannot get auth token - user not authenticated');
       return null;
     }
     return await user.getIdToken();

@@ -2,9 +2,9 @@ import { ApiError, ApiEvent, ApiFindResult, ApiSuccess } from '../models/api.typ
 import { logger } from '../utils/logger';
 import { handleFetchError, logError } from '../utils/errorHandler';
 
-const ANALYSE_API_URL = 'https://analyse-u6pn2d2dsq-uc.a.run.app';
-const FIND_TICKETS_API_URL = 'https://findtickets-u6pn2d2dsq-uc.a.run.app';
-const FEATURE_FLAGS_API_URL = 'https://us-central1-cap2cal.cloudfunctions.net/featureFlags';
+const ANALYSE_API_URL = import.meta.env.VITE_ANALYSE_API_URL;
+const FIND_TICKETS_API_URL = import.meta.env.VITE_FIND_TICKETS_API_URL;
+const FEATURE_FLAGS_API_URL = import.meta.env.VITE_FEATURE_FLAGS_API_URL;
 
 type EventSuccess = ApiSuccess<{ items: ApiEvent[] }>;
 type EventError = ApiError;

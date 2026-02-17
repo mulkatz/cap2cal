@@ -67,8 +67,8 @@ Capture2Calendar is a React-based Capacitor application that allows users to cap
 - **Issue**: Backend API URLs hardcoded in source
 - **Location**: `src/api/api.ts:4-6`
 ```typescript
-const ANALYSE_API_URL = 'https://analyse4-u6pn2d2dsq-uc.a.run.app';
-const FIND_TICKETS_API_URL = 'https://findtickets-u6pn2d2dsq-uc.a.run.app';
+const ANALYSE_API_URL = import.meta.env.VITE_ANALYSE_API_URL;
+const FIND_TICKETS_API_URL = import.meta.env.VITE_FIND_TICKETS_API_URL;
 ```
 - **Impact**: HIGH - Can't change endpoints without rebuild
 - **Fix**: Move to environment variables
