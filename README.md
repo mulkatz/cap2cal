@@ -1,6 +1,7 @@
 <div align="center">
   <img src="app/src/assets/images/icon.png" width="100" alt="Cap2Cal Icon" />
   <h1>Cap2Cal</h1>
+  <p>Turn any event poster into a calendar entry with AI.<br/>Never type event details manually again.</p>
 </div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
