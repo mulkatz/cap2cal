@@ -35,4 +35,5 @@ dist-ssr
 
 # Screenshots
 screenshots/output
+!tools/screenshots/output/en-GB/
 screenshots/node_modules
