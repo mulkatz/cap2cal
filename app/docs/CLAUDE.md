@@ -1,49 +1,56 @@
 # App Context
 
-Mobile app built with React 18 + Capacitor 7. Runs on iOS, Android, and web.
+React 18 + Capacitor 7 mobile app. Runs natively on iOS and Android.
 
-## Project Structure
+## Structure
 
 ```
-app/src/
-├── pages/          # Screens (App.tsx orchestrates view state)
+src/
+├── pages/          # Screens — App.tsx orchestrates via view state, not a router
 ├── components/
-│   ├── ui/         # Atomic, reusable (CTAButton, Dialog, Backdrop)
-│   └── features/   # Smart, domain-specific (EventCard, PaywallSheet)
-├── services/       # External integrations (api, analytics, calendar, purchases)
+│   ├── ui/         # Presentational, reusable (CTAButton, Dialog, Backdrop)
+│   └── features/   # Smart, domain-specific (EventCard, PaywallSheet, TicketButton)
+├── services/       # API layer (api.ts, analytics, calendar, purchases)
 ├── hooks/          # Business logic (useCapture, useCalendarExport, useShare)
 ├── contexts/       # Global state (AppContext, DialogContext, FirebaseContext)
-├── db/             # Dexie (IndexedDB) schema
-├── models/         # TypeScript types
-├── utils/          # Pure helpers (logger, dateTime, platform, i18n)
-└── assets/         # Icons, images, translations
+├── db/             # Dexie IndexedDB schema and queries
+├── models/         # TypeScript type definitions
+├── utils/          # Pure helpers (logger, dateTime, platform, errorHandler)
+└── assets/         # Icons, images, translation JSON files
 ```
 
 ## Core Flow
 
 ```
-Camera → useCapture hook → api.ts (POST image) → Gemini AI → save to Dexie → ResultView → calendar export
+Camera → useCapture → api.ts (POST base64 image + auth token)
+  → Gemini AI extracts events → save to Dexie → ResultView → calendar export
 ```
 
 ## Key Patterns
 
-- **View state, not router**: `App.tsx` uses state-based view switching (`home | camera | loading | result`)
-- **Dialog stack**: `DialogContext` manages a stack with hardware back button support
-- **Service layer**: Components use hooks/contexts, never call Firebase/Capacitor directly
-- **Platform detection**: `Capacitor.getPlatform()` for iOS/Android/web branching
+**View state, not router.** `App.tsx` switches views via state (`home | camera | loading | result`), not URL routing.
 
-## Important Files
+**Dialog stack.** `DialogContext` manages a LIFO stack with hardware back button support. Push/pop dialogs, never render them conditionally.
 
-| File | Purpose |
-|------|---------|
-| `pages/App.tsx` | Root orchestrator, view state management |
-| `hooks/useCapture.tsx` | Image capture + API call + error handling |
-| `services/api.ts` | Backend communication (analyse, findTickets, featureFlags) |
-| `contexts/FirebaseContext.tsx` | Auth, analytics, feature flags, remote config |
-| `db/db.ts` | Dexie database schema |
-| `services/purchases.service.ts` | RevenueCat in-app purchases |
+**Service layer.** Components talk to hooks and contexts. Hooks talk to services. Services talk to Firebase/Capacitor. Never skip a layer.
 
-## Naming Conventions
+**Auth tokens.** All API calls that cost money (`analyse`, `findTickets`, `findTicketPrice`) require a Firebase Bearer token. Get it via `getAuthToken()` from `FirebaseContext` and pass it to the API function.
+
+**Platform branching.** Use `Capacitor.getPlatform()` for iOS/Android/web differences. Use `Capacitor.isNativePlatform()` to gate native-only features.
+
+## Key Files
+
+| File | Role |
+|------|------|
+| `pages/App.tsx` | Root orchestrator, view state, screen transitions |
+| `hooks/useCapture.tsx` | Camera → image processing → API call → DB save |
+| `services/api.ts` | All backend calls (analyse, findTickets, featureFlags) |
+| `contexts/FirebaseContext.tsx` | Auth, analytics, feature flags, `getAuthToken()` |
+| `db/db.ts` | Dexie schema — `eventItems` table stores all captured events |
+| `services/purchases.service.ts` | RevenueCat subscription management |
+| `utils/logger.ts` | Log levels (debug/info/warn/error), silenced in production |
+
+## Naming
 
 | Type | Pattern | Example |
 |------|---------|---------|
@@ -51,3 +58,4 @@ Camera → useCapture hook → api.ts (POST image) → Gemini AI → save to Dex
 | Hooks | `use*.tsx` | `useCapture.tsx` |
 | Services | `*.service.ts` | `analytics.service.ts` |
 | Utils | `camelCase.ts` | `dateTime.ts` |
+| Types | `*.types.ts` | `api.types.ts` |

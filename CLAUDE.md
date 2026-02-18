@@ -1,48 +1,55 @@
 # Cap2Cal
 
-AI-powered mobile app that extracts event details from photos and adds them to your calendar.
+AI-powered mobile app that extracts event details from photos and exports them to your calendar. Production app on [iOS](https://apps.apple.com/app/capture2calendar/id6754225481) and [Android](https://play.google.com/store/apps/details?id=cx.franz.cap2cal).
 
-## Monorepo Structure
+## Monorepo
 
-| Directory | Purpose | Stack |
-|-----------|---------|-------|
+| Directory | What | Stack |
+|-----------|------|-------|
 | `app/` | Mobile app | React 18, TypeScript, Vite, TailwindCSS, Capacitor 7 |
-| `backend/` | API | Firebase Cloud Functions, Vertex AI (Gemini) |
+| `backend/` | Cloud Functions | Firebase Functions, Vertex AI (Gemini), Zod |
 | `web/` | Landing page | React, Framer Motion, PostHog |
-| `tools/` | Screenshot automation | Puppeteer |
+| `tools/` | Screenshots | Puppeteer |
 
-## Quick Start
+## Development
 
 ```bash
-# App
-cd app && npm install && cp .env.example .env && npm run dev
+# App (web preview)
+cd app && npm install && cp .env.example .env
+npm run dev
 
-# Backend
-cd backend/functions && npm install && firebase deploy --only functions
+# Backend (local emulator)
+cd backend/functions && npm install
+npm run serve
 
-# Web
-cd web && npm install && cp .env.example .env && npm run dev
+# Landing page
+cd web && npm install && cp .env.example .env
+npm run dev
+```
+
+Build and run on device:
+```bash
+cd app && npm run build && npx cap run ios   # or: npx cap run android
 ```
 
 ## Conventions
 
-- **Commits**: Conventional Commits (`feat:`, `fix:`, `chore:`, etc.)
-- **Exports**: Named exports, no default exports
-- **Styling**: TailwindCSS only, no inline styles
+- **Commits**: conventional commits — `feat:`, `fix:`, `chore:`, `refactor:`, `style:`, `docs:`
+- **Exports**: named exports only, no default exports
+- **Styling**: TailwindCSS, no inline styles
 - **State**: React Context + hooks, no Redux
-- **Storage**: Dexie (IndexedDB), local-first
-- **i18n**: All user-facing text via i18next
-- **Services**: External integrations wrapped in service layer, never called directly from components
+- **Storage**: Dexie (IndexedDB), local-first, no server-side user data
+- **i18n**: all UI text via i18next, never hardcode strings
+- **Services**: wrap external APIs in service layer — components never call Firebase/Capacitor directly
 
-## Key Architecture Decisions
+## Architecture
 
-- **Capacitor over React Native** — single codebase for web + iOS + Android
-- **Anonymous auth** — no sign-up friction, Firebase UID on first launch
-- **Local-first** — events persist offline, no server-side user data
-- **Feature flags** — Firebase Remote Config for toggling features
+- **Capacitor over React Native** — single web codebase for iOS + Android + web
+- **Anonymous auth** — Firebase UID on first launch, zero sign-up friction
+- **Local-first** — all event data in IndexedDB, works offline
+- **Feature flags** — Firebase Remote Config controls features server-side
+- **Auth on all endpoints** — every Cloud Function that costs money or mutates data requires a Firebase Bearer token
 
-## Documentation
+## Docs
 
-- [Architecture](./docs/ARCHITECTURE.md) — system design and data flow
-- [Getting Started](./docs/GETTING-STARTED.md) — detailed setup guide
-- [App Context](./app/docs/CLAUDE.md) — mobile app specifics
+See [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) for system design and [`app/docs/CLAUDE.md`](./app/docs/CLAUDE.md) for app-specific patterns.
