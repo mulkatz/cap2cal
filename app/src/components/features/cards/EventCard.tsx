@@ -15,6 +15,7 @@ import { generateEventPdf, getEventInviteUrl } from '../../../utils/pdfGenerator
 import { db } from '../../../db/db';
 import { useShare } from '../../../hooks/useShare';
 import { findTickets } from '../../../services/api';
+import { useFirebaseContext } from '../../../contexts/FirebaseContext';
 
 type Props = {
   data: CaptureEvent;
@@ -111,6 +112,7 @@ const DateBadge = ({ dateTime, locale }: { dateTime?: { date?: string; time?: st
 const EventCardAtom = React.memo(
   ({ data, onFavourite, isFavourite, onImage, onExport, onDelete, onAddress, locale, variant = 'default' }: Props) => {
     const { t, i18n } = useTranslation();
+    const { getAuthToken } = useFirebaseContext();
     const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
     const [showActionSheet, setShowActionSheet] = useState(false);
     const [isPreparingShare, setIsPreparingShare] = useState(false);
@@ -210,7 +212,8 @@ const EventCardAtom = React.memo(
         if (!currentTicketLink && alreadyFetchedTicketLink === undefined && ticketSearchQuery) {
           // Need to fetch ticket link
           console.log('[handleShare] Fetching ticket link before PDF generation...');
-          const ticketResult = await findTickets(ticketSearchQuery, i18n.language);
+          const authToken = await getAuthToken();
+          const ticketResult = await findTickets(ticketSearchQuery, i18n.language, authToken || undefined);
 
           if (ticketResult && ticketResult.ticketLinks.length > 0) {
             currentTicketLink = ticketResult.ticketLinks[0];

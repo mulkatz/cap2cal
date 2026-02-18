@@ -11,16 +11,17 @@ import { IconTicket } from '../../assets/icons';
 import { useFirebaseContext } from '../../contexts/FirebaseContext.tsx';
 
 export const TicketButton = ({ id, isFavourite }: { id: string; isFavourite: boolean }) => {
-  const { featureFlags } = useFirebaseContext();
+  const { featureFlags, getAuthToken } = useFirebaseContext();
   const [fetching, setFetching] = useState(false);
   const { t } = useTranslation();
   const i18n = i18next.language;
 
   // Check if ticket search is enabled (defaults to true for backwards compatibility)
   const ticketSearchEnabled = featureFlags?.ticket_search_enabled ?? true;
-  const fetchTickets = (item: CaptureEvent, searchQuery: string) => {
+  const fetchTickets = async (item: CaptureEvent, searchQuery: string) => {
     setFetching(true);
-    findTickets(searchQuery, i18n).then(async (value) => {
+    const authToken = await getAuthToken();
+    findTickets(searchQuery, i18n, authToken || undefined).then(async (value) => {
       if (value === null) {
         await db.eventItems.update(item, { ...item, alreadyFetchedTicketLink: null });
         setFetching(false);

@@ -106,16 +106,22 @@ export const fetchData = async (
   }
 };
 
-export const findTickets = async (query: string, i18n: string): Promise<ApiFindResult | null> => {
+export const findTickets = async (query: string, i18n: string, authToken?: string): Promise<ApiFindResult | null> => {
   const context = 'API.findTickets';
   logger.debug(context, 'Finding tickets', { query, i18n });
 
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+
+    if (authToken) {
+      headers['Authorization'] = `Bearer ${authToken}`;
+    }
+
     const res = await fetch(FIND_TICKETS_API_URL, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify({
         query,
         i18n, // Send language for regional ticket provider prioritization
