@@ -10,6 +10,7 @@ import {
 } from '@google/generative-ai';
 import { defineSecret } from 'firebase-functions/params';
 import { TICKET_PROVIDER_DOMAINS } from '../findTickets/models';
+import { validateAuthRequest } from '../../auth';
 
 const GEMINI_API_KEY = defineSecret('GEMINI_API_TOKEN');
 const CUSTOM_SEARCH_API_KEY = defineSecret('GOOGLE_CUSTOM_SEARCH_API_KEY');
@@ -205,6 +206,12 @@ export const findTicketPrice = onRequest(
     cors: true,
   },
   async (request, response) => {
+    const auth = await validateAuthRequest(request);
+    if (!auth.allowed) {
+      response.status(auth.status || 401).json({ error: auth.error });
+      return;
+    }
+
     const { eventQuery } = request.body;
 
     const API_KEY_VALUE = CUSTOM_SEARCH_API_KEY.value();

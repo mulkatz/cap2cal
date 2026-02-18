@@ -94,6 +94,27 @@ export async function getRemoteConfigValues(): Promise<RemoteConfigValues> {
   return { paidOnly, freeLimit, inAppRating };
 }
 
+/**
+ * Validates that the request has a valid Firebase Auth token.
+ * Use this for endpoints that only need authentication without capture limit checks.
+ */
+export async function validateAuthRequest(request: Request): Promise<ValidationResult> {
+  const authHeader = request.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return { allowed: false, error: 'Missing or invalid authorization token', status: 401 };
+  }
+
+  try {
+    const token = authHeader.split('Bearer ')[1];
+    const decodedToken = await admin.auth().verifyIdToken(token);
+    return { allowed: true, userId: decodedToken.uid };
+  } catch (error) {
+    logger.error('Token verification failed', error);
+    return { allowed: false, error: 'Invalid authentication token', status: 401 };
+  }
+}
+
 export async function validateCaptureRequest(request: Request): Promise<ValidationResult> {
   try {
     // Extract auth token from Authorization header

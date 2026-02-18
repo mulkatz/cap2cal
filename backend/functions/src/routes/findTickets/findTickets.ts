@@ -5,6 +5,7 @@ import { defineSecret } from 'firebase-functions/params';
 import { TICKET_PROVIDER_DOMAINS } from './models';
 import { ALL_PROVIDER_DOMAINS, REGIONAL_PROVIDERS, Region } from './providers';
 import { detectRegion } from './regionDetection';
+import { validateAuthRequest } from '../../auth';
 
 const GOOGLE_CUSTOM_SEARCH_API_KEY = defineSecret('GOOGLE_CUSTOM_SEARCH_API_KEY');
 const GOOGLE_CUSTOM_SEARCH_CX_ID = defineSecret('GOOGLE_CUSTOM_SEARCH_CX_ID');
@@ -26,6 +27,12 @@ type FindTicketsResponse = {
 export const findTickets = onRequest(
   { secrets: [GOOGLE_CUSTOM_SEARCH_API_KEY, GOOGLE_CUSTOM_SEARCH_CX_ID], cors: true },
   async (request, response) => {
+    const auth = await validateAuthRequest(request);
+    if (!auth.allowed) {
+      response.status(auth.status || 401).json({ error: auth.error });
+      return;
+    }
+
     const { query, i18n, region: explicitRegion } = request.body;
 
     const API_KEY_VALUE = GOOGLE_CUSTOM_SEARCH_API_KEY.value();
