@@ -2,6 +2,14 @@
   <img src="app/src/assets/images/icon.png" width="100" alt="Cap2Cal Icon" />
   <h1>Cap2Cal</h1>
   <p>Turn any event poster into a calendar entry with AI.<br/>Never type event details manually again.</p>
+  <br/>
+  <a href="https://apps.apple.com/app/capture2calendar/id6754225481">
+    <img src="web/src/assets/icons/Download_on_the_App_Store_RGB_blk.svg" height="40" alt="Download on the App Store" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://play.google.com/store/apps/details?id=cx.franz.cap2cal">
+    <img src="web/src/assets/icons/Google_Play_Store_badge_EN.svg" height="40" alt="Get it on Google Play" />
+  </a>
 </div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
