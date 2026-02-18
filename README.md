@@ -10,6 +10,7 @@
   <a href="https://play.google.com/store/apps/details?id=cx.franz.cap2cal">
     <img src="web/src/assets/icons/Google_Play_Store_badge_EN.svg" height="40" alt="Get it on Google Play" />
   </a>
+  <br/><br/>
 </div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
