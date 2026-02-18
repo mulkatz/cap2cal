@@ -28,7 +28,7 @@ Camera → useCapture → api.ts (POST base64 image + auth token)
 
 ## Key Patterns
 
-**View state, not router.** `App.tsx` switches views via state (`home | camera | loading | result`), not URL routing.
+**View state, not router.** `App.tsx` switches views via state (`home | loading | camera | result`), not URL routing.
 
 **Dialog stack.** `DialogContext` manages a LIFO stack with hardware back button support. Push/pop dialogs, never render them conditionally.
 
@@ -48,7 +48,7 @@ Camera → useCapture → api.ts (POST base64 image + auth token)
 | `contexts/FirebaseContext.tsx` | Auth, analytics, feature flags, `getAuthToken()` |
 | `db/db.ts` | Dexie schema — `eventItems` table stores all captured events |
 | `services/purchases.service.ts` | RevenueCat subscription management |
-| `utils/logger.ts` | Log levels (debug/info/warn/error), silenced in production |
+| `utils/logger.ts` | Log levels (debug/info/warn/error), only warn+ in production |
 
 ## Naming
 
