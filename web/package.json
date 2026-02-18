@@ -3,7 +3,14 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Cap2Cal - Never miss an event again. AI-powered event capture from posters to your calendar in 3 seconds.",
+  "description": "Cap2Cal landing page and marketing site",
+  "author": "Franz Benthin <franz.benthin.dev@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Franjoo/cap2cal",
+    "directory": "web"
+  },
   "scripts": {
     "build": "tsc -b && npx tailwindcss -i ./src/index.css -o ./src/all.css && vite build && node ./src/cs.js",
     "dev": "vite --host && npx tailwindcss -i ./src/index.css -o ./src/all.css --watch",

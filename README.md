@@ -1,6 +1,14 @@
 # Cap2Cal
 
-> Snap a photo of any event poster, flyer, or ticket — Cap2Cal extracts the event details using AI and adds them to your calendar. Available on [iOS](https://apps.apple.com/app/cap2cal/id6738043582) and [Android](https://play.google.com/store/apps/details?id=cx.franz.cap2cal).
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Platform - iOS](https://img.shields.io/badge/Platform-iOS-000000?logo=apple)](https://apps.apple.com/app/cap2cal/id6738043582)
+[![Platform - Android](https://img.shields.io/badge/Platform-Android-3DDC84?logo=android&logoColor=white)](https://play.google.com/store/apps/details?id=cx.franz.cap2cal)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Firebase](https://img.shields.io/badge/Firebase-Cloud_Functions-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com)
+[![Gemini](https://img.shields.io/badge/Google-Gemini_AI-4285F4?logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
+
+> Snap a photo of any event poster, flyer, or ticket — Cap2Cal extracts the event details using AI and adds them to your calendar. Available on [iOS](https://apps.apple.com/app/cap2cal/id6738043582) and [Android](https://play.google.com/store/apps/details?id=cx.franz.cap2cal). See the [landing page](https://cap2cal.franz.cx/).
 
 <div align="center">
   <img src="tools/screenshots/output/en-GB/03_camera_view_1.png" width="180" alt="Camera View" />

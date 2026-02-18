@@ -1,5 +1,13 @@
 {
-  "name": "functions",
+  "name": "cap2cal-functions",
+  "description": "Cap2Cal backend — Firebase Cloud Functions for AI event analysis and ticket search",
+  "author": "Franz Benthin <franz.benthin.dev@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Franjoo/cap2cal",
+    "directory": "backend/functions"
+  },
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
