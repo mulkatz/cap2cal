@@ -1,4 +1,7 @@
-# Cap2Cal
+<div align="center">
+  <img src="app/src/assets/images/icon.png" width="100" alt="Cap2Cal Icon" />
+  <h1>Cap2Cal</h1>
+</div>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Platform - iOS](https://img.shields.io/badge/Platform-iOS-000000?logo=apple)](https://apps.apple.com/app/capture2calendar/id6754225481)
