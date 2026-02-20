@@ -68,7 +68,7 @@ cap2cal/
 │       └── routes/       # analyse, findTickets, featureFlags, ...
 ├── web/                  # Landing page & marketing site
 ├── tools/                # Screenshot generation (Puppeteer)
-└── docs/                 # Architecture, setup guides, planning
+└── docs/                 # Architecture and setup guides
 ```
 
 ## Getting Started
@@ -124,7 +124,7 @@ npm run dev
 - **Event history** — Local-first storage with favorites, filters, and image preview
 - **Share** — Export event cards as PDF or image
 - **Multi-language** — English, German, Spanish, French, Portuguese, and more
-- **Offline-ready** — Events stored locally, synced when online
+- **Offline-ready** — Events stored locally on-device, works without internet
 - **Onboarding** — 3-screen tutorial flow
 - **In-app purchases** — Pro subscription via RevenueCat (optional, can be disabled)
 - **Feature flags** — Remote config for toggling features server-side
