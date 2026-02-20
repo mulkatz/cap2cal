@@ -25,6 +25,8 @@ dist-ssr
 
 .env
 .firebase
+.firebaserc
+firebase-debug.log
 
 # Firebase native configs
 **/google-services.json

@@ -82,7 +82,7 @@ cap2cal/
 ### Setup
 
 ```bash
-git clone https://github.com/Franjoo/cap2cal.git
+git clone https://github.com/mulkatz/cap2cal.git
 cd cap2cal
 
 # App
@@ -149,6 +149,14 @@ See [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) for the full system design.
 - [Architecture](./docs/ARCHITECTURE.md) — System design and data flow
 - [RevenueCat Setup](./docs/REVENUECAT_SETUP.md) — In-app purchase configuration
 
+## Contributing
+
+Contributions are welcome! Please read the [Contributing Guide](./CONTRIBUTING.md) before submitting a PR.
+
+## License
+
+[MIT](./LICENSE)
+
 ## Author
 
-Built by [Franz Benthin](https://github.com/Franjoo).
+Built by [Franz Benthin](https://github.com/mulkatz).
