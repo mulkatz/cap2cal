@@ -65,6 +65,7 @@ Each subproject has a `.env.example` file. Copy it to `.env` and fill in the val
 | `VITE_FIND_TICKETS_API_URL` | `app/.env` | URL of the `findTickets` Cloud Function |
 | `VITE_FEATURE_FLAGS_API_URL` | `app/.env` | URL of the `featureFlags` Cloud Function |
 | `VITE_REVENUECAT_*` | `app/.env` | RevenueCat API keys (optional, see [RevenueCat Setup](./REVENUECAT_SETUP.md)) |
+| `VITE_DEVELOPER_MODE_ENABLED` | `app/.env` | Enable dev tools like crash testing (`false` in production) |
 | `VITE_FIREBASE_*` | `web/.env` | Firebase config for the landing page |
 | `VITE_PUBLIC_POSTHOG_*` | `web/.env` | PostHog analytics config |
 

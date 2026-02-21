@@ -12,7 +12,7 @@ This tool uses Puppeteer to automatically generate consistent app screenshots ac
 
 ## Prerequisites
 
-1. **Node.js** v18 or higher
+1. **Node.js** v22 or higher
 2. **Running dev server** - Your Cap2Cal app must be running on `http://localhost:5173` (or specify custom URL)
 
 ## Installation
