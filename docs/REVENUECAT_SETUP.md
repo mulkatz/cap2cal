@@ -1,35 +1,32 @@
-# RevenueCat Setup Guide for Cap2Cal
+# RevenueCat Setup
 
-This guide walks you through setting up RevenueCat for in-app purchases in the Cap2Cal app.
+This guide covers enabling, configuring, and testing in-app purchases via RevenueCat.
 
-## Table of Contents
+## Enable/Disable Toggle
 
-1. [Overview](#overview)
-2. [Prerequisites](#prerequisites)
-3. [RevenueCat Account Setup](#revenuecat-account-setup)
-4. [App Store Connect Setup (iOS)](#app-store-connect-setup-ios)
-5. [Google Play Console Setup (Android)](#google-play-console-setup-android)
-6. [RevenueCat Configuration](#revenuecat-configuration)
-7. [Environment Variables](#environment-variables)
-8. [Backend Webhook Setup](#backend-webhook-setup)
-9. [Testing](#testing)
-10. [Troubleshooting](#troubleshooting)
+RevenueCat can be toggled via a single environment variable — no code changes needed:
+
+```bash
+# app/.env
+VITE_REVENUECAT_ENABLED=true   # enable in-app purchases
+VITE_REVENUECAT_ENABLED=false  # disable (default)
+```
+
+When disabled, the RevenueCat SDK won't initialize, no paywall is shown, and the app can be submitted without in-app purchase complications. All RevenueCat code stays in place and is ready to activate.
+
+After changing the flag, rebuild: `npm run build && npx cap sync`
 
 ---
 
 ## Overview
 
-Cap2Cal uses RevenueCat to manage in-app subscriptions across iOS and Android. The implementation includes:
+Cap2Cal uses RevenueCat to manage in-app subscriptions across iOS and Android:
 
-- **Frontend**: React + Capacitor app with RevenueCat Capacitor plugin (`@revenuecat/purchases-capacitor`)
-- **Backend**: Firebase Cloud Functions webhook for subscription events
-- **Platform**: Web-based React app wrapped with Capacitor for native iOS/Android
-- **Pricing**:
-  - Monthly: $0.99/month
-  - Yearly: $9.99/year (Best Value - Save 17%)
-- **Entitlement**: `pro` entitlement grants unlimited captures
+- **Plugin**: `@revenuecat/purchases-capacitor`
+- **Entitlement**: `pro` — grants unlimited captures
+- **Products**: `cap2cal_pro_monthly` and `cap2cal_pro_yearly`
 
-**Note**: Purchases only work on native iOS/Android apps built with Capacitor. The web version does not support in-app purchases.
+Purchases only work on native iOS/Android apps. The web version does not support in-app purchases.
 
 ---
 
@@ -371,48 +368,9 @@ https://us-central1-YOUR_PROJECT_ID.cloudfunctions.net/revenuecatWebhook
 
 ---
 
-## Building the App
-
-Before testing, you need to build and deploy the Capacitor app to a device/simulator:
-
-### iOS Build
-
-```bash
-# Build the web app
-npm run build
-
-# Sync with Capacitor
-npx cap sync ios
-
-# Open in Xcode
-npx cap open ios
-```
-
-Then in Xcode:
-1. Select your development team in Signing & Capabilities
-2. Select a physical device or simulator
-3. Click Run (⌘R)
-
-### Android Build
-
-```bash
-# Build the web app
-npm run build
-
-# Sync with Capacitor
-npx cap sync android
-
-# Open in Android Studio
-npx cap open android
-```
-
-Then in Android Studio:
-1. Select a device or emulator
-2. Click Run
-
----
-
 ## Testing
+
+Before testing purchases, build and deploy to a device (see [Getting Started](./GETTING-STARTED.md)).
 
 ### 1. iOS Sandbox Testing
 
@@ -609,52 +567,6 @@ Alternative: Use license testing for faster testing without internal track:
 
 ---
 
-## Useful Commands
-
-### Capacitor Commands
-
-```bash
-# Build web app and sync with native projects
-npm run build && npx cap sync
-
-# Run on iOS simulator
-npx cap run ios
-
-# Run on Android emulator/device
-npx cap run android
-
-# Open in Xcode
-npx cap open ios
-
-# Open in Android Studio
-npx cap open android
-
-# Update Capacitor plugins
-npm update @revenuecat/purchases-capacitor
-npx cap sync
-```
-
-### Firebase Commands
-
-```bash
-# Check Firebase Functions config
-firebase functions:config:get
-
-# View real-time function logs
-firebase functions:log --only revenuecatWebhook
-
-# Deploy only webhook function
-firebase deploy --only functions:revenuecatWebhook
-
-# Deploy all functions
-firebase deploy --only functions
-
-# Test RevenueCat integration locally (requires Firebase emulator)
-firebase emulators:start --only functions
-```
-
----
-
 ## Testing Checklist
 
 Before going live, test the following:
@@ -688,59 +600,8 @@ Before going live, test the following:
 
 ---
 
-## Production Readiness
+## Resources
 
-Before launching to production:
-
-1. **Complete App Store Review**:
-   - Submit in-app purchases for review in App Store Connect
-   - Include subscription details in app review notes
-   - Provide test account credentials for reviewers
-
-2. **Complete Google Play Review**:
-   - Activate in-app products in Play Console
-   - Complete store listing
-   - Submit app for review
-
-3. **Update Environment Variables**:
-   - Ensure production API keys are set (not sandbox)
-   - Verify webhook URL points to production Firebase function
-
-4. **Test with Real Money**:
-   - Make a real purchase with your own account
-   - Verify all flows work end-to-end
-   - Immediately refund to avoid charges
-
-5. **Monitor Analytics**:
-   - Track `SUBSCRIPTION_PURCHASE_INITIATED`
-   - Track `SUBSCRIPTION_PURCHASE_SUCCESS`
-   - Track `SUBSCRIPTION_PURCHASE_FAILED`
-   - Monitor conversion rates
-
-6. **Set Up Alerts**:
-   - Firebase Functions alerts for webhook errors
-   - RevenueCat integration health monitoring
-
----
-
-## Support Resources
-
-- **RevenueCat Documentation**: https://docs.revenuecat.com/
-- **RevenueCat Community**: https://community.revenuecat.com/
-- **App Store Connect Help**: https://developer.apple.com/help/app-store-connect/
-- **Google Play Console Help**: https://support.google.com/googleplay/android-developer/
-
----
-
-## Need Help?
-
-If you encounter issues not covered in this guide:
-
-1. Check RevenueCat Dashboard → **Health** for integration status
-2. Review Firebase Functions logs for errors
-3. Search RevenueCat Community for similar issues
-4. Contact RevenueCat support (they're very responsive!)
-
----
-
-**Happy monetizing!**
+- [RevenueCat Docs](https://docs.revenuecat.com/)
+- [App Store Connect Help](https://developer.apple.com/help/app-store-connect/)
+- [Google Play Console Help](https://support.google.com/googleplay/android-developer/)

@@ -3,25 +3,30 @@
 ## System Overview
 
 ```
-┌──────────────────┐       HTTPS        ┌──────────────────┐
-│                  │ ──────────────────► │                  │
-│   Mobile App     │                     │  Cloud Functions │
-│   React +        │ ◄──────────────────  │  (Firebase)      │
-│   Capacitor      │    JSON response    │                  │
-│                  │                     └────────┬─────────┘
-└──────┬───────────┘                              │
-       │                                          │
-       │  Local storage                           │  Vertex AI
-       ▼                                          ▼
-┌──────────────────┐                     ┌──────────────────┐
-│  IndexedDB       │                     │  Google Gemini   │
-│  (Dexie)         │                     │  (Image → Event) │
-└──────────────────┘                     └──────────────────┘
+┌──────────────────┐        HTTPS        ┌──────────────────┐
+│                  │ ────────────────────►│                  │
+│   Mobile App     │                      │  Cloud Functions │
+│   React +        │◄──────────────────── │  (Firebase)      │
+│   Capacitor      │    JSON response     │                  │
+│                  │                      └────────┬─────────┘
+└──┬───────────┬───┘                               │
+   │           │                                    │  Vertex AI
+   │           │                                    ▼
+   │           │  Anonymous auth          ┌──────────────────┐
+   │           └─────────────────────────►│  Google Gemini   │
+   │              Firebase Auth           │  (Image → Event) │
+   │                                      └──────────────────┘
+   │  Local storage
+   ▼
+┌──────────────────┐
+│  IndexedDB       │
+│  (Dexie)         │
+└──────────────────┘
 ```
 
 The system has two main parts: a **mobile app** that runs on iOS, Android, and web, and a **serverless backend** on Firebase Cloud Functions that handles AI-powered image analysis.
 
-All user data stays on the device. The backend is stateless — it receives an image, extracts event details via Gemini, and returns structured data.
+All user data stays on the device. The backend is stateless — it receives an image, extracts event details via Gemini, and returns structured data. Firebase Auth provides anonymous UIDs so every API call is authenticated without requiring sign-up.
 
 ## Mobile App
 
@@ -38,11 +43,11 @@ All user data stays on the device. The backend is stateless — it receives an i
 
 ```
 ┌─────────────────────────────────────────┐
-│  Pages                                  │  Screens: Camera, Result, History, Settings
+│  Pages                                  │  Camera, Result, History, Settings
 ├─────────────────────────────────────────┤
-│  Components                             │  Reusable UI: EventCard, Dialogs, Sheets
+│  Components                             │  EventCard, Dialogs, Sheets
 ├─────────────────────────────────────────┤
-│  Hooks                                  │  useCapture, useShare, useEvents, ...
+│  Hooks                                  │  useCapture, useShare, useEvents
 ├─────────────────────────────────────────┤
 │  Contexts                               │  AppContext, FirebaseContext, DialogContext
 ├─────────────────────────────────────────┤
@@ -68,17 +73,29 @@ All user data stays on the device. The backend is stateless — it receives an i
 
 ### Core Data Flows
 
-**Capture Flow:**
+**Capture:**
 1. User takes photo or imports image
 2. Image compressed client-side
 3. Sent to `/analyse` Cloud Function with Firebase auth token
 4. Gemini extracts event details (title, date, time, location, description)
-5. Structured result returned and saved to local IndexedDB
-6. User can export to calendar or share as PDF/image
+5. Structured result saved to local IndexedDB
+6. User reviews result and can edit details
 
 **Calendar Export:**
 - Native (iOS/Android): Capacitor Calendar plugin writes directly to device calendar
 - Web: Generates Google Calendar URL, Apple .ics file, or Outlook link
+
+**Share:**
+- Event card rendered to an off-screen element, captured as a screenshot
+- Exported as PDF with interactive links (location, calendar) or as PNG image
+- Shared via native share sheet (Capacitor Share plugin)
+
+**Ticket Search:**
+1. User taps "Find Tickets" on an event card
+2. App sends event title + location to `/findTickets` Cloud Function
+3. Backend queries Google Custom Search across 60+ ticket providers
+4. Results sorted by regional provider priority (based on user locale)
+5. Ticket links displayed as tappable buttons
 
 ## Backend
 

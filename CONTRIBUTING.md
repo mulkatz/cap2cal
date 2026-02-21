@@ -5,7 +5,7 @@ Thanks for your interest in contributing! Here's how to get started.
 ## Getting Started
 
 1. Fork the repo and clone it
-2. Follow the [setup instructions](./README.md#setup) to get the app running locally
+2. Follow the [Getting Started guide](./docs/GETTING-STARTED.md) to get the app running locally
 3. Create a branch for your changes: `git checkout -b feat/your-feature`
 
 ## Development

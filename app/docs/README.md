@@ -1,10 +1,6 @@
-# Mobile App Documentation
+# Mobile App
 
-Documentation for the cap2cal mobile application (React + Capacitor).
-
-## Guides
-
-- **[App Architecture](./CLAUDE.md)** — App structure, core patterns, key files, and naming conventions
+Documentation for the cap2cal mobile app (React + Capacitor).
 
 ## Quick Start
 
@@ -17,5 +13,5 @@ npx cap run ios          # or: npx cap run android
 
 ## Related
 
-- [Project Architecture](../../docs/ARCHITECTURE.md) — System-level design
+- [Architecture](../../docs/ARCHITECTURE.md) — System design and app layer structure
 - [Getting Started](../../docs/GETTING-STARTED.md) — Full setup guide

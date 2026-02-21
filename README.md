@@ -73,62 +73,26 @@ cap2cal/
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 22+
-- iOS: Xcode 15+ (macOS)
-- Android: Android Studio
-
-### Setup
-
 ```bash
 git clone https://github.com/mulkatz/cap2cal.git
-cd cap2cal
-
-# App
-cd app
+cd cap2cal/app
 npm install
 cp .env.example .env  # fill in your Firebase config + API URLs
-
-# Development (web preview)
-npm run dev
-
-# Build & run on device
-npm run build
-npx cap run ios       # or: npx cap run android
+npm run dev           # web preview at localhost:5173
 ```
 
-### Backend
-
-```bash
-cd backend/functions
-npm install
-# Configure Firebase secrets (Gemini API key, etc.)
-firebase deploy --only functions
-```
-
-### Landing Page
-
-```bash
-cd web
-npm install
-cp .env.example .env  # fill in Firebase + PostHog config
-npm run dev
-```
+To build for iOS or Android, or to set up the backend and landing page, see the full [Getting Started guide](./docs/GETTING-STARTED.md).
 
 ## Features
 
-- **AI event extraction** — Gemini-powered, handles complex posters with multiple events
+- **AI event extraction** — Gemini-powered, handles posters with multiple events
 - **Calendar export** — Google Calendar, Apple Calendar, Outlook, native device calendar
-- **Ticket search** — Finds ticket links for detected events via Google Custom Search
-- **Event history** — Local-first storage with favorites, filters, and image preview
+- **Ticket search** — Finds ticket links for detected events
+- **Event history** — Favorites, filters, and image preview
 - **Share** — Export event cards as PDF or image
 - **Multi-language** — English, German, Spanish, French, Portuguese, and more
-- **Offline-ready** — Events stored locally on-device, works without internet
-- **Onboarding** — 3-screen tutorial flow
+- **Offline-ready** — All data stored locally on-device
 - **In-app purchases** — Pro subscription via RevenueCat (optional, can be disabled)
-- **Feature flags** — Remote config for toggling features server-side
-- **Crashlytics** — Error tracking with Firebase Crashlytics
 
 ## Architecture
 
