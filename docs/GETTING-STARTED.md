@@ -60,9 +60,19 @@ Each subproject has a `.env.example` file. Copy it to `.env` and fill in the val
 
 | Variable | Where | Description |
 |----------|-------|-------------|
-| `VITE_API_URL` | `app/.env` | Backend API URL |
 | `VITE_FIREBASE_*` | `app/.env` | Firebase project config |
-| `VITE_REVENUECAT_*` | `app/.env` | RevenueCat API keys (optional) |
+| `VITE_ANALYSE_API_URL` | `app/.env` | URL of the `analyse` Cloud Function |
+| `VITE_FIND_TICKETS_API_URL` | `app/.env` | URL of the `findTickets` Cloud Function |
+| `VITE_FEATURE_FLAGS_API_URL` | `app/.env` | URL of the `featureFlags` Cloud Function |
+| `VITE_REVENUECAT_*` | `app/.env` | RevenueCat API keys (optional, see [RevenueCat Setup](./REVENUECAT_SETUP.md)) |
+| `VITE_FIREBASE_*` | `web/.env` | Firebase config for the landing page |
+| `VITE_PUBLIC_POSTHOG_*` | `web/.env` | PostHog analytics config |
+
+The backend uses [Firebase Secret Manager](https://firebase.google.com/docs/functions/config-env#secret-manager) instead of `.env` files. See `backend/functions/.env.example` for the required secrets and set them with:
+
+```bash
+firebase functions:secrets:set SECRET_NAME
+```
 
 ## Building for Production
 
